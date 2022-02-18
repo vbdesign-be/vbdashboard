@@ -1,0 +1,66 @@
+.btn,
+.form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%
+}
+.btn {
+  background-color: #157399;
+  left: auto;
+  right: auto
+}
+.form,
+.form--mini,
+.menu__item {
+  background-color: #fff
+}
+.form {
+  margin-top: 200px;
+  box-shadow: #000 0 0 0 0
+}
+.form--mini {
+  width: 60%;
+  padding: 25px;
+  margin: 150px auto 100px
+}
+.form__container,
+.form__group,
+.form__input,
+.notification-mini {
+  margin-right: auto;
+  margin-left: auto
+}
+.form__container {
+  margin-top: 150px;
+  width: 80%
+}
+.form__group,
+.form__input {
+  width: 50%
+}
+.notification-mini {
+  width: 60%;
+  margin-bottom: -50px
+}
+.menu__item {
+  color: #2f4858
+}
+.header__btn {
+  margin-left: auto
+}
+.main-item {
+  color: #0cf
+}
+.menu__item__icon {
+  color: #2f4858
+}
+.form__header {
+  margin-bottom: 50px
+}
+.form.form--mini {
+  width: 60%
+}
+.form__title {
+  margin-bottom: 25px
+}
+

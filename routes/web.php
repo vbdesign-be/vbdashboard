@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+use App\Mail\UserLoginMail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', [LoginController::class, "login"])->name('login');
+Route::get('/register', [LoginController::class, "register"]);
+Route::post('/user/register', [LoginController::class, "store"]);
+Route::post('/user/login', [LoginController::class, "canLogin"]);
+Route::get('/logout', [Logincontroller::class, "logout"]);
+
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/', [UserController::class, "dashboard"]);
+    Route::get('/profile', [UserController::class, "profile"]);
+    Route::post('/user/editUser/{id}', [UserController::class, "editUser"]);
 });
