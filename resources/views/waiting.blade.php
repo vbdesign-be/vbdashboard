@@ -36,7 +36,7 @@
 
 <div class="notification notification--normal">
     <h1 class="notification__header" >Hallo {{ $user->firstname }}</h1>
-    <p class="notification__text">Klik op de link die we hebben gestuurd op {{ $user->email }} </p>
+    <p class="notification__text">Klik op de link die we hebben gestuurd op {{ $user->email }}</p>
 </div>
 
 

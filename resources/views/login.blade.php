@@ -7,7 +7,6 @@
 @if($errors->any())
     @component('components/notification')
         @slot('type') red @endslot
-        @slot('mini') r @endslot
         <ul>
             @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -19,7 +18,6 @@
 @if($flash = session('error'))
 @component('components/notification')
         @slot('type') red @endslot
-        @slot('mini') r @endslot
         <ul>
             <li>{{ $flash }}</li>
         </ul>
