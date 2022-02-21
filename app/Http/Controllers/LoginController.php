@@ -95,7 +95,7 @@ class LoginController extends Controller
 
             //message flashen
             $request->flash();
-            $request->session()->flash('message', 'We hebben je een mail gestuurd met een loginbtn');
+            $request->session()->flash('message', 'We hebben een mail gestuurd naar ' . $user->email . ' met een loginlink');
             
             //load waiting view
             return redirect('/login');
