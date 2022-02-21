@@ -1,0 +1,14 @@
+@import 'components/form';
+@import 'components/btns';
+@import 'components/notification';
+@import 'components/mail';
+@import 'abstracts/colors';
+
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: $offwhite;
+}

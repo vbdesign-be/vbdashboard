@@ -1,0 +1,50 @@
+.notification{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
+    border-radius: 20px;
+    padding:25px;
+    box-shadow: 0px 0px 24px -6px rgba(0,0,0,0.09);
+    color:white;
+}
+
+.notification--normal{
+    background-color: $blue;
+}
+
+.notification--normalmini{
+    width:40%;
+    background-color: $blue;
+}
+
+.notification--danger{
+    background-color: $red;
+}
+
+.notification ul{
+    list-style: none;
+}
+
+.notification ul li {
+    margin-bottom: 15px;
+    font-family: $font;
+    font-size: $normal;
+}
+
+.notification--danger ul li {
+    color: $white;
+}
+
+.notification__header{
+    font-size: $big;
+    font-family: $font;
+    text-align: center;
+}
+
+.notification__text{
+    font-size: $normal;
+    font-family: $font;
+    text-align: center;
+    margin-top:20px;
+}

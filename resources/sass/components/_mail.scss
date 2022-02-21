@@ -1,0 +1,32 @@
+@import '../abstracts/colors';
+@import '../abstracts/fonts';
+
+.mail{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: $white;
+    box-shadow: $shadow;
+    padding:25px;
+    margin-top:15%;
+}
+
+.mail__title{
+    color: $darkblue;
+    font-family: $font;
+    $font-size: $big;
+    text-align:center;
+}
+
+.mail__text{
+    color: $darkblue;
+    font-family: $font;
+    font-size: $text;
+    text-align: center;
+}
+
+.mail__btn{
+    display:flex;
+    justify-content: center;
+    margin-top:50px;
+}
