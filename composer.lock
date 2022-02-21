@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a8680c81917190f27e903da56271021",
+    "content-hash": "24dea7da860d4972578477118e482824",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1007,6 +1007,105 @@
                 }
             ],
             "time": "2021-10-06T17:43:30+00:00"
+        },
+        {
+            "name": "janhenkes/teamleader-php-sdk",
+            "version": "2.9.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janhenkes/teamleader-php-sdk.git",
+                "reference": "5556d22a5f7b2982b60ac9d37a18188854de5b01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janhenkes/teamleader-php-sdk/zipball/5556d22a5f7b2982b60ac9d37a18188854de5b01",
+                "reference": "5556d22a5f7b2982b60ac9d37a18188854de5b01",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0|^7.0",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Teamleader\\": "src/Teamleader"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Henkes",
+                    "email": "jan@jannesmannes.nl",
+                    "homepage": "https://jannesmannes.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Teamleader API v2 PHP SDK",
+            "homepage": "https://github.com/janhenkes/teamleader-php-sdk",
+            "keywords": [
+                "Teamleader"
+            ],
+            "support": {
+                "issues": "https://github.com/janhenkes/teamleader-php-sdk/issues",
+                "source": "https://github.com/janhenkes/teamleader-php-sdk/tree/2.9.4"
+            },
+            "time": "2022-01-10T09:40:03+00:00"
+        },
+        {
+            "name": "justijndepover/teamleader-api",
+            "version": "0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/justijndepover/teamleader-api.git",
+                "reference": "c27a837d42c8063b2c49e5efb4004a2f539f298f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/justijndepover/teamleader-api/zipball/c27a837d42c8063b2c49e5efb4004a2f539f298f",
+                "reference": "c27a837d42c8063b2c49e5efb4004a2f539f298f",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.3"
+            },
+            "require-dev": {
+                "justijndepover/php-check": "^0.5.0",
+                "orchestra/testbench": "^6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Justijndepover\\Teamleader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Justijn Depover",
+                    "email": "justijndepover@gmail.com"
+                }
+            ],
+            "description": "PHP Client for the Teamleader API",
+            "keywords": [
+                "Teamleader",
+                "api",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/justijndepover/teamleader-api/issues",
+                "source": "https://github.com/justijndepover/teamleader-api/tree/0.6.0"
+            },
+            "time": "2021-11-01T09:01:24+00:00"
         },
         {
             "name": "laravel/framework",
@@ -6118,9 +6217,6 @@
             "require": {
                 "php": "^7.1 || ^8.0"
             },
-            "replace": {
-                "myclabs/deep-copy": "self.version"
-            },
             "require-dev": {
                 "doctrine/collections": "^1.0",
                 "doctrine/common": "^2.6",
@@ -6586,16 +6682,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.10",
+            "version": "9.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "d5850aaf931743067f4bfc1ae4cbd06468400687"
+                "reference": "665a1ac0a763c51afc30d6d130dac0813092b17f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d5850aaf931743067f4bfc1ae4cbd06468400687",
-                "reference": "d5850aaf931743067f4bfc1ae4cbd06468400687",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/665a1ac0a763c51afc30d6d130dac0813092b17f",
+                "reference": "665a1ac0a763c51afc30d6d130dac0813092b17f",
                 "shasum": ""
             },
             "require": {
@@ -6651,7 +6747,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.10"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.11"
             },
             "funding": [
                 {
@@ -6659,7 +6755,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-05T09:12:13+00:00"
+            "time": "2022-02-18T12:46:09+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -6904,16 +7000,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.13",
+            "version": "9.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "597cb647654ede35e43b137926dfdfef0fb11743"
+                "reference": "1883687169c017d6ae37c58883ca3994cfc34189"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/597cb647654ede35e43b137926dfdfef0fb11743",
-                "reference": "597cb647654ede35e43b137926dfdfef0fb11743",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1883687169c017d6ae37c58883ca3994cfc34189",
+                "reference": "1883687169c017d6ae37c58883ca3994cfc34189",
                 "shasum": ""
             },
             "require": {
@@ -6991,7 +7087,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.13"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.14"
             },
             "funding": [
                 {
@@ -7003,7 +7099,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-24T07:33:35+00:00"
+            "time": "2022-02-18T12:54:07+00:00"
         },
         {
             "name": "sebastian/cli-parser",

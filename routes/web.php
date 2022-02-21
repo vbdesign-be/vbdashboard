@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SettingsController;
 use App\Mail\UserLoginMail;
 
 
@@ -22,6 +24,10 @@ Route::get('/register', [LoginController::class, "register"]);
 Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
+
+Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
+Route::get('/teamleader', [DashboardController::class, "getConnection"]);
+
 
 
 Route::group(['middleware' => ['auth']], function() {
