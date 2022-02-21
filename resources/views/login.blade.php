@@ -47,7 +47,7 @@
       
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="email">Email</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" placeholder="Write a text"></div>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" placeholder="Write a text" value="{{ old('email') }}"></div>
       
     <div class="form__btn">
         <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Login</button>

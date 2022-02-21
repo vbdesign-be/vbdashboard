@@ -90,9 +90,13 @@ class LoginController extends Controller
 
             //sending the email
             Mail::to($user->email)->send(new UserLoginMail($data));
+
+            //message flashen
+            $request->flash();
+            $request->session()->flash('message', 'We hebben je een mail gestuurd met een loginbtn');
             
             //load waiting view
-            return view('waiting', $data);
+            return redirect('/login');
         
         }
     }
