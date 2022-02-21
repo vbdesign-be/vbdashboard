@@ -2060,7 +2060,24 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //faq opnenen
+
+
+var faqs = document.querySelectorAll('#faq-item');
+faqs.forEach(function (faq) {
+  var btn = faq.querySelector('#btn');
+  var answer = faq.querySelector("#answer");
+  var click = 0;
+  btn.addEventListener('click', function (e) {
+    if (!click) {
+      answer.classList.remove('hidden');
+      click = 1;
+    } else if (click) {
+      answer.classList.add('hidden');
+      click = 0;
+    }
+  });
+});
 
 /***/ }),
 
