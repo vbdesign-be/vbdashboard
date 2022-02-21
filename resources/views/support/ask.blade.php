@@ -74,17 +74,41 @@
                 </div>
               </div>
               <ul class="hier plaatsten">
-                
+              
+              @if($errors->any())
+                @component('components/notification')
+                @slot('type') red @endslot
+                @slot('textcolor') red @endslot
+                  <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                @endcomponent
+              @endif
+
+              @if($flash = session('error'))
+                @component('components/notification')
+                @slot('type') red @endslot
+                @slot('textcolor') red @endslot
+                  <ul>
+                    <li>{{ $flash }}</li>
+                  </ul>
+                @endcomponent
+              @endif
+
+              @if($flash = session('message'))
+                @component('components/notification')
+                @slot('type') green @endslot
+                @slot('textcolor') green @endslot
+                  <ul>
+                    <li>{{ $flash }}</li>
+                </ul>
+               @endcomponent
+              @endif
               
               <form action="support/addQuestion" method="post">
               @csrf
-              <div class="mb-6 form__group">
-                <label class="block text-sm font-medium mb-2" for="familienaam">Familienaam</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" placeholder="Write a text"></div>
-              
-              <div class="mb-6 form__group">
-                <label class="block text-sm font-medium mb-2" for="voornaam">Voornaam</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" placeholder="Write a text"></div>
               
               <div class="mb-6 form__group">
                 <label class="block text-sm font-medium mb-2" for="onderwerp">Onderwerp</label>

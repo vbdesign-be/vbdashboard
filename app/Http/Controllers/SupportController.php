@@ -32,11 +32,8 @@ class SupportController extends Controller
 
         //checking
         $credentials = $request->validate([
-            'voornaam' => 'required|max:255',
-            'familienaam' => 'required|max:255',
             'onderwerp' => 'required|max:255',
             'vraag' => 'required'
-
         ]);
 
         $question = new Question();
@@ -44,6 +41,8 @@ class SupportController extends Controller
         $question->subject = $request->input('onderwerp');
         $question->question = $request->input('vraag');
         $question->save();
+
+        $request->session()->flash('message', "We hebben je vraag goed ontvangen en beantwoorden hem zo snel mogelijk");
 
         return redirect('/status');
 

@@ -74,6 +74,38 @@
                 </div>
               </div>
               <ul>
+
+              @if($errors->any())
+                @component('components/notification')
+                @slot('type') red @endslot
+                @slot('textcolor') red @endslot
+                  <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                @endcomponent
+              @endif
+
+              @if($flash = session('error'))
+                @component('components/notification')
+                @slot('type') red @endslot
+                @slot('textcolor') red @endslot
+                  <ul>
+                    <li>{{ $flash }}</li>
+                  </ul>
+                @endcomponent
+              @endif
+
+              @if($flash = session('message'))
+                @component('components/notification')
+                @slot('type') green @endslot
+                @slot('textcolor') green @endslot
+                  <ul>
+                    <li>{{ $flash }}</li>
+                </ul>
+               @endcomponent
+              @endif
                 
               <section class="py-8">
                 @foreach($questions as $q)
