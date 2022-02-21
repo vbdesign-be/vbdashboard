@@ -15,15 +15,7 @@ class UserController extends Controller
     
 
     public function profile(){
-
-        $sectoren = [
-            'it',
-            'entertainment',
-            'sport'
-        ];
-
         $data['user'] = Auth::user();
-        $data['sectors'] = $sectoren;
         return view('profile', $data);
     }
 

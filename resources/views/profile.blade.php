@@ -13,72 +13,62 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">Pas hier je gegevens van je profiel aan</h2>
+            <h2 class="text-2xl font-bold">Profiel van {{ $user->firstname }}</h2>
           </div>
         </div>
         
+        <form action="/user/register" method="post" class="form--mini shadow-md">
+        @csrf
+      
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="familienaam">Familienaam</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" value="{{ $user->lastname }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="voornaam">Voornaam</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" value="{{ $user->firstname }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="email">Email</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" value="{{ $user->email }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="bedrijfsnaam">Bedrijfsnaam</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsnaam" value="{{ $user->company }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="btwnummer">Btw-nummer</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btwnummer" value="{{ $user->btw }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="gsm">Gsm-nummer</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="gsm" value="{{ $user->gsm }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="{{ $user->phone }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="adres">adres</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="adres" value="{{ $user->adress }}"></div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="stad">Stad</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="stad" value="{{ $user->city }}"></div>
+            
+                <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="">Sector</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="{{ $user->sector }}"></div>
+            
+            <div class="form__btn">
+            <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Opslaan</button>
+            </div>
+      
+      </form>
+
         
 
-            <!-- code van het formulier van de gegevens -->
-
-            <div class="form__container form__container--big">
-
-
-            <form action="user/editUser/{{ $user->id }}" method="post" class="form--mini">
-            @csrf
-
-                <div class="form__column form__column--left">
-                    <div class="input-group">
-                        <label class="label" for="lastname">Familienaam</label>
-                        <input class="input" type="text" name="familienaam" value="{{ $user->lastname }}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="label" for="firstname">Voornaam</label>
-                        <input class="input" type="text" name="voornaam" value="{{ $user->firstname }}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="label" for="email">Email</label>
-                        <input class="input" type="text" name="email" value="{{ $user->email }}">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="label" for="btw">Btw-nummer</label>
-                        <input class="input" type="text" name="btwnummer" value="{{ $user->btwnumber }}">
-                    </div>
-                </div>
-
-                <div class="form__column form__column--right">
-                    <div class="input-group">
-                        <label class="label" for="gsm">Gsm</label>
-                        <input class="input" type="text" name="gsm" value="{{ $user->gsm }}">
-                    </div>
-
-                <div class="input-group">
-                    <label class="label" for="phone">Telefoon</label>
-                    <input class="input" type="text" name="telefoon" value="{{ $user->phone }}">
-                </div>
-
-                <div class="input-group">
-                    <label class="label" for="city">Stad</label>
-                    <input class="input" type="text" name="stad" value="{{ $user->city }}">
-                </div>
-
-                <div class="input-group">
-                    <label class="label" for="sector">Sector</label>
-                    <input class="input" type="text" name="sector" value="{{ $user->sector }}">
-                </div>
-
-            </div>
-
-            <div class="form__btn" >
-                <input class="btn" type="submit"  value="Registreer">
-            </div>
-
-        </form>
-
-        </div>
+            
 
         
         </div>

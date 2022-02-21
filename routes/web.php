@@ -31,7 +31,8 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/profile', [UserController::class, "profile"]);
+
+    Route::get('/profiel', [UserController::class, "profile"]);
     Route::post('/user/editUser/{id}', [UserController::class, "editUser"]);
 
     //projecten

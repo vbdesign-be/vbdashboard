@@ -46,13 +46,15 @@ class LoginController extends Controller
         ]);
         
         //saving a new user
-        $user = new \App\Models\User();
+        $user = new User();
         $user->firstname = $request->input('voornaam');
         $user->lastname = $request->input('familienaam');
         $user->email = $request->input('email');
+        $user->company = $request->input('bedrijfsnaam');
         $user->btwnumber = $request->input('btwnummer');
         $user->gsm = $request->input('gsm');
         $user->phone = $request->input('telefoon');
+        $user->adress = $request->input('adres');
         $user->city = $request->input('stad');
         $user->sector = $request->input('sector');
         $user->save();
