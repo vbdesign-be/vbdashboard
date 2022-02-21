@@ -3,6 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StatistiekController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\OfferteController;
+use App\Http\Controllers\AfspraakController;
+use App\Http\Controllers\SupportController;
 use App\Mail\UserLoginMail;
 
 
@@ -25,7 +31,20 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/', [UserController::class, "dashboard"]);
     Route::get('/profile', [UserController::class, "profile"]);
     Route::post('/user/editUser/{id}', [UserController::class, "editUser"]);
+
+    //projecten
+    Route::get('/', [ProjectController::class, "projects"]);
+
+    //statistieken
+    Route::get('/statistieken', [StatistiekController::class, "statistieken"]);
+
+    Route::get('/shop', [ShopController::class, "shop"]);
+
+    Route::get('/offerte', [OfferteController::class, "offerte"]);
+
+    Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
+
+    Route::get('/support', [SupportController::class, "support"]);
 });

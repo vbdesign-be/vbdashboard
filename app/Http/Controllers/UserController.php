@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public function dashboard(){
-        $data['user'] = Auth::user();
-        return view('dashboard/dashboard', $data);
-    }
+    
 
     public function profile(){
 
