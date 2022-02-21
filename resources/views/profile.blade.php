@@ -16,8 +16,31 @@
             <h2 class="text-2xl font-bold">Profiel van {{ $user->firstname }}</h2>
           </div>
         </div>
+
+        @if($errors->any())
+            @component('components/notification')
+            @slot('type') red @endslot
+            @slot('mini') r @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endcomponent
+        @endif
+
+        @if($flash = session('message'))
+        @component('components/notification')
+            @slot('type') green @endslot
+            @slot('textcolor') green @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
         
-        <form action="/user/register" method="post" class="form--mini shadow-md">
+        <form action="/user/update" method="post" class="form--mini shadow-md">
         @csrf
       
             <div class="mb-6">

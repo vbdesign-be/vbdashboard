@@ -19,7 +19,7 @@ class UserController extends Controller
         return view('profile', $data);
     }
 
-    public function editUser(Request $request){
+    public function updateUser(Request $request){
         //checking
         $credentials = $request->validate([
             'voornaam' => 'required|max:255',
@@ -27,23 +27,30 @@ class UserController extends Controller
             'email' => 'required|email'
         ]);
 
-        $user = User::find($request->id);
+        $id = Auth::id();
+
+        $user = User::find($id);
+        
         $user->firstname = $request->input('voornaam');
         $user->lastname = $request->input('familienaam');
         $user->email = $request->input('email');
+        $user->company = $request->input('bedrijfsnaam');
         $user->btwnumber = $request->input('btwnummer');
         $user->gsm = $request->input('gsm');
         $user->phone = $request->input('telefoon');
+        $user->adress = $request->input('adres');
         $user->city = $request->input('stad');
         $user->sector = $request->input('sector');
         $user->save();
 
-        // $request->session()->flash('message', 'je account is geüpdate');
+        $request->session()->flash('message', 'je account is geüpdate');
 
         
-        return redirect('/profile');
+        return redirect('/profiel');
 
 
     }
+
+
     
 }

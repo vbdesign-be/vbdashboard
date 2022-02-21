@@ -33,7 +33,7 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/profiel', [UserController::class, "profile"]);
-    Route::post('/user/editUser/{id}', [UserController::class, "editUser"]);
+    Route::post('/user/update', [UserController::class, "updateUser"]);
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);
