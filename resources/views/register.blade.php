@@ -12,7 +12,7 @@
 @if($errors->any())
     @component('components/notification')
         @slot('type') red @endslot
-        @slot('mini') r @endslot
+        @slot('size') notification-mini  @endslot
         @slot('textcolor') red @endslot
         <ul>
             @foreach($errors->all() as $error)
