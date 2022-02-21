@@ -30,6 +30,9 @@
   margin-right: auto;
   margin-left: auto
 }
+.menu__item {
+  color: #2f4858
+}
 .form__container {
   margin-top: 150px;
   width: 80%
@@ -41,9 +44,6 @@
 .notification-mini {
   width: 60%;
   margin-bottom: -50px
-}
-.menu__item {
-  color: #2f4858
 }
 .header__btn {
   margin-left: auto
@@ -62,5 +62,8 @@
 }
 .form__title {
   margin-bottom: 25px
+}
+.submit {
+  background-color: #157399
 }
 
