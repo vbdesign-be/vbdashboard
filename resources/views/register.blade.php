@@ -13,6 +13,7 @@
     @component('components/notification')
         @slot('type') red @endslot
         @slot('mini') r @endslot
+        @slot('textcolor') red @endslot
         <ul>
             @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -65,7 +66,10 @@
         <label class="block text-sm font-medium mb-2" for="">Sector</label>
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" placeholder="Write a text"></div>
       
+      <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanmelden</button>
+      </div>
+      
       </form>
     </div>
     
