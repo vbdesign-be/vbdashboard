@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.form__title--small {
+  margin-top: 50px;
+}
+
 .form__btn {
   grid-column: 1/span 2;
   display: flex;

@@ -7,6 +7,7 @@ use App\Models\User;
 use Grosv\LaravelPasswordlessLogin\LoginUrl;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserLoginMail;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -50,14 +51,19 @@ class LoginController extends Controller
         $user->firstname = $request->input('voornaam');
         $user->lastname = $request->input('familienaam');
         $user->email = $request->input('email');
-        $user->company = $request->input('bedrijfsnaam');
-        $user->btwnumber = $request->input('btwnummer');
         $user->gsm = $request->input('gsm');
-        $user->phone = $request->input('telefoon');
-        $user->adress = $request->input('adres');
-        $user->city = $request->input('stad');
-        $user->sector = $request->input('sector');
         $user->save();
+
+        $company = new Company();
+        $company->name = $request->input('bedrijfsnaam');
+        $company->VAT = $request->input('btw-nummer');
+        $company->phone = $request->input('telefoon');
+        $company->adress = $request->input('straat');
+        $company->postalcode = $request->input('postcode');
+        $company->city = $request->input('plaats');
+        $company->sector = $request->input('sector');
+        $company->save();
+
 
         $request->flash();
 
