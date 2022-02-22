@@ -17,11 +17,10 @@ class CreateOffertesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('summary');
-            $table->string('status');
+            $table->string('status')->default('aanvraag');
             $table->string('reference');
             $table->foreignId('company_id');
             $table->integer('estimated_value');
-            $table->integer('estimated_probability');
             $table->string('estimated_closing_date');
             $table->timestamps();
         });

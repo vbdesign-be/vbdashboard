@@ -46,7 +46,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/shop', [ShopController::class, "shop"]);
 
+    //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);
+    Route::post('/offerte/post', [OfferteController::class, "post"]);
 
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
 

@@ -92,66 +92,20 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach($offertes as $f)
                   <tr class="text-xs bg-gray-50">
                     <td class="flex items-center py-5 px-6 font-medium">
                       <input class="mr-3" type="checkbox" name="" id="">
-                      <p>M063592DR2</p>
+                      <p>{{ $f->title }}</p>
                     </td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">Code 5928MD01</td>
+                    <td class="font-medium">{{ $f->estimated_closing_date }}</td>
+                    <td class="font-medium">{{ $f->estimated_value }}</td>
                     <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
+                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $f->status }}</span>
                     </td>
                     <td>$2500.00</td>
                   </tr>
-                  <tr class="text-xs">
-                    <td class="flex items-center py-5 px-6 font-medium">
-                      <input class="mr-3" type="checkbox" name="" id="">
-                      <p>M063592DR2</p>
-                    </td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">Code 5928MD01</td>
-                    <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
-                    </td>
-                    <td>$2500.00</td>
-                  </tr>
-                  <tr class="text-xs bg-gray-50">
-                    <td class="flex items-center py-5 px-6 font-medium">
-                      <input class="mr-3" type="checkbox" name="" id="">
-                      <p>M063592DR2</p>
-                    </td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">Code 5928MD01</td>
-                    <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
-                    </td>
-                    <td>$2500.00</td>
-                  </tr>
-                  <tr class="text-xs">
-                    <td class="flex items-center py-5 px-6 font-medium">
-                      <input class="mr-3" type="checkbox" name="" id="">
-                      <p>M063592DR2</p>
-                    </td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">Code 5928MD01</td>
-                    <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
-                    </td>
-                    <td>$2500.00</td>
-                  </tr>
-                  <tr class="text-xs bg-gray-50">
-                    <td class="flex items-center py-5 px-6 font-medium">
-                      <input class="mr-3" type="checkbox" name="" id="">
-                      <p>M063592DR2</p>
-                    </td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">Code 5928MD01</td>
-                    <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
-                    </td>
-                    <td>$2500.00</td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -174,8 +128,8 @@
       </div>
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="">Slaagkanst</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="" placeholder="Write a text">
+        <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" placeholder="Write a text">
       </div>
       </div>
       </div>
@@ -183,22 +137,21 @@
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
+        <label class="block text-sm font-medium mb-2" for="deadline">Gewenste deadline</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" placeholder="Write a text">
       </div>
       </div>
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
-      </div>
+      
       </div>
       </div>
       
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="">Label for textarea</label>
-        <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="field-name" rows="5" placeholder="Write something..."></textarea>
+        <label class="block text-sm font-medium mb-2" for="samenvatting">Samenvatting</label>
+        <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" placeholder="Write something..."></textarea>
       </div>
+
+      <input class="hidden" type="text" name="company" value="{{ $user->company->id }}">
       
       <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>

@@ -20,5 +20,6 @@ class UserSeeder extends Seeder
         $user->email = "jonathan_verhaegen@hotmail.com";
         $user->gsm = "0498413706";
         $user->save();
+        
     }
 }
