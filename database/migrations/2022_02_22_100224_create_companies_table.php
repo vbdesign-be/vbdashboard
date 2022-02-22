@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->string('adress')->nullable();
             $table->string('postalcode')->nullable();
             $table->string('city')->nullable();
+            $table->string('country')->default('BE');
             $table->string('sector')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();

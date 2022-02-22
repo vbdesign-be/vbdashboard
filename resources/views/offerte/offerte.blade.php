@@ -158,6 +158,54 @@
           </div>
         </div>
       </section>
+
+
+      <div class="form--offerte__container container px-4 mx-auto">
+      <h1 class="mb-2 text-4xl font-bold font-heading form__title">Vraag hier je offerte aan</h1>
+      
+      <form class="bg-white shadow rounded py-6 px-6" action="/offerte/post" method="post">
+      @csrf
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="titel">Titel offerte</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" placeholder="Write a text">
+      </div>
+      </div>
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Slaagkanst</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="" placeholder="Write a text">
+      </div>
+      </div>
+      </div>
+      
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
+      </div>
+      </div>
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
+      </div>
+      </div>
+      </div>
+      
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Label for textarea</label>
+        <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="field-name" rows="5" placeholder="Write something..."></textarea>
+      </div>
+      
+      <div class="form__btn">
+      <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>
+      </div>
+
+      </form>
+      </div>
         
 
 @endsection
