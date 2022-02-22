@@ -12,6 +12,8 @@ class OfferteController extends Controller
     public function offerte(){
         $data["user"] = User::find(Auth::id());
         $data["offertes"] = Offerte::where('company_id', $data["user"]->company->id)->get();
+
+        
         
         return view('offerte/offerte', $data);
     }
@@ -32,8 +34,10 @@ class OfferteController extends Controller
         $offerte->company_id = $request->input('company');
         $offerte->estimated_value = $request->input('kostprijs');
         $offerte->estimated_closing_date = $request->input('deadline');
-        $offerte->save();
+        // $offerte->save();
+        dd($request->input('deadline'));
 
+        $request->session()->flash('message', 'Je offerte is goed ontvangen');
 
         return redirect('/offerte');
 

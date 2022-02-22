@@ -167,6 +167,10 @@ input[type=file] {
   margin-bottom: 25px;
 }
 
+.offerte {
+  border-bottom: solid white 10px;
+}
+
 * {
   box-sizing: border-box;
 }

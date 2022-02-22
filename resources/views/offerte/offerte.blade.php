@@ -16,6 +16,17 @@
             <h2 class="text-2xl font-bold">Offerte</h2>
           </div>
         </div>
+
+        @if($flash = session('message'))
+        @component('components/notification')
+            @slot('type') green @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') green @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
         
         <section class="py-8">
         <div class="container px-4 mx-auto">
@@ -93,18 +104,20 @@
                 </thead>
                 <tbody>
                   @foreach($offertes as $f)
-                  <tr class="text-xs bg-gray-50">
-                    <td class="flex items-center py-5 px-6 font-medium">
-                      <input class="mr-3" type="checkbox" name="" id="">
-                      <p>{{ $f->title }}</p>
-                    </td>
-                    <td class="font-medium">{{ $f->estimated_closing_date }}</td>
-                    <td class="font-medium">{{ $f->estimated_value }}</td>
-                    <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $f->status }}</span>
-                    </td>
-                    <td>$2500.00</td>
-                  </tr>
+
+                    <tr class="offerte text-xs bg-gray-50">
+                      <td class="flex items-center py-5 px-6 font-medium">
+                        <input class="mr-3" type="checkbox" name="" id="">
+                        <p>{{ $f->title }}</p>
+                      </td>
+                      <td class="font-medium">{{ $f->estimated_closing_date }}</td>
+                      <td class="font-medium">{{ $f->estimated_value }}</td>
+                      <td>
+                        <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $f->status }}</span>
+                      </td>
+                      <td>{{ $f->estimated_value }}</td>
+                    </tr>
+                    
                   @endforeach
                 </tbody>
               </table>
@@ -112,6 +125,22 @@
           </div>
         </div>
       </section>
+
+
+      @if($errors->any())
+            @component('components/notification')
+            @slot('type') red @endslot
+            @slot('size') notification-mini   @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endcomponent
+        @endif
+
+        
 
 
       <div class="form--offerte__container container px-4 mx-auto">
@@ -123,13 +152,13 @@
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="titel">Titel offerte</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" placeholder="Write a text">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" value="{{ old('titel') }}">
       </div>
       </div>
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" placeholder="Write a text">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" value="{{ old('kostprijs') }}">
       </div>
       </div>
       </div>
@@ -138,7 +167,7 @@
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="deadline">Gewenste deadline</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" placeholder="Write a text">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" value="{{ old('deadline') }}">
       </div>
       </div>
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
@@ -148,7 +177,7 @@
       
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="samenvatting">Samenvatting</label>
-        <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" placeholder="Write something..."></textarea>
+        <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" value="{{ old('samenvatting') }}"></textarea>
       </div>
 
       <input class="hidden" type="text" name="company" value="{{ $user->company->id }}">
