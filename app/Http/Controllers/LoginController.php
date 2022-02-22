@@ -43,7 +43,10 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'voornaam' => 'required|max:255',
             'familienaam' => 'required|max:255',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'bedrijfsnaam' => 'required|max:255',
+            'bedrijfsemail' => 'required|email',
+            'btw-nummer' => 'required|max:255'
         ]);
         
         //saving a new user
