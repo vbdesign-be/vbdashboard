@@ -52,7 +52,13 @@ class UserController extends Controller
 
         $imageName = time().'.'.$request->avatar->extension();
 
-        $request->image->move(public_path('img'), $imageName);
+        $request->avatar->move(public_path('img'), $imageName);
+
+        $user = User::find(Auth::id());
+        $user->avatar = $imageName;
+        $user->save();
+
+        return redirect('/profiel');
 
     }
 
