@@ -42,7 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = ["company"];
+
     public function company(){
-        return $this->hasMany(\App\Models\Company::class);
+        return $this->hasOne(\App\Models\Company::class);
     }
 }

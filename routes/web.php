@@ -8,6 +8,7 @@ use App\Http\Controllers\StatistiekController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\OfferteController;
 use App\Http\Controllers\AfspraakController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SupportController;
 use App\Mail\UserLoginMail;
 
@@ -52,4 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);
     Route::get('/status', [SupportController::class, "status"]);
+
+    //company
+    Route::post('/company/update', [CompanyController::class, "update"]);
 });

@@ -16,9 +16,8 @@ class UserController extends Controller
     
 
     public function profile(){
-        $user = User::find(Auth::id());
-        dd($user->company);
-        return view('profile');
+        $data["user"] = User::find(Auth::id());
+        return view('profile', $data);
     }
 
     public function updateUser(Request $request){
@@ -39,8 +38,6 @@ class UserController extends Controller
         $user->save();
 
         $request->session()->flash('message', 'je account is geüpdate');
-
-        
         return redirect('/profiel');
 
 
