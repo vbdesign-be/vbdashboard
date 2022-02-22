@@ -116,6 +116,7 @@
                         <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $f->status }}</span>
                       </td>
                       <td>{{ $f->estimated_value }}</td>
+                      <td><a href="">download icon</a></td>
                     </tr>
                     
                   @endforeach

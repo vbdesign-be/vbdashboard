@@ -2092,6 +2092,13 @@ selectBtn.addEventListener('click', function (e) {
     companyForm.style.display = "block";
     userForm.style.display = "none";
   }
+}); //calendly
+
+Calendly.initInlineWidget({
+  url: 'https://calendly.com/jonathan-764',
+  parentElement: document.getElementById('kalender'),
+  prefill: {},
+  utm: {}
 });
 
 /***/ }),
