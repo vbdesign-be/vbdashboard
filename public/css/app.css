@@ -36,6 +36,10 @@
   margin-left: 2%;
 }
 
+.form--avatar {
+  margin-bottom: 50px;
+}
+
 .btn {
   background-color: #157399;
   border-radius: 30px;

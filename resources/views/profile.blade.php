@@ -43,7 +43,8 @@
 
         
         <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+
+      <!-- <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
       <form enctype="multipart/form-data" class="flex flex-wrap -mx-4 -mb-4 md:mb-0" action="/user/updateAvatar" method="post">
       @csrf
@@ -52,6 +53,19 @@
         <div class="form__file__btn w-full md:w-1/3 px-4 mb-4 md:mb-0"><button class="form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Submit</button></div>
         
         </form>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
+      </div> -->
+
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
+      <form enctype="multipart/form-data" class="form--avatar flex flex-wrap -mx-4 -mb-4 md:mb-0" action="/user/updateAvatar" method="post">
+      @csrf
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><img class="w-20 h-20 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="img/{{ $user->avatar }}" alt="avatar"></div>
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><p>{{ $user->firstname . ' ' . $user->lastname }}</p></div>
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><input name="avatar" type="file"></div>
+        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><button class="form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update avatar</button></div>
+</form>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
       </div>
