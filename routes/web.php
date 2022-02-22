@@ -25,8 +25,8 @@ Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
-Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
-Route::get('/teamleader', [DashboardController::class, "getConnection"]);
+// Route::get('/connect', [DashboardController::class, "getConnection"]);
+Route::get('/teamleader', [DashboardController::class, "connectTeamleader"]);
 
 
 
