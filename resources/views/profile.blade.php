@@ -47,7 +47,7 @@
         <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
       <form enctype="multipart/form-data" class="flex flex-wrap -mx-4 -mb-4 md:mb-0" action="/user/updateAvatar" method="post">
       @csrf
-        <div class="form__img w-full md:w-1/3 px-4 mb-4 md:mb-0"><img class="w-20 h-20 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="{{ asset(' $user->avatar ') }}" alt=""></div>
+        <div class="form__img w-full md:w-1/3 px-4 mb-4 md:mb-0"><img class="w-20 h-20 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="img/{{ $user->avatar }}" alt="avatar"></div>
         <div class="form__file w-full md:w-1/3 px-4 mb-4 md:mb-0"><input type="file"></div>
         <div class="form__file__btn w-full md:w-1/3 px-4 mb-4 md:mb-0"><button class="form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Submit</button></div>
         
