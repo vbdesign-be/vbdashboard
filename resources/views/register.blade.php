@@ -50,6 +50,11 @@
       </div>
 
       <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="bedrijfsemail">Bedrijfsemail</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsemail" placeholder="Write a text">
+      </div>
+
+      <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="btw-nummer">Btw-nummer</label>
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-nummer" placeholder="Write a text">
       </div>

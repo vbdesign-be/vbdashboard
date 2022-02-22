@@ -54,14 +54,18 @@ class LoginController extends Controller
         $user->gsm = $request->input('gsm');
         $user->save();
 
+        $newUser = User::where('email', $request->input('email'))->first();
+
         $company = new Company();
         $company->name = $request->input('bedrijfsnaam');
+        $company->email = $request->input('bedrijfsemail');
         $company->VAT = $request->input('btw-nummer');
         $company->phone = $request->input('telefoon');
         $company->adress = $request->input('straat');
         $company->postalcode = $request->input('postcode');
         $company->city = $request->input('plaats');
         $company->sector = $request->input('sector');
+        $company->user_id = $newUser->id;
         $company->save();
 
 
