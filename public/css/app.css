@@ -40,6 +40,27 @@
   margin-bottom: 50px;
 }
 
+input[type=file] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.form--avatar__group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form--avatar__group--left {
+  margin-left: -15%;
+}
+
 .btn {
   background-color: #157399;
   border-radius: 30px;
@@ -49,6 +70,10 @@
   font-size: 24px;
   font-family: "DM Sans", sans-serif;
   text-decoration: none;
+}
+
+.btn--mini {
+  font-size: small;
 }
 
 .notification {
@@ -143,4 +168,8 @@
 
 body {
   background-color: #F6F7F8;
+}
+
+.avatar {
+  border-radius: 250px;
 }

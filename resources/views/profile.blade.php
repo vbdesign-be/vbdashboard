@@ -61,11 +61,11 @@
         <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
       <form enctype="multipart/form-data" class="form--avatar flex flex-wrap -mx-4 -mb-4 md:mb-0" action="/user/updateAvatar" method="post">
       @csrf
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><img class="w-20 h-20 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="img/{{ $user->avatar }}" alt="avatar"></div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><p>{{ $user->firstname . ' ' . $user->lastname }}</p></div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><input name="avatar" type="file"></div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0"><button class="form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update avatar</button></div>
-</form>
+        <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"><div><img class=" w-32 h-32 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="img/{{ $user->avatar }}" alt="avatar"></div></div>
+        <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"><p>{{ $user->firstname . ' ' . $user->lastname }}</p></div>
+        <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"><label class="btn--mini  custom-file-upload"><input name="avatar" type="file"/>Afbeelding kiezen</label></div>
+        <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"><button class="btn--mini form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update avatar</button></div>
+      </form>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
       </div>

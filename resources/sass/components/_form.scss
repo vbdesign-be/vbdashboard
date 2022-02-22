@@ -128,5 +128,26 @@
     margin-bottom: 50px;
 }
 
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.form--avatar__group{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form--avatar__group--left{
+    margin-left: -15%;
+}
+
 
 
