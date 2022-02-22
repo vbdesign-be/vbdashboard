@@ -33,8 +33,10 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 
 Route::group(['middleware' => ['auth']], function() {
 
+    //user
     Route::get('/profiel', [UserController::class, "profile"]);
     Route::post('/user/update', [UserController::class, "updateUser"]);
+    Route::post('/user/updateAvatar', [UserController::class, "updateAvatar"]);
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);

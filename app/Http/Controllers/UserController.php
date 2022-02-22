@@ -43,6 +43,19 @@ class UserController extends Controller
 
     }
 
+    public function updateAvatar(Request $request){
+        $credentials = $request->validate([
+
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+        ]);
+
+        $imageName = time().'.'.$request->avatar->extension();
+
+        $request->image->move(public_path('img'), $imageName);
+
+    }
+
 
     
 }
