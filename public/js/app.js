@@ -2077,6 +2077,21 @@ faqs.forEach(function (faq) {
       click = 0;
     }
   });
+}); //profile form 
+
+var selectBtn = document.querySelector('.selectForm');
+var userForm = document.querySelector('.form--user');
+var companyForm = document.querySelector('.form--company');
+selectBtn.addEventListener('click', function (e) {
+  var value = selectBtn.value;
+
+  if (value === "profiel") {
+    companyForm.style.display = "none";
+    userForm.style.display = "block";
+  } else if (value === "company") {
+    companyForm.style.display = "block";
+    userForm.style.display = "none";
+  }
 });
 
 /***/ }),

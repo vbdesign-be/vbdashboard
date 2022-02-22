@@ -27,3 +27,22 @@ faqs.forEach((faq) => {
     })
     
 })
+
+
+//profile form 
+
+let selectBtn = document.querySelector('.selectForm');
+let userForm = document.querySelector('.form--user');
+let companyForm = document.querySelector('.form--company');
+
+selectBtn.addEventListener('click', (e) => {
+    let value = selectBtn.value;
+    
+    if(value === "profiel"){
+        companyForm.style.display = "none";
+        userForm.style.display = "block";
+    }else if(value === "company"){
+        companyForm.style.display = "block";
+        userForm.style.display = "none";
+    }
+})
