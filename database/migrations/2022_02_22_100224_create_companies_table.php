@@ -23,7 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->string('postalcode')->nullable();
             $table->string('city')->nullable();
             $table->string('sector')->nullable();
-            $table->integer('user_id');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }

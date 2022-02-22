@@ -7,6 +7,7 @@ use App\Models\User;
 use Grosv\LaravelPasswordlessLogin\LoginUrl;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserLoginMail;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -15,8 +16,9 @@ class UserController extends Controller
     
 
     public function profile(){
-        $data['user'] = Auth::user();
-        return view('profile', $data);
+        $user = User::find(Auth::id());
+        dd($user->company);
+        return view('profile');
     }
 
     public function updateUser(Request $request){
