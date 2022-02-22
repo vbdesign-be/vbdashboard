@@ -18,6 +18,20 @@
   display: none;
 }
 
+.form__file {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: -10%;
+}
+
+.form__file__btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2%;
+}
+
 .btn {
   background-color: #157399;
   border-radius: 30px;
