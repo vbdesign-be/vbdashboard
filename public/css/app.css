@@ -9,6 +9,15 @@
   margin-top: 30px;
 }
 
+.form__select__container {
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+.form--company {
+  display: none;
+}
+
 .btn {
   background-color: #157399;
   border-radius: 30px;
@@ -64,6 +73,13 @@
   font-family: "DM Sans", sans-serif;
   text-align: center;
   margin-top: 20px;
+}
+
+.notification-profile {
+  margin-bottom: 50px;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .mail {

@@ -20,7 +20,7 @@
         @if($errors->any())
             @component('components/notification')
             @slot('type') red @endslot
-            @slot('size') notification-mini  @endslot
+            @slot('size') notification-profile   @endslot
             @slot('textcolor') red @endslot
             <ul>
                 @foreach($errors->all() as $error)
@@ -33,7 +33,7 @@
         @if($flash = session('message'))
         @component('components/notification')
             @slot('type') green @endslot
-            @slot('size') notification-mini  @endslot
+            @slot('size')  notification-profile  @endslot
             @slot('textcolor') green @endslot
             <ul>
                 <li>{{ $flash }}</li>
@@ -41,62 +41,103 @@
         @endcomponent
         @endif
         
-        <form action="/user/update" method="post" class="form--mini shadow-md">
-        @csrf
+        <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">Profiel foto</div>
+        <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">btn aanpassen</div>
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
+      </div>
       
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="familienaam">Familienaam</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" value="{{ $user->lastname }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="voornaam">Voornaam</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" value="{{ $user->firstname }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="email">Email</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" value="{{ $user->email }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="bedrijfsnaam">Bedrijfsnaam</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsnaam" value="{{ $user->company }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="btwnummer">Btw-nummer</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btwnummer" value="{{ $user->btw }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="gsm">Gsm-nummer</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="gsm" value="{{ $user->gsm }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="{{ $user->phone }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="adres">adres</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="adres" value="{{ $user->adress }}"></div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="stad">Stad</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="stad" value="{{ $user->city }}"></div>
-            
-                <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="">Sector</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="{{ $user->sector }}"></div>
-            
-            <div class="form__btn">
-            <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Opslaan</button>
-            </div>
+      <div class="form__select__container container container px-4 mx-auto">
+      <div class="px-4 mx-auto w-52">
+        <label class="block text-sm font-medium mb-2" for="">Label for select</label>
+        <div class="relative">
+          <select class="appearance-none block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="field-name"><option value="profiel">Profiel</option><option value="company">Bedrijf</option></select><div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path></svg></div>
+        </div>
+      </div>
+      </div>
       
+      <form class="form--user" action="/user/update" method="post">
+      @csrf
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="familienaam">Familienaam</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" value="{{ $user->lastname }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="voornaam">Voornaam</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" value="{{ $user->firstname }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="email">Email</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" value="{{ $user->email }}">
+      </div>
+      </div>
+      </div>
+      
+      
+      <div class="form__btn">
+      <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanpassen</button>
+      </div>
+        </form>
+
+      <form class="form--company" action="" method="post">
+      @csrf
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="familienaam">Familienaam</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" value="{{ $user->lastname }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="voornaam">Voornaam</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" value="{{ $user->firstname }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="email">Email</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" value="{{ $user->email }}">
+      </div>
+      </div>
+      </div>
+      
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="">Label for text</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="" placeholder="Write a text">
+      </div>
+      </div>
+      </div>
+      
+      <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Submit</button>
       </form>
 
-        
-
-            
-
-        
-        </div>
-        </div>
       </div>
     
 

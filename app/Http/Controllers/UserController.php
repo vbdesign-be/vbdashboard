@@ -34,13 +34,6 @@ class UserController extends Controller
         $user->firstname = $request->input('voornaam');
         $user->lastname = $request->input('familienaam');
         $user->email = $request->input('email');
-        $user->company = $request->input('bedrijfsnaam');
-        $user->btwnumber = $request->input('btwnummer');
-        $user->gsm = $request->input('gsm');
-        $user->phone = $request->input('telefoon');
-        $user->adress = $request->input('adres');
-        $user->city = $request->input('stad');
-        $user->sector = $request->input('sector');
         $user->save();
 
         $request->session()->flash('message', 'je account is geüpdate');
