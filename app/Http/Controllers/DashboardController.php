@@ -113,4 +113,18 @@ class DashboardController extends Controller
         
     }
 
+
+    public function connect(){
+        $params = [
+            "client_id"=> "d4edfc96ff1d0814c57f3ed0a72cebc8",
+            "response_type" => "code",
+            "state" =>"dashboard",
+            "redirect_uri" => "https://vbdashboard.test/teamleader",
+        ];
+
+        
+    }
+
+    
+
 }

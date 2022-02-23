@@ -29,6 +29,13 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    
+    'teamleader' => [
+        'client_id' => env('TEAMLEADER_CLIENT_ID'),
+        'client_secret' => env('TEAMLEADER_CLIENT_SECRET'),
+        'redirect_uri' => env('TEAMLEADER_REDIRECT_URI'),
+        'state' => env('TEAMLEADER_STATE', 'FtvPC1SE2h3LVPEJZIsrfaVWTwwn7T0R'),
+    ],
 
     
 ];
