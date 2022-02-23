@@ -147,7 +147,7 @@
       <div class="form--offerte__container container px-4 mx-auto">
       <h1 class="mb-2 text-4xl font-bold font-heading form__title">Vraag hier je offerte aan</h1>
       
-      <form class="bg-white shadow rounded py-6 px-6" action="/offerte/post" method="post">
+      <form id="offerteAanvragen" class="bg-white shadow rounded py-6 px-6" action="/offerte/post" method="post">
       @csrf
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
