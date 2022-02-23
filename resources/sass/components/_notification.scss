@@ -1,0 +1,52 @@
+.notification{
+    width: 100%;
+}
+
+.notification-mid{
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.notification--normalmini{
+    width:40%;
+    background-color: $blue;
+}
+
+.notification--danger{
+    background-color: $red;
+}
+
+.notification ul{
+    list-style: none;
+}
+
+.notification ul li {
+    margin-bottom: 15px;
+    font-family: $font;
+    font-size: $normal;
+}
+
+.notification--danger ul li {
+    color: $white;
+}
+
+.notification__header{
+    font-size: $big;
+    font-family: $font;
+    text-align: center;
+}
+
+.notification__text{
+    font-size: $normal;
+    font-family: $font;
+    text-align: center;
+    margin-top:20px;
+}
+
+.notification-profile{
+    margin-bottom: 50px;
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
+}

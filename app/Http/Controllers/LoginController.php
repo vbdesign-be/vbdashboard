@@ -7,6 +7,7 @@ use App\Models\User;
 use Grosv\LaravelPasswordlessLogin\LoginUrl;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserLoginMail;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -42,20 +43,34 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'voornaam' => 'required|max:255',
             'familienaam' => 'required|max:255',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'bedrijfsnaam' => 'required|max:255',
+            'bedrijfsemail' => 'required|email',
+            'btw-nummer' => 'required|max:255'
         ]);
         
         //saving a new user
-        $user = new \App\Models\User();
+        $user = new User();
         $user->firstname = $request->input('voornaam');
         $user->lastname = $request->input('familienaam');
         $user->email = $request->input('email');
-        $user->btwnumber = $request->input('btwnummer');
         $user->gsm = $request->input('gsm');
-        $user->phone = $request->input('telefoon');
-        $user->city = $request->input('stad');
-        $user->sector = $request->input('sector');
         $user->save();
+
+        $newUser = User::where('email', $request->input('email'))->first();
+
+        $company = new Company();
+        $company->name = $request->input('bedrijfsnaam');
+        $company->email = $request->input('bedrijfsemail');
+        $company->VAT = $request->input('btw-nummer');
+        $company->phone = $request->input('telefoon');
+        $company->adress = $request->input('straat');
+        $company->postalcode = $request->input('postcode');
+        $company->city = $request->input('plaats');
+        $company->sector = $request->input('sector');
+        $company->user_id = $newUser->id;
+        $company->save();
+
 
         $request->flash();
 
@@ -90,9 +105,13 @@ class LoginController extends Controller
 
             //sending the email
             Mail::to($user->email)->send(new UserLoginMail($data));
+
+            //message flashen
+            $request->flash();
+            $request->session()->flash('message', 'We hebben een mail gestuurd naar ' . $user->email . ' met een loginlink');
             
             //load waiting view
-            return view('waiting', $data);
+            return redirect('/login');
         
         }
     }

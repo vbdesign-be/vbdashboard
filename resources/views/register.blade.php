@@ -12,7 +12,8 @@
 @if($errors->any())
     @component('components/notification')
         @slot('type') red @endslot
-        @slot('mini') r @endslot
+        @slot('size') notification-mini  @endslot
+        @slot('textcolor') red @endslot
         <ul>
             @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -38,34 +39,56 @@
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" placeholder="Write a text"></div>
       
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="bedrijfsnaam">Bedrijfsnaam</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsnaam" placeholder="Write a text"></div>
-      
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="btwnummer">Btw-nummer</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btwnummer" placeholder="Write a text"></div>
-      
-      <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="gsm">Gsm-nummer</label>
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="gsm" placeholder="Write a text"></div>
-      
+
+      <h2 class="mb-2 text-4xl font-bold font-heading form__title form__title--small">Bedrijfsinformatie</h2>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="bedrijfsnaam">Bedrijfsnaam</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsnaam" placeholder="Write a text">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="bedrijfsemail">Bedrijfsemail</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsemail" placeholder="Write a text">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="btw-nummer">Btw-nummer</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-nummer" placeholder="Write a text">
+      </div>
+
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" placeholder="Write a text"></div>
-      
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" placeholder="Write a text">
+      </div>
+
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="adres">adres</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="adres" placeholder="Write a text"></div>
-    
-    <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="stad">Stad</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="stad" placeholder="Write a text"></div>
+        <label class="block text-sm font-medium mb-2" for="straat">Straat + nummer</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="straat" placeholder="Write a text">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="postcode">Postcode</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="postcode" placeholder="Write a text">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="plaats">Plaats</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="plaats" placeholder="Write a text">
+      </div>
+
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" placeholder="Write a text">
+      </div>
       
-        <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="">Sector</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" placeholder="Write a text"></div>
       
+      <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanmelden</button>
+      </div>
+      
       </form>
     </div>
     
