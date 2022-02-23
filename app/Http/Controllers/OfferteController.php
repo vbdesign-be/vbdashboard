@@ -27,15 +27,25 @@ class OfferteController extends Controller
             'samenvatting' => 'required',
         ]);
 
+        $datum = $request->input('deadline');
+
+        $jaar = substr($datum, 0,4);
+        $maand = substr($datum, 5,2);
+        $dag = substr($datum, 8,2);
+
+        $newJaar = $dag . '-' . $maand . '-' . $jaar;
+        
+
         $offerte = new Offerte();
         $offerte->title = $request->input('titel');
         $offerte->summary = $request->input('samenvatting');
         $offerte->reference = "123";
         $offerte->company_id = $request->input('company');
         $offerte->estimated_value = $request->input('kostprijs');
-        $offerte->estimated_closing_date = $request->input('deadline');
-        // $offerte->save();
-        dd($request->input('deadline'));
+        $offerte->estimated_closing_date = $newJaar;
+        $offerte->save();
+        
+        
 
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
 
