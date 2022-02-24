@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingsController;
 use App\Mail\UserLoginMail;
-
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,21 +19,26 @@ use App\Mail\UserLoginMail;
 |
 */
 
+
+
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::get('/register', [LoginController::class, "register"]);
 Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
-// // Route::get('/connect', [DashboardController::class, "getConnection"]);
-// Route::get('/teamleader', [DashboardController::class, "connectTeamleader"]);
-// Route::get('/connect', [DashboardController::class, "connect"]);
+//justijn
+// Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
+// Route::get('/teamleader', [DashboardController::class, "loadView"]);
 
-Route::get('/teamleader', [SettingsController::class, 'index'])->name('settings.index');
-Route::post('/teamleader/authorize', [SettingsController::class, 'redirectForAuthorization'])->name('settings.teamleader.authorize');
-Route::get('/teamleader/accept', [SettingsController::class, 'accept']);
+// Route::get('/teamleader', [SettingsController::class, 'index'])->name('settings.index');
+// Route::post('/teamleader/authorize', [SettingsController::class, 'redirectForAuthorization'])->name('settings.teamleader.authorize');
+// Route::get('/teamleader/accept', [SettingsController::class, 'accept']);
 
-
+//madeItBelgium
+Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
+Route::get('/teamleader', [DashboardController::class, "loadView"]);
+Route::post('/token', [DashboardController::class, "token"]);
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [UserController::class, "dashboard"]);
