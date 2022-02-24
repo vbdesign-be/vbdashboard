@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" class="form" method="post" action="https://focus.teamleader.eu/oauth2/access_token">
+<form enctype="multipart/form-data" class="form" method="post" action="/token">
 @csrf
     <input id="id" type="text" name="client_id" value={{ $client_id }}>
     <input id="secret" type="text" name="client_secret" value={{ $client_secret }}>
@@ -8,8 +8,11 @@
 
     
 </form>
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+
+    
+
 
     let form = document.querySelector('.form');
 
@@ -33,9 +36,26 @@
 
 
     if (input != "") {
-        // fetch('https://focus.teamleader.eu/oauth2/access_token', {
-        //     method: 'POST',
-        //     body: formData
+        fetch(' https://focus.teamleader.eu/oauth2/access_token', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            });
+        // // form.submit();
+
+        // axios({
+        //         method: 'post',
+        //         url: 'https://focus.teamleader.eu/oauth2/access_token',
+        //         body: formData
         //     })
         //     .then(response => response.json())
         //     .then(result => {
@@ -44,7 +64,8 @@
         //     .catch(error => {
         //     console.error('Error:', error);
         //     });
-        form.submit();
+
+
     }
         
     

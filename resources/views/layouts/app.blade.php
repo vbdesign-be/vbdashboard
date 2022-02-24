@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="{{ url('css/app.css') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-tailwind.png">
-    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
   </head>
   <body class="antialiased bg-body text-body font-body">
 

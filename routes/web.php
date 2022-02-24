@@ -27,6 +27,11 @@ Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
+// //eiegencode
+Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
+Route::get('/teamleader', [DashboardController::class, "loadView"]);
+Route::post('/token', [DashboardController::class, "token"]);
+
 // justijn
 // Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
 // Route::get('/teamleader', [DashboardController::class, "loadView"]);
@@ -39,10 +44,7 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 // Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
 // Route::get('/teamleader', [DashboardController::class, "loadView"]);
 
-// //eiegencode
-Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
-Route::get('/teamleader', [DashboardController::class, "loadView"]);
-Route::post('/token', [DashboardController::class, "token"]);
+
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [UserController::class, "dashboard"]);
