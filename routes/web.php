@@ -27,7 +27,7 @@ Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
-//justijn
+// justijn
 // Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
 // Route::get('/teamleader', [DashboardController::class, "loadView"]);
 
@@ -35,7 +35,11 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 // Route::post('/teamleader/authorize', [SettingsController::class, 'redirectForAuthorization'])->name('settings.teamleader.authorize');
 // Route::get('/teamleader/accept', [SettingsController::class, 'accept']);
 
-//madeItBelgium
+// //madeItBelgium
+// Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
+// Route::get('/teamleader', [DashboardController::class, "loadView"]);
+
+// //eiegencode
 Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
 Route::get('/teamleader', [DashboardController::class, "loadView"]);
 Route::post('/token', [DashboardController::class, "token"]);

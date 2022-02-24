@@ -41,11 +41,10 @@ class DashboardController extends Controller
     //     }
         
     //     $teamleader->setAuthorizationCode($request->input('code'));
+        
     //     $teamleader->connect();
 
-    //     $accessToken = $teamleader->getAccessToken();
-    //     $refreshToken = $teamleader->getRefreshToken();
-    //     $expiresAt = $teamleader->getTokenExpiresAt();
+        
 
         
         
@@ -63,17 +62,22 @@ class DashboardController extends Controller
 
 
 
-    //     // // fetch data:
-    //     // $teamleader->crm->get();
+    //     // // // fetch data:
+    //     // // $teamleader->crm->get();
 
-    //     // you should always store your tokens at the end of a call
-    //     $accessToken = $teamleader->getAccessToken();
-    //     $refreshToken = $teamleader->getRefreshToken();
-    //     $expiresAt = $teamleader->getTokenExpiresAt();
+    //     // // you should always store your tokens at the end of a call
+    //     // $accessToken = $teamleader->getAccessToken();
+    //     // $refreshToken = $teamleader->getRefreshToken();
+    //     // $expiresAt = $teamleader->getTokenExpiresAt();
 
-    //     dd($teamleader);
+    //     // dd($teamleader);
 
-    //     return view('teamleader');
+    //     // return view('teamleader');
+
+    //     $code = $request->input("code");
+
+    //     $teamleader->acquireAccessToken();
+
     // }
 
 
@@ -149,6 +153,9 @@ class DashboardController extends Controller
     // }
 
 
+
+    //eigen code
+
     public function connectTeamleader(){
 
         $appUrl = "https://vbdashboard.test";
@@ -208,7 +215,7 @@ class DashboardController extends Controller
     }
 
     public function token(Request $request){
-        
+
         $response = Http::dd()->post('https://focus.teamleader.eu/oauth2/access_token', $request);
 
         dd($response);
