@@ -6,9 +6,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "fruitcake/laravel-cors": "^2.0",
+        "fruitcake/laravel-cors": "^3.0",
         "grosv/laravel-passwordless-login": "^1.7",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.4",
         "janhenkes/teamleader-php-sdk": "^2.9",
         "justijndepover/teamleader-api": "^0.6.0",
         "laravel/framework": "^8.75",
