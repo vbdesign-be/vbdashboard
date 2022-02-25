@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Teamleader extends Model
+class teamleaderConnection extends Model
 {
     use HasFactory;
-
+    
     protected $fillable = [
         'accesToken',
         'refreshToken',
@@ -16,4 +16,8 @@ class Teamleader extends Model
         'type',
         'state'
     ];
+
+
+    
+
 }

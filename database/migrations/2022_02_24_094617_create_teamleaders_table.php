@@ -15,9 +15,11 @@ class CreateTeamleadersTable extends Migration
     {
         Schema::create('teamleaders', function (Blueprint $table) {
             $table->id();
-            $table->string('accesToken');
-            $table->string('refreshToken');
-            $table->string('expiresAt');
+            $table->text('accesToken')->nullable();
+            $table->text('refreshToken')->nullable();
+            $table->timestamp('expiresAt')->nullable();
+            $table->string('type')->nullable();
+            $table->string('state')->nullable();
             $table->timestamps();
         });
     }

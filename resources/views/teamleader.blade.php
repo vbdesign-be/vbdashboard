@@ -52,9 +52,6 @@
             console.error('Error:', error);
             });
         
-
-
-
         
 
 

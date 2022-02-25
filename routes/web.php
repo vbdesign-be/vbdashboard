@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\teamleaderController;
 use App\Mail\UserLoginMail;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,9 @@ Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
 // //eiegencode
-Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
-Route::get('/teamleader', [DashboardController::class, "loadView"]);
-Route::post('/token', [DashboardController::class, "token"]);
+// Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
+// Route::get('/teamleader', [DashboardController::class, "loadView"]);
+// Route::post('/token', [DashboardController::class, "token"]);
 
 // justijn
 // Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
@@ -41,8 +42,10 @@ Route::post('/token', [DashboardController::class, "token"]);
 // Route::get('/teamleader/accept', [SettingsController::class, 'accept']);
 
 // //madeItBelgium
-// Route::get('/connect', [DashboardController::class, "connectTeamleader"]);
-// Route::get('/teamleader', [DashboardController::class, "loadView"]);
+Route::get('/connect', [teamleaderController::class, "requestToken"]);
+Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
+Route::get('/contacts', [teamleaderController::class, "contacts"]);
+Route::get('/companies', [teamleaderController::class, "companies"]);
 
 
 
