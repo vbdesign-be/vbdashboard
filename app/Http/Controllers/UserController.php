@@ -24,8 +24,11 @@ class UserController extends Controller
         $dataUser = Auth::user();
 
         $userUpdate = User::find(Auth::id());
-        $userUpdate->didLogin = 1;
-        $userUpdate->save();
+        if(!$userUpdate->didLogin){
+            $userUpdate->didLogin = 1;
+            $userUpdate->save();
+        }
+        
 
 
         $resp = TeamLeader::crm()->contact()->info($dataUser->teamleader_id);
