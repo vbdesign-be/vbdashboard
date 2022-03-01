@@ -14,14 +14,8 @@ class CompanyController extends Controller
     public function company($id){
 
         teamleaderController::reAuthTL();
-
-        
-        $companyres = TeamLeader::crm()->company()->info($id);
-
-        $company = $companyres->data;
-
-        dd($company);
-
-        return view('company');
+        $company = TeamLeader::crm()->company()->info($id);
+        $data["company"] = $company->data;
+        return view('company', $data);
     }
 }

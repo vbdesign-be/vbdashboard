@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/profiel', [UserController::class, "profile"]);
     Route::post('/user/update', [UserController::class, "updateUser"]);
     Route::post('/user/updateAvatar', [UserController::class, "updateAvatar"]);
+    
+    //company
+    Route::get('/company/{id}', [CompanyController::class, "company"]);
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);
@@ -77,7 +80,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/support/addQuestion', [SupportController::class, "store"]);
     Route::get('/status', [SupportController::class, "status"]);
 
-    //company
-    Route::get('/company/{id}', [CompanyController::class, "company"]);
-    Route::post('/company/update', [CompanyController::class, "update"]);
+    
+    
 });
