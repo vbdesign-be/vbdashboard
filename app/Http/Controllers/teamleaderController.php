@@ -76,6 +76,12 @@ class teamleaderController extends Controller
         dd($offertes);
     }
 
+    public function register(){
+        $this->reAuthTL();
+        $users = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"]] ]);
+        dd($users);
+    }
+
 
 
     private function reAuthTL()
