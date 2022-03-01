@@ -17,22 +17,6 @@ class LoginController extends Controller
         return view('login');
     }
 
-    //return register view
-    public function register(){
-
-        //array with all sectors
-        $sectoren = [
-            'it',
-            'entertainment',
-            'sport'
-        ];
-
-        //getting data of account with teamleader api and sending it to view->todo
-
-         $data["sectors"] = $sectoren;
-         return view('register', $data);
-
-    }
 
     //saving a new account in database
     public function store(Request $request){

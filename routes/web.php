@@ -30,8 +30,6 @@ use Illuminate\Http\Request;
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
-Route::get('/register', [LoginController::class, "register"]);
-Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
