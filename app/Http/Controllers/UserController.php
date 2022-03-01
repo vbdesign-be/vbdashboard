@@ -22,6 +22,12 @@ class UserController extends Controller
         teamleaderController::reAuthTL();
 
         $dataUser = Auth::user();
+
+        $userUpdate = User::find(Auth::id());
+        $userUpdate->didLogin = 1;
+        $userUpdate->save();
+
+
         $resp = TeamLeader::crm()->contact()->info($dataUser->teamleader_id);
         $user = $resp->data;
         $phone = "";
@@ -96,10 +102,6 @@ class UserController extends Controller
                 ]);
         }
 
-        
-        
-        
-
         $newUser = User::find(Auth::id());
         $newUser->email = $email;
         $newUser->save();
@@ -118,9 +120,7 @@ class UserController extends Controller
         ]);
 
         $imageName = time().'.'.$request->avatar->extension();
-
         $request->avatar->move(public_path('img'), $imageName);
-
         $user = User::find(Auth::id());
         $user->avatar = $imageName;
         $user->save();
