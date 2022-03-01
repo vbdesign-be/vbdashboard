@@ -46,9 +46,9 @@ class teamleaderController extends Controller
 
         $this->reAuthTL();
 
-        $contacts = TeamLeader::crm()->contact()->list();
+        // $contacts = TeamLeader::crm()->contact()->list();
 
-        // $contacts = TeamLeader::crm()->contact()->info("83007810-b364-00b2-bc72-ff97826406ef");
+        $contacts = TeamLeader::crm()->contact()->info("83007810-b364-00b2-bc72-ff97826406ef");
         dd($contacts);
         
 

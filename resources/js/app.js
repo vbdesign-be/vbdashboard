@@ -29,7 +29,7 @@ faqs.forEach((faq) => {
 })
 
 
-//profile form 
+//profile form
 
 let selectBtn = document.querySelector('.selectForm');
 let userForm = document.querySelector('.form--user');
