@@ -7,41 +7,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
+use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
 class CompanyController extends Controller
 {
-    public function update(Request $request){
-        
-        $credentials = $request->validate([
-            'bedrijfsnaam' => 'required|max:255',
-            'bedrijfsemail' => 'required|email',
-            'btw-nummer' => 'required|max:255'
-        ]);
+    public function company($id){
 
-        $user = User::find(Auth::id())->first();
-
-        $company = Company::find($user->company->id)->first();
-
-        $company->name = $request->input('bedrijfsnaam');
-        $company->email = $request->input('bedrijfsemail');
-        $company->VAT = $request->input('btw-nummer');
-        $company->phone = $request->input('telefoon');
-        $company->adress = $request->input('straat');
-        $company->postalcode = $request->input('postcode');
-        $company->city = $request->input('plaats');
-        $company->VAT = $request->input('btw-nummer');
-        $company->sector = $request->input('sector');
-        $company->save();
-
-        $request->session()->flash('message', ''. $request->input('bedrijfsnaam'). ' is geüpdate ' );
-
-        return redirect('/profiel');
-        
-
+        teamleaderController::reAuthTL();
 
         
+        $companyres = TeamLeader::crm()->company()->info($id);
 
+        $company = $companyres->data;
 
+        dd($company);
 
+        return view('company');
     }
 }

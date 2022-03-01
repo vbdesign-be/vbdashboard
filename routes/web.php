@@ -78,5 +78,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/status', [SupportController::class, "status"]);
 
     //company
+    Route::get('/company/{id}', [CompanyController::class, "company"]);
     Route::post('/company/update', [CompanyController::class, "update"]);
 });

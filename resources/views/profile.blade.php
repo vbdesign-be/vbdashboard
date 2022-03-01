@@ -115,15 +115,20 @@
         </form>
 
       
+        
 
       </div>
+
+      <div class="container--companies container px-4 mx-auto p-6 relative">
+        <h2 class="text-2xl font-bold">Bedrijven van {{ $user->first_name }}</h2>
+      </div>  
 
 
       <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"></div>
+        @foreach($companies as $company)
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a href="/company/{{$company->id}}">{{ $company->name }}</a></div>
+        @endforeach
       </div>
       </div>
 

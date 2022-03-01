@@ -35,6 +35,7 @@ class UserController extends Controller
         $user = $resp->data;
         $phone = "";
         $mobile = "";
+        $company_id = "";
         $avatar = $dataUser->avatar;
     
         $emails = $resp->data->emails;
@@ -52,12 +53,20 @@ class UserController extends Controller
                 $phone = $telephones[$x]->number;
             }
         }
+
+        $companies = $resp->data->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+        }
+
+        $companies = TeamLeader::crm()->company()->info($company_id);
         
         $data['user'] = $user;
         $data['email'] = $email;
         $data['phone'] = $phone;
         $data['mobile'] = $mobile;
         $data['avatar'] = $avatar;
+        $data['companies'] = $companies;
         return view('profile', $data);
     }
 

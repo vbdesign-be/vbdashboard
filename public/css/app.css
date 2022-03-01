@@ -186,3 +186,7 @@ body {
 .invisible {
   visibility: hidden;
 }
+
+.container--companies {
+  margin-top: 50px;
+}
