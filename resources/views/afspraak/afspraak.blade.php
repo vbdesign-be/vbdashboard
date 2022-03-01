@@ -29,6 +29,15 @@
           </div>
         <!-- Calendly inline widget end -->
         </div>
+
+        <script>
+          Calendly.initInlineWidget({
+          url: 'https://calendly.com/jonathan-764',
+          parentElement: document.getElementById('kalender'),
+          prefill: {},
+          utm: {}
+        });
+        </script>
         
 
 @endsection

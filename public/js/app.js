@@ -2082,24 +2082,20 @@ faqs.forEach(function (faq) {
 var selectBtn = document.querySelector('.selectForm');
 var userForm = document.querySelector('.form--user');
 var companyForm = document.querySelector('.form--company');
-selectBtn.addEventListener('click', function (e) {
-  var value = selectBtn.value;
 
-  if (value === "profiel") {
-    companyForm.style.display = "none";
-    userForm.style.display = "block";
-  } else if (value === "company") {
-    companyForm.style.display = "block";
-    userForm.style.display = "none";
-  }
-}); //calendly
+if (selectBtn) {
+  selectBtn.addEventListener('click', function (e) {
+    var value = selectBtn.value;
 
-Calendly.initInlineWidget({
-  url: 'https://calendly.com/jonathan-764',
-  parentElement: document.getElementById('kalender'),
-  prefill: {},
-  utm: {}
-});
+    if (value === "profiel") {
+      companyForm.style.display = "none";
+      userForm.style.display = "block";
+    } else if (value === "company") {
+      companyForm.style.display = "block";
+      userForm.style.display = "none";
+    }
+  });
+}
 
 /***/ }),
 
