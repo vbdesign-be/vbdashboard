@@ -46,6 +46,8 @@ Route::get('/connect', [teamleaderController::class, "requestToken"]);
 Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
 Route::get('/contacts', [teamleaderController::class, "contacts"]);
 Route::get('/companies', [teamleaderController::class, "companies"]);
+Route::get('/facturen', [teamleaderController::class, "facturen"]);
+Route::get('/offertes', [teamleaderController::class, "offertes"]);
 
 
 

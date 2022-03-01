@@ -37,6 +37,8 @@ class teamleaderController extends Controller
         $teamleaderConnection->state = 'connection';
         $teamleaderConnection->save();
 
+        return redirect('/');
+
     }
 
 
@@ -45,6 +47,8 @@ class teamleaderController extends Controller
         $this->reAuthTL();
 
         $contacts = TeamLeader::crm()->contact()->list();
+
+        // $contacts = TeamLeader::crm()->contact()->info("83007810-b364-00b2-bc72-ff97826406ef");
         dd($contacts);
         
 
@@ -57,6 +61,19 @@ class teamleaderController extends Controller
         $companies = TeamLeader::crm()->company()->list();
         dd($companies);
 
+    }
+
+    public function facturen(){
+        $this->reAuthTL();
+
+        $facturen = TeamLeader::invoicing()->invoices()->list();
+        dd($facturen);
+    }
+
+    public function offertes(){
+        $this->reAuthTL();
+        $offertes = TeamLeader::deals()->list($data = []);
+        dd($offertes);
     }
 
 
