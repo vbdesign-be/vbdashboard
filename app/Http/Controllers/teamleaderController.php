@@ -78,8 +78,13 @@ class teamleaderController extends Controller
 
     public function register(){
         $this->reAuthTL();
-        $users = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"]] ]);
-        dd($users);
+        
+        // $resp = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"]], 'sort' => ['object' => ['field' => 'updated_at', 'order' => 'desc']] ]);
+
+        $resp = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"], 'email' => ['type' => 'primary', 'email' => 'bert@vbdesign.be']]]);
+    
+        dd($resp);
+        
     }
 
 
