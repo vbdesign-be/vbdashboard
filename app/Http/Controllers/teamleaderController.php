@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teamleader as TeamleaderConnection;
+use App\Models\User;
 use Illuminate\Http\Request;
 use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
@@ -79,11 +80,33 @@ class teamleaderController extends Controller
     public function register(){
         $this->reAuthTL();
         
-        // $resp = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"]], 'sort' => ['object' => ['field' => 'updated_at', 'order' => 'desc']] ]);
+        //kijken of ze klant tag hebben
 
         $resp = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"], 'email' => ['type' => 'primary', 'email' => 'bert@vbdesign.be']]]);
-    
-        dd($resp);
+        
+        $user1 = $resp->data[0];
+
+        //kijken of ze al in de database staan
+
+        $checkUser = User::where('email', $user1->emails[0]->email)->first();
+
+        if($checkUser){
+            return redirect("/login");
+        }else{
+            $user = new User();
+            $user->email = $user1->emails[0]->email;
+            $user->teamleader_id = $user1->id;
+            $user->save();
+            return redirect("/login");
+        }
+
+        
+
+        
+        
+        
+
+
         
     }
 

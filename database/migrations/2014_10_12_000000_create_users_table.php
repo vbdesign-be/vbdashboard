@@ -15,6 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
+            $table->string('teamleader_id');
             $table->string('avatar')->default('avatar.png');
             $table->timestamps();
         });
