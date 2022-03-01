@@ -28,7 +28,7 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('register', [teamleaderController::class, "register"]);
+
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
@@ -42,6 +42,11 @@ Route::get('/contacts', [teamleaderController::class, "contacts"]);
 Route::get('/companies', [teamleaderController::class, "companies"]);
 Route::get('/facturen', [teamleaderController::class, "facturen"]);
 Route::get('/offertes', [teamleaderController::class, "offertes"]);
+
+Route::get('/register', [teamleaderController::class, "register"]);
+Route::get('/registerBert', [teamleaderController::class, "registerBert"]);
+Route::get('/updateBert', [teamleaderController::class, "updateBert"]);
+
 
 
 

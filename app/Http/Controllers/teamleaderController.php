@@ -77,35 +77,71 @@ class teamleaderController extends Controller
         dd($offertes);
     }
 
+    public function updateBert(){
+        $this->reAuthTL();
+        $user = User::where('email', 'bert@vbdesign.be')->first();
+        $teamleader_id = $user->teamleader_id;
+
+        TeamLeader::crm()->contact()->update($teamleader_id, ['emails' => ['object' => ['type' => "primary", 'email' => 'bert@vbdesign']]]);
+
+    }
+
     public function register(){
+        $this->reAuthTL();
+
+        for($x = 1; $x <= 10; $x++){
+            $resp[] = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"]], 'page' => ['number' => $x, 'size' => 100]]);
+        }
+
+        for($x = 0; $x < count($resp); $x++){
+            $users = $resp[$x]->data;
+
+            foreach($users as $u){
+
+                $emails = $u->emails;
+                foreach($emails as $e){
+                    $email = $e->email;
+                }
+                
+               $checkUser = User::where('teamleader_id', $u->id)->first();
+               if(!$checkUser){
+                   $newUser = new User();
+                   $newUser->email = $email;
+                   $newUser->teamleader_id = $u->id;
+                   $newUser->save();
+               }
+           }
+
+        }
+
+        return redirect('/login');
+        
+    }
+
+   
+
+    public function registerBert(){
         $this->reAuthTL();
         
         //kijken of ze klant tag hebben
 
         $resp = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"], 'email' => ['type' => 'primary', 'email' => 'bert@vbdesign.be']]]);
-        
-        $user1 = $resp->data[0];
 
-        //kijken of ze al in de database staan
+        $userNew = $resp->data[0];
 
-        $checkUser = User::where('email', $user1->emails[0]->email)->first();
+        $checkUser = User::where('email', $userNew->emails[0]->email)->first();
 
         if($checkUser){
-            return redirect("/login");
+                
         }else{
             $user = new User();
-            $user->email = $user1->emails[0]->email;
-            $user->teamleader_id = $user1->id;
+            $user->email = $userNew->emails[0]->email;
+            $user->teamleader_id = $userNew->id;
             $user->save();
-            return redirect("/login");
+                
         }
 
-        
-
-        
-        
-        
-
+        return redirect("/login");
 
         
     }
