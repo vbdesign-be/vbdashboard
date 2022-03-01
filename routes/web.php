@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -10,8 +11,10 @@ use App\Http\Controllers\OfferteController;
 use App\Http\Controllers\AfspraakController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SupportController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\teamleaderController;
 use App\Mail\UserLoginMail;
-
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +27,24 @@ use App\Mail\UserLoginMail;
 |
 */
 
+
+
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::get('/register', [LoginController::class, "register"]);
 Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
+
+
+
+// //madeItBelgium
+Route::get('/connect', [teamleaderController::class, "requestToken"]);
+Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
+Route::get('/contacts', [teamleaderController::class, "contacts"]);
+Route::get('/companies', [teamleaderController::class, "companies"]);
+Route::get('/facturen', [teamleaderController::class, "facturen"]);
+Route::get('/offertes', [teamleaderController::class, "offertes"]);
+
 
 
 Route::group(['middleware' => ['auth']], function() {
