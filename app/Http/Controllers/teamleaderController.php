@@ -148,7 +148,7 @@ class teamleaderController extends Controller
 
 
 
-    private function reAuthTL()
+    public static function reAuthTL()
     {
         $apiConnection = TeamleaderConnection::where('type', 'teamleader')->first();
         

@@ -10,7 +10,7 @@ class ProjectController extends Controller
     public function projects(Request $request){
         $user = Auth::user();
         if(!$user->didLogin){
-            $request->session()->flash('login', 'Welkom op je dashboard, hieronder kan je je gegvens controleren en veranderen.');
+            $request->session()->flash('notification', 'Welkom op je dashboard, hieronder kan je je gegevens controleren en veranderen.');
             return redirect('/profiel');
         }
 

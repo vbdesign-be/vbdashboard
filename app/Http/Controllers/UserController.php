@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\UserLoginMail;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
+use MadeITBelgium\TeamLeader\Facade\TeamLeader;
+use App\Models\Teamleader as TeamleaderConnection;
 
 class UserController extends Controller
 {
@@ -16,7 +18,41 @@ class UserController extends Controller
     
 
     public function profile(){
-        $data["user"] = User::find(Auth::id());
+
+        teamleaderController::reAuthTL();
+
+        $dataUser = Auth::user();
+        $resp = TeamLeader::crm()->contact()->info($dataUser->teamleader_id);
+        $user = $resp->data;
+        $phone = "";
+        $mobile = "";
+        $avatar = $dataUser->avatar;
+    
+
+        $emails = $resp->data->emails;
+        foreach($emails as $e){
+            $email = $e->email;
+        }
+
+        $telephones = $resp->data->telephones;
+        for($x = 0; $x < count($telephones); $x++){
+            if($telephones[$x]->type === "mobile"){
+                $mobile = $telephones[$x]->number;
+            }
+
+            if($telephones[$x]->type === "phone"){
+                $phone = $telephones[$x]->number;
+            }
+        }
+
+        
+            
+        
+        $data['user'] = $user;
+        $data['email'] = $email;
+        $data['phone'] = $phone;
+        $data['mobile'] = $mobile;
+        $data['avatar'] = $avatar;
         return view('profile', $data);
     }
 
@@ -62,6 +98,7 @@ class UserController extends Controller
 
     }
 
+   
 
     
 }
