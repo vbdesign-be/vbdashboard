@@ -28,7 +28,6 @@ class UserController extends Controller
         $mobile = "";
         $avatar = $dataUser->avatar;
     
-
         $emails = $resp->data->emails;
         foreach($emails as $e){
             $email = $e->email;
@@ -44,9 +43,6 @@ class UserController extends Controller
                 $phone = $telephones[$x]->number;
             }
         }
-
-        
-            
         
         $data['user'] = $user;
         $data['email'] = $email;
@@ -57,6 +53,9 @@ class UserController extends Controller
     }
 
     public function updateUser(Request $request){
+        
+        teamleaderController::reAuthTL();
+
         //checking
         $credentials = $request->validate([
             'voornaam' => 'required|max:255',
@@ -64,14 +63,46 @@ class UserController extends Controller
             'email' => 'required|email'
         ]);
 
-        $id = Auth::id();
+        $user = auth::user();
+        $teamleader_id = $user->teamleader_id;
+        $firstname = $request->input('voornaam');
+        $lastname = $request->input('familienaam');
+        $email = $request->input('email');
+        $phone = $request->input('telefoon');
+        $mobile = $request->input('gsm');
 
-        $user = User::find($id);
+        if(!empty($request->input('telefoon') && $request->input('gsm'))){
+
+            TeamLeader::crm()->contact()->update($teamleader_id, [
+                'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
+                'first_name' => $firstname, 
+                'last_name' => $lastname,
+                'telephones' => ['object' => ['type' => "mobile", 'number' => '0498745612'], ['type' => 'phone', 'number' => $phone]]
+                ]);
+
+        }elseif(!empty($request->input('telefoon'))){
+            TeamLeader::crm()->contact()->update($teamleader_id, [
+                'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
+                'first_name' => $firstname, 
+                'last_name' => $lastname,
+                'telephones' => ['object' => ['type' => 'phone', 'number' => $phone]]
+                ]);
+        }elseif(!empty($request->input('gsm'))){
+            TeamLeader::crm()->contact()->update($teamleader_id, [
+                'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
+                'first_name' => $firstname, 
+                'last_name' => $lastname,
+                'telephones' => ['object' => ['type' => 'mobile', 'number' => $mobile]]
+                ]);
+        }
+
         
-        $user->firstname = $request->input('voornaam');
-        $user->lastname = $request->input('familienaam');
-        $user->email = $request->input('email');
-        $user->save();
+        
+        
+
+        $newUser = User::find(Auth::id());
+        $newUser->email = $email;
+        $newUser->save();
 
         $request->session()->flash('message', 'je account is geüpdate');
         return redirect('/profiel');

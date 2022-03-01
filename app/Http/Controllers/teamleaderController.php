@@ -83,7 +83,7 @@ class teamleaderController extends Controller
         $teamleader_id = $user->teamleader_id;
 
         TeamLeader::crm()->contact()->update($teamleader_id, ['emails' => ['object' => ['type' => "primary", 'email' => 'bert@vbdesign']]]);
-
+        TeamLeader::crm()->contact()->update($teamleader_id, ['telephones' => ['object' => ['type' => "mobile", 'number' => '0498745612']]]);
     }
 
     public function register(){
