@@ -64,8 +64,8 @@
         <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
       <form enctype="multipart/form-data" class="form--avatar flex flex-wrap -mx-4 -mb-4 md:mb-0" action="/user/updateAvatar" method="post">
       @csrf
-        <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"></div>
-        <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"><p>{{ $company->name }}</p></div>
+        <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"><p>{{ $company->name }}</p></div>
+        <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"><p></p></div>
         <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"></div>
         <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"></div>
       </form>
@@ -113,10 +113,18 @@
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="btw-plichtig">Btw-plichtig?</label>
-        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-plichtig" value="">
-          <option value="yes">Ja</option>
-          <option value="no">Nee</option>
+        <label class="block text-sm font-medium mb-2" for="bedrijfsvorm">Bedrijfsvorm</label>
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsvorm" value="">
+          @if(!empty($company->business_type))
+            @foreach($businessTypes as $businessType)
+              <option value="{{ $businessType->id }}" @if( $company->business_type->id === $businessType->id) selected @endif>{{ $businessType->name }}</option>
+            @endforeach
+          @else
+          <option value="" >Kies bedrijfsvorm</option>
+          @foreach($businessTypes as $businessType)
+              <option value="{{ $businessType->id }}">{{ $businessType->name }}</option>
+          @endforeach
+          @endif
         </select>
       </div>
       </div>
@@ -163,28 +171,15 @@
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-      <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
-        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="">
-          <option value="development">Development</option>
-          <option value="design">Design</option>
+      <label class="block text-sm font-medium mb-2" for="land">Land</label>
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="land" value="">
+          <option value="BE" selected>België</option>
         </select>
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="bedrijfsvorm">Bedrijfsvorm</label>
-        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsvorm" value="">
-          @if(!empty($company->business_type))
-            @foreach($businessTypes as $businessType)
-              <option value="{{ $businessType->id }}" @if( $company->business_type->id === $businessType->id) selected @endif>{{ $businessType->name }}</option>
-            @endforeach
-          @else
-          <option value="" >Kies bedrijfsvorm</option>
-          @foreach($businessTypes as $businessType)
-              <option value="{{ $businessType->id }}">{{ $businessType->name }}</option>
-          @endforeach
-          @endif
-        </select>
+        
       </div>
       </div>
       </div>
