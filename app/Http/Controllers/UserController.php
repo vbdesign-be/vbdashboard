@@ -101,14 +101,14 @@ class UserController extends Controller
                 'last_name' => $lastname,
                 'telephones' => [],
             ]);
-        }elseif(empty($phone) && !empty($mobile)){
+        }elseif(empty($phone)){
             TeamLeader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
                 'telephones' => ['object' => ['type' => "mobile", 'number' => $mobile]]
             ]);
-        }elseif(empty($mobile) && !empty($phone)){
+        }elseif(empty($mobile)){
             TeamLeader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
