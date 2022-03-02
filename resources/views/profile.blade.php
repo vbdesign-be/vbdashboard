@@ -127,80 +127,13 @@
       <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         @foreach($companies as $company)
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a href="/company/{{$company->id}}">{{ $company->name }}</a></div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a class="btn btn--company shadow"  href="/company/{{$company->id}}">{{ $company->name }}</a></div>
         @endforeach
       </div>
       </div>
 
 
-      <!-- <form class="form--company" action="/company/update" method="post">
-      @csrf
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="bedrijfsnaam">Bedrijfsnaam</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsnaam" >
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="bedrijfsemail">Bedrijfsemail</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsemail" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-      <label class="block text-sm font-medium mb-2" for="btw-nummer">BTW-nummer</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-nummer" value="">
-      </div>
-      </div>
-      </div>
       
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-      <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="straat">Straat + nummer</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="straat" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="postcode">postcode</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="postcode" value="">
-      </div>
-      </div>
-      </div>
-
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="plaats">Plaats</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="plaats" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-      <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-      </div>
-      </div>
-      </div>
-
-      <div class="form__btn">
-      <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanpassen</button>
-      </div>
-      
-      </form> -->
     
 
 

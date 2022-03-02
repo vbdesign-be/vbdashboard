@@ -12,6 +12,18 @@
     text-decoration: none;
 }
 
+.btn--company{
+    background-color: $offwhite;
+    display:flex;
+    justify-content: center;
+    border:none;
+    border-radius: 0px;
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    color: $darkblue;
+}
+
 .btn--mini{
     font-size: small;
 }
