@@ -30,8 +30,6 @@ use Illuminate\Http\Request;
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
-Route::get('/register', [LoginController::class, "register"]);
-Route::post('/user/register', [LoginController::class, "store"]);
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
@@ -45,6 +43,11 @@ Route::get('/companies', [teamleaderController::class, "companies"]);
 Route::get('/facturen', [teamleaderController::class, "facturen"]);
 Route::get('/offertes', [teamleaderController::class, "offertes"]);
 
+Route::get('/register', [teamleaderController::class, "register"]);
+Route::get('/registerBert', [teamleaderController::class, "registerBert"]);
+Route::get('/updateBert', [teamleaderController::class, "updateBert"]);
+
+
 
 
 Route::group(['middleware' => ['auth']], function() {
@@ -53,6 +56,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/profiel', [UserController::class, "profile"]);
     Route::post('/user/update', [UserController::class, "updateUser"]);
     Route::post('/user/updateAvatar', [UserController::class, "updateAvatar"]);
+    
+    //company
+    Route::get('/company/{id}', [CompanyController::class, "company"]);
+    Route::post('company/update', [CompanyController::class, "updateCompany"]);
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);
@@ -74,6 +81,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/support/addQuestion', [SupportController::class, "store"]);
     Route::get('/status', [SupportController::class, "status"]);
 
-    //company
-    Route::post('/company/update', [CompanyController::class, "update"]);
+    
+    
 });

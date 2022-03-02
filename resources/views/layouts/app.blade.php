@@ -8,8 +8,9 @@
     <meta name="author" content="">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
     <link rel="stylesheet" href="css/tailwind/tailwind.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="{{ url('css/app.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/tailwind/tailwind.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-tailwind.png">
     <script src="js/main.js"></script>
     

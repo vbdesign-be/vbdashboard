@@ -77,6 +77,18 @@ input[type=file] {
   text-decoration: none;
 }
 
+.btn--company {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  border: none;
+  border-radius: 0px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #2F4858;
+}
+
 .btn--mini {
   font-size: small;
 }
@@ -185,4 +197,8 @@ body {
 
 .invisible {
   visibility: hidden;
+}
+
+.container--companies {
+  margin-top: 50px;
 }
