@@ -71,6 +71,7 @@ class CompanyController extends Controller
         }
         
         // dd($data['company']);
+        
         return view('company', $data);
     }
 
