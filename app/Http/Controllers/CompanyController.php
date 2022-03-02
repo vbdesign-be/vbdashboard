@@ -80,13 +80,12 @@ class CompanyController extends Controller
 
         $credentials = $request->validate([
             'bedrijfsnaam' => 'required|max:255',
-            'bedrijfsemail' => 'required|email',
-            'sector' => 'required',
-            'btw-plichtig' => 'required',     
+            'bedrijfsemail' => 'required|email',     
         ]);
 
         $company_id = $request->input('company_id');
 
+      
         
         if (!empty($request->input('telefoon'))) {
             TeamLeader::crm()->company()->update($company_id, [
@@ -100,7 +99,7 @@ class CompanyController extends Controller
                 'line_1' => $request->input('straat'),
                 'postal_code' => $request->input('postcode'),
                 'city' => $request->input('stad'),
-                'country' => 'BE',
+                'country' => $request->input('land'),
                 'area_level_two_id' =>  $request->input('provincie'),
                 ]]],
             ]);
@@ -115,7 +114,7 @@ class CompanyController extends Controller
                     'line_1' => $request->input('straat'),
                     'postal_code' => $request->input('postcode'),
                     'city' => $request->input('stad'),
-                    'country' => 'BE',
+                    'country' => $request->input('land'),
                     'area_level_two_id' =>  $request->input('provincie'),
                     ]]],
                 ]);
