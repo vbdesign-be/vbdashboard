@@ -22,15 +22,15 @@ class OfferteController extends Controller
         }
 
         foreach($comps as $c){
-            
-            $offertes = TeamLeader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ]]);
+            $offertes[] = TeamLeader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ]])->data;
         }
         
         
+        $data['offertes'] = $offertes;
+        // dd($data['offertes']);
         
-        dd($offertes);
 
-        // return view('offerte/offerte');
+        return view('offerte/offerte', $data);
     }
 
     public function post(Request $request){

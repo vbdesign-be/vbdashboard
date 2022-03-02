@@ -9,7 +9,7 @@
         <div>
           
         <x-menu/>
-        
+
 
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
@@ -17,6 +17,13 @@
             <h2 class="text-2xl font-bold">Offerte</h2>
           </div>
         </div>
+
+        @foreach($offertes as $f)
+        @for($x = 0; $x < count($f); $x++)
+          {{$f[$x]->title}}
+        @endfor
+        @endforeach
+        
 
         @if($flash = session('message'))
         @component('components/notification')
