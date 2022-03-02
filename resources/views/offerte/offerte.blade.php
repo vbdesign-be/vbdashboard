@@ -18,11 +18,7 @@
           </div>
         </div>
 
-        @foreach($offertes as $f)
-        @for($x = 0; $x < count($f); $x++)
-          {{$f[$x]->title}}
-        @endfor
-        @endforeach
+        
         
 
         @if($flash = session('message'))
@@ -103,12 +99,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                 
+                @foreach($offertes as $f)
+                @for($x = 0; $x < count($f); $x++)
 
                     <tr class="offerte text-xs bg-gray-50">
                       <td class="flex items-center py-5 px-6 font-medium">
                         <input class="mr-3" type="checkbox" name="" id="">
-                        <p>test</p>
+                        <p>{{ $f[$x]->title }}</p>
                       </td>
                       <td class="font-medium">test</td>
                       <td class="font-medium">test</td>
@@ -118,7 +115,8 @@
                       <td>test</td>
                       <td><a class="btn--download invisible" href="">download icon</a></td>
                     </tr>
-                    
+                  @endfor
+                @endforeach
                  
                 </tbody>
               </table>
