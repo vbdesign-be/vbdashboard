@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth']], function() {
     
     //company
     Route::get('/company/{id}', [CompanyController::class, "company"]);
+    Route::post('company/update', [CompanyController::class, "updateCompany"]);
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);

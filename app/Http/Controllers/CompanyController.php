@@ -49,7 +49,32 @@ class CompanyController extends Controller
 
         $businessTypes = TeamLeader::crm()->company()->getBusinessTypes();
         $data["businessTypes"] = $businessTypes->data;
-        // dd($data['businessTypes']);
         return view('company', $data);
+    }
+
+    public function updateCompany(Request $request){
+        teamleaderController::reAuthTL();
+
+        $credentials = $request->validate([
+            'bedrijfsnaam' => 'required|max:255',
+            'bedrijfsemail' => 'required|email',
+            'sector' => 'required',
+            'btw-plichtig' => 'required',
+            'bedrijfsvorm' => 'required'       
+        ]);
+
+        $company_id = $request->input('company_id');
+        TeamLeader::crm()->company()->update($company_id, [
+            'name' => $request->input('bedrijfsnaam'),
+            'business_type_id' => $request->input('bedrijfsvorm'),
+            'vat_number' => $request->input('btw-nummer'),
+            'website' => $request->input('website'),
+            'emails' => ['object' => ['type' => "primary", 'email' => $request->input('bedrijfsemail')]],
+            'telephones' => ['object' => ['type' => "phone", 'number' => $request->input('telefoon')]], 
+        ]);
+
+        return redirect('/company/'.$company_id.'');
+
+
     }
 }

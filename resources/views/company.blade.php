@@ -5,6 +5,8 @@
 @section('content')
 
 
+
+
 <div class="">
 
     <x-menu />
@@ -16,6 +18,8 @@
             <h2 class="text-2xl font-bold">Profiel van {{ $company->name }}</h2>
           </div>
         </div>
+
+        
 
         @if($errors->any())
             @component('components/notification')
@@ -110,7 +114,10 @@
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="btw-plichtig">Btw-plichtig?</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-plichtig" value="">
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-plichtig" value="">
+          <option value="yes">Ja</option>
+          <option value="no">Nee</option>
+        </select>
       </div>
       </div>
       </div>
@@ -140,7 +147,10 @@
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="">
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="">
+          <option value="development">Development</option>
+          <option value="design">Design</option>
+        </select>
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
@@ -148,14 +158,14 @@
         <label class="block text-sm font-medium mb-2" for="bedrijfsvorm">Bedrijfsvorm</label>
         <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsvorm" value="">
           @foreach($businessTypes as $businessType)
-          <option value="{{ $businessType->id }}">{{ $businessType->name }}</option>
+          <option value="{{ $businessType->id }}" @if($company->business_type->id === $businessType->id) selected @endif>{{ $businessType->name }}</option>
           @endforeach
         </select>
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        
+        <input type="hidden"  name="company_id" value="{{ $company->id }}">
       </div>
       </div>
       </div>
