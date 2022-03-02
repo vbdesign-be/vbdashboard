@@ -82,12 +82,14 @@ class CompanyController extends Controller
             'bedrijfsnaam' => 'required|max:255',
             'bedrijfsemail' => 'required|email',
             'sector' => 'required',
-            'btw-plichtig' => 'required',
-            'bedrijfsvorm' => 'required'       
+            'btw-plichtig' => 'required',     
         ]);
 
         $company_id = $request->input('company_id');
-        TeamLeader::crm()->company()->update($company_id, [
+
+        
+        if (!empty($request->input('telefoon'))) {
+            TeamLeader::crm()->company()->update($company_id, [
             'name' => $request->input('bedrijfsnaam'),
             'business_type_id' => $request->input('bedrijfsvorm'),
             'vat_number' => $request->input('btw-nummer'),
@@ -100,8 +102,28 @@ class CompanyController extends Controller
                 'city' => $request->input('stad'),
                 'country' => 'BE',
                 'area_level_two_id' =>  $request->input('provincie'),
-            ]]],  
-        ]);
+                ]]],
+            ]);
+        }else{
+            TeamLeader::crm()->company()->update($company_id, [
+                'name' => $request->input('bedrijfsnaam'),
+                'business_type_id' => $request->input('bedrijfsvorm'),
+                'vat_number' => $request->input('btw-nummer'),
+                'website' => $request->input('website'),
+                'emails' => ['object' => ['type' => "primary", 'email' => $request->input('bedrijfsemail')]],
+                'addresses' => ['object' => ['type' => "primary", 'address' => [
+                    'line_1' => $request->input('straat'),
+                    'postal_code' => $request->input('postcode'),
+                    'city' => $request->input('stad'),
+                    'country' => 'BE',
+                    'area_level_two_id' =>  $request->input('provincie'),
+                    ]]],
+                ]);
+        }
+
+        $request->session()->flash('message', 'De gegevens van '. $request->input('bedrijfsnaam'). ' zijn geüpdate');
+        
+
 
         return redirect('/company/'.$company_id.'');
 

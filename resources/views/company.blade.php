@@ -189,7 +189,7 @@
       </div>
       </div>
 
-      <input type="hidden"  name="company_id" value="">
+      <input type="hidden"  name="company_id" value="{{ $company->id }}">
 
       <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanpassen</button>
