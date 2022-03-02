@@ -156,15 +156,15 @@
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="provincie">Provincie</label>
         <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="provincie" value="">
-          @if(!empty($provines))
+        @if(!empty($company->province))
             @foreach($provinces as $p)
-              <option value="{{ $p->id }}" @if($p->id && $p->id === $company->province) selected @endif  >{{$p->name}}</option>
+              <option value="{{ $p->id }}" @if( $company->province === $p->id) selected @endif>{{ $p->name }}</option>
             @endforeach
           @else
-            <option value="">Kies provincie</option>
-            @foreach($provinces as $p)
-              <option value="{{ $p->id }}">{{$p->name}}</option>
-            @endforeach
+          <option value="" >Kies provincie</option>
+          @foreach($provinces as $p)
+              <option value="{{ $p->id }}">{{ $p->name }}</option>
+          @endforeach
           @endif
         </select>
       </div>
