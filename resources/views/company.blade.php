@@ -83,34 +83,13 @@
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="bedrijfsemail">Bedrijfsemail</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsemail" value="">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsemail" value="{{ $company->email }}">
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
       <label class="block text-sm font-medium mb-2" for="btw-nummer">BTW-nummer</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-nummer" value="">
-      </div>
-      </div>
-      </div>
-      
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-      <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="straat">Straat + nummer</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="straat" value="">
-      </div>
-      </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="postcode">postcode</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="postcode" value="">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-nummer" value="{{ $company->vat_number }}">
       </div>
       </div>
       </div>
@@ -118,21 +97,65 @@
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="plaats">Plaats</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="plaats" value="">
+        <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="{{ $company->phone }}">
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-      <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
+        <label class="block text-sm font-medium mb-2" for="website">Website</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="website" value="{{ $company->website }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="website">Btw-plichtig?</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="website" value="{{ $company->website }}">
+      </div>
+      </div>
+      </div>
+      
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="straat">Straat + nummer</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="straat" value="{{ $company->street }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="postcode">Postcode</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="postcode" value="{{ $company->postal }}">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="stad">Stad</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="stad" value="{{ $company->city }}">
+      </div>
+      </div>
+      </div>
+
+      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="">
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="bedrijfsvorm">Bedrijfsvorm</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsvorm" value="">
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        
       </div>
       </div>
       </div>
+
 
       <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanpassen</button>
@@ -152,9 +175,9 @@
 
       <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a href="">test</a></div>
-       
+        @foreach($company->users as $u)
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a class="btn btn--company shadow" @if($u->id === $user->teamleader_id) href="/profiel" @endif >{{ $u->first_name .' '. $u->last_name }}</a></div> 
+       @endforeach
       </div>
       </div>
 
