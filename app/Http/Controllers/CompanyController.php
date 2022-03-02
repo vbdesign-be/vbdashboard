@@ -43,9 +43,12 @@ class CompanyController extends Controller
                 if($address->address->area_level_two){
                     $data['company']->province = $address->address->area_level_two->id;
                 }
+                $data['company']->country = $address->address->country;
                 
             }
         }
+
+        
 
 
         $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id ]]);
@@ -55,10 +58,10 @@ class CompanyController extends Controller
         }
         
 
-        $businessTypes = TeamLeader::crm()->company()->getBusinessTypes();
+        $businessTypes = TeamLeader::crm()->company()->getBusinessTypes($data['company']->country);
         $data["businessTypes"] = $businessTypes->data;
 
-        $provinces = TeamLeader::crm()->company()->getProvinces();
+        $provinces = TeamLeader::crm()->company()->getProvinces($data['company']->country);
         $data['provinces'] = $provinces->data;
 
         
