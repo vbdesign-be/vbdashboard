@@ -18,12 +18,19 @@ class OfferteController extends Controller
         $companies = $user->companies;
         foreach($companies as $c){
             $company_id = $c->company->id;
+            $comps[] = TeamLeader::crm()->company()->info($company_id);
         }
 
-        $offertes = TeamLeader::deals()->list($data = []);
+        foreach($comps as $c){
+            
+            $offertes = TeamLeader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ]]);
+        }
+        
+        
+        
         dd($offertes);
 
-        return view('offerte/offerte');
+        // return view('offerte/offerte');
     }
 
     public function post(Request $request){
