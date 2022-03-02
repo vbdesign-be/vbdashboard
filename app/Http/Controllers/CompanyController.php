@@ -11,7 +11,8 @@ use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
 class CompanyController extends Controller
 {
-    public function company(Request $request, $id){
+    public function company($id){
+
         teamleaderController::reAuthTL();
         $data['user'] = Auth::user();
         $company = TeamLeader::crm()->company()->info($id);
@@ -48,15 +49,10 @@ class CompanyController extends Controller
             }
         }
 
-        
-
-
         $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id ]]);
-        
         foreach($company_users as $u){
             $data['company']->users = $u;
         }
-        
 
         $businessTypes = TeamLeader::crm()->company()->getBusinessTypes($data['company']->country);
         $data["businessTypes"] = $businessTypes->data;
@@ -64,18 +60,15 @@ class CompanyController extends Controller
         $provinces = TeamLeader::crm()->company()->getProvinces($data['company']->country);
         $data['provinces'] = $provinces->data;
 
-        
         foreach($data["company"]->users as $u){
-
-            if(Auth::user()->teamleader_id != $u->id){
-                abort(403);
-            }
-
+            $user_ids[] = $u->id;
         }
-        
-        // dd($data['company']);
-        
-        return view('company', $data);
+        $check = in_array(Auth::user()->teamleader_id, $user_ids, TRUE);
+        if($check){
+            return view('company', $data);
+        }else{
+            abort(403);
+        }
     }
 
     public function updateCompany(Request $request){
