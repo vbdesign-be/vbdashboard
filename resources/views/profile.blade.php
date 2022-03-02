@@ -60,7 +60,7 @@
         <div class="w-full md:w-2/3 px-4 mb-4 md:mb-0">
       <form enctype="multipart/form-data" class="form--avatar flex flex-wrap -mx-4 -mb-4 md:mb-0" action="/user/updateAvatar" method="post">
       @csrf
-        <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"><div><img class=" w-32 h-32 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="img/{{ $avatar }}" alt="avatar"></div></div>
+        <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"><div><img class=" w-32 h-32 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="img/{{ $user->avatar }}" alt="avatar"></div></div>
         <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"><p>{{ $user->first_name ." ". $user->last_name }}</p></div>
         <div class="form--avatar__group w-full md:w-1/2 px-8 mb-4 md:mb-0"><label class="btn--mini  custom-file-upload"><input name="avatar" type="file"/>Afbeelding kiezen</label></div>
         <div class="form--avatar__group form--avatar__group--left w-full md:w-1/2 px-4 mb-4 md:mb-0"><button class="btn--mini form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update avatar</button></div>
@@ -77,19 +77,19 @@
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="familienaam">Familienaam</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" value="{{ $user->last_name }}">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="familienaam" value="@if(!empty($user->last_name)) {{$user->last_name}} @endif">
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="voornaam">Voornaam</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" value="{{ $user->first_name }}">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="voornaam" value="@if(!empty($user->first_name)) {{$user->first_name}} @endif">
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="email">Email</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" value="{{ $email }}">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" value="@if(!empty($user->email)) {{$user->email}} @endif">
       </div>
       </div>
       </div>
@@ -97,13 +97,13 @@
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="telefoon">Telefoon</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="{{ $phone }}">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="telefoon" value="@if(!empty($user->phone)) {{$user->phone}} @endif">
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="gsm">Gsm</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="gsm" value="{{ $mobile }}">
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="gsm" value="@if(!empty($user->mobile)) {{$user->mobile}} @endif">
       </div>
       </div>
       </div>
@@ -126,7 +126,7 @@
 
       <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        @foreach($companies as $company)
+        @foreach($user->companies as $company)
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a class="btn btn--company shadow"  href="/company/{{$company->id}}">{{ $company->name }}</a></div>
         @endforeach
       </div>

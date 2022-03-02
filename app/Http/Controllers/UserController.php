@@ -62,11 +62,11 @@ class UserController extends Controller
         $companies = TeamLeader::crm()->company()->info($company_id);
         
         $data['user'] = $user;
-        $data['email'] = $email;
-        $data['phone'] = $phone;
-        $data['mobile'] = $mobile;
-        $data['avatar'] = $avatar;
-        $data['companies'] = $companies;
+        $data['user']->email = $email;
+        $data['user']->phone= $phone;
+        $data['user']->mobile = $mobile;
+        $data['user']->avatar = $avatar;
+        $data['user']->companies = $companies;
         return view('profile', $data);
     }
 
@@ -78,7 +78,7 @@ class UserController extends Controller
         $credentials = $request->validate([
             'voornaam' => 'required|max:255',
             'familienaam' => 'required|max:255',
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $user = auth::user();
@@ -88,31 +88,44 @@ class UserController extends Controller
         $email = $request->input('email');
         $phone = $request->input('telefoon');
         $mobile = $request->input('gsm');
+        
 
-        if(!empty($request->input('telefoon') && $request->input('gsm'))){
+        
 
+        
+        
+        if(empty($phone) && empty($mobile)){
             TeamLeader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
-                'telephones' => ['object' => ['type' => "mobile", 'number' => '0498745612'], ['type' => 'phone', 'number' => $phone]]
-                ]);
-
-        }elseif(!empty($request->input('telefoon'))){
+                'telephones' => [],
+            ]);
+        }elseif(empty($phone) && !empty($mobile)){
             TeamLeader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
-                'telephones' => ['object' => ['type' => 'phone', 'number' => $phone]]
-                ]);
-        }elseif(!empty($request->input('gsm'))){
+                'telephones' => ['object' => ['type' => "mobile", 'number' => $mobile]]
+            ]);
+        }elseif(empty($mobile) && !empty($phone)){
             TeamLeader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
-                'telephones' => ['object' => ['type' => 'mobile', 'number' => $mobile]]
-                ]);
+                'telephones' => ['object' => ['type' => "phone", 'number' => $phone]]
+            ]);
+        }else{
+            TeamLeader::crm()->contact()->update($teamleader_id, [
+                'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
+                'first_name' => $firstname, 
+                'last_name' => $lastname,
+                'telephones' => ['object' => ['type' => "mobile", 'number' => $mobile], ['type' => 'phone', 'number' => $phone]]
+            ]);
         }
+        
+
+        
 
         $newUser = User::find(Auth::id());
         $newUser->email = $email;
