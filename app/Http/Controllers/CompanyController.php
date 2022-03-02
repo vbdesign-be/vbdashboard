@@ -16,7 +16,7 @@ class CompanyController extends Controller
         $data['user'] = Auth::user();
         $company = TeamLeader::crm()->company()->info($id);
         $data["company"] = $company->data;
-        // dd($company);
+        
         $emails = $data['company']->emails;
         foreach($emails as $e){
             if ($e->type === "primary") {
@@ -45,9 +45,11 @@ class CompanyController extends Controller
 
 
         $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id ]]);
-        
         $data['company']->users = $company_users->data;
 
+        $businessTypes = TeamLeader::crm()->company()->getBusinessTypes();
+        $data["businessTypes"] = $businessTypes->data;
+        // dd($data['businessTypes']);
         return view('company', $data);
     }
 }

@@ -109,8 +109,8 @@
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="website">Btw-plichtig?</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="website" value="{{ $company->website }}">
+        <label class="block text-sm font-medium mb-2" for="btw-plichtig">Btw-plichtig?</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="btw-plichtig" value="">
       </div>
       </div>
       </div>
@@ -146,7 +146,11 @@
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="bedrijfsvorm">Bedrijfsvorm</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsvorm" value="">
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijfsvorm" value="">
+          @foreach($businessTypes as $businessType)
+          <option value="{{ $businessType->id }}">{{ $businessType->name }}</option>
+          @endforeach
+        </select>
       </div>
       </div>
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
