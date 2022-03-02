@@ -127,7 +127,8 @@
       <div class="container px-4 mx-auto bg-white p-6 relative rounded shadow">
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         @foreach($user->companies as $company)
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a class="btn btn--company shadow"  href="/company/{{$company->id}}">{{ $company->name }}</a></div>
+        
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0"><a class="btn btn--company shadow"  href="/company/{{$company->data->id}}">{{$company->data->name}}</a></div>
         @endforeach
       </div>
       </div>

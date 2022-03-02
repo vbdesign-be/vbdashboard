@@ -10,7 +10,7 @@
           
         <x-menu/>
         
-        
+
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
@@ -96,23 +96,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($offertes as $f)
+                 
 
                     <tr class="offerte text-xs bg-gray-50">
                       <td class="flex items-center py-5 px-6 font-medium">
                         <input class="mr-3" type="checkbox" name="" id="">
-                        <p>{{ $f->title }}</p>
+                        <p>test</p>
                       </td>
-                      <td class="font-medium">{{ $f->estimated_closing_date }}</td>
-                      <td class="font-medium">{{ $f->estimated_value }}</td>
+                      <td class="font-medium">test</td>
+                      <td class="font-medium">test</td>
                       <td>
-                        <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $f->status }}</span>
+                        <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">test</span>
                       </td>
-                      <td>{{ $f->estimated_value }}</td>
+                      <td>test</td>
                       <td><a class="btn--download invisible" href="">download icon</a></td>
                     </tr>
                     
-                  @endforeach
+                 
                 </tbody>
               </table>
             </div>
@@ -174,7 +174,7 @@
         <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" value="{{ old('samenvatting') }}"></textarea>
       </div>
 
-      <input class="hidden" type="text" name="company" value="{{ $user->company->id }}">
+      <input class="hidden" type="text" name="company" value="">
       
       <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>

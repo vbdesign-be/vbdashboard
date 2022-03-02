@@ -6,16 +6,24 @@ use App\Models\Offerte;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
 class OfferteController extends Controller
 {
     public function offerte(){
-        $data["user"] = User::find(Auth::id());
-        $data["offertes"] = Offerte::where('company_id', $data["user"]->company->id)->get();
+        teamleaderController::reAuthTL();
 
-        
-        
-        return view('offerte/offerte', $data);
+        $userId = Auth::user()->teamleader_id;
+        $user = TeamLeader::crm()->contact()->info($userId)->data;
+        $companies = $user->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+        }
+
+        $offertes = TeamLeader::deals()->list($data = []);
+        dd($offertes);
+
+        return view('offerte/offerte');
     }
 
     public function post(Request $request){
@@ -44,11 +52,7 @@ class OfferteController extends Controller
         $offerte->estimated_value = $request->input('kostprijs');
         $offerte->estimated_closing_date = $newJaar;
         $offerte->save();
-        
-        
-
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
-
         return redirect('/offerte');
 
         
