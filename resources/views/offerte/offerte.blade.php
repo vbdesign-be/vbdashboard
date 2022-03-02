@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', 'Offerte')
+@section('title', 'Offertes')
 
 @section('content')
 
@@ -14,7 +14,7 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">Offerte</h2>
+            <h2 class="text-2xl font-bold">Offertes</h2>
           </div>
         </div>
 
