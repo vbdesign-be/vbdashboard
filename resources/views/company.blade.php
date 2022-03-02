@@ -146,7 +146,24 @@
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
         <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
+        <label class="block text-sm font-medium mb-2" for="provincie">Provincie</label>
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="provincie" value="">
+          @if(!empty($provines))
+          @foreach($provinces as $p)
+          <option value="{{ $p->id }}" @if($p->id && $p->id === $company->province) selected @endif  >{{$p->name}}</option>
+          @endforeach
+          @else
+          <option value="">Kies provincie</option>
+          @foreach($provinces as $p)
+            <option value="{{ $p->id }}">{{$p->name}}</option>
+            @endforeach
+          @endif
+        </select>
+      </div>
+      </div>
+        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+      <label class="block text-sm font-medium mb-2" for="sector">Sector</label>
         <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="sector" value="">
           <option value="development">Development</option>
           <option value="design">Design</option>
@@ -163,13 +180,9 @@
         </select>
       </div>
       </div>
-        <div class="w-full md:w-1/3 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <input type="hidden"  name="company_id" value="{{ $company->id }}">
-      </div>
-      </div>
       </div>
 
+      <input type="hidden"  name="company_id" value="{{ $company->id }}">
 
       <div class="form__btn">
       <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Aanpassen</button>

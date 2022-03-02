@@ -40,6 +40,10 @@ class CompanyController extends Controller
                 $data['company']->street = $address->address->line_1;
                 $data['company']->city = $address->address->city;
                 $data['company']->postal = $address->address->postal_code;
+                if($address->address->area_level_two){
+                    $data['company']->province = $address->address->area_level_two->id;
+                }
+                
             }
         }
 
@@ -49,6 +53,10 @@ class CompanyController extends Controller
 
         $businessTypes = TeamLeader::crm()->company()->getBusinessTypes();
         $data["businessTypes"] = $businessTypes->data;
+
+        $provinces = TeamLeader::crm()->company()->getProvinces();
+        $data['provinces'] = $provinces->data;
+        // dd($data['company']);
         return view('company', $data);
     }
 
@@ -70,7 +78,14 @@ class CompanyController extends Controller
             'vat_number' => $request->input('btw-nummer'),
             'website' => $request->input('website'),
             'emails' => ['object' => ['type' => "primary", 'email' => $request->input('bedrijfsemail')]],
-            'telephones' => ['object' => ['type' => "phone", 'number' => $request->input('telefoon')]], 
+            'telephones' => ['object' => ['type' => "phone", 'number' => $request->input('telefoon')]],
+            'addresses' => ['object' => ['type' => "primary", 'address' => [
+                'line_1' => $request->input('straat'),
+                'postal_code' => $request->input('postcode'),
+                'city' => $request->input('stad'),
+                'country' => 'BE',
+                'area_level_two_id' =>  $request->input('provincie'),
+            ]]],  
         ]);
 
         return redirect('/company/'.$company_id.'');
