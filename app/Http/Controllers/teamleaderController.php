@@ -92,7 +92,6 @@ class teamleaderController extends Controller
                     $newUser->tag = $u->tags[0];
                     $newUser->save();
                 }else{
-                    dd('bestaant');
                     if (empty($u->tags)){
                         $user = User::where('teamleader_id', $u->id)->first();
                         $user->email = $email;
