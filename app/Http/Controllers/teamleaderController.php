@@ -48,21 +48,7 @@ class teamleaderController extends Controller
         $this->reAuthTL();
 
         // $user = User::where("email", 'bert@vbdesign.be')->first();
-        // $bert = TeamLeader::crm()->contact()->info($user->teamleader_id)->data;
-        
-        // if(empty($user)){
-        //     echo 'niemand in de databank';
-        // }else{
-        //     if(empty($bert->tags)){
-        //         $user1 = User::where("email", 'bert@vbdesign.be')->first();
-        //         $user1->tag = 'empty';
-        //         $user1->save();
-        //     }else{
-        //         $user1 = User::where("email", 'bert@vbdesign.be')->first();
-        //         $user1->tag = $bert->tags[0];
-        //         $user1->save();
-        //     }
-        // }
+        // $bert = TeamLeader::crm()->contact()->info($user->teamleader_id)->data
 
 
 
@@ -74,9 +60,6 @@ class teamleaderController extends Controller
         for ($x = 0; $x < count($resp); $x++) {
             $users = $resp[$x]->data;
         
-        
-            
-
             foreach ($users as $u) {
                 
                 $emails = $u->emails;
@@ -92,7 +75,9 @@ class teamleaderController extends Controller
                     $newUser->tag = $u->tags[0];
                     $newUser->save();
                 }else{
-                    if (empty($u->tags)){
+                    
+                    if (empty($u->tags[0])){
+                        dd($u);
                         $user = User::where('teamleader_id', $u->id)->first();
                         $user->email = $email;
                         $user->teamleader_id = $u->id;
@@ -100,7 +85,6 @@ class teamleaderController extends Controller
                         $user->save();
                     } else {
                         $user = User::where('teamleader_id', $u->id)->first();
-                        dd($user);
                         $user->email = $email;
                         $user->teamleader_id = $u->id;
                         $user->tag = $u->tags[0];
