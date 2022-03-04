@@ -57,52 +57,39 @@ class teamleaderController extends Controller
             }
         }
             foreach ($users as $u) {
-                
                 $emails = $u->emails;
                 foreach ($emails as $e) {
                     $email = $e->email;
                 }
                 
                 $checkUser = User::where('teamleader_id', $u->id)->first();
-              
-                if(empty($checkUser)) {
-                    if(empty($u->tags[0])){
-                        $newUser = new User();
-                        $newUser->email = $email;
-                        $newUser->teamleader_id = $u->id;
-                        $newUser->tag = 'empty';
-                        $newUser->save();
-                    }else{
-                        $newUser = new User();
-                        $newUser->email = $email;
-                        $newUser->teamleader_id = $u->id;
-                        $newUser->tag = $u->tags[0];
-                        $newUser->save();
+
+                if (!empty($u->tags[0])) {
+                    if ($u->tags[0] === 'klant') {
+                        if (empty($checkUser)) {
+                            $newUser = new User();
+                            $newUser->email = $email;
+                            $newUser->teamleader_id = $u->id;
+                            $newUser->tag = $u->tags[0];
+                            $newUser->save();
+                        } else {
+                            $user = User::where('teamleader_id', $u->id)->first();
+                            $user->email = $email;
+                            $user->teamleader_id = $u->id;
+                            $user->tag = $u->tags[0];
+                            $user->save();
+                        }
+                    } else {
+                        if (!empty($checkUser)) {
+                            $checkUser->delete();
+                        }
                     }
-                    
-                }else{
-                    if(empty($u->tags[0])){
-                        $user = User::where('teamleader_id', $u->id)->first();
-                        $user->email = $email;
-                        $user->teamleader_id = $u->id;
-                        $user->tag = 'empty';
-                        $user->save();
-                    }else{
-                        $user = User::where('teamleader_id', $u->id)->first();
-                        $user->email = $email;
-                        $user->teamleader_id = $u->id;
-                        $user->tag = $u->tags[0];
-                        $user->save();
+                } elseif (empty($u->tags[0])) {
+                    if (!empty($checkUser)) {
+                        $checkUser->delete();
                     }
                 }
             }
-            
-            $faultUsers = User::where('tag', '!=', 'klant')->get();
-            foreach($faultUsers as $u){
-                $u->delete();
-            }
-
-            return redirect('/login');
         
     }
 

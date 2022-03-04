@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('get:teamleaderInfo')->everyMinute();
+        $schedule->command('check:user')->everyMinute();
     }
 
     /**
