@@ -10,6 +10,7 @@
     <x-menu />
         
         <div>
+          
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
