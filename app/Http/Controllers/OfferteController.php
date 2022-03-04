@@ -27,11 +27,6 @@ class OfferteController extends Controller
         }
         
         $data['offertes'] = $offertes;
-
-        
-        
-        
-
         
 
         
@@ -62,6 +57,8 @@ class OfferteController extends Controller
         for($x = 1; $x <= 10; $x++){
             $quotations [] = TeamLeader::deals()->getQuotations(['page' => ['number' => $x, 'size' => 50]])->data;
         }
+
+        
 
         foreach($quotations as $q){
             foreach($q as $t){
