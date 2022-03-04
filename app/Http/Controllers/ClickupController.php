@@ -53,11 +53,13 @@ class ClickupController extends Controller
         $clickup = Clickup::find(1);
         $token = $clickup->token;
         
-        $url = 'https://app.clickup.com/api/v2/list/180354726/task';
+        $url = 'https://app.clickup.com/api/v2/list/40397755/task';
 
         $response = Http::withToken($token)->get($url);
 
-        dd($response->body());
+        $data = json_decode($response->body());
+
+        dd($data); 
         
     }
 }
