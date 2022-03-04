@@ -17,5 +17,6 @@ class ProjectController extends Controller
 
         $data['user'] = $user;
         return view('projects/projects', $data);
+        
     }
 }
