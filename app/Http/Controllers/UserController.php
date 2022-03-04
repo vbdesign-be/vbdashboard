@@ -153,6 +153,7 @@ class UserController extends Controller
         $user->avatar = $imageName;
         $user->save();
 
+        $request->session()->flash('message', 'je avatar is geüpdate');
         return redirect('/profiel');
 
     }
