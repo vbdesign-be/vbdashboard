@@ -13,6 +13,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
+use App\Http\Controllers\ClickupController;
 use App\Mail\UserLoginMail;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,10 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 Route::get('/connect', [teamleaderController::class, "requestToken"]);
 Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
 Route::get('/register', [teamleaderController::class, "register"]);
+
+Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
+Route::get('/clickup', [ClickupController::class, "accessToken"]);
+Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
 
 Route::group(['middleware' => ['auth']], function() {
