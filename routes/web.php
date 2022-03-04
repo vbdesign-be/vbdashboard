@@ -38,16 +38,7 @@ Route::get('/logout', [Logincontroller::class, "logout"]);
 // //madeItBelgium
 Route::get('/connect', [teamleaderController::class, "requestToken"]);
 Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
-Route::get('/contacts', [teamleaderController::class, "contacts"]);
-Route::get('/companies', [teamleaderController::class, "companies"]);
-Route::get('/facturen', [teamleaderController::class, "facturen"]);
-Route::get('/offertes', [teamleaderController::class, "offertes"]);
-
 Route::get('/register', [teamleaderController::class, "register"]);
-Route::get('/registerBert', [teamleaderController::class, "registerBert"]);
-Route::get('/updateBert', [teamleaderController::class, "updateBert"]);
-
-
 
 
 Route::group(['middleware' => ['auth']], function() {
@@ -72,6 +63,7 @@ Route::group(['middleware' => ['auth']], function() {
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);
     Route::post('/offerte/post', [OfferteController::class, "post"]);
+    Route::get('getDeal/{id}', [OfferteController::class, "getDeal"]);
 
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
 

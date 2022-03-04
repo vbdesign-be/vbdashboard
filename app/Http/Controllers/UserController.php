@@ -55,18 +55,21 @@ class UserController extends Controller
         }
 
         $companies = $resp->data->companies;
+        
         foreach($companies as $c){
             $company_id = $c->company->id;
+            $comps[] = TeamLeader::crm()->company()->info($company_id);
         }
 
-        $companies = TeamLeader::crm()->company()->info($company_id);
         
+        
+
         $data['user'] = $user;
         $data['user']->email = $email;
         $data['user']->phone= $phone;
         $data['user']->mobile = $mobile;
         $data['user']->avatar = $avatar;
-        $data['user']->companies = $companies;
+        $data['user']->companies = $comps;
         return view('profile', $data);
     }
 

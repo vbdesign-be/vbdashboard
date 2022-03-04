@@ -77,7 +77,7 @@ class LoginController extends Controller
         
         if(!$user){
             //no user found:
-            $request->session()->flash('error', 'Er is geen account gevonden met dit emailadress');
+            $request->session()->flash('error', 'Er is geen account gevonden met dit emailadres');
             return redirect('login');
         }else{
             //user found:

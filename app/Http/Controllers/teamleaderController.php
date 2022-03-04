@@ -43,106 +43,66 @@ class teamleaderController extends Controller
     }
 
 
-    public function contacts(){
-
-        $this->reAuthTL();
-
-        // $contacts = TeamLeader::crm()->contact()->list();
-
-        $contacts = TeamLeader::crm()->contact()->info("83007810-b364-00b2-bc72-ff97826406ef");
-        dd($contacts);
-        
-
-
-    }
-
-    public function companies(){
-        $this->reAuthTL();
-
-        $companies = TeamLeader::crm()->company()->list();
-        dd($companies);
-
-    }
-
-    public function facturen(){
-        $this->reAuthTL();
-
-        $facturen = TeamLeader::invoicing()->invoices()->list();
-        dd($facturen);
-    }
-
-    public function offertes(){
-        $this->reAuthTL();
-        $offertes = TeamLeader::deals()->list($data = []);
-        dd($offertes);
-    }
-
-    public function updateBert(){
-        $this->reAuthTL();
-        $user = User::where('email', 'bert@vbdesign.be')->first();
-        $teamleader_id = $user->teamleader_id;
-
-        TeamLeader::crm()->contact()->update($teamleader_id, ['emails' => ['object' => ['type' => "primary", 'email' => 'bert@vbdesign']]]);
-        TeamLeader::crm()->contact()->update($teamleader_id, ['telephones' => ['object' => ['type' => "mobile", 'number' => '0498745612']]]);
-    }
 
     public function register(){
         $this->reAuthTL();
 
-        for($x = 1; $x <= 10; $x++){
-            $resp[] = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"]], 'page' => ['number' => $x, 'size' => 100]]);
+        for ($x = 1; $x <= 10; $x++) {
+            $resp[] = TeamLeader::crm()->contact()->list([ 'page' => ['number' => $x, 'size' => 100]]);
         }
 
-        for($x = 0; $x < count($resp); $x++){
-            $users = $resp[$x]->data;
-
-            foreach($users as $u){
-
+        foreach($resp as $r){
+            foreach($r->data as $t){
+                $users [] = $t;
+            }
+        }
+            foreach ($users as $u) {
+                
                 $emails = $u->emails;
-                foreach($emails as $e){
+                foreach ($emails as $e) {
                     $email = $e->email;
                 }
                 
-               $checkUser = User::where('teamleader_id', $u->id)->first();
-               if(!$checkUser){
-                   $newUser = new User();
-                   $newUser->email = $email;
-                   $newUser->teamleader_id = $u->id;
-                   $newUser->save();
-               }
-           }
+                $checkUser = User::where('teamleader_id', $u->id)->first();
+              
+                if(empty($checkUser)) {
+                    if(empty($u->tags[0])){
+                        $newUser = new User();
+                        $newUser->email = $email;
+                        $newUser->teamleader_id = $u->id;
+                        $newUser->tag = 'empty';
+                        $newUser->save();
+                    }else{
+                        $newUser = new User();
+                        $newUser->email = $email;
+                        $newUser->teamleader_id = $u->id;
+                        $newUser->tag = $u->tags[0];
+                        $newUser->save();
+                    }
+                    
+                }else{
+                    if(empty($u->tags[0])){
+                        $user = User::where('teamleader_id', $u->id)->first();
+                        $user->email = $email;
+                        $user->teamleader_id = $u->id;
+                        $user->tag = 'empty';
+                        $user->save();
+                    }else{
+                        $user = User::where('teamleader_id', $u->id)->first();
+                        $user->email = $email;
+                        $user->teamleader_id = $u->id;
+                        $user->tag = $u->tags[0];
+                        $user->save();
+                    }
+                }
+            }
+            
+            $faultUsers = User::where('tag', '!=', 'klant')->get();
+            foreach($faultUsers as $u){
+                $u->delete();
+            }
 
-        }
-
-        return redirect('/login');
-        
-    }
-
-   
-
-    public function registerBert(){
-        $this->reAuthTL();
-        
-        //kijken of ze klant tag hebben
-
-        $resp = TeamLeader::crm()->contact()->list(['filter' => ['tags' => [0 => "klant"], 'email' => ['type' => 'primary', 'email' => 'bert@vbdesign.be']]]);
-
-        $userNew = $resp->data[0];
-
-        $checkUser = User::where('email', $userNew->emails[0]->email)->first();
-
-        if($checkUser){
-                
-        }else{
-            $user = new User();
-            $user->email = $userNew->emails[0]->email;
-            $user->teamleader_id = $userNew->id;
-            $user->save();
-                
-        }
-
-        return redirect("/login");
-
+            return redirect('/login');
         
     }
 

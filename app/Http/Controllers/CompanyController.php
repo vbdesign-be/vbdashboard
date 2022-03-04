@@ -48,8 +48,8 @@ class CompanyController extends Controller
                 
             }
         }
-
-        $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id ]]);
+     
+        $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id, 'tags' => [0 => "klant"] ]]);
         foreach($company_users as $u){
             $data['company']->users = $u;
         }

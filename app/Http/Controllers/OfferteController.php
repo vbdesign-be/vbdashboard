@@ -6,16 +6,79 @@ use App\Models\Offerte;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
 class OfferteController extends Controller
 {
     public function offerte(){
-        $data["user"] = User::find(Auth::id());
-        $data["offertes"] = Offerte::where('company_id', $data["user"]->company->id)->get();
+        teamleaderController::reAuthTL();
+
+        $userId = Auth::user()->teamleader_id;
+        $user = TeamLeader::crm()->contact()->info($userId)->data;
+        $companies = $user->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+            $comps[] = TeamLeader::crm()->company()->info($company_id);
+        }
+
+        foreach ($comps as $c) {
+            //kunnen maar dan 20 zijn dus enkele instantie in de array moet een offerte zijn
+            $offertes[] = TeamLeader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
+        }
+        
+        $data['offertes'] = $offertes;
+        
 
         
+        // //de quotation deal id de deal gaan opvragen
+        // foreach($comps as $c){
+        // foreach($test as $t){
+        //     $deal = TeamLeader::deals()->info($t->deal->id)->data;
+        //     if($deal->lead->customer->id === $c->data->id){
+        //         $dealCompany[] = $t;
+        //     }
+        // }
+        // }
+
+        //als die deal bij het bedrijf hoort mag het in een array ofzo
+
         
+
+
         return view('offerte/offerte', $data);
+    }
+
+    public function getDeal($id){
+        teamleaderController::reAuthTL();
+
+        $dealId = $id;
+
+        //lijst met alle quotations in
+        for($x = 1; $x <= 10; $x++){
+            $quotations [] = TeamLeader::deals()->getQuotations(['page' => ['number' => $x, 'size' => 50]])->data;
+        }
+
+        
+
+        foreach($quotations as $q){
+            foreach($q as $t){
+                $offertes [] = $t;
+            }
+        }
+
+        foreach($offertes as $f){
+            $test = TeamLeader::deals()->getInfoQuotation($f->id);
+            if($test->data->deal->id === $dealId){
+                $offerte = $test;
+            }
+        }
+
+        $download = TeamLeader::deals()->downloadQuotation(['id' => $offerte->data->id, 'format' => 'pdf']);
+
+        $redirect = $download->data->location;
+
+        return redirect($redirect);
+
     }
 
     public function post(Request $request){
@@ -44,11 +107,7 @@ class OfferteController extends Controller
         $offerte->estimated_value = $request->input('kostprijs');
         $offerte->estimated_closing_date = $newJaar;
         $offerte->save();
-        
-        
-
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
-
         return redirect('/offerte');
 
         

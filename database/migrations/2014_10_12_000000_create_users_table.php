@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->string('teamleader_id');
             $table->string('avatar')->default('avatar.png');
+            $table->string('tag');
             $table->boolean('didLogin')->nullable();
             $table->timestamps();
         });
