@@ -15,8 +15,6 @@ use App\Models\Teamleader as TeamleaderConnection;
 class UserController extends Controller
 {
 
-    
-
     public function profile(){
 
         teamleaderController::reAuthTL();
@@ -29,8 +27,6 @@ class UserController extends Controller
             $userUpdate->save();
         }
         
-
-
         $resp = TeamLeader::crm()->contact()->info($dataUser->teamleader_id);
         $user = $resp->data;
         $phone = "";
@@ -92,11 +88,6 @@ class UserController extends Controller
         $phone = $request->input('telefoon');
         $mobile = $request->input('gsm');
         
-
-        
-
-        
-        
         if(empty($phone) && empty($mobile)){
             TeamLeader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
@@ -126,9 +117,6 @@ class UserController extends Controller
                 'telephones' => ['object' => ['type' => "mobile", 'number' => $mobile], ['type' => 'phone', 'number' => $phone]]
             ]);
         }
-        
-
-        
 
         $newUser = User::find(Auth::id());
         $newUser->email = $email;
@@ -157,8 +145,5 @@ class UserController extends Controller
         return redirect('/profiel');
 
     }
-
-   
-
     
 }
