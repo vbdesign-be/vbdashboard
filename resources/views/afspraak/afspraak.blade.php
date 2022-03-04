@@ -17,7 +17,7 @@
           </div>
         </div>
         
-        <div class="kalender">
+        <div class="kalender container px-4 mx-auto bg-white p-6 relative rounded shadow">
         <!-- Calendly inline widget begin -->
           <div id="kalender" class="calendly-inline-widget" style="min-width:320px;height:580px;" data-auto-load="false">
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
