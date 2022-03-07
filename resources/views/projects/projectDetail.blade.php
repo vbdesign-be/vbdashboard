@@ -63,6 +63,7 @@
               
             </div>
             
+            @if(!empty($bugfixes))
             @foreach($bugfixes as $bugfix)
             <div class="flex justify-between items-center mb-2 p-4 bg-gray-50 rounded">
               <div class="flex items-center">
@@ -84,6 +85,7 @@
               </div>
             </div>
             @endforeach
+            @endif
             
             
             </div>
@@ -110,7 +112,6 @@
                 <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" placeholder="Write something..."></textarea>
             </div>
             
-            <input name="company_id" type="hidden" value="{{ $companies->id }}">
             <input name="project_id" type="hidden" value="{{ $project->id }}">
             <input name="id" type="hidden" value="{{ $project->id }}">
             

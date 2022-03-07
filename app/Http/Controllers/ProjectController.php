@@ -62,35 +62,33 @@ class ProjectController extends Controller
 
         $tasks = json_decode($response->body())->tasks;
 
-        //companies ophalen
+        // //companies ophalen
 
-        $user = Auth::User();
-        teamleaderController::reAuthTL();
+        // $user = Auth::User();
+        // teamleaderController::reAuthTL();
 
-        $resp = TeamLeader::crm()->contact()->info($user->teamleader_id);
+        // $resp = TeamLeader::crm()->contact()->info($user->teamleader_id);
 
-        $companies = $resp->data->companies;
+        // $companies = $resp->data->companies;
         
-        foreach($companies as $c){
-            $company_id = $c->company->id;
-            $comps[] = TeamLeader::crm()->company()->info($company_id);
-        }
+        // foreach($companies as $c){
+        //     $company_id = $c->company->id;
+        //     $comps[] = TeamLeader::crm()->company()->info($company_id);
+        // }
 
-        foreach($comps as $c){
-            $data['companies'] = $c->data;
-        }
+        // foreach($comps as $c){
+        //     $data['companies'] = $c->data;
+        // }
 
         
-
         foreach($tasks as $t){
-            foreach($comps as $c){
-            if($t->custom_fields[0]->value === $c->data->id && $t->custom_fields[1]->value === $data['project']->id){
+            if($t->custom_fields[0]->value === $data['project']->id){
                 $bugfixes[] = $t;
             }
         }
-        }
         
         $data['bugfixes'] = $bugfixes;
+        
         
         return view('projects/projectDetail', $data);
     }
@@ -109,13 +107,9 @@ class ProjectController extends Controller
             "check_required_custom_fields" => true,
             "custom_fields" => [[
                 "id" => "54d6704f-7ce2-4980-b171-a599fb99ffc3",
-                "value" => $request->input('company_id'),
-            ],
-            [
-                "id" => "6d90c6bb-f0aa-4f28-93d5-c806a6193a7d",
                 "value" => $request->input('project_id'),
-            ]]
-        ];
+            ]
+        ]];
 
         
        
