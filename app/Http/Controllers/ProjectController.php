@@ -36,17 +36,34 @@ class ProjectController extends Controller
         
 
         foreach($comps as $c){
-            $projecten = TeamLeader::crm()->company()->getProjects($c->data->id);
+            $data['projects'] = TeamLeader::crm()->company()->getProjects($c->data->id)->data;
         }
-
-        dd($projecten);
-
         
-
-
-        
-        // return view('projects/projects', $data);
+        return view('projects/projects', $data);
     }
+
+
+    public function detail($id){
+
+        teamleaderController::reAuthTL();
+        //project ophalen
+        $data['project'] = TeamLeader::crm()->company()->getProjectDetail($id)->data;
+
+        //bugfixes ophalen
+        $clickup = Clickup::find(1);
+        $token = $clickup->token;
+        
+        $url = 'https://app.clickup.com/api/v2/list/180519993/task';
+
+        $response = Http::withToken($token)->get($url);
+
+        $tasks = json_decode($response->body())->tasks;
+
+        $data['bugfixes'] = $tasks;
+
+        return view('projects/projectDetail', $data);
+    }
+
 
     public function getCompanyId()
     {

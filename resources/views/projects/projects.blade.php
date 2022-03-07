@@ -24,7 +24,8 @@
           <div class="flex flex-wrap -m-4">
 
           @foreach($projects as $project)
-            <div class="project w-full md:w-1/2 lg:w-1/4 p-4">
+          
+            <a href="project/{{ $project->id }}" class="project w-full md:w-1/2 lg:w-1/4 p-4">
               <div class="p-6 bg-white rounded">
                 <div class="flex items-center mb-6">
                   <span class="project__icon__container flex-shrink-0 inline-flex justify-center items-center mr-3 w-10 h-10 rounded-full">
@@ -33,7 +34,7 @@
                     </svg>
                   </span>
                   <div>
-                    <p class="text-xs font-bold">{{ $project->name }}</p>
+                    <p class="text-xs font-bold">{{ $project->title }}</p>
                   </div>
                 </div>
                 <div>
@@ -42,24 +43,15 @@
                   <div class="flex items-center justify-between mb-10">
                   </div>
                   <div class="relative w-full h-1 mb-3 rounded-full bg-gray-50">
-                    @if($project->status->orderindex === 0)
-                    <div style="background-color:{{$project->status->color}}" class="absolute top-0 left-0 h-full w-0/4 rounded-full"></div>
-                    @elseif($project->status->orderindex === 1)
-                    <div style="background-color:{{$project->status->color}}" class="absolute top-0 left-0 h-full w-1/4 rounded-full"></div>
-                    @elseif($project->status->orderindex === 2)
-                    <div style="background-color:{{$project->status->color}}" class="absolute top-0 left-0 h-full w-1/2 rounded-full"></div>
-                    @elseif($project->status->orderindex === 3)
-                    <div style="background-color:{{$project->status->color}}" class="absolute top-0 left-0 h-full w-3/4 rounded-full"></div>
-                    @elseif($project->status->orderindex === 4 || $project->status->orderindex === 5)
-                    <div style="background-color:{{$project->status->color}}" class="absolute top-0 left-0 h-full w-full rounded-full"></div>
-                    @endif
+                    <div  class="absolute top-0 left-0 h-full w-1/4 rounded-full"></div>
                   </div>
                   <div class="flex items-center">
-                    <span style="background-color:{{$project->status->color}}" class="inline-block py-1 px-2 mr-2 rounded-full text-xs text-black-500">{{ $project->status->status }}</span>
+                    <span class="inline-block py-1 px-2 mr-2 rounded-full text-xs text-black-500">{{ $project->status }}</span>
                   </div>
                 </div>
               </div>
-            </div>
+              </a>
+            
           @endforeach
           </div>
         </div>

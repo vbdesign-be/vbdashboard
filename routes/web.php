@@ -59,6 +59,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);
+    Route::get('/project/{id}', [ProjectController::class, 'detail']);
 
     //statistieken
     Route::get('/statistieken', [StatistiekController::class, "statistieken"]);
