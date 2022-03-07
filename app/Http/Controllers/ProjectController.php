@@ -62,25 +62,6 @@ class ProjectController extends Controller
 
         $tasks = json_decode($response->body())->tasks;
 
-        // //companies ophalen
-
-        // $user = Auth::User();
-        // teamleaderController::reAuthTL();
-
-        // $resp = TeamLeader::crm()->contact()->info($user->teamleader_id);
-
-        // $companies = $resp->data->companies;
-        
-        // foreach($companies as $c){
-        //     $company_id = $c->company->id;
-        //     $comps[] = TeamLeader::crm()->company()->info($company_id);
-        // }
-
-        // foreach($comps as $c){
-        //     $data['companies'] = $c->data;
-        // }
-
-        
         foreach($tasks as $t){
             if($t->custom_fields[0]->value === $data['project']->id){
                 $bugfixes[] = $t;
@@ -95,6 +76,10 @@ class ProjectController extends Controller
 
     public function addBugfix(Request $request){
         
+        $credentials = $request->validate([
+            'titel' => 'required|max:255',
+            'beschrijving' => 'required',
+        ]);
 
         //create task
         $clickup = Clickup::find(1);
