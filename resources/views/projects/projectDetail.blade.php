@@ -111,7 +111,9 @@
             </div>
             
             <input name="company_id" type="hidden" value="{{ $companies->id }}">
+            <input name="project_id" type="hidden" value="{{ $project->id }}">
             <input name="id" type="hidden" value="{{ $project->id }}">
+            
 
             <div class="form__btn">
             <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Bugfix toevoegen</button>

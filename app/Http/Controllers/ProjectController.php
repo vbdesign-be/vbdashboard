@@ -84,13 +84,11 @@ class ProjectController extends Controller
 
         foreach($tasks as $t){
             foreach($comps as $c){
-            if($t->custom_fields[0]->value === $c->data->id){
+            if($t->custom_fields[0]->value === $c->data->id && $t->custom_fields[1]->value === $data['project']->id){
                 $bugfixes[] = $t;
             }
         }
         }
-
-        
         
         $data['bugfixes'] = $bugfixes;
         
@@ -112,10 +110,14 @@ class ProjectController extends Controller
             "custom_fields" => [[
                 "id" => "54d6704f-7ce2-4980-b171-a599fb99ffc3",
                 "value" => $request->input('company_id'),
+            ],
+            [
+                "id" => "6d90c6bb-f0aa-4f28-93d5-c806a6193a7d",
+                "value" => $request->input('project_id'),
             ]]
         ];
 
-        // dd(json_encode($body));
+        
        
         Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url);
         
