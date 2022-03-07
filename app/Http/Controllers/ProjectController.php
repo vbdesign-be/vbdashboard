@@ -48,6 +48,7 @@ class ProjectController extends Controller
         teamleaderController::reAuthTL();
         //project ophalen
         $data['project'] = TeamLeader::crm()->company()->getProjectDetail($id)->data;
+        
 
         //bugfixes ophalen
         $clickup = Clickup::find(1);
@@ -60,7 +61,8 @@ class ProjectController extends Controller
         $tasks = json_decode($response->body())->tasks;
 
         $data['bugfixes'] = $tasks;
-
+        
+        
         return view('projects/projectDetail', $data);
     }
 
@@ -75,12 +77,19 @@ class ProjectController extends Controller
         $body = [
             "name" => $request->input('titel'),
             "description" => $request->input('beschrijving'),
+            "check_required_custom_fields" => true,
+            "custom_fields" => [[
+                "id" => "54d6704f-7ce2-4980-b171-a599fb99ffc3",
+                "value" => $request->input('company_id'),
+            ]]
         ];
+
+        // dd(json_encode($body));
        
         Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url);
         
 
-        
+        return redirect('/project/'.$request->input('id'));
 
     }
 
