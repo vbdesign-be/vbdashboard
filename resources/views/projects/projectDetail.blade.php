@@ -109,8 +109,8 @@
                 <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
                 <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" placeholder="Write something..."></textarea>
             </div>
-
-            <input name="company_id" type="hidden" value="test">
+            
+            <input name="company_id" type="hidden" value="{{ $companies->id }}">
             <input name="id" type="hidden" value="{{ $project->id }}">
 
             <div class="form__btn">

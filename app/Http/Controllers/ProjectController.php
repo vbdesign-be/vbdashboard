@@ -33,6 +33,8 @@ class ProjectController extends Controller
         }
 
         //voor elk bedrijf de projecten eruit filteren
+
+        
         
 
         foreach($comps as $c){
@@ -60,8 +62,37 @@ class ProjectController extends Controller
 
         $tasks = json_decode($response->body())->tasks;
 
-        $data['bugfixes'] = $tasks;
+        //companies ophalen
+
+        $user = Auth::User();
+        teamleaderController::reAuthTL();
+
+        $resp = TeamLeader::crm()->contact()->info($user->teamleader_id);
+
+        $companies = $resp->data->companies;
         
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+            $comps[] = TeamLeader::crm()->company()->info($company_id);
+        }
+
+        foreach($comps as $c){
+            $data['companies'] = $c->data;
+        }
+
+        
+
+        foreach($tasks as $t){
+            foreach($comps as $c){
+            if($t->custom_fields[0]->value === $c->data->id){
+                $bugfixes[] = $t;
+            }
+        }
+        }
+
+        
+        
+        $data['bugfixes'] = $bugfixes;
         
         return view('projects/projectDetail', $data);
     }
