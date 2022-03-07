@@ -88,6 +88,37 @@
         </div>
       </section>
 
+      <section class="py-8">
+        <div class="container px-4 mx-auto">
+        
+        <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/project/addBugfix" method="post">
+        @csrf
+            <div class="flex items-center">
+                <h3 class="mr-2 text-xl font-bold">Bugfix toevoegen</h3>  
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="titel">Titel</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" placeholder="Write a text">
+            </div>
+      
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
+                <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" placeholder="Write something..."></textarea>
+            </div>
+
+            <input name="company_id" type="hidden" value="test">
+
+            <div class="form__btn">
+            <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Bugfix toevoegen</button>
+            </div>
+        </form>
+
+        </div>
+      </section>
+
+      
+
       </div>
 
 

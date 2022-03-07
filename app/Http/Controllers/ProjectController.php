@@ -64,6 +64,26 @@ class ProjectController extends Controller
         return view('projects/projectDetail', $data);
     }
 
+    public function addBugfix(Request $request){
+        
+
+        //create task
+        $clickup = Clickup::find(1);
+        $token = $clickup->token;
+        
+        $url = 'https://app.clickup.com/api/v2/list/180519993/task';
+        $body = [
+            "name" => $request->input('titel'),
+            "description" => $request->input('beschrijving'),
+        ];
+       
+        Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url);
+        
+
+        
+
+    }
+
 
     public function getCompanyId()
     {
