@@ -96,15 +96,43 @@ class ProjectController extends Controller
 
         $tasks = json_decode($response->body())->tasks;
 
+
         foreach($tasks as $t){
             if($t->custom_fields[0]->value === $data['project']->id){
                 $bugfixes[] = $t;
             }
         }
         
-        $data['bugfixes'] = $bugfixes;
+        if(!empty($bugfixes)){
+            $data['bugfixes'] = $bugfixes;
+        }else{
+            $data['bugfixes'] = "";
+        }
+        
+        
 
-        return view('projects/bugfix', $data); 
+        //security
+        $company_id = $data['project']->customer->id;
+        
+        $company = TeamLeader::crm()->company()->info($company_id)->data;
+        
+        $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
+        foreach($company_users as $u){
+            $users = $u;
+        }
+
+        foreach($users as $u){
+            $user_ids[] = $u->id;
+        }
+        
+        $check = in_array(Auth::user()->teamleader_id, $user_ids, TRUE);
+        if($check){
+            return view('projects/bugfix', $data); 
+        }else{
+            abort(403);
+        }
+
+        
     }
 
     public function addBugfix(Request $request){
