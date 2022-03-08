@@ -32,15 +32,8 @@ class ClickupController extends Controller
 
         $test = ['body' => json_encode($data)];
 
-        // $resp = Http::post($url, [
-        //     'client_id' => $clientId,
-        //     'client_secret' => $clientSecret,
-        //     'code' => $code,
-        // ]);
-
         $resp = Http::post($url.'?client_id='.$clientId.'&client_secret='.$clientSecret.'&code='.$code);
 
-        
         $data = json_decode($resp->body());
 
         $clickup = new Clickup();

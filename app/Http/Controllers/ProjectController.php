@@ -51,6 +51,16 @@ class ProjectController extends Controller
         //project ophalen
         $data['project'] = TeamLeader::crm()->company()->getProjectDetail($id)->data;
         
+        return view('projects/projectDetail', $data);
+    }
+
+    public function bugfix($id){
+
+
+        teamleaderController::reAuthTL();
+        //project ophalen
+        $data['project'] = TeamLeader::crm()->company()->getProjectDetail($id)->data;
+    
 
         //bugfixes ophalen
         $clickup = Clickup::find(1);
@@ -69,9 +79,8 @@ class ProjectController extends Controller
         }
         
         $data['bugfixes'] = $bugfixes;
-        
-        
-        return view('projects/projectDetail', $data);
+
+        return view('projects/bugfix', $data); 
     }
 
     public function addBugfix(Request $request){
