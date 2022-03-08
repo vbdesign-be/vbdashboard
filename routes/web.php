@@ -45,9 +45,7 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-Route::get('test', function() {
-    Storage::disk('google')->put('test.txt', 'Hello World');
-});
+
 
 
 Route::group(['middleware' => ['auth']], function() {

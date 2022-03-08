@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -106,16 +107,26 @@ class ProjectController extends Controller
         ]];
 
         Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url);
-        return redirect('/project/'.$request->input('id'));
+        return redirect('/project/bugfix/'.$request->input('id'));
 
     }
 
     public function addPhoto(Request $request){
-        foreach($request->fotos as $photo){
-            dd($photo->path());
-        }
-    }
+        $id = $request->input('project_id');
 
+        teamleaderController::reAuthTL();
+        //project ophalen
+        $project = TeamLeader::crm()->company()->getProjectDetail($id)->data;
+
+        //fotos opslagen in google
+        for($x = 0; $x < count($request->fotos); $x++){
+            Storage::disk("google")->putFileAs("", $request->fotos[$x], $project->title." ".$x.".jpg");
+        }
+
+        $request->session()->flash('message', 'De afbeeldingen zijn geüpload');
+
+        return redirect('project/'.$project->id);
+    }
 
     public function getCompanyId()
     {

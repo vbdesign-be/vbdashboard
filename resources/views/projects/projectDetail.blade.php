@@ -111,6 +111,7 @@
               @csrf
 
                 <label class="btn--mini  custom-file-upload"><input name="fotos[]" type="file" multiple/>Afbeelding kiezen</label>
+                <input type="hidden" name="project_id" value="{{ $project->id }}">
                 <button class="btn--mini form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Upload foto's</button>
             
             
