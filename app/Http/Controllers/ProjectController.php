@@ -117,12 +117,20 @@ class ProjectController extends Controller
         teamleaderController::reAuthTL();
         //project ophalen
         $project = TeamLeader::crm()->company()->getProjectDetail($id)->data;
+        
+        //juiste map van de drive halen
+        $folder = $project->title;
+        $contents = collect(Storage::disk("google")->listContents('/', false));
+        $dir = $contents->where('type', '=', 'dir')->where('filename', '=', $folder)->first(); 
 
         //fotos opslagen in google
         for($x = 0; $x < count($request->fotos); $x++){
-            Storage::disk("google")->putFileAs("", $request->fotos[$x], $project->title." ".$x.".jpg");
+            Storage::disk("google")->putFileAs($dir['path'], $request->fotos[$x], $project->title." ".$x.".jpg");
         }
 
+        
+          
+        //user laten weten dat het gelukt is
         $request->session()->flash('message', 'De afbeeldingen zijn geüpload');
 
         return redirect('project/'.$project->id);
