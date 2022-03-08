@@ -51,8 +51,31 @@ class ProjectController extends Controller
         teamleaderController::reAuthTL();
         //project ophalen
         $data['project'] = TeamLeader::crm()->company()->getProjectDetail($id)->data;
+
+        //security
+        $company_id = $data['project']->customer->id;
         
-        return view('projects/projectDetail', $data);
+        $company = TeamLeader::crm()->company()->info($company_id)->data;
+        
+        $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
+        foreach($company_users as $u){
+            $users = $u;
+        }
+
+        foreach($users as $u){
+            $user_ids[] = $u->id;
+        }
+        
+        $check = in_array(Auth::user()->teamleader_id, $user_ids, TRUE);
+        if($check){
+            return view('projects/projectDetail', $data);
+        }else{
+            abort(403);
+        }
+        
+
+              
+        
     }
 
     public function bugfix($id){
