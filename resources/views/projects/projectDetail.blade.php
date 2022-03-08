@@ -91,19 +91,13 @@
               <div>
                 <div class="flex items-center">
                   <h3 class="mr-2 text-xl font-bold">Bugfixes</h3>
-                  
                 </div>
                 <p class="text-sm text-gray-500">Lijst met alle bugfixes voor {{ $project->title }}</p>
               </div>
-
             </div>
-
             <div class="form__btn">
             <a href="/project/bugfix/{{ $project->id }}" class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" href="">Bekijk bugfixes</a>
             </div>
-            
-            
-            
             </div>
           </div>
         </div>
@@ -111,23 +105,32 @@
 
       <section class="py-8">
         <div class="container px-4 mx-auto">
+          <div class="px-6 pb-6 pt-4 bg-white shadow rounded">
+            <div class="flex flex-wrap items-center mb-3">
+              <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/project/addPhoto" method="post" enctype="multipart/form-data">
+              @csrf
+
+                <label class="btn--mini  custom-file-upload"><input name="fotos[]" type="file" multiple/>Afbeelding kiezen</label>
+                <button class="btn--mini form__avatar__btn inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Upload foto's</button>
+            
+            
+              </form>
+            </div>
+            </div>
+          </div>
+      </section>
+
+      <section class="py-8">
+      <div class="container px-4 mx-auto">
         
-        <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/project/addPhoto" method="post">
-        @csrf
-            
-            
-        </form>
+        
 
         </div>
       </section>
 
 
+
       </div>
-
-
-    
-
-
       </div>
 
 @endsection

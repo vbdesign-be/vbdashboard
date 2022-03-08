@@ -45,6 +45,10 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
+Route::get('test', function() {
+    Storage::disk('google')->put('test.txt', 'Hello World');
+});
+
 
 Route::group(['middleware' => ['auth']], function() {
 
@@ -62,6 +66,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/project/addBugfix', [ProjectController::class, 'addBugfix']);
     Route::get('/project/bugfix/{id}', [ProjectController::class, 'bugfix']);
     Route::get('/project/{id}', [ProjectController::class, 'detail']);
+    Route::post('/project/addPhoto', [ProjectController::class, 'addPhoto']);
     
 
     //statistieken

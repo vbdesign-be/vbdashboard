@@ -105,13 +105,15 @@ class ProjectController extends Controller
             ]
         ]];
 
-        
-       
         Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url);
-        
-
         return redirect('/project/'.$request->input('id'));
 
+    }
+
+    public function addPhoto(Request $request){
+        foreach($request->fotos as $photo){
+            dd($photo->path());
+        }
     }
 
 
