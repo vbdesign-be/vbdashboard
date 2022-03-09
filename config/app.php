@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         MadeITBelgium\TeamLeader\ServiceProvider\TeamLeader::class,
+        App\Providers\GoogleDriveServiceProvider::class,
         
 
         /*

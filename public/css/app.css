@@ -183,6 +183,14 @@ input[type=file] {
   border-bottom: solid white 10px;
 }
 
+.project__icon__container {
+  background-color: #2F4858;
+}
+
+.bugfix__status__text {
+  color: #ffffff;
+}
+
 * {
   box-sizing: border-box;
 }
