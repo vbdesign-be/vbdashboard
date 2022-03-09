@@ -113,11 +113,6 @@ class ProjectController extends Controller
             $data['bugfixes'] = "";
         }
 
-        
-        
-
-        
-        
         //security
         $company_id = $data['project']->customer->id;
         
@@ -151,24 +146,30 @@ class ProjectController extends Controller
         ]);
 
         //juiste map zoeken
-
-
-        //create task
         $clickup = Clickup::find(1);
         $token = $clickup->token;
+
+        $url = 'https://app.clickup.com/api/v2/space/6748104/folder';
+
+        $response = Http::withToken($token)->get($url);
+        $folders = json_decode($response->body())->folders;
         
-        $url = 'https://app.clickup.com/api/v2/list/180519993/task';
+        
+        foreach($folders as $folder){
+            if($folder->name === $request->input('projectName')){
+                $projectFolder = $folder;
+            }
+        }
+
+        //create task
+    
+        $url2 = 'https://app.clickup.com/api/v2/list/'.$projectFolder->lists[1]->id.'/task';
         $body = [
             "name" => $request->input('titel'),
             "description" => $request->input('beschrijving'),
-            "check_required_custom_fields" => true,
-            "custom_fields" => [[
-                "id" => "54d6704f-7ce2-4980-b171-a599fb99ffc3",
-                "value" => $request->input('project_id'),
-            ]
-        ]];
+            ];
 
-        Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url);
+        Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url2);
         return redirect('/project/bugfix/'.$request->input('id'));
 
     }

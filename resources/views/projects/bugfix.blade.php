@@ -81,7 +81,7 @@
                 </span>
                 <div>
                   <h4 class="text-sm font-medium">{{ $bugfix->name }}</h4>
-                  <p class="text-xs text-gray-500">Development Department</p>
+                  <p class="text-xs text-gray-500">{{ $project->title }}</p>
                 </div>
               </div>
               <div class="flex items-center">
@@ -116,8 +116,8 @@
                 <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" placeholder="Write something..."></textarea>
             </div>
             
-            <input name="project_id" type="hidden" value="{{ $project->id }}">
             <input name="id" type="hidden" value="{{ $project->id }}">
+            <input name="projectName" type="hidden" value="{{ $project->title }}">
             
 
             <div class="form__btn">
