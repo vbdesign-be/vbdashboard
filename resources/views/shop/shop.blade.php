@@ -83,15 +83,15 @@
         @if(!empty($domain))
         <section class="py-8">
         <div class="container px-4 mx-auto">
-          <a href="#">
+          
           <div class="p-6 bg-white rounded shadow">
             <div class="flex justify-between items-center">
             <h3 class="font-medium">{{$domain}}</h3>
             <span class="inline-block py-1 px-2 bg-green-50 text-xs text-green-500 rounded-full">Beschikbaar</span>
-            <h3 class="mb-2 font-medium">€10</h3>
+            <a href="">koop btn</a>
             </div>
           </div>
-          </a>
+         
         </div>
       </section>
       @endif

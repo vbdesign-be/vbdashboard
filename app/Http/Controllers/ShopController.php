@@ -26,6 +26,10 @@ class ShopController extends Controller
             $request->session()->flash('error', $domain.' is geen domeinnaam');
         }
 
+        $token = VimexxController::connect();
+
+        dd($token);
+
         return view('shop/shop', $data);
 
     }

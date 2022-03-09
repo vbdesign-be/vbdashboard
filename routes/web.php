@@ -14,6 +14,7 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
+use App\Http\Controllers\VimexxController;
 use App\Mail\UserLoginMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -46,23 +47,7 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-Route::get('/test', function() {
-
-    $folder = 'VB design';
-    $contents = collect(Storage::disk("google")->listContents('/', false));
-    $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first(); // There could be duplicate directory names!
-
-    if ( ! $dir) {
-        return 'No such folder!';
-    }
-
-    $files = collect(Storage::disk("google")->listContents($dir['path'], false))
-        ->where('type', '=', 'file');
-
-    dd($dir);
-});
+// Route::get('/test', [VimexxController::class, "connect"]);
 
 
 Route::group(['middleware' => ['auth']], function() {
