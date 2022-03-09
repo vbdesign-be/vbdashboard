@@ -85,30 +85,38 @@ class ProjectController extends Controller
         teamleaderController::reAuthTL();
         //project ophalen
         $data['project'] = TeamLeader::crm()->company()->getProjectDetail($id)->data;
-    
 
-        //bugfixes ophalen
+        //allee projecten ophalen
+
         $clickup = Clickup::find(1);
         $token = $clickup->token;
-        
-        $url = 'https://app.clickup.com/api/v2/list/180519993/task';
+
+        $url = 'https://app.clickup.com/api/v2/space/6748104/folder';
 
         $response = Http::withToken($token)->get($url);
-
-        $tasks = json_decode($response->body())->tasks;
-
-
-        foreach($tasks as $t){
-            if($t->custom_fields[0]->value === $data['project']->id){
-                $bugfixes[] = $t;
+        $folders = json_decode($response->body())->folders;
+        
+        
+        foreach($folders as $folder){
+            if($folder->name === $data['project']->title){
+                $projectFolder = $folder;
             }
         }
+
+        $url2 = 'https://app.clickup.com/api/v2/list/'.$projectFolder->lists[1]->id.'/task';
+        $response2 = Http::withToken($token)->get($url2);
+        $bugfixes = json_decode($response2->body())->tasks;
         
         if(!empty($bugfixes)){
             $data['bugfixes'] = $bugfixes;
         }else{
             $data['bugfixes'] = "";
         }
+
+        
+        
+
+        
         
         //security
         $company_id = $data['project']->customer->id;
