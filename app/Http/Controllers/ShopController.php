@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ShopController extends Controller
 {
@@ -28,7 +29,20 @@ class ShopController extends Controller
 
         $token = VimexxController::connect();
 
-        dd($token);
+        //domein beschikbaar check
+
+        $domainSplit = explode('.', $domain, 2);
+
+        $data = [
+            'sld' => $domainSplit[0],
+            'tld' => $domainSplit[1]
+        ];
+
+        $url = 'https://api.vimexx.nl/wefact/domain/available';
+        
+        $response = Http::withToken($token)->post($url, $data);
+        dd($response->body());
+
 
         return view('shop/shop', $data);
 
