@@ -87,7 +87,9 @@ Route::group(['middleware' => ['auth']], function() {
     //statistieken
     Route::get('/statistieken', [StatistiekController::class, "statistieken"]);
 
+    //shop
     Route::get('/shop', [ShopController::class, "shop"]);
+    Route::post('/shop/searchDomain', [ShopController::class, "searchDomain"]);
 
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);
@@ -101,6 +103,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);
     Route::get('/status', [SupportController::class, "status"]);
+
+    
 
     
     
