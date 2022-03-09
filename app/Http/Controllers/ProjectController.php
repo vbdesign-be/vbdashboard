@@ -57,6 +57,7 @@ class ProjectController extends Controller
         
         $company = TeamLeader::crm()->company()->info($company_id)->data;
         
+        
         $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
         foreach($company_users as $u){
             $users = $u;
@@ -109,12 +110,11 @@ class ProjectController extends Controller
             $data['bugfixes'] = "";
         }
         
-        
-
         //security
         $company_id = $data['project']->customer->id;
         
         $company = TeamLeader::crm()->company()->info($company_id)->data;
+        
         
         $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
         foreach($company_users as $u){
@@ -142,6 +142,9 @@ class ProjectController extends Controller
             'beschrijving' => 'required',
         ]);
 
+        //juiste map zoeken
+
+
         //create task
         $clickup = Clickup::find(1);
         $token = $clickup->token;
@@ -168,43 +171,35 @@ class ProjectController extends Controller
         teamleaderController::reAuthTL();
         //project ophalen
         $project = TeamLeader::crm()->company()->getProjectDetail($id)->data;
-        
+
+        $company = TeamLeader::crm()->company()->info($project->customer->id)->data;
+
         // juiste map van de drive halen
-        $folder = $project->title;
-        $contents = collect(Storage::disk("google")->listContents('/', false));
-        $dir = $contents->where('type', '=', 'dir')->where('filename', '=', $folder)->first(); 
+        $folderCompany = $company->name;
+        $contentsCompany = collect(Storage::disk("google")->listContents('/', false));
+        $dirCompany = $contentsCompany->where('type', '=', 'dir')->where('filename', '=', $folderCompany)->first();
+
+        $folderProject = $project->title;
+        $contentsProject = collect(Storage::disk("google")->listContents('/'.$dirCompany['path'], false));
+        $dirProject = $contentsProject->where('type', '=', 'dir')->where('filename', '=', $folderProject)->first();
+
+        $folderAssets = "assets";
+        $contentsAssets = collect(Storage::disk("google")->listContents('/'.$dirProject['path'], false));
+        $dirAssets = $contentsAssets->where('type', '=', 'dir')->where('filename', '=', $folderAssets)->first();
 
         // fotos opslagen in google
-        
-            //naam van project plus nummer
-        // for($x = 0; $x < count($request->fotos); $x++){
-        //     Storage::disk("google")->putFileAs($dir['path'], $request->fotos[$x], $project->title." ".$x.".jpg");
-        // }
-        
-            //naam van de file op de pc van de klant
         foreach($request->file('fotos') as $foto){
             // dd($foto->getClientOriginalName());
-            Storage::disk("google")->putFileAs($dir['path'], $foto, $foto->getClientOriginalName());
+            Storage::disk("google")->putFileAs($dirAssets['path'], $foto, $foto->getClientOriginalName());
         }
 
-        
-          
         //user laten weten dat het gelukt is
-        $request->session()->flash('message', 'De afbeeldingen zijn geüpload');
+        $request->session()->flash('message', 'De bestanden zijn geüpload');
 
         return redirect('project/'.$project->id);
+
+        //https://www.youtube.com/watch?v=ygtawz36Lq0&t=17s
     }
 
-    public function getCompanyId()
-    {
-        $clickup = Clickup::find(1);
-        $token = $clickup->token;
-        
-        $url = 'https://app.clickup.com/api/v2/list/40397755/task';
-
-        $response = Http::withToken($token)->get($url);
-
-        $tasks = json_decode($response->body())->tasks;
-        $data['projects'] = $tasks;
-    }
+    
 }

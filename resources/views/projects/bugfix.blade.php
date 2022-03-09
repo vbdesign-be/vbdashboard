@@ -83,9 +83,6 @@
                   <h4 class="text-sm font-medium">{{ $bugfix->name }}</h4>
                   <p class="text-xs text-gray-500">Development Department</p>
                 </div>
-                <div class="ml-20">
-                  <h4 class="text-sm font-medium">{{ $bugfix->date_created}}</h4>
-                </div>
               </div>
               <div class="flex items-center">
                 <span style="background-color: {{$bugfix->status->color}};" class="bugfix__status__text inline-block mr-3 py-1 px-2 bg-indigo-50 text-xs rounded-full">{{ $bugfix->status->status }}</span>
