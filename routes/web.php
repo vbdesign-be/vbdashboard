@@ -47,8 +47,6 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-Route::get('/test', [VimexxController::class, "connect"]);
-
 
 Route::group(['middleware' => ['auth']], function() {
 
@@ -75,6 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
     //shop
     Route::get('/shop', [ShopController::class, "shop"]);
     Route::post('/shop/searchDomain', [ShopController::class, "searchDomain"]);
+    Route::get('/shop/winkelmandje/{domain}', [ShopController::class, "Cart"]);
 
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);

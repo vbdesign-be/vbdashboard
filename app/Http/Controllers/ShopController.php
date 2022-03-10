@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Http;
 class ShopController extends Controller
 {
     public function shop(){
-
         return view('shop/shop');
     }
 
@@ -36,13 +35,11 @@ class ShopController extends Controller
             $data["domain"] = "";
             $request->session()->flash('error', $domain.' is geen domeinnaam');
         }
-
-        
-
-        
-
-
         return view('shop/shop', $data);
 
+    }
+
+    public function cart($domain){
+        return view('shop/cart');
     }
 }
