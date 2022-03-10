@@ -71,9 +71,6 @@
                 <div>
                   <div class="flex items-center justify-between mb-10">
                   </div>
-                  <div class="relative w-full h-1 mb-3 rounded-full bg-gray-50">
-                    <div  class="absolute top-0 left-0 h-full w-1/4 rounded-full"></div>
-                  </div>
                   <div class="flex items-center">
                     <span class="inline-block py-1 px-2 mr-2 rounded-full text-xs text-black-500">{{ $project->status }}</span>
                   </div>

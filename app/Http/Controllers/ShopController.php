@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vimexx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -22,26 +23,23 @@ class ShopController extends Controller
 
         if(str_ends_with($domain, ".be")){
             $data["domain"] = $domain;
+            $vimexx = new Vimexx();
+            $check = $vimexx->checkDomain($domain);
+            $data["check"] = $check;
+        
+            if($check === "Beschikbaar"){
+                $data['checkColor'] = "green";
+            }else{
+                $data['checkColor'] = "red";
+            }
         }else{
             $data["domain"] = "";
             $request->session()->flash('error', $domain.' is geen domeinnaam');
         }
 
-        $token = VimexxController::connect();
-
-        //domein beschikbaar check
-
-        $domainSplit = explode('.', $domain, 2);
-
-        $data = [
-            'sld' => $domainSplit[0],
-            'tld' => $domainSplit[1]
-        ];
-
-        $url = 'https://api.vimexx.nl/wefact/domain/available';
         
-        $response = Http::withToken($token)->post($url, $data);
-        dd($response->body());
+
+        
 
 
         return view('shop/shop', $data);

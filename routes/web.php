@@ -47,7 +47,7 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-// Route::get('/test', [VimexxController::class, "connect"]);
+Route::get('/test', [VimexxController::class, "connect"]);
 
 
 Route::group(['middleware' => ['auth']], function() {
