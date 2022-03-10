@@ -48,6 +48,25 @@ faqs.forEach((faq) => {
     
 // })
 
+let items = document.querySelectorAll('.offerte');
+
+items.forEach((item) => {
+    let deleteBtn = item.querySelector('.delete');
+    let domain = item.querySelector('.domein');
+    deleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        domain.value = "";
+        item.classList.add('hidden');
+    })
+
+})
+
+
+
+
+
+
+
 
 
 

@@ -47,12 +47,8 @@ class ShopController extends Controller
     }
 
     public function buyDomain(Request $request){
-        $domain = $request->input('domain');
-        $mailboxSelect = $request->input('mailboxSelect');
-
-        if($mailboxSelect === "true"){
-            dd($request->input('mailbox'));
-        }
+        
+        dd("domeinnaam kopen via mollie en een order toevoegen". $request->input('domain'));
 
         
     }

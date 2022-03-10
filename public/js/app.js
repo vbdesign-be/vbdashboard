@@ -2091,6 +2091,17 @@ faqs.forEach(function (faq) {
 //     }
 // })
 
+var items = document.querySelectorAll('.offerte');
+items.forEach(function (item) {
+  var deleteBtn = item.querySelector('.delete');
+  var domain = item.querySelector('.domein');
+  deleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    domain.value = "";
+    item.classList.add('hidden');
+  });
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
