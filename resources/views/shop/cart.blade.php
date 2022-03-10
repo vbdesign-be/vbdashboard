@@ -78,18 +78,7 @@
                 <form class="domainForm" method="post" action="/shop/buy/domain">
                 @csrf
                   <tr id="winkelmandje" class="offerte text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">
-                        <div>{{ $domain }}<input name="domain" type="hidden" value="{{$domain}}"></div>
-                        <div><select id="selectMailbox" name="mailbox" ><option value="false">Geen mailbox</option><option value="true">Mailbox toevoegen</option></select></div>
-                    </td>
-                    <td class="font-medium">1 jaar</td>
-                    <td class="font-medium">1 x €4.99</td>
-                    <td class="font-medium">€4,99</td>
-                    <td><a href="">verwijder btn</a></td>
-                  </tr>
-
-                  <tr id="mailbox" class="offerte hidden text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">Mailbox {{$domain}}</td>
+                    <td class="py-5 px-6 font-medium"><div>{{ $domain }}<input name="domain" type="hidden" value="{{$domain}}"></div></td>
                     <td class="font-medium">1 jaar</td>
                     <td class="font-medium">1 x €4.99</td>
                     <td class="font-medium">€4,99</td>

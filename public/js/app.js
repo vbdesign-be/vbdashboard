@@ -2078,21 +2078,18 @@ faqs.forEach(function (faq) {
     }
   });
 }); //winkelmandje
-
-var winkelmandje = document.querySelector('#winkelmandje');
-var select = document.querySelector('#selectMailbox');
-var mailbox = document.querySelector('#mailbox');
-select.addEventListener('change', function (e) {
-  e.preventDefault();
-
-  if (select.value === 'true') {
-    mailbox.classList.remove('hidden');
-  }
-
-  if (select.value === 'false') {
-    mailbox.classList.add('hidden');
-  }
-});
+// let winkelmandje = document.querySelector('#winkelmandje');
+// let select = document.querySelector('#selectMailbox');
+// let mailbox = document.querySelector('#mailbox');
+// select.addEventListener('change', (e) => {
+//     e.preventDefault();
+//     if(select.value === 'true'){
+//        mailbox.classList.remove('hidden');
+//     }
+//     if(select.value === 'false'){
+//         mailbox.classList.add('hidden');
+//     }
+// })
 
 /***/ }),
 

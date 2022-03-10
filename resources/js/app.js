@@ -31,22 +31,22 @@ faqs.forEach((faq) => {
 
 //winkelmandje
 
-let winkelmandje = document.querySelector('#winkelmandje');
-let select = document.querySelector('#selectMailbox');
-let mailbox = document.querySelector('#mailbox');
+// let winkelmandje = document.querySelector('#winkelmandje');
+// let select = document.querySelector('#selectMailbox');
+// let mailbox = document.querySelector('#mailbox');
 
 
-select.addEventListener('change', (e) => {
-    e.preventDefault();
+// select.addEventListener('change', (e) => {
+//     e.preventDefault();
 
-    if(select.value === 'true'){
-       mailbox.classList.remove('hidden');
-    }
-    if(select.value === 'false'){
-        mailbox.classList.add('hidden');
-    }
+//     if(select.value === 'true'){
+//        mailbox.classList.remove('hidden');
+//     }
+//     if(select.value === 'false'){
+//         mailbox.classList.add('hidden');
+//     }
     
-})
+// })
 
 
 

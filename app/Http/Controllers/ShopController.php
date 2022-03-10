@@ -42,10 +42,18 @@ class ShopController extends Controller
     public function cart(Request $request){
         $domain = $request->input('domain');
         $data["domain"] = $domain;
+        $data["mailbox"] = "info@".$domain;
         return view('shop/cart', $data);
     }
 
     public function buyDomain(Request $request){
-        dd($request->input('domain'));
+        $domain = $request->input('domain');
+        $mailboxSelect = $request->input('mailboxSelect');
+
+        if($mailboxSelect === "true"){
+            dd($request->input('mailbox'));
+        }
+
+        
     }
 }
