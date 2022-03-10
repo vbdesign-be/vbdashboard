@@ -14,6 +14,7 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
+use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\VimexxController;
 use App\Mail\UserLoginMail;
 use Illuminate\Http\Request;
@@ -75,6 +76,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/shop/searchDomain', [ShopController::class, "searchDomain"]);
     Route::post('/shop/winkelmandje', [ShopController::class, "Cart"]);
     Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
+
+    //domeinen
+    Route::get('/domeinen', [DomeinController::class, "domeinen"]);
 
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);
