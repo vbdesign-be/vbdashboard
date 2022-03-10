@@ -75,54 +75,32 @@
                   <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium px-6">Product</th><th class="pb-3 font-medium">Looptijd</th><th class="pb-3 font-medium">prijs</th><th class="pb-3 font-medium">Totaal</th></tr>
                 </thead>
                 <tbody>
-                  <tr class="text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">SR2451EW32</td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">name@shuffle.dev</td>
-                    <td class="font-medium">Monthly</td>
-                    <td>
-                      
+                <form class="domainForm" method="post" action="/shop/buy/domain">
+                @csrf
+                  <tr id="winkelmandje" class="offerte text-xs bg-gray-50">
+                    <td class="py-5 px-6 font-medium">
+                        <div>{{ $domain }}<input name="domain" type="hidden" value="{{$domain}}"></div>
+                        <div><select id="selectMailbox" name="mailbox" ><option value="false">Geen mailbox</option><option value="true">Mailbox toevoegen</option></select></div>
                     </td>
+                    <td class="font-medium">1 jaar</td>
+                    <td class="font-medium">1 x €4.99</td>
+                    <td class="font-medium">€4,99</td>
+                    <td><a href="">verwijder btn</a></td>
                   </tr>
-                  <tr class="text-xs">
-                    <td class="py-5 px-6 font-medium">SR2451EW32</td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">name@shuffle.dev</td>
-                    <td class="font-medium">Monthly</td>
-                    <td>
-                      
-                    </td>
-                  </tr>
-                  <tr class="text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">SR2451EW32</td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">name@shuffle.dev</td>
-                    <td class="font-medium">Lifetime</td>
-                    <td>
-                      
-                    </td>
-                  </tr>
-                  <tr class="text-xs">
-                    <td class="py-5 px-6 font-medium">SR2451EW32</td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">name@shuffle.dev</td>
-                    <td class="font-medium">Yearly</td>
-                    <td>
-                      
-                    </td>
-                  </tr>
-                  <tr class="text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">SR2451EW32</td>
-                    <td class="font-medium">08.04.2021</td>
-                    <td class="font-medium">name@shuffle.dev</td>
-                    <td class="font-medium">Monthly</td>
-                    <td>
-                      
-                    </td>
+
+                  <tr id="mailbox" class="offerte hidden text-xs bg-gray-50">
+                    <td class="py-5 px-6 font-medium">Mailbox {{$domain}}</td>
+                    <td class="font-medium">1 jaar</td>
+                    <td class="font-medium">1 x €4.99</td>
+                    <td class="font-medium">€4,99</td>
+                    <td><a href="">verwijder btn</a></td>
                   </tr>
                 </tbody>
               </table>
-              
+              <div class="form__btn">
+                <button class="inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">koop</button>
+              </div>
+              </form>
             </div>
           </div>
         </div>

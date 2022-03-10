@@ -29,26 +29,25 @@ faqs.forEach((faq) => {
 })
 
 
-//profile form
+//winkelmandje
 
-let selectBtn = document.querySelector('.selectForm');
-let userForm = document.querySelector('.form--user');
-let companyForm = document.querySelector('.form--company');
+let winkelmandje = document.querySelector('#winkelmandje');
+let select = document.querySelector('#selectMailbox');
+let mailbox = document.querySelector('#mailbox');
 
-if(selectBtn){
 
-selectBtn.addEventListener('click', (e) => {
-    let value = selectBtn.value;
-    
-    if(value === "profiel"){
-        companyForm.style.display = "none";
-        userForm.style.display = "block";
-    }else if(value === "company"){
-        companyForm.style.display = "block";
-        userForm.style.display = "none";
+select.addEventListener('change', (e) => {
+    e.preventDefault();
+
+    if(select.value === 'true'){
+       mailbox.classList.remove('hidden');
     }
+    if(select.value === 'false'){
+        mailbox.classList.add('hidden');
+    }
+    
 })
-}
+
 
 
 

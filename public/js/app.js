@@ -2077,25 +2077,22 @@ faqs.forEach(function (faq) {
       click = 0;
     }
   });
-}); //profile form
+}); //winkelmandje
 
-var selectBtn = document.querySelector('.selectForm');
-var userForm = document.querySelector('.form--user');
-var companyForm = document.querySelector('.form--company');
+var winkelmandje = document.querySelector('#winkelmandje');
+var select = document.querySelector('#selectMailbox');
+var mailbox = document.querySelector('#mailbox');
+select.addEventListener('change', function (e) {
+  e.preventDefault();
 
-if (selectBtn) {
-  selectBtn.addEventListener('click', function (e) {
-    var value = selectBtn.value;
+  if (select.value === 'true') {
+    mailbox.classList.remove('hidden');
+  }
 
-    if (value === "profiel") {
-      companyForm.style.display = "none";
-      userForm.style.display = "block";
-    } else if (value === "company") {
-      companyForm.style.display = "block";
-      userForm.style.display = "none";
-    }
-  });
-}
+  if (select.value === 'false') {
+    mailbox.classList.add('hidden');
+  }
+});
 
 /***/ }),
 

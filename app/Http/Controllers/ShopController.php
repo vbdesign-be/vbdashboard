@@ -39,7 +39,13 @@ class ShopController extends Controller
 
     }
 
-    public function cart($domain){
-        return view('shop/cart');
+    public function cart(Request $request){
+        $domain = $request->input('domain');
+        $data["domain"] = $domain;
+        return view('shop/cart', $data);
+    }
+
+    public function buyDomain(Request $request){
+        dd($request->input('domain'));
     }
 }
