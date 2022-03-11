@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('domain');
+            $table->boolean('payed')->nullable();
             $table->timestamps();
         });
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Vimexx;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class ShopController extends Controller
@@ -48,8 +50,23 @@ class ShopController extends Controller
 
     public function buyDomain(Request $request){
         
-        dd("domeinnaam kopen via mollie en een order toevoegen". $request->input('domain'));
+        $domain = $request->input("domain");
 
+        if(!empty($domain)){
+
+            $order = new Order();
+            $order->domain = $domain;
+            $order->user_id = Auth::id();
+            $order->payed = false;
+            $order->save();
+
+            //molliepayment starten
+
+
+            //redirecten naar domeinnamen met een message
+
+
+        }
         
     }
 }

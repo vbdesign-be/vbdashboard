@@ -34,10 +34,6 @@ class ProjectController extends Controller
         }
 
         //voor elk bedrijf de projecten eruit filteren
-
-        
-        
-
         foreach($comps as $c){
             $data['projects'] = TeamLeader::crm()->company()->getProjects($c->data->id)->data;
         }
