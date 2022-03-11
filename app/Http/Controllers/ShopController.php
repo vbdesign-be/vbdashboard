@@ -65,6 +65,7 @@ class ShopController extends Controller
 
             //redirecten naar domeinnamen met een message
 
+            $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinnaam te registeren. Dit kan 24u duren.');
             return redirect('domeinen');
 
 
