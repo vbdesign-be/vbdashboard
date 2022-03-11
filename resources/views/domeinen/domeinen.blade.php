@@ -17,6 +17,10 @@
           </div>
         </div>
 
+        @foreach($orders as $order)
+          <h1>{{ $order->domain }}</h1>
+        @endforeach
+
         
 
         

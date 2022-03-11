@@ -65,6 +65,8 @@ class ShopController extends Controller
 
             //redirecten naar domeinnamen met een message
 
+            return redirect('domeinen');
+
 
         }
         
