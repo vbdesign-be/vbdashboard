@@ -56,7 +56,7 @@
         <div class="container px-4 mx-auto">
       <section class="py-8">
         <div class="container px-4 mx-auto">
-        <a href="project/{{ $project->id }}" class="project w-full md:w-1/2 lg:w-1/4 p-4">
+        <div  class="project w-full ">
               <div class="p-6 bg-white rounded">
                 <div class="flex items-center mb-6">
                   <span class="project__icon__container flex-shrink-0 inline-flex justify-center items-center mr-3 w-10 h-10 rounded-full">
@@ -72,11 +72,11 @@
                   <div class="flex items-center justify-between mb-10">
                   </div>
                   <div class="flex items-center">
-                    <span class="inline-block py-1 px-2 mr-2 rounded-full text-xs text-black-500">{{ $project->status }}</span>
+                    <span class="inline-block py-1 px-2 mr-2 rounded-full text-xs bg-indigo-50 text-black-500">{{ $project->status }}</span>
                   </div>
                 </div>
               </div>
-              </a>
+</div>
           </div>
         
       </section>

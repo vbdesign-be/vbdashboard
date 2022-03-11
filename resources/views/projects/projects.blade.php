@@ -41,7 +41,7 @@
                   <div class="flex items-center justify-between mb-10">
                   </div>
                   <div class="flex items-center">
-                    <span class="inline-block py-1 px-2 mr-2 rounded-full text-xs text-black-500">{{ $project->status }}</span>
+                    <span class="inline-block py-1 px-2 mr-2 rounded-full text-xs bg-indigo-50 text-black-500">{{ $project->status }}</span>
                   </div>
                 </div>
               </div>

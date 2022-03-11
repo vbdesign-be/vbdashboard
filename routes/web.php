@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //shop
     Route::get('/shop', [ShopController::class, "shop"]);
-    Route::post('/shop/searchDomain', [ShopController::class, "searchDomain"]);
+    Route::post('/shop/search', [ShopController::class, "searchDomain"]);
     Route::post('/shop/winkelmandje', [ShopController::class, "Cart"]);
     Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
 

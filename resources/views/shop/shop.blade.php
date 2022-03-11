@@ -65,7 +65,7 @@
 
 
         <div class="container px-4 mx-auto">
-          <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/shop/searchDomain" method="post">
+          <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/shop/search" method="post">
           @csrf
             <h1 class="mb-2 text-4xl font-bold font-heading">Start met een gloednieuwe website</h1>
       
