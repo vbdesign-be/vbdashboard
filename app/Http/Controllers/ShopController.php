@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Http;
 class ShopController extends Controller
 {
     public function shop(){
+        
         return view('shop/shop');
     }
 
@@ -52,6 +53,8 @@ class ShopController extends Controller
         
         $domain = $request->input("domain");
 
+       
+
         if(!empty($domain)){
 
             $order = new Order();
@@ -64,8 +67,9 @@ class ShopController extends Controller
 
 
             //redirecten naar domeinnamen met een message
-
+            
             $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinnaam te registeren. Dit kan 24u duren.');
+            MollieController::createPayment('4.99', $domain);
             return redirect('domeinen');
 
 
