@@ -48,7 +48,7 @@ faqs.forEach((faq) => {
     
 // })
 
-let items = document.querySelectorAll('.offerte');
+let items = document.querySelectorAll('#winkelmandje');
 
 items.forEach((item) => {
     let deleteBtn = item.querySelector('.delete');
@@ -59,6 +59,50 @@ items.forEach((item) => {
         item.classList.add('hidden');
     })
 
+});
+
+
+//emailadd
+
+let emailAddBtn = document.querySelector('.emailAddBtn');
+let emailAdd = document.querySelector('#emailAdd');
+
+emailAddBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    emailAdd.classList.remove('hidden');
+    window.location.href = '#emailAdd';
+});
+
+//emaildelete
+
+let emails = document.querySelectorAll('#emailBoxes');
+
+emails.forEach((email) => {
+
+    let deleteBtn = email.querySelector('.emailDeleteBtn');
+    deleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        //formdata verzenden;
+        let formData =  new FormData();
+
+        formData.append('email', 'jonathan_verhaegen@hotmail.com');
+
+        fetch('/domein/email/delete', {
+            method: 'POST',
+            body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            });
+
+            email.classList.add('hidden');
+
+    });
 })
 
 

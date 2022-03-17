@@ -28,6 +28,11 @@ class DomeinController extends Controller
     }
 
     public function detail($domein){
-        dd($domein);
+         return view('domeinen/domeindetail');
+    }
+
+    public function deleteEmail(Request $request){
+        $email = $request->input('email');
+        dd($email);
     }
 }

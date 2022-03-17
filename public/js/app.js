@@ -2091,7 +2091,7 @@ faqs.forEach(function (faq) {
 //     }
 // })
 
-var items = document.querySelectorAll('.offerte');
+var items = document.querySelectorAll('#winkelmandje');
 items.forEach(function (item) {
   var deleteBtn = item.querySelector('.delete');
   var domain = item.querySelector('.domein');
@@ -2099,6 +2099,36 @@ items.forEach(function (item) {
     e.preventDefault();
     domain.value = "";
     item.classList.add('hidden');
+  });
+}); //emailadd
+
+var emailAddBtn = document.querySelector('.emailAddBtn');
+var emailAdd = document.querySelector('#emailAdd');
+emailAddBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  emailAdd.classList.remove('hidden');
+  window.location.href = '#emailAdd';
+}); //emaildelete
+
+var emails = document.querySelectorAll('#emailBoxes');
+emails.forEach(function (email) {
+  var deleteBtn = email.querySelector('.emailDeleteBtn');
+  deleteBtn.addEventListener('click', function (e) {
+    e.preventDefault(); //formdata verzenden;
+
+    var formData = new FormData();
+    formData.append('email', 'jonathan_verhaegen@hotmail.com');
+    fetch('/domein/email/delete', {
+      method: 'POST',
+      body: formData
+    }).then(function (response) {
+      return response.json();
+    }).then(function (result) {
+      console.log('Success:', result);
+    })["catch"](function (error) {
+      console.error('Error:', error);
+    });
+    email.classList.add('hidden');
   });
 });
 
