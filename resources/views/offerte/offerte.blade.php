@@ -40,7 +40,7 @@
                 <h3 class="text-xl font-bold">Recente offertes</h3>
               </div>
             </div>
-            <div class="overflow-x-auto">
+            <div class="p-4 overflow-x-auto">
               <table class="table-auto w-full">
                 <thead>
                   <tr class="text-xs text-gray-500 text-left">

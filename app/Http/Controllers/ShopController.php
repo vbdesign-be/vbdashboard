@@ -64,16 +64,17 @@ class ShopController extends Controller
             $order->save();
 
             //molliepayment starten
-
-
-            //redirecten naar domeinnamen met een message
-            
-            $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinnaam te registeren. Dit kan 24u duren.');
             MollieController::createPayment('4.99', $domain);
+            
             return redirect('domeinen');
 
 
         }
         
+    }
+
+    public function payed(Request $request){
+        $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinnaam te registeren. Dit kan 24u duren.');
+        return redirect('domeinen');
     }
 }

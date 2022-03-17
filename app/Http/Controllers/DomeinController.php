@@ -10,6 +10,8 @@ class DomeinController extends Controller
 {
     public function domeinen(){
         $orders = Order::where('user_id', Auth::id())->get();
+
+        
         
         foreach($orders as $order){
             if($order->payed){

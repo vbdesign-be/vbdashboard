@@ -21,7 +21,7 @@ class MollieController extends Controller
                 'value' => $price
             ],
             'description' => 'aankoop domeinnaam: '.$domeinnaam,
-            'redirectUrl' => 'https://vbdashboard.test/domeinen',
+            'redirectUrl' => 'https://vbdashboard.test/payed',
             'metadata' => [
                 'order_id' => '12345',
           ]
