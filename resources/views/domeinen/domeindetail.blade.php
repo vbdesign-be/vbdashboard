@@ -82,7 +82,7 @@
                     <td>
                       <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">active</span>
                     </td>
-                    <td><a class="emailDeleteBtn" href="">verwijder button</a></td>
+                    <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="jonathan@vbdesign.be"><input type="submit" value="verwijder btn"></form></td>
                   </tr>
                 </tbody>
                 </table>

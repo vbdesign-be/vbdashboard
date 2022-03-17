@@ -75,35 +75,21 @@ emailAddBtn.addEventListener('click', (e) => {
 
 //emaildelete
 
-let emails = document.querySelectorAll('#emailBoxes');
+// let emails = document.querySelectorAll('#emailBoxes');
 
-emails.forEach((email) => {
+// emails.forEach((email) => {
 
-    let deleteBtn = email.querySelector('.emailDeleteBtn');
-    deleteBtn.addEventListener('click', (e) => {
-        e.preventDefault();
+//     let deleteBtn = email.querySelector('.emailDeleteBtn');
+//     deleteBtn.addEventListener('click', (e) => {
+//         e.preventDefault();
         
-        //formdata verzenden;
-        let formData =  new FormData();
+//         //formdata verzenden;
+        
 
-        formData.append('email', 'jonathan_verhaegen@hotmail.com');
+//             //email.classList.add('hidden');
 
-        fetch('/domein/email/delete', {
-            method: 'POST',
-            body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Success:', result);
-            })
-            .catch(error => {
-            console.error('Error:', error);
-            });
-
-            email.classList.add('hidden');
-
-    });
-})
+//     });
+// })
 
 
 

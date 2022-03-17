@@ -2109,28 +2109,15 @@ emailAddBtn.addEventListener('click', function (e) {
   emailAdd.classList.remove('hidden');
   window.location.href = '#emailAdd';
 }); //emaildelete
-
-var emails = document.querySelectorAll('#emailBoxes');
-emails.forEach(function (email) {
-  var deleteBtn = email.querySelector('.emailDeleteBtn');
-  deleteBtn.addEventListener('click', function (e) {
-    e.preventDefault(); //formdata verzenden;
-
-    var formData = new FormData();
-    formData.append('email', 'jonathan_verhaegen@hotmail.com');
-    fetch('/domein/email/delete', {
-      method: 'POST',
-      body: formData
-    }).then(function (response) {
-      return response.json();
-    }).then(function (result) {
-      console.log('Success:', result);
-    })["catch"](function (error) {
-      console.error('Error:', error);
-    });
-    email.classList.add('hidden');
-  });
-});
+// let emails = document.querySelectorAll('#emailBoxes');
+// emails.forEach((email) => {
+//     let deleteBtn = email.querySelector('.emailDeleteBtn');
+//     deleteBtn.addEventListener('click', (e) => {
+//         e.preventDefault();
+//         //formdata verzenden;
+//             //email.classList.add('hidden');
+//     });
+// })
 
 /***/ }),
 
