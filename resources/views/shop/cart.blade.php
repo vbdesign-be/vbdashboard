@@ -77,7 +77,7 @@
                 <tbody>
                 <form class="domainForm" method="post" action="/shop/buy/domain">
                 @csrf
-                  <tr id="winkelmandje" class="offerte text-xs bg-gray-50">
+                  <tr id="winkelmandje" class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium"><div>{{ $domain }}<input class="domein" name="domain" type="hidden" value="{{$domain}}"></div></td>
                     <td class="font-medium">1 jaar</td>
                     <td class="font-medium">1 x €4.99</td>

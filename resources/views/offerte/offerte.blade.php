@@ -78,7 +78,7 @@
                 <tbody>
                 @for($x = 0; $x < count($offertes); $x++)
                 @foreach($offertes[$x] as $f)
-                    <tr class="offerte text-xs bg-gray-50">
+                    <tr class="table__item text-xs bg-gray-50">
                       <td class="flex items-center py-4 px-6 font-medium">
                         <p>{{ $f->title }}</p>
                       </td>
