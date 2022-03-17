@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -14,6 +15,7 @@ class MollieController extends Controller
     }
 
     public static function createPayment($price, $domeinnaam){
+        $order = Order::where('domain', $domeinnaam)->first();
         $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
         $data = [
             'amount' => [
@@ -21,9 +23,9 @@ class MollieController extends Controller
                 'value' => $price
             ],
             'description' => 'aankoop domeinnaam: '.$domeinnaam,
-            'redirectUrl' => 'https://vbdashboard.test/payed',
+            'redirectUrl' => 'https://vbdashboard.test/payed?order_id='.$order->id,
             'metadata' => [
-                'order_id' => '12345',
+                'order_id' => $order->id,
           ]
         ];
 

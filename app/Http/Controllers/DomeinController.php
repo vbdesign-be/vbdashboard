@@ -11,7 +11,7 @@ class DomeinController extends Controller
     public function domeinen(){
         $orders = Order::where('user_id', Auth::id())->get();
 
-        
+
         
         foreach($orders as $order){
             if($order->payed){
@@ -19,7 +19,11 @@ class DomeinController extends Controller
             }
         }
         
+        if(!empty($data['orders'])){
+            return view('domeinen/domeinen', $data);
+        }else{
+            return view('domeinen/domeinen');
+        }
         
-        return view('domeinen/domeinen', $data);
     }
 }

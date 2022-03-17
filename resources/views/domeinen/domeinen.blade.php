@@ -77,15 +77,17 @@
                   <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">E-mailbox</th><th class="pb-3 font-medium">Status</th></tr>
                 </thead>
                 <tbody>
+                  @if(!empty($orders))
                   @foreach($orders as $order)
                   <tr class="table__item text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">SR2451EW32</td>
-                    <td class="font-medium">08.04.2021</td>
+                    <td class="py-5 px-6 font-medium">{{ $order->domain }}</td>
+                    <td class="font-medium">geen emailbox</td>
                     <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">Completed</span>
+                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $order->status }}</span>
                     </td>
                   </tr>
                   @endforeach
+                  @endif
                 </tbody>
               </table>
               
