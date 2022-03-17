@@ -87,4 +87,12 @@ class ShopController extends Controller
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinnaam te registeren. Dit kan 24u duren.');
         return redirect('domeinen');
     }
+
+    public function buyEmail(Request $request){
+        $email = $request->input('emailbox');
+        
+        $front = strtok($email, '@');
+
+        dd($front);
+    }
 }

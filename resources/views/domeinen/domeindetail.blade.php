@@ -78,7 +78,7 @@
                 <tbody>
                   <tr id="emailBoxes" class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">info@test.be</td>
-                    <td class="font-medium">test.be</td>
+                    <td class="font-medium">{{$domain}}</td>
                     <td>
                       <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">active</span>
                     </td>
@@ -105,7 +105,21 @@
 
       <section id="emailAdd" class="py-8 hidden">
           <div class="container px-4 mx-auto">
-            <h1>blablabla</h1>
+          <form class="mt-6 px-6 pb-6 pt-4 bg-white shadow rounded" action="/shop/buy/email" method="post">
+          @csrf
+            
+      
+            <p class=" my-6 text-center emailAddTitle text-base">Emailadress toevoegen aan {{ $domain }}</p>
+      
+            <div class="container px-4 mx-auto w-6/12">
+            <div class="">
+              <input class="block w-full px-4 py-3  text-sm placeholder-gray-500 bg-white border rounded" type="text" name="emailbox" placeholder="{{$placeholder}}">
+            </div>
+            <div class="form__btn">
+            <button class=" inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">toevoegen</button>
+            </div>
+          </div>
+          </form>
           </div>
       </section>
     </div>

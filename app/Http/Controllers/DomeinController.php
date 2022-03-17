@@ -27,8 +27,10 @@ class DomeinController extends Controller
         
     }
 
-    public function detail($domein){
-         return view('domeinen/domeindetail');
+    public function detail($domain){
+        $data['domain'] = $domain;
+        $data['placeholder'] = "info@".$domain;
+         return view('domeinen/domeindetail', $data);
     }
 
     public function deleteEmail(Request $request){
