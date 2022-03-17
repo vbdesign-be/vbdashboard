@@ -1,0 +1,1 @@
+<span class="inline-block py-1 px-2 text-white bg-{{$color}}-500 rounded-full">{{$slot}}</span>

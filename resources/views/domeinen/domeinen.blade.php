@@ -83,8 +83,26 @@
                     <td class="py-5 px-6 font-medium">{{ $order->domain }}</td>
                     <td class="font-medium">geen emailbox</td>
                     <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $order->status }}</span>
+                    @if($order->status === "lost")
+                          @component('components/domainstatus')
+                            @slot('color') red @endslot
+                              {{$order->status}}
+                          @endcomponent
+                        @endif
+                        @if($order->status === "won")
+                          @component('components/domainstatus')
+                            @slot('color') green @endslot
+                              {{$order->status}}
+                          @endcomponent
+                        @endif
+                        @if($order->status === "pending")
+                          @component('components/domainstatus')
+                            @slot('color') orange @endslot
+                              {{$order->status}}
+                          @endcomponent
+                        @endif
                     </td>
+                    <td><a href="domein/{{$order->domain}}">bewerk knopje</a></td>
                   </tr>
                   @endforeach
                   @endif

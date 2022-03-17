@@ -26,4 +26,8 @@ class DomeinController extends Controller
         }
         
     }
+
+    public function detail($domein){
+        dd($domein);
+    }
 }

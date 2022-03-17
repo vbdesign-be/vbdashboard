@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //domeinen
     Route::get('/domeinen', [DomeinController::class, "domeinen"]);
+    Route::get('/domein/{domein}', [DomeinController::class, "detail"]);
 
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);
