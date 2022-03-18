@@ -86,17 +86,20 @@ class ShopController extends Controller
     }
 
     public function payed(Request $request){
-        //domein registreren via vimexx
-
         //order aanpassen
         $id = $request->input('order_id');
         $order = Order::where('id', $id)->first();
         $order->payed = 1;
         $order->status = "pending";
         $order->save();
+
+        //domeinnaam registeren via vimexx
+        $vimexx = new Vimexx();
+        // $res = $vimexx->registerDomain($order->domain);
+        // dd($res);
         
         //message en redirect
-        $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinnaam te registeren. Dit kan 24u duren.');
+        $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
         return redirect('domeinen');
     }
 

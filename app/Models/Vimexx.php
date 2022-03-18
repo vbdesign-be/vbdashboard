@@ -384,7 +384,7 @@ class Vimexx extends Model
 
         if (!$response['result']) {
             $this->Error[] = $response['message'];
-            return false;
+            return $response['message'];
         } else {
             return array(
                 'Domain' => $domainName,
