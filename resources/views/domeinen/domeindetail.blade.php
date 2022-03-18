@@ -76,18 +76,20 @@
                   <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Email</th><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">Status</th></tr>
                 </thead>
                 <tbody>
-                  
+                  @if(!empty($emails))
+                  @foreach($emails as $email)
                   <tr id="emailBoxes" class="table__item text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">info@test.be</td>
+                    <td class="py-5 px-6 font-medium">{{$email->email}}</td>
                     <td class="font-medium">{{$domain}}</td>
                     <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">active</span>
+                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $email->status }}</span>
                     </td>
-                    <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="jonathan@vbdesign.be"><input type="submit" value="verwijder btn"></form></td>
+                    <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="{{$email->email}}"><input type="submit" value="verwijder btn"></form></td>
                   </tr>
                 </tbody>
+                  @endforeach
+                  @endif
                 </table>
-
                 <div class="form__btn">
                 <a class="emailAddBtn inline-flex items-center py-2 px-3 rounded text-xs text-white bg-indigo-500 hover:bg-indigo-600 rounded" href="#">
                 <span class="mr-1">

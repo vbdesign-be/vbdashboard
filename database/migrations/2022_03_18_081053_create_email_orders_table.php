@@ -13,12 +13,12 @@ class CreateEmailordersTable extends Migration
      */
     public function up()
     {
-        Schema::create('emailorders', function (Blueprint $table) {
+        Schema::create('email_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id');
             $table->string('email');
             $table->string('status')->nullable();
-            $table->boolean('payed');
+            $table->boolean('payed')->nullable();
             $table->timestamps();
         });
     }

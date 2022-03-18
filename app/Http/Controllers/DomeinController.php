@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailOrder;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,20 +30,24 @@ class DomeinController extends Controller
 
     public function detail($domain){
         //order ophalen met dat domein
-
-        $order = Order::where('domain', $domain)->first();
-        dd($order);
-
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
         //order ophalen van de emailboxen met dat domein
-
+        $emails = EmailOrder::where('order_id', $order->id)->get();
         //enkel de betaalde emailboxen
-
-        //checken op user_id
-
-        //data versturen
         
+        foreach($emails as $email){
+            if($email->payed === 1){
+                $emailsPayed [] = $email;
+            }
+        }
+        if(!empty($emailsPayed)){
+            $data['emails'] = $emailsPayed;
+        }else{
+            $data['emails'] = "";
+        }
+        $data['domain'] = $order->domain;
         $data['placeholder'] = "info@".$domain;
-         return view('domeinen/domeindetail', $data);
+        return view('domeinen/domeindetail', $data);
     }
 
     public function deleteEmail(Request $request){
