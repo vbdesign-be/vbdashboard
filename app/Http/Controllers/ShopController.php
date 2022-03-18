@@ -100,6 +100,18 @@ class ShopController extends Controller
         return redirect('domeinen');
     }
 
+    public function payedEmail(Request $request){
+        $emailOrderId = $request->input('emailorder_id');
+        $emailOrder = EmailOrder::find($emailOrderId);
+        $emailOrder->payed = 1;
+        $emailOrder->status = "pending";
+        $emailOrder->save();
+
+        $order = Order::find($emailOrder->order_id);
+        $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je emailbox te registeren. Dit kan 24u duren.');
+        return redirect('domein/'.$order->domain);
+    }
+
     public function buyEmail(Request $request){
         $credentials = $request->validate([
             'emailbox' => 'email|max:255',
@@ -136,8 +148,7 @@ class ShopController extends Controller
         MollieController::createPaymentEmail('4.99', $front."@".$domain);
 
 
-        //order op payed zetten en pending
-
+        
 
     }
 }

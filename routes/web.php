@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
     Route::post('/shop/buy/email', [ShopController::class, "buyEmail"]);
     Route::get('/payed', [ShopController::class, "payed"]);
+    Route::get('/payedEmail', [ShopController::class, "payedEmail"]);
 
     //domeinen
     Route::get('/domeinen', [DomeinController::class, "domeinen"]);
