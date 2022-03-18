@@ -112,11 +112,12 @@
           @csrf
             
       
-            <p class=" my-6 text-center emailAddTitle text-base">Emailadress toevoegen aan {{ $domain }}</p>
+            <p class=" my-6 text-center emailAddTitle text-base">Emailbox toevoegen aan {{ $domain }}</p>
       
             <div class="container px-4 mx-auto w-6/12">
             <div class="">
               <input class="block w-full px-4 py-3  text-sm placeholder-gray-500 bg-white border rounded" type="text" name="emailbox" placeholder="{{$placeholder}}">
+              <input type="hidden" name="domain" value="{{$domain}}">
             </div>
             <div class="form__btn">
             <button class=" inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">toevoegen</button>

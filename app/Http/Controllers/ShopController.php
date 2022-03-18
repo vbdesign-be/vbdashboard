@@ -103,10 +103,13 @@ class ShopController extends Controller
     }
 
     public function buyEmail(Request $request){
+        $credentials = $request->validate([
+            'emailbox' => 'email|max:255',
+        ]);
         $email = $request->input('emailbox');
-        
+        $domain = $request->input('domain');
         $front = strtok($email, '@');
 
-        dd($front);
+        dd($front."@".$domain);
     }
 }
