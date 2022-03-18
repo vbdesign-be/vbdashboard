@@ -149,9 +149,12 @@ class ShopController extends Controller
         };
     if(in_array('bestaat al' , $check)){
         //email gewoon toevoegen via qboxmail
+        QboxController::makeEmail($front);
     }else{
         //domain toevoegen aan qboxmail
+        QboxController::makeDomain($domain);
         //emailbox toevoegen
+        QboxController::makeEmail($front);
     }
 
         //order maken in de emailorders

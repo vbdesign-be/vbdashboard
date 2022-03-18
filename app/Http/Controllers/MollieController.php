@@ -61,4 +61,6 @@ class MollieController extends Controller
         exit;
 
     }
+
+    
 }
