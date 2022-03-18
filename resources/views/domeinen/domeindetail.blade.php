@@ -82,7 +82,24 @@
                     <td class="py-5 px-6 font-medium">{{$email->email}}</td>
                     <td class="font-medium">{{$domain}}</td>
                     <td>
-                      <span class="inline-block py-1 px-2 text-white bg-green-500 rounded-full">{{ $email->status }}</span>
+                    @if($email->status === "offline")
+                          @component('components/domainstatus')
+                            @slot('color') red @endslot
+                              {{$email->status}}
+                          @endcomponent
+                        @endif
+                        @if($email->status === "active")
+                          @component('components/domainstatus')
+                            @slot('color') green @endslot
+                              {{$email->status}}
+                          @endcomponent
+                        @endif
+                        @if($email->status === "pending")
+                          @component('components/domainstatus')
+                            @slot('color') orange @endslot
+                              {{$email->status}}
+                          @endcomponent
+                        @endif
                     </td>
                     <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="{{$email->email}}"><input type="submit" value="verwijder btn"></form></td>
                   </tr>

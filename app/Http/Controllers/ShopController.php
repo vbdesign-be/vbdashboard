@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailOrder;
 use App\Models\Order;
 use App\Models\Vimexx;
 use Illuminate\Http\Request;
@@ -110,6 +111,34 @@ class ShopController extends Controller
         $domain = $request->input('domain');
         $front = strtok($email, '@');
 
-        dd($front."@".$domain);
+        
+
+        //checken of de emailbox al bestaat
+
+        $emailOrder = EmailOrder::where('email', $front."@".$domain)->first();
+
+        //checken of email nog beschikbaar is
+        if(!empty($emailOrder)){
+            $request->session()->flash('error', $emailOrder->email.' is al in benadeling');
+            return redirect('domein/'.$domain);
+        }
+        //checken of email nog beschikbaar is in qbox
+        //api call
+
+        //order maken in de emailorders
+            //order id van domein weten
+            $res = Order::where('domain', $domain)->first();
+        $order = new EmailOrder();
+        $order->order_id = $res->id;
+        $order->email = $front."@".$domain;
+        $order->status = "pending";
+        $order->save();
+
+
+        //payment creeren
+
+        //order op payed zetten en pending
+
+
     }
 }
