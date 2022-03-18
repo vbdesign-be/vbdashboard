@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);
+    Route::get('/home', [ProjectController::class, "projects"]);
     Route::post('/project/addBugfix', [ProjectController::class, 'addBugfix']);
     Route::get('/project/bugfix/{id}', [ProjectController::class, 'bugfix']);
     Route::get('/project/{id}', [ProjectController::class, 'detail']);

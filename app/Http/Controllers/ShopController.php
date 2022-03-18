@@ -21,7 +21,18 @@ class ShopController extends Controller
             'domeinnaam' => 'required|max:255',
         ]);
 
-        $domain = $request->input('domeinnaam');
+    
+        $input = $request->input('domeinnaam');
+        if(strtok($input, '.') === "www"){
+            $domain = substr($input, strpos($input, ".") + 1); 
+        }else{
+            $domain = $input;
+        }
+
+        dd($domain);
+
+        
+
 
         if(str_ends_with($domain, ".be")){
             $data["domain"] = $domain;
