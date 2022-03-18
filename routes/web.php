@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 
-Route::get('/test', [QboxController::class, "getAllDomains"]);
+// Route::get('/test', [QboxController::class, "getAllDomains"]);
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');

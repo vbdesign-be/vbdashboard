@@ -126,8 +126,6 @@ class ShopController extends Controller
         $domain = $request->input('domain');
         $front = strtok($email, '@');
 
-        
-
         //checken of de emailbox al bestaat
 
         $emailOrder = EmailOrder::where('email', $front."@".$domain)->first();
@@ -139,6 +137,22 @@ class ShopController extends Controller
         }
         //checken of email nog beschikbaar is in qbox
         //api call
+
+        $emailDomains = QboxController::getAllDomains();
+        
+        foreach($emailDomains as $edomain){
+            if($edomain->name === $domain){
+                $check [] = "bestaat al";
+            }else{
+                $check [] = "bestaat niet";
+            }
+        };
+    if(in_array('bestaat al' , $check)){
+        //email gewoon toevoegen via qboxmail
+    }else{
+        //domain toevoegen aan qboxmail
+        //emailbox toevoegen
+    }
 
         //order maken in de emailorders
             //order id van domein weten
