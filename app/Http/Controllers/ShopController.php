@@ -101,6 +101,9 @@ class ShopController extends Controller
     }
 
     public function payedEmail(Request $request){
+        //email aanvragen via qboxmail
+
+        //emailOrder aanpassen
         $emailOrderId = $request->input('emailorder_id');
         $emailOrder = EmailOrder::find($emailOrderId);
         $emailOrder->payed = 1;

@@ -11,9 +11,6 @@ class DomeinController extends Controller
 {
     public function domeinen(){
         $orders = Order::where('user_id', Auth::id())->get();
-
-
-        
         foreach($orders as $order){
             if($order->payed){
                 $data['orders'][] = $order;
@@ -31,6 +28,9 @@ class DomeinController extends Controller
     public function detail($domain){
         //order ophalen met dat domein
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
         //order ophalen van de emailboxen met dat domein
         $emails = EmailOrder::where('order_id', $order->id)->get();
         //enkel de betaalde emailboxen
