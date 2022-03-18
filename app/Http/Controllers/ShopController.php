@@ -67,9 +67,6 @@ class ShopController extends Controller
     public function buyDomain(Request $request){
         
         $domain = $request->input("domain");
-
-       
-
         if(!empty($domain)){
 
             $order = new Order();
@@ -136,6 +133,8 @@ class ShopController extends Controller
 
 
         //payment creeren
+        MollieController::createPaymentEmail('4.99', $front."@".$domain);
+
 
         //order op payed zetten en pending
 
