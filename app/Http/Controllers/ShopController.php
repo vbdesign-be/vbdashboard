@@ -29,10 +29,13 @@ class ShopController extends Controller
             $domain = $input;
         }
 
-        dd($domain);
+        $order = Order::where('domain', $domain)->first();
 
-        
-
+        if(!empty($order)){
+            $data["domain"] = "";
+            $request->session()->flash('error', $domain.' is al in benadeling');
+            return view('shop/shop', $data);
+        }
 
         if(str_ends_with($domain, ".be")){
             $data["domain"] = $domain;

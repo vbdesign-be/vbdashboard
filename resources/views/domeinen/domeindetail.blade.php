@@ -76,6 +76,7 @@
                   <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Email</th><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">Status</th></tr>
                 </thead>
                 <tbody>
+                  
                   <tr id="emailBoxes" class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">info@test.be</td>
                     <td class="font-medium">{{$domain}}</td>

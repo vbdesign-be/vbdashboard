@@ -74,7 +74,7 @@
             <div class="p-4 overflow-x-auto">
               <table class="table-auto w-full">
                 <thead>
-                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">E-mailbox</th><th class="pb-3 font-medium">Status</th></tr>
+                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">E-mailbox</th><th class="pb-3 font-medium">Status</th><th style="visibility:hidden">bewerk knopjes </th></tr>
                 </thead>
                 <tbody>
                   @if(!empty($orders))
@@ -83,13 +83,13 @@
                     <td class="py-5 px-6 font-medium">{{ $order->domain }}</td>
                     <td class="font-medium">geen emailbox</td>
                     <td>
-                    @if($order->status === "lost")
+                    @if($order->status === "offline")
                           @component('components/domainstatus')
                             @slot('color') red @endslot
                               {{$order->status}}
                           @endcomponent
                         @endif
-                        @if($order->status === "won")
+                        @if($order->status === "active")
                           @component('components/domainstatus')
                             @slot('color') green @endslot
                               {{$order->status}}
@@ -102,7 +102,7 @@
                           @endcomponent
                         @endif
                     </td>
-                    <td><a href="domein/{{$order->domain}}">bewerk knopje</a></td>
+                    <td>@if($order->status === "active")<a href="domein/{{$order->domain}}">bewerk knopje</a>@else<div></div>@endif</td>
                   </tr>
                   @endforeach
                   @endif

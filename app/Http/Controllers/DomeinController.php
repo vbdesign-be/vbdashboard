@@ -30,6 +30,9 @@ class DomeinController extends Controller
     public function detail($domain){
         //order ophalen met dat domein
 
+        $order = Order::where('domain', $domain)->first();
+        dd($order);
+
         //order ophalen van de emailboxen met dat domein
 
         //enkel de betaalde emailboxen
