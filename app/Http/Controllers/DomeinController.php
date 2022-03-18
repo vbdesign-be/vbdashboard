@@ -28,7 +28,16 @@ class DomeinController extends Controller
     }
 
     public function detail($domain){
-        $data['domain'] = $domain;
+        //order ophalen met dat domein
+
+        //order ophalen van de emailboxen met dat domein
+
+        //enkel de betaalde emailboxen
+
+        //checken op user_id
+
+        //data versturen
+        
         $data['placeholder'] = "info@".$domain;
          return view('domeinen/domeindetail', $data);
     }
