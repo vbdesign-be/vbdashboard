@@ -15,6 +15,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
 use App\Http\Controllers\cloudflareController;
+use App\Http\Controllers\CloudflareController as ControllersCloudflareController;
 use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\QboxController;
 use App\Http\Controllers\VimexxController;
@@ -34,7 +35,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 
-// Route::get('/test', [QboxController::class, "getAllDomains"]);
+Route::get('/test', [ControllersCloudflareController::class, "test"]);
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class cloudflareController extends Controller
+class CloudflareController extends Controller
 {
     public function test(){
-
+        dd('jiplaaa');
     }
 }
