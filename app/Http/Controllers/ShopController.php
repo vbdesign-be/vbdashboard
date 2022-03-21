@@ -149,20 +149,26 @@ class ShopController extends Controller
         };
     if(in_array('bestaat al' , $check)){
         //email gewoon toevoegen via qboxmail
-        QboxController::makeEmail($front);
+        $order = Order::where('domain', $domain)->first();
+        $resource_code = $order->resource_code;
+        QboxController::makeEmail($front, $resource_code);
     }else{
         //domain toevoegen aan qboxmail
-        QboxController::makeDomain($domain);
+        $resource_code = QboxController::makeDomain($domain);
+        $order = Order::where('domain', $domain)->first();
+        $order->resource_code = $resource_code;
+        $order->save();
         //emailbox toevoegen
-        QboxController::makeEmail($front);
+        QboxController::makeEmail($front, $resource_code);
     }
 
         //order maken in de emailorders
             //order id van domein weten
-            $res = Order::where('domain', $domain)->first();
+        $res = Order::where('domain', $domain)->first();
         $order = new EmailOrder();
         $order->order_id = $res->id;
         $order->email = $front."@".$domain;
+        $order->recource_code = $resource_code;
         $order->status = "pending";
         $order->save();
 
