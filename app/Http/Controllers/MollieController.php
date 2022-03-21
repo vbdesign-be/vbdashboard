@@ -39,7 +39,7 @@ class MollieController extends Controller
         
     }
 
-    public static function createPaymentEmail($price, $email){
+    public static function createPaymentEmail($price, $email, $front, $password){
         $emailOrder = EmailOrder::where('email', $email)->first();
         $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
         $data = [
@@ -48,7 +48,7 @@ class MollieController extends Controller
                 'value' => $price
             ],
             'description' => 'aankoop emailbox: '.$email,
-            'redirectUrl' => 'https://vbdashboard.test/payedEmail?emailorder_id='.$emailOrder->id,
+            'redirectUrl' => 'https://vbdashboard.test/payedEmail?emailorder_id='.$emailOrder->id.'&front='.$front.'&password='.$password,
             'metadata' => [
                 'type' => 'EmailOrder',
                 'emailOrder_id' => $emailOrder->id,

@@ -99,27 +99,85 @@ class ShopController extends Controller
         // dd($res);
 
         //domeinnaam reistreren via cloudflare
-        // $cloudflare = CloudflareController::createZone($order->domain);
-        
+        $cloudflare = CloudflareController::createZone($order->domain);
+
         //message en redirect
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
         return redirect('domeinen');
     }
 
     public function payedEmail(Request $request){
-        
-
         //emailOrder aanpassen
         $emailOrderId = $request->input('emailorder_id');
+        $front = $request->input('front');
+        $password = $request->input('password');
         $emailOrder = EmailOrder::find($emailOrderId);
         $emailOrder->payed = 1;
         $emailOrder->status = "pending";
         $emailOrder->save();
 
+        
+
         $order = Order::find($emailOrder->order_id);
+        //pas hier de logica toepassen van na de aankoop
+
+        //checken of email nog beschikbaar is in qbox
+        //api call
+        $emailDomains = QboxController::getAllDomains();
+        
+        foreach($emailDomains as $edomain){
+            if($edomain->name === $order->domain){
+                $check [] = "bestaat al";
+            }else{
+                $check [] = "bestaat niet";
+            }
+        };
+
+        if(in_array('bestaat al' , $check)){
+            //email gewoon toevoegen via qboxmail
+            $order = Order::where('domain', $order->domain)->first();
+            $resource_code = $order->resource_code;
+            // QboxController::makeEmail($front, $resource_code, $password);
+        }else{
+            
+            //domain toevoegen aan qboxmail
+            $resource_code = QboxController::makeDomain($order->domain);
+
+            //emailorder opslaan
+            $order->resource_code = $resource_code; 
+            $order->save();
+            //emailbox toevoegen
+            // $madeEmail = QboxController::makeEmail($front, $resource_code, $password);
+
+             //toevoegen aan de cloudflare domein
+                //create a cloudflare domein als dat er nog niet is
+                $check = CloudflareController::getOneDomain($order->domain);
+                
+                if(empty($check)){
+                    //informatie tonen zodat mensne die kunnen invullen
+                    $info = "name: ".strtolower($resource_code).".".$order->domain.", ip: 185.97.217.16";
+                    $request->session()->flash('notification', 'We hebben je aankoop goed ontvangen. Vul deze gegevens in bij je domeinaamhost: '.$info);
+                    return redirect('domein/'.$order->domain);
+                }else{
+                    $name = strtolower($resource_code).$order->domain;
+                    $ip = '185.97.217.16';
+                    dd('invullen in de cloudflare');
+                    //invullen op cloudflare
+                    CloudflareController::createDnsRecord('zone', $name, $ip);
+                    //qboxmail check doen
+                    QboxController::checkDns($resource_code);
+
+
+
+                }
+                //alle info in dat cloudflare domein zetten
+        }
+
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je emailbox te registeren. Dit kan 24u duren.');
         return redirect('domein/'.$order->domain);
     }
+
+
 
     public function buyEmail(Request $request){
         $credentials = $request->validate([
@@ -142,41 +200,9 @@ class ShopController extends Controller
             return redirect('domein/'.$domain);
         }
         
-        //checken of email nog beschikbaar is in qbox
-        //api call
-        $emailDomains = QboxController::getAllDomains();
-        
-        foreach($emailDomains as $edomain){
-            if($edomain->name === $domain){
-                $check [] = "bestaat al";
-            }else{
-                $check [] = "bestaat niet";
-            }
-        };
-
-        if(in_array('bestaat al' , $check)){
-            //email gewoon toevoegen via qboxmail
-            $order = Order::where('domain', $domain)->first();
-            $resource_code = $order->resource_code;
-            QboxController::makeEmail($front, $resource_code, $password);
-        }else{
-            //domain toevoegen aan qboxmail
-            $resource_code = QboxController::makeDomain($domain);
-
-            //toevoegen aan de cloudflare domein
-
-
-            //emailorder opslaan
-            $order = Order::where('domain', $domain)->first();
-            $order->resource_code = $resource_code;
-            $order->save();
-            //emailbox toevoegen
-            QboxController::makeEmail($front, $resource_code, $password);
-        }
-
         //order maken in de emailorders
             //order id van domein weten
-        $res = Order::where('domain', $domain)->first();
+            $res = Order::where('domain', $domain)->first();
         $order = new EmailOrder();
         $order->order_id = $res->id;
         $order->email = $front."@".$domain;
@@ -184,6 +210,6 @@ class ShopController extends Controller
         $order->save();
         
         //payment creeren
-        MollieController::createPaymentEmail('4.99', $front."@".$domain, $domain, $email, $password);
+        MollieController::createPaymentEmail('4.99', $front."@".$domain, $front, $password);
     }
 }

@@ -35,8 +35,9 @@ use Illuminate\Support\Facades\Storage;
 */
 
 
-Route::get('/test', [ControllersCloudflareController::class, "test"]);
-Route::get('/test2', [ControllersCloudflareController::class, "getOneDomain"]);
+// Route::post('/test', [ShopController::class, "payedEmail"]);
+Route::get('/test', [cloudflareController::class, "getOneDomain"]);
+
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
