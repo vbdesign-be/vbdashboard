@@ -120,9 +120,12 @@ class ShopController extends Controller
 
     public function buyEmail(Request $request){
         $credentials = $request->validate([
-            'emailbox' => 'email|max:255',
+            'emailbox' => 'required|email|max:255',
+            'password' => 'required|confirmed|min:8',
+
         ]);
         $email = $request->input('emailbox');
+        $password = $request->input('password');
         $domain = $request->input('domain');
         $front = strtok($email, '@');
 
@@ -147,20 +150,21 @@ class ShopController extends Controller
                 $check [] = "bestaat niet";
             }
         };
-    if(in_array('bestaat al' , $check)){
-        //email gewoon toevoegen via qboxmail
-        $order = Order::where('domain', $domain)->first();
-        $resource_code = $order->resource_code;
-        QboxController::makeEmail($front, $resource_code);
-    }else{
-        //domain toevoegen aan qboxmail
-        $resource_code = QboxController::makeDomain($domain);
-        $order = Order::where('domain', $domain)->first();
-        $order->resource_code = $resource_code;
-        $order->save();
-        //emailbox toevoegen
-        QboxController::makeEmail($front, $resource_code);
-    }
+
+        if(in_array('bestaat al' , $check)){
+            //email gewoon toevoegen via qboxmail
+            $order = Order::where('domain', $domain)->first();
+            $resource_code = $order->resource_code;
+            QboxController::makeEmail($front, $resource_code, $password);
+        }else{
+            //domain toevoegen aan qboxmail
+            $resource_code = QboxController::makeDomain($domain);
+            $order = Order::where('domain', $domain)->first();
+            $order->resource_code = $resource_code;
+            $order->save();
+            //emailbox toevoegen
+            QboxController::makeEmail($front, $resource_code, $password);
+        }
 
         //order maken in de emailorders
             //order id van domein weten
@@ -168,16 +172,10 @@ class ShopController extends Controller
         $order = new EmailOrder();
         $order->order_id = $res->id;
         $order->email = $front."@".$domain;
-        $order->recource_code = $resource_code;
         $order->status = "pending";
         $order->save();
-
-
+        
         //payment creeren
         MollieController::createPaymentEmail('4.99', $front."@".$domain);
-
-
-        
-
     }
 }
