@@ -97,6 +97,9 @@ class ShopController extends Controller
         $vimexx = new Vimexx();
         // $res = $vimexx->registerDomain($order->domain);
         // dd($res);
+
+        //domeinnaam reistreren via cloudflare
+        // $cloudflare = CloudflareController::createZone($order->domain);
         
         //message en redirect
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
@@ -104,7 +107,7 @@ class ShopController extends Controller
     }
 
     public function payedEmail(Request $request){
-        //email aanvragen via qboxmail
+        
 
         //emailOrder aanpassen
         $emailOrderId = $request->input('emailorder_id');
@@ -138,9 +141,9 @@ class ShopController extends Controller
             $request->session()->flash('error', $emailOrder->email.' is al in benadeling');
             return redirect('domein/'.$domain);
         }
+        
         //checken of email nog beschikbaar is in qbox
         //api call
-
         $emailDomains = QboxController::getAllDomains();
         
         foreach($emailDomains as $edomain){
@@ -159,6 +162,11 @@ class ShopController extends Controller
         }else{
             //domain toevoegen aan qboxmail
             $resource_code = QboxController::makeDomain($domain);
+
+            //toevoegen aan de cloudflare domein
+
+
+            //emailorder opslaan
             $order = Order::where('domain', $domain)->first();
             $order->resource_code = $resource_code;
             $order->save();
@@ -176,6 +184,6 @@ class ShopController extends Controller
         $order->save();
         
         //payment creeren
-        MollieController::createPaymentEmail('4.99', $front."@".$domain);
+        MollieController::createPaymentEmail('4.99', $front."@".$domain, $domain, $email, $password);
     }
 }
