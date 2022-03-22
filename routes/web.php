@@ -35,8 +35,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 
-// Route::post('/test', [ShopController::class, "payedEmail"]);
-Route::get('/test', [cloudflareController::class, "getOneDomain"]);
+
 
 
 
@@ -82,7 +81,8 @@ Route::group(['middleware' => ['auth']], function() {
     //shop
     Route::get('/shop', [ShopController::class, "shop"]);
     Route::post('/shop/search', [ShopController::class, "searchDomain"]);
-    Route::post('/shop/winkelmandje', [ShopController::class, "Cart"]);
+    Route::post('/shop/winkelmandje', [ShopController::class, "cart"]);
+    Route::post('/shop/transfer', [ShopController::class, "cartTransfer"]);
     Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
     Route::post('/shop/buy/email', [ShopController::class, "buyEmail"]);
     Route::get('/payed', [ShopController::class, "payed"]);
