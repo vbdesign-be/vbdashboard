@@ -140,7 +140,7 @@ class ShopController extends Controller
             $order = Order::where('domain', $order->domain)->first();
             $resource_code = $order->resource_code;
             $test = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
-            dd($test);
+            
         }else{
             
             //domain toevoegen aan qboxmail
@@ -168,11 +168,11 @@ class ShopController extends Controller
                     //invullen op cloudflare
                     CloudflareController::createDnsRecord($check[0]->id, $name, $ip);
                     //qboxmail check doen
-                    QboxController::checkDns($resource_code);
-                    sleep(30);
+                    $test = QboxController::checkDns($resource_code);
+                    sleep(40);
                     
-                    $test = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
-                    dd($test);
+                    $resp = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+                    
                 }
                 
         }
