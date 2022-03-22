@@ -266,7 +266,7 @@ class Vimexx extends Model
         ]);
 
         
-        
+        dd($response);
 
         if(!$response['result']) {
             $this->Error[] = $response['message'];
@@ -322,6 +322,8 @@ class Vimexx extends Model
             'tld'   => $domainSplit[1],
             'token' => $authcode
         ]);
+
+        return $response;
 
         if (!$response['result']) {
             $this->Error[] = $response['message'];
@@ -935,6 +937,8 @@ class Vimexx extends Model
     function doPending($domain, $pendingInfo){
 
         $response = $this->request('GET', '/domains/'.$domain);
+
+        dd($response);
 
         if($response['error'])
         {

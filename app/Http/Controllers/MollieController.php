@@ -62,5 +62,26 @@ class MollieController extends Controller
 
     }
 
+    public static function createPaymentTransfer($price, $domain, $code){
+        $order = Order::where('domain', $domain)->first();
+        $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
+        $data = [
+            'amount' => [
+                'currency' => 'EUR',
+                'value' => $price
+            ],
+            'description' => 'verhuis domeinnaam: '.$domain,
+            'redirectUrl' => 'https://vbdashboard.test/payedTransfer?order_id='.$order->id.'&code='.$code,
+            'metadata' => [
+                'type' => 'Order',
+                'order_id' => $order->id,
+          ]
+        ];
+        $res = Http::withToken("test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC")->post('https://api.mollie.com/v2/payments', $data);
+        $ans = json_decode($res->body());
+        header("Location: {$ans->_links->checkout->href}");
+        exit;
+    }
+
     
 }

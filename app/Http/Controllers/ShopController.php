@@ -84,10 +84,6 @@ class ShopController extends Controller
 
             //molliepayment starten
             MollieController::createPayment('4.99', $domain);
-            
-            return redirect('domeinen');
-
-
         }
         
     }
@@ -224,5 +220,47 @@ class ShopController extends Controller
         
         //payment creeren
         MollieController::createPaymentEmail('4.99', $front."@".$domain, $front, $password);
+    }
+
+    public function transferDomain(Request $request){
+        $domain = $request->input("domain");
+        $code = $request->input('code');
+        
+        if(!empty($domain) && !empty($code)){
+
+            $order = new Order();
+            $order->domain = $domain;
+            $order->user_id = Auth::id();
+            $order->payed = false;
+            $order->save();
+
+            //molliepayment starten
+            MollieController::createPaymentTransfer('4.99', $domain, $code);
+        }
+    }
+
+    public function payedTransfer(Request $request){
+        $id = $request->input('order_id');
+        $code = $request->input('code');
+        $order = Order::where('id', $id)->first();
+        $order->payed = 1;
+        $order->status = "pending";
+        $order->save();
+
+        //domeinnaam verhuizen
+        $vimexx = new Vimexx();
+        $test = $vimexx->transferDomain($order->domain,'', '', $code);
+
+        //toevoegen aan cloudflare
+        CloudflareController::createZone($order->domain);
+        dd($test);
+        $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinaam te verhuizen. Dit kan 24u duren.');
+        return redirect('domein/'.$order->domain);
+    }
+
+    public function test(){
+        $vimexx = new Vimexx();
+        $test = $vimexx->doPending('vbdesign.be', '');
+        dd($test);
     }
 }

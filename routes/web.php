@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-
+Route::get('/test', [ShopController::class, "test"]);
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
@@ -84,9 +84,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/shop/winkelmandje', [ShopController::class, "cart"]);
     Route::post('/shop/transfer', [ShopController::class, "cartTransfer"]);
     Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
+    Route::post('/shop/transfer/domain', [ShopController::class, "transferDomain"]);
     Route::post('/shop/buy/email', [ShopController::class, "buyEmail"]);
     Route::get('/payed', [ShopController::class, "payed"]);
     Route::get('/payedEmail', [ShopController::class, "payedEmail"]);
+    Route::get('/payedTransfer', [ShopController::class, "payedTransfer"]);
 
     //domeinen
     Route::get('/domeinen', [DomeinController::class, "domeinen"]);
