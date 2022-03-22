@@ -33,32 +33,33 @@ class QboxController extends Controller
         return $data->resource_code;
     }
 
-    public static function makeEmail($email, $code, $password){
-        // $url = 'https://api.qboxmail.com/api/domains/'.$code.'/email_accounts';
-        // $token = 'cdwqFqPa6PQx0Gxab8ytj4JV3dU3abWk4nrZ5FPG-LSD-QTMA0peaEmd6Ah6G9rP';
-        // $data = [
-        //     'name' => $email,
-        //     'password' => $password,
-        //     'password_confirmation' => $password,
-        // ];
-        // $res = Http::withHeaders([
-        //     'X-Api-Token' => $token,
-        // ])->post($url, $data);
+    public static function makeEmail($email, $code, $password, $name){
+        $url = 'https://api.qboxmail.com/api/domains/'.$code.'/email_accounts';
+        $token = 'cdwqFqPa6PQx0Gxab8ytj4JV3dU3abWk4nrZ5FPG-LSD-QTMA0peaEmd6Ah6G9rP';
+        $data = [
+            'name' => $email,
+            'password' => $password,
+            'password_confirmation' => $password,
+            'firstname' => $name
+        ];
+        $res = Http::withHeaders([
+            'X-Api-Token' => $token,
+        ])->post($url, $data);
 
-        // $data = json_decode($res);
-        // dd($data);
-        dd('email gemaakt test');
+        $data = json_decode($res);
+        return $data;
+        
     }
  
     public static function checkDns($code){
-       $url = 'https://api.qboxmail.com/api/domains/'.$code.'/email_accounts';
+       $url = 'https://api.qboxmail.com/api/domains/'.$code.'/dns_ownership_check';
         $token = 'cdwqFqPa6PQx0Gxab8ytj4JV3dU3abWk4nrZ5FPG-LSD-QTMA0peaEmd6Ah6G9rP';
         $res = Http::withHeaders([
             'X-Api-Token' => $token,
         ])->put($url);
 
         $data = json_decode($res);
-        return $data->resource_code;
+        return $data;
     }
 
 }

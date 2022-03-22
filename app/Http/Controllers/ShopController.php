@@ -116,6 +116,8 @@ class ShopController extends Controller
         $emailOrder->status = "pending";
         $emailOrder->save();
 
+        $user = UserController::getUser();
+
         
 
         $order = Order::find($emailOrder->order_id);
@@ -129,7 +131,7 @@ class ShopController extends Controller
             if($edomain->name === $order->domain){
                 $check [] = "bestaat al";
             }else{
-                $check [] = "bestaat niet";
+                $check [] = "bestaat niet"; 
             }
         };
 
@@ -137,7 +139,8 @@ class ShopController extends Controller
             //email gewoon toevoegen via qboxmail
             $order = Order::where('domain', $order->domain)->first();
             $resource_code = $order->resource_code;
-            // QboxController::makeEmail($front, $resource_code, $password);
+            $test = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+            dd($test);
         }else{
             
             //domain toevoegen aan qboxmail
@@ -147,7 +150,7 @@ class ShopController extends Controller
             $order->resource_code = $resource_code; 
             $order->save();
             //emailbox toevoegen
-            // $madeEmail = QboxController::makeEmail($front, $resource_code, $password);
+            
 
              //toevoegen aan de cloudflare domein
                 //create a cloudflare domein als dat er nog niet is
@@ -159,18 +162,19 @@ class ShopController extends Controller
                     $request->session()->flash('notification', 'We hebben je aankoop goed ontvangen. Vul deze gegevens in bij je domeinaamhost: '.$info);
                     return redirect('domein/'.$order->domain);
                 }else{
-                    $name = strtolower($resource_code).$order->domain;
+                    $name = strtolower($resource_code).'.'.$order->domain;
                     $ip = '185.97.217.16';
-                    dd('invullen in de cloudflare');
+                    
                     //invullen op cloudflare
-                    CloudflareController::createDnsRecord('zone', $name, $ip);
+                    CloudflareController::createDnsRecord($check[0]->id, $name, $ip);
                     //qboxmail check doen
                     QboxController::checkDns($resource_code);
-
-
-
+                    sleep(30);
+                    
+                    $test = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+                    dd($test);
                 }
-                //alle info in dat cloudflare domein zetten
+                
         }
 
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je emailbox te registeren. Dit kan 24u duren.');
@@ -189,6 +193,8 @@ class ShopController extends Controller
         $password = $request->input('password');
         $domain = $request->input('domain');
         $front = strtok($email, '@');
+        
+        
 
         //checken of de emailbox al bestaat
 
