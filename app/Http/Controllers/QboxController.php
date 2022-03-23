@@ -73,4 +73,15 @@ class QboxController extends Controller
         return $data->resources[0]->txt_record;
     }
 
+    public static function verifyMX($code){
+        $url = 'https://api.qboxmail.com/api/domains/'.$code.'/dns';
+        $token = 'cdwqFqPa6PQx0Gxab8ytj4JV3dU3abWk4nrZ5FPG-LSD-QTMA0peaEmd6Ah6G9rP';
+        $res = Http::withHeaders([
+            'X-Api-Token' => $token,
+        ])->put($url);
+
+        $data = json_decode($res);
+        return $data;
+    }
+
 }

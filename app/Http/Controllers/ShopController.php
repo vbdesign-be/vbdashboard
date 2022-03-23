@@ -142,7 +142,9 @@ class ShopController extends Controller
             //email gewoon toevoegen via qboxmail
             $order = Order::where('domain', $order->domain)->first();
             $resource_code = $order->resource_code;
-            $test = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+            QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+            $emailOrder->status = "active";
+            $emailOrder->save();
             
         }else{
             
@@ -162,6 +164,7 @@ class ShopController extends Controller
                 if(empty($check)){
                     //informatie tonen zodat mensne die kunnen invullen
                     $info = "name: ".strtolower($resource_code).".".$order->domain.", ip: 185.97.217.16";
+                    //de juiste informatie weergeven
                     $request->session()->flash('notification', 'We hebben je aankoop goed ontvangen. Vul deze gegevens in bij je domeinaamhost: '.$info);
                     return redirect('domein/'.$order->domain);
                 }else{
@@ -180,14 +183,12 @@ class ShopController extends Controller
                     CloudflareController::createSPFRecord($check[0]->id);
                     CloudflareController::createDKIMRecord($check[0]->id, $record);
                     CloudflareController::createDMARCRecord($check[0]->id);
-                    
                     QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
-                    
+                    QboxController::verifyMX(strtolower($resource_code));
                     $emailOrder->status = "active";
                     $emailOrder->save();
                     
                 }
-                
         }
 
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je emailbox te registeren. Dit kan 24u duren.');
