@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Auth;
 class SupportController extends Controller
 {
     public function support(){
+        return view('support/support');
+    }
 
+    public function faq(){
         $faqs = Faq::get();
         $data['faqs'] = $faqs;
-        return view('support/support', $data);
+        return view('support/faq', $data);
     }
 
     public function askQuestion(){

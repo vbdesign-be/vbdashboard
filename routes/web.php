@@ -99,7 +99,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
 
     //support
-    Route::get('/faq', [SupportController::class, "support"]);
+    Route::get('/support', [SupportController::class, "support"]);
+    Route::get('/support/faq', [SupportController::class, "faq"]);
+
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);
     Route::get('/status', [SupportController::class, "status"]);
