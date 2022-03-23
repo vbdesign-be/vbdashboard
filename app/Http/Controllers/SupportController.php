@@ -43,7 +43,6 @@ class SupportController extends Controller
         $question->save();
 
         $request->session()->flash('message', "We hebben je vraag goed ontvangen en beantwoorden hem zo snel mogelijk");
-
         return redirect('/status');
 
 
