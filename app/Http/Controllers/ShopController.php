@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\checkDnsINfo;
 use App\Models\EmailOrder;
 use App\Models\Order;
 use App\Models\Vimexx;
@@ -173,20 +174,8 @@ class ShopController extends Controller
 
                     //invullen op cloudflare
                     CloudflareController::createDnsRecord($check[0]->id, $name, $ip);
-                    sleep(20);
-                    //qboxmail check doen
-                    QboxController::checkDns(strtolower($resource_code));
-                    sleep(40);
-                    $record = QboxController::getDKIM(strtolower($resource_code));
-                    CloudflareController::createMXRecord($check[0]->id, 1);
-                    CloudflareController::createMXRecord($check[0]->id, 2);
-                    CloudflareController::createSPFRecord($check[0]->id);
-                    CloudflareController::createDKIMRecord($check[0]->id, $record);
-                    CloudflareController::createDMARCRecord($check[0]->id);
-                    QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
-                    QboxController::verifyMX(strtolower($resource_code));
-                    $emailOrder->status = "active";
-                    $emailOrder->save();
+                    //qboxmail check doen liefts async
+                    $this->dispatch(new checkDnsINfo($resource_code, $check, $front, $password, $user, $emailOrder));
                     
                 }
         }
@@ -269,9 +258,5 @@ class ShopController extends Controller
         return redirect('domein/'.$order->domain);
     }
 
-    public function test(){
-        $vimexx = new Vimexx();
-        $test = $vimexx->doPending('vbdesign.be', '');
-        dd($test);
-    }
+    
 }
