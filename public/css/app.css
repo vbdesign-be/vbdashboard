@@ -191,6 +191,28 @@ input[type=file] {
   color: #ffffff;
 }
 
+.titlecard:hover {
+  -webkit-animation: scale 0.4s forwards ease;
+          animation: scale 0.4s forwards ease;
+}
+
+@-webkit-keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.1);
+  }
+}
+
+@keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.1);
+  }
+}
 * {
   box-sizing: border-box;
 }

@@ -1,0 +1,9 @@
+.titlecard:hover{
+    animation: scale 0.4s forwards ease;
+}
+
+
+@keyframes scale {
+    0% { -webkit-transform: scale(1) }
+    100% { -webkit-transform: scale(1.1) }
+  }

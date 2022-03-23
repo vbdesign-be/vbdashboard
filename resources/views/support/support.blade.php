@@ -18,7 +18,9 @@
         </div>
 
 
-        <section class="py-8"><div class="container px-4 mx-auto">
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
+
           <div class="mb-8 p-8 bg-indigo-500 rounded">
             <div class="flex flex-wrap items-center -mx-4">
               <div class="w-full lg:w-2/3 px-4">
@@ -29,7 +31,24 @@
                 <img src="artemis-assets/images/office.png" alt=""></div>
             </div>
           </div>
-          <div class="flex flex-wrap -mx-4">
+
+          <div class="mb-8 flex flex-wrap items-center justify-center  gap-6">
+            <a href="" class="titlecard w-5/12 rounded bg-white py-8 px-12 shadow">
+              <h1 class="text-center font-bold text-3xl">Faq</h1>
+              <p class="text-center mx-auto w-8/12 my-8 text-base">Hier vind je de meest gestelde vragen door onze klanten.</p>
+              <img src="" alt="logo faqs">
+            </a>
+
+            <a href="" class="titlecard w-5/12 rounded bg-white py-8 px-12 shadow">
+              <h1 class="text-center font-bold text-3xl">Tickets</h1>
+              <p class="text-center mx-auto w-8/12 my-8 text-base">Hier kan je ons een vraag stellen en je vragen opvolgen.</p>
+              <img src="" alt="logo faqs">
+            </a>
+            
+            
+          </div>
+
+          <!-- <div class="flex flex-wrap -mx-4">
             <div class="w-full lg:w-3/12 px-4 mb-8 lg:mb-0">
               <div class="p-2 bg-white rounded">
                 <ul class="text-sm"><li>
@@ -64,6 +83,7 @@
                   </li>
                 </ul></div>
             </div>
+
             <div class="w-full lg:w-9/12 px-4">
               <div class="flex items-center mb-8 px-3">
                 <span class="inline-flex justify-center items-center w-16 h-16 mr-4 bg-indigo-500 rounded">
@@ -85,7 +105,7 @@
                   </li>
                   @endforeach
               </ul></div>
-          </div>
+          </div> -->
         </div>
       </section>
         
