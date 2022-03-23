@@ -167,14 +167,24 @@ class ShopController extends Controller
                 }else{
                     $name = strtolower($resource_code).'.'.$order->domain;
                     $ip = '185.97.217.16';
-                    
+
                     //invullen op cloudflare
                     CloudflareController::createDnsRecord($check[0]->id, $name, $ip);
+                    sleep(20);
                     //qboxmail check doen
-                    $test = QboxController::checkDns($resource_code);
+                    QboxController::checkDns(strtolower($resource_code));
                     sleep(40);
+                    $record = QboxController::getDKIM(strtolower($resource_code));
+                    CloudflareController::createMXRecord($check[0]->id, 1);
+                    CloudflareController::createMXRecord($check[0]->id, 2);
+                    CloudflareController::createSPFRecord($check[0]->id);
+                    CloudflareController::createDKIMRecord($check[0]->id, $record);
+                    CloudflareController::createDMARCRecord($check[0]->id);
                     
-                    $resp = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+                    QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+                    
+                    $emailOrder->status = "active";
+                    $emailOrder->save();
                     
                 }
                 
