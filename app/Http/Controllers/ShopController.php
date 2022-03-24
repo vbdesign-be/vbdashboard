@@ -105,6 +105,12 @@ class ShopController extends Controller
         //domeinnaam reistreren via cloudflare
         // $cloudflare = CloudflareController::createZone($order->domain);
 
+        $check = $vimexx->checkDomain($order->domain);
+        if($check === 'Niet beschikbaar'){
+            $order->status = "active";
+            $order->save();
+        }
+
         //message en redirect
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
         return redirect('domeinen');
@@ -264,6 +270,8 @@ class ShopController extends Controller
         $vimexx->doPending('krits.be', '');
         dd($vimexx);
     }
+
+    
 
     
 }
