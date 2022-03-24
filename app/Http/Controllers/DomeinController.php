@@ -16,7 +16,6 @@ class DomeinController extends Controller
                 $data['orders'][] = $order;
             }
         }
-        
         if(!empty($data['orders'])){
             return view('domeinen/domeinen', $data);
         }else{

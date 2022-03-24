@@ -81,7 +81,19 @@
                   @foreach($orders as $order)
                   <tr class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">{{ $order->domain }}</td>
-                    <td class="font-medium">geen emailbox</td>
+
+                    <td class="font-medium">
+                      <ul class="mt-2 ">
+                      @foreach($order->emailorder as $email)
+                      @if(!isset($email->email))
+                      test
+                      @endif
+                      <li class="mb-2">{{$email->email}}</li>
+                      @endforeach
+                      </ul>
+                      
+                    </td>
+                    
                     <td>
                     @if($order->status === "offline")
                           @component('components/domainstatus')

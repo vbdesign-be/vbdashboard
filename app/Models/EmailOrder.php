@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class EmailOrder extends Model
 {
     use HasFactory;
+
+    
+    public function order(){
+        return $this->belongsTo(\App\Models\Order::class);
+    }
 }

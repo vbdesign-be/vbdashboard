@@ -103,7 +103,7 @@ class ShopController extends Controller
         // dd($res);
 
         //domeinnaam reistreren via cloudflare
-        $cloudflare = CloudflareController::createZone($order->domain);
+        // $cloudflare = CloudflareController::createZone($order->domain);
 
         //message en redirect
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
@@ -248,12 +248,12 @@ class ShopController extends Controller
         $order->save();
 
         //domeinnaam verhuizen
-        $vimexx = new Vimexx();
-        $test = $vimexx->transferDomain($order->domain,'', '', $code);
+        // $vimexx = new Vimexx();
+        // $test = $vimexx->transferDomain($order->domain,'', '', $code);
 
         //toevoegen aan cloudflare
-        CloudflareController::createZone($order->domain);
-        dd($test);
+        // CloudflareController::createZone($order->domain);
+        
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinaam te verhuizen. Dit kan 24u duren.');
         return redirect('domein/'.$order->domain);
     }

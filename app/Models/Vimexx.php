@@ -265,9 +265,6 @@ class Vimexx extends Model
             'tld' => $domainSplit[1]
         ]);
 
-        
-        dd($response);
-
         if(!$response['result']) {
             $this->Error[] = $response['message'];
             return false;
