@@ -149,8 +149,9 @@ class ShopController extends Controller
             //email gewoon toevoegen via qboxmail
             $order = Order::where('domain', $order->domain)->first();
             $resource_code = $order->resource_code;
-            QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
+            $newEmail = QboxController::makeEmail($front, $resource_code, $password, $user->data->first_name);
             $emailOrder->status = "active";
+            $emailOrder->resource_code = $newEmail->resource_code;
             $emailOrder->save();
             
         }else{

@@ -17,6 +17,7 @@ class CreateEmailordersTable extends Migration
             $table->id();
             $table->foreignId('order_id');
             $table->string('email');
+            $table->string('resource_code')->nullable();
             $table->string('status')->nullable();
             $table->boolean('payed')->nullable();
             $table->timestamps();

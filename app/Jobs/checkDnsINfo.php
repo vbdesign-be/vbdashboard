@@ -53,9 +53,10 @@ class checkDnsINfo implements ShouldQueue
         CloudflareController::createSPFRecord($this->check[0]->id);
         CloudflareController::createDKIMRecord($this->check[0]->id, $record);
         CloudflareController::createDMARCRecord($this->check[0]->id);
-        QboxController::makeEmail($this->front, $this->resource_code, $this->password, $this->user->data->first_name);
+        $newEmail = QboxController::makeEmail($this->front, $this->resource_code, $this->password, $this->user->data->first_name);
         QboxController::verifyMX(strtolower($this->resource_code));
         $this->emailOrder->status = "active";
+        $this->emailOrder->resource_code = $newEmail->resource_code;
         $this->emailOrder->save();          
                     
         

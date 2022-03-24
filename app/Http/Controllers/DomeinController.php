@@ -50,7 +50,13 @@ class DomeinController extends Controller
     }
 
     public function deleteEmail(Request $request){
+        //domeincode ophalen
+        $domain = $request->input('domain');
+        $order = Order::where('domain', $domain)->first();
+        
+
         $email = $request->input('email');
-        dd($email);
+        
+        
     }
 }

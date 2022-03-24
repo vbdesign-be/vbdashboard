@@ -101,7 +101,7 @@
                           @endcomponent
                         @endif
                     </td>
-                    <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="{{$email->email}}">@if($email->status === "active")<input type="submit" value="verwijder btn">@endif</form></td>
+                    <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="{{$email->email}}"><input name="domain" type="hidden" value="{{$domain}}">@if($email->status === "active")<input type="submit" value="verwijder btn">@endif</form></td>
                   </tr>
                 </tbody>
                   @endforeach
