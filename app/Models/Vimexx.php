@@ -935,6 +935,8 @@ class Vimexx extends Model
 
         $response = $this->request('GET', '/domains/'.$domain);
 
+        dd($response);
+
         if($response['error'])
         {
             $this->Error[] = $response['error']['message'];

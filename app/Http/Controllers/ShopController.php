@@ -164,9 +164,10 @@ class ShopController extends Controller
                 
                 if(empty($check)){
                     //informatie tonen zodat mensne die kunnen invullen
-                    $info = "name: ".strtolower($resource_code).".".$order->domain.", ip: 185.97.217.16";
+                    $dns = "type: A   name: ".$resource_code.".".$order->domain."   content: 185.97.217.16   TTL: auto/1";
+
                     //de juiste informatie weergeven
-                    $request->session()->flash('notification', 'We hebben je aankoop goed ontvangen. Vul deze gegevens in bij je domeinaamhost: '.$info);
+                    $request->session()->flash('notification', "We hebben je aankoop goed ontvangen. Vul deze gegevens in bij je domeinaamhost:\n".$dns."\nStuur ons een support ticket wanneer je deze info hebt ingevuld.");
                     return redirect('domein/'.$order->domain);
                 }else{
                     $name = strtolower($resource_code).'.'.$order->domain;
@@ -256,6 +257,12 @@ class ShopController extends Controller
         
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinaam te verhuizen. Dit kan 24u duren.');
         return redirect('domein/'.$order->domain);
+    }
+
+    public function test(){
+        $vimexx = new Vimexx();
+        $vimexx->doPending('krits.be', '');
+        dd($vimexx);
     }
 
     
