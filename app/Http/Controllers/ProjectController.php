@@ -99,6 +99,10 @@ class ProjectController extends Controller
             }
         }
 
+        if(empty($projectFolder)){
+            abort(404);
+        }
+
         $url2 = 'https://app.clickup.com/api/v2/list/'.$projectFolder->lists[1]->id.'/task';
         $response2 = Http::withToken($token)->get($url2);
         $bugfixes = json_decode($response2->body())->tasks;

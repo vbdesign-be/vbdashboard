@@ -16,7 +16,7 @@ class CreateOffertesTable extends Migration
         Schema::create('offertes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('summary');
+            $table->longText('summary');
             $table->string('status')->default('aanvraag');
             $table->string('reference');
             $table->foreignId('company_id');

@@ -21,15 +21,14 @@ class OfferteController extends Controller
             $comps[] = TeamLeader::crm()->company()->info($company_id);
         }
 
+        $data['comps'] = $comps;
+       
         foreach ($comps as $c) {
             //kunnen maar dan 20 zijn dus enkele instantie in de array moet een offerte zijn
             $offertes[] = TeamLeader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
         }
-        
         $data['offertes'] = $offertes;
-        
-
-        
+    
         // //de quotation deal id de deal gaan opvragen
         // foreach($comps as $c){
         // foreach($test as $t){
@@ -85,6 +84,7 @@ class OfferteController extends Controller
 
         $credentials = $request->validate([
             'titel' => 'required|max:255',
+            'bedrijf' => 'required',
             'kostprijs' => 'required',
             'deadline' => 'required',
             'samenvatting' => 'required',
@@ -98,6 +98,7 @@ class OfferteController extends Controller
 
         $newJaar = $dag . '-' . $maand . '-' . $jaar;
         
+        dd($request->input('bedrijf'));
 
         $offerte = new Offerte();
         $offerte->title = $request->input('titel');
@@ -108,6 +109,8 @@ class OfferteController extends Controller
         $offerte->estimated_closing_date = $newJaar;
         $offerte->save();
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
+
+        //mail versturen naar bert met nieuwe offerte
         return redirect('/offerte');
 
         
