@@ -29,26 +29,76 @@ faqs.forEach((faq) => {
 })
 
 
-//profile form
+//winkelmandje
 
-let selectBtn = document.querySelector('.selectForm');
-let userForm = document.querySelector('.form--user');
-let companyForm = document.querySelector('.form--company');
+// let winkelmandje = document.querySelector('#winkelmandje');
+// let select = document.querySelector('#selectMailbox');
+// let mailbox = document.querySelector('#mailbox');
 
-if(selectBtn){
 
-selectBtn.addEventListener('click', (e) => {
-    let value = selectBtn.value;
+// select.addEventListener('change', (e) => {
+//     e.preventDefault();
+
+//     if(select.value === 'true'){
+//        mailbox.classList.remove('hidden');
+//     }
+//     if(select.value === 'false'){
+//         mailbox.classList.add('hidden');
+//     }
     
-    if(value === "profiel"){
-        companyForm.style.display = "none";
-        userForm.style.display = "block";
-    }else if(value === "company"){
-        companyForm.style.display = "block";
-        userForm.style.display = "none";
-    }
-})
-}
+// })
+
+let items = document.querySelectorAll('#winkelmandje');
+
+items.forEach((item) => {
+    let deleteBtn = item.querySelector('.delete');
+    let domain = item.querySelector('.domein');
+    deleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        domain.value = "";
+        item.classList.add('hidden');
+    })
+
+});
+
+
+//emailadd
+
+let emailAddBtn = document.querySelector('.emailAddBtn');
+let emailAdd = document.querySelector('#emailAdd');
+
+emailAddBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    emailAdd.classList.remove('hidden');
+    window.location.href = '#emailAdd';
+});
+
+//emaildelete
+
+// let emails = document.querySelectorAll('#emailBoxes');
+
+// emails.forEach((email) => {
+
+//     let deleteBtn = email.querySelector('.emailDeleteBtn');
+//     deleteBtn.addEventListener('click', (e) => {
+//         e.preventDefault();
+        
+//         //formdata verzenden;
+        
+
+//             //email.classList.add('hidden');
+
+//     });
+// })
+
+
+
+
+
+
+
+
+
 
 
 

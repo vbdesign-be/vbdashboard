@@ -40,7 +40,7 @@
                 <h3 class="text-xl font-bold">Recente offertes</h3>
               </div>
             </div>
-            <div class="overflow-x-auto">
+            <div class="p-4 overflow-x-auto">
               <table class="table-auto w-full">
                 <thead>
                   <tr class="text-xs text-gray-500 text-left">
@@ -78,7 +78,7 @@
                 <tbody>
                 @for($x = 0; $x < count($offertes); $x++)
                 @foreach($offertes[$x] as $f)
-                    <tr class="offerte text-xs bg-gray-50">
+                    <tr class="table__item text-xs bg-gray-50">
                       <td class="flex items-center py-4 px-6 font-medium">
                         <p>{{ $f->title }}</p>
                       </td>

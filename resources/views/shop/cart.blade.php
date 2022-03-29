@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', 'Shop')
+@section('title', 'Winkelmandje')
 
 @section('content')
 
@@ -13,7 +13,7 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">Shop</h2>
+            <h2 class="text-2xl font-bold">Winkelmandje</h2>
           </div>
         </div>
 
@@ -63,43 +63,40 @@
         @endcomponent
         @endif
 
-
-        <div class="container px-4 mx-auto">
-          <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/shop/search" method="post">
-          @csrf
-            <h1 class="mb-2 text-4xl font-bold font-heading">Start met een gloednieuwe website</h1>
-      
-            <p class="mb-2 text-base">Bekijk of je domeinnaam nog beschikbaar is</p>
-      
-            <div class="container px-4 mx-auto w-80 flex">
-            <div class="">
-              <input class="block w-full px-4 py-3  text-sm placeholder-gray-500 bg-white border rounded" type="text" name="domeinnaam" @if(!empty($domain)) value="{{$domain}}" @endif placeholder="voorbeeld.be">
-            </div>
-            <button class="inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Submit</button>
-          </div>
-          </form>
-        </div>
-
-        @if(!empty($domain))
         <section class="py-8">
         <div class="container px-4 mx-auto">
-          
-          <div class="p-6 bg-white rounded shadow">
-            <div class="flex justify-between items-center">
-            <h3 class="font-medium">{{$domain}}</h3>
-            <span class="inline-block py-1 px-2 bg-{{ $checkColor }}-50 text-xs text-{{ $checkColor }}-500 rounded-full">{{ $check }}</span>
-            <div>
-            @if($check === "Beschikbaar")<form method="post" action="/shop/winkelmandje">@csrf <input type="hidden" name="domain" value="{{ $domain }}"> <button type="submit" >Koop btn</button>  </form>@endif
-            @if($check === "Niet beschikbaar")<form method="post" action="/shop/transfer">@csrf <input type="hidden" name="domain" value="{{ $domain }}"> <button type="submit" >verhuis btn</button>  </form>@endif
-            
+          <div class="pt-4 bg-white shadow rounded">
+            <div class="flex px-6 pb-4 border-b">
+              <h3 class="text-xl font-bold">Winkelmandje</h3>
             </div>
-            
+            <div class="p-4 overflow-x-auto">
+              <table class="table-auto w-full">
+                <thead>
+                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium px-6">Product</th><th class="pb-3 font-medium">Looptijd</th><th class="pb-3 font-medium">prijs</th><th class="pb-3 font-medium">Totaal</th></tr>
+                </thead>
+                <tbody>
+                <form class="domainForm" method="post" action="/shop/buy/domain">
+                @csrf
+                  <tr id="winkelmandje" class="table__item text-xs bg-gray-50">
+                    <td class="py-5 px-6 font-medium"><div>{{ $domain }}<input class="domein" name="domain" type="hidden" value="{{$domain}}"></div></td>
+                    <td class="font-medium">1 jaar</td>
+                    <td class="font-medium">1 x €4.99</td>
+                    <td class="font-medium">€4,99</td>
+                    <td><a class="delete" href="">verwijder btn</a></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="form__btn">
+                <button class="inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">koop</button>
+              </div>
+              </form>
             </div>
           </div>
-         
         </div>
       </section>
-      @endif
+        
+
+        
 
 
         

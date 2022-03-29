@@ -14,6 +14,11 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
+use App\Http\Controllers\cloudflareController;
+use App\Http\Controllers\CloudflareController as ControllersCloudflareController;
+use App\Http\Controllers\DomeinController;
+use App\Http\Controllers\QboxController;
+use App\Http\Controllers\VimexxController;
 use App\Mail\UserLoginMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,6 +36,9 @@ use Illuminate\Support\Facades\Storage;
 
 
 
+Route::get('/test', [ShopController::class, "test"]);
+
+
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
@@ -46,24 +54,6 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-Route::get('/test', function() {
-
-    $folder = 'VB design';
-    $contents = collect(Storage::disk("google")->listContents('/', false));
-    $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first(); // There could be duplicate directory names!
-
-    if ( ! $dir) {
-        return 'No such folder!';
-    }
-
-    $files = collect(Storage::disk("google")->listContents($dir['path'], false))
-        ->where('type', '=', 'file');
-
-    dd($dir);
-});
-
 
 Route::group(['middleware' => ['auth']], function() {
 
@@ -78,6 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //projecten
     Route::get('/', [ProjectController::class, "projects"]);
+    Route::get('/home', [ProjectController::class, "projects"]);
     Route::post('/project/addBugfix', [ProjectController::class, 'addBugfix']);
     Route::get('/project/bugfix/{id}', [ProjectController::class, 'bugfix']);
     Route::get('/project/{id}', [ProjectController::class, 'detail']);
@@ -89,7 +80,21 @@ Route::group(['middleware' => ['auth']], function() {
 
     //shop
     Route::get('/shop', [ShopController::class, "shop"]);
-    Route::post('/shop/searchDomain', [ShopController::class, "searchDomain"]);
+    Route::post('/shop/search', [ShopController::class, "searchDomain"]);
+    Route::post('/shop/winkelmandje', [ShopController::class, "cart"]);
+    Route::post('/shop/transfer', [ShopController::class, "cartTransfer"]);
+    Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
+    Route::post('/shop/transfer/domain', [ShopController::class, "transferDomain"]);
+    Route::post('/shop/buy/email', [ShopController::class, "buyEmail"]);
+    Route::get('/payed', [ShopController::class, "payed"]);
+    Route::get('/payedEmail', [ShopController::class, "payedEmail"]);
+    Route::get('/payedTransfer', [ShopController::class, "payedTransfer"]);
+
+    //domeinen
+    Route::get('/domeinen', [DomeinController::class, "domeinen"]);
+    Route::post('/domein/email/delete', [DomeinController::class, "deleteEmail"]);
+    Route::get('/domein/{domein}', [DomeinController::class, "detail"]);
+    
 
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);

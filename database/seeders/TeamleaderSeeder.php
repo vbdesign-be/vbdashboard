@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Company;
+use App\Models\Teamleader;
 use Illuminate\Database\Seeder;
 
-class CompanySeeder extends Seeder
+class TeamleaderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,9 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
+        $teamleader = new Teamleader();
+        $teamleader->type = "test";
+        $teamleader->save();
 
     }
 }

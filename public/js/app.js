@@ -2077,25 +2077,47 @@ faqs.forEach(function (faq) {
       click = 0;
     }
   });
-}); //profile form
+}); //winkelmandje
+// let winkelmandje = document.querySelector('#winkelmandje');
+// let select = document.querySelector('#selectMailbox');
+// let mailbox = document.querySelector('#mailbox');
+// select.addEventListener('change', (e) => {
+//     e.preventDefault();
+//     if(select.value === 'true'){
+//        mailbox.classList.remove('hidden');
+//     }
+//     if(select.value === 'false'){
+//         mailbox.classList.add('hidden');
+//     }
+// })
 
-var selectBtn = document.querySelector('.selectForm');
-var userForm = document.querySelector('.form--user');
-var companyForm = document.querySelector('.form--company');
-
-if (selectBtn) {
-  selectBtn.addEventListener('click', function (e) {
-    var value = selectBtn.value;
-
-    if (value === "profiel") {
-      companyForm.style.display = "none";
-      userForm.style.display = "block";
-    } else if (value === "company") {
-      companyForm.style.display = "block";
-      userForm.style.display = "none";
-    }
+var items = document.querySelectorAll('#winkelmandje');
+items.forEach(function (item) {
+  var deleteBtn = item.querySelector('.delete');
+  var domain = item.querySelector('.domein');
+  deleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    domain.value = "";
+    item.classList.add('hidden');
   });
-}
+}); //emailadd
+
+var emailAddBtn = document.querySelector('.emailAddBtn');
+var emailAdd = document.querySelector('#emailAdd');
+emailAddBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  emailAdd.classList.remove('hidden');
+  window.location.href = '#emailAdd';
+}); //emaildelete
+// let emails = document.querySelectorAll('#emailBoxes');
+// emails.forEach((email) => {
+//     let deleteBtn = email.querySelector('.emailDeleteBtn');
+//     deleteBtn.addEventListener('click', (e) => {
+//         e.preventDefault();
+//         //formdata verzenden;
+//             //email.classList.add('hidden');
+//     });
+// })
 
 /***/ }),
 
