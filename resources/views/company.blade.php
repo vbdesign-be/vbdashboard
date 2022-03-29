@@ -6,7 +6,6 @@
 
 
 
-
 <div class="">
 
     <x-menu />
