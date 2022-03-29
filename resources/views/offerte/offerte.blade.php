@@ -149,7 +149,7 @@
         <label class="block text-sm font-medium mb-2" for="bedrijf">Bedrijf</label>
         <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijf">
           @foreach($comps as $comp)
-          <option value="{{$comp->data->name}}">{{$comp->data->name}}</option>
+          <option value="{{$comp->data->id}}">{{$comp->data->name}}</option>
           @endforeach
         <select>
       </div>
