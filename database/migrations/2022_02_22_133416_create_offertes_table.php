@@ -19,7 +19,7 @@ class CreateOffertesTable extends Migration
             $table->longText('summary');
             $table->string('status')->default('aanvraag');
             $table->string('reference');
-            $table->foreignId('company_id');
+            $table->string('company_id');
             $table->integer('estimated_value');
             $table->string('estimated_closing_date');
             $table->timestamps();

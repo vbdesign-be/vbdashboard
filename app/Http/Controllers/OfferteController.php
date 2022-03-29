@@ -98,13 +98,11 @@ class OfferteController extends Controller
 
         $newJaar = $dag . '-' . $maand . '-' . $jaar;
         
-        dd($request->input('bedrijf'));
-
         $offerte = new Offerte();
         $offerte->title = $request->input('titel');
         $offerte->summary = $request->input('samenvatting');
         $offerte->reference = "123";
-        $offerte->company_id = $request->input('company');
+        $offerte->company_id = $request->input('bedrijf');
         $offerte->estimated_value = $request->input('kostprijs');
         $offerte->estimated_closing_date = $newJaar;
         $offerte->save();
