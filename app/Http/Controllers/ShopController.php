@@ -153,7 +153,8 @@ class ShopController extends Controller
             $emailOrder->status = "active";
             $emailOrder->resource_code = $newEmail->resource_code;
             $emailOrder->save();
-            
+            $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. '.$emailOrder->email.' is geregistreerd.');
+            return redirect('domein/'.$order->domain);
         }else{
             
             //domain toevoegen aan qboxmail
