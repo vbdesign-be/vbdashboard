@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewOfferte;
+use App\Mail\NewOfferteMail;
 use App\Models\Offerte;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
 class OfferteController extends Controller
@@ -90,27 +93,34 @@ class OfferteController extends Controller
             'samenvatting' => 'required',
         ]);
 
+        $title = $request->input('titel');
+        $company_id = $request->input('company');
+        $estimated_value = $request->input('kostprijs');
+        $summary = $request->input('samenvatting');
         $datum = $request->input('deadline');
 
         $jaar = substr($datum, 0,4);
         $maand = substr($datum, 5,2);
         $dag = substr($datum, 8,2);
+        $estimated_closing_date = $dag . '-' . $maand . '-' . $jaar;
 
-        $newJaar = $dag . '-' . $maand . '-' . $jaar;
         
         //offerte in database
         $offerte = new Offerte();
-        $offerte->title = $request->input('titel');
-        $offerte->summary = $request->input('samenvatting');
+        $offerte->title = $title;
+        $offerte->summary = $summary;
         $offerte->reference = "123";
-        $offerte->company_id = $request->input('bedrijf');
-        $offerte->estimated_value = $request->input('kostprijs');
-        $offerte->estimated_closing_date = $newJaar;
+        $offerte->company_id = $company_id;
+        $offerte->estimated_value = $estimated_value;
+        $offerte->estimated_closing_date = $estimated_closing_date;
         $offerte->save();
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
 
-        //mail versturen naar bert met nieuwe offerte
+        //gegevens van het bedrijf mee doorsturen
+        
 
+        //mail versturen naar bert met nieuwe offerte
+        Mail::to('bert@vbdesign.be')->send(new NewOfferteMail($title, $summary, $estimated_value, $estimated_closing_date));
         //redirecten
         return redirect('/offerte');
 
