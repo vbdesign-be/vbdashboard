@@ -98,6 +98,7 @@ class OfferteController extends Controller
 
         $newJaar = $dag . '-' . $maand . '-' . $jaar;
         
+        //offerte in database
         $offerte = new Offerte();
         $offerte->title = $request->input('titel');
         $offerte->summary = $request->input('samenvatting');
@@ -109,6 +110,8 @@ class OfferteController extends Controller
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
 
         //mail versturen naar bert met nieuwe offerte
+
+        //redirecten
         return redirect('/offerte');
 
         
