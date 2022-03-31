@@ -85,42 +85,50 @@ class OfferteController extends Controller
 
     public function post(Request $request){
 
-        $credentials = $request->validate([
-            'titel' => 'required|max:255',
-            'bedrijf' => 'required',
-            'kostprijs' => 'required',
-            'deadline' => 'required',
-            'samenvatting' => 'required',
-        ]);
+        // $credentials = $request->validate([
+        //     'titel' => 'required|max:255',
+        //     'bedrijf' => 'required',
+        //     'kostprijs' => 'required',
+        //     'deadline' => 'required',
+        //     'samenvatting' => 'required',
+        // ]);
 
-        $title = $request->input('titel');
-        $company_id = $request->input('company');
-        $estimated_value = $request->input('kostprijs');
-        $summary = $request->input('samenvatting');
+        $data['title'] = $request->input('titel');
+        $data['company_id'] = $request->input('bedrijf');
+        $data['estimated_value'] = $request->input('kostprijs');
+        $data['summary'] = $request->input('samenvatting');
         $datum = $request->input('deadline');
 
         $jaar = substr($datum, 0,4);
         $maand = substr($datum, 5,2);
         $dag = substr($datum, 8,2);
-        $estimated_closing_date = $dag . '-' . $maand . '-' . $jaar;
+        $data['estimated_closing_date'] = $dag . '-' . $maand . '-' . $jaar;
 
         
         //offerte in database
         $offerte = new Offerte();
-        $offerte->title = $title;
-        $offerte->summary = $summary;
+        $offerte->title = $data['title'];
+        $offerte->summary = $data['summary'];
         $offerte->reference = "123";
-        $offerte->company_id = $company_id;
-        $offerte->estimated_value = $estimated_value;
-        $offerte->estimated_closing_date = $estimated_closing_date;
+        $offerte->company_id = $data['company_id'];
+        $offerte->estimated_value = $data['estimated_value'];
+        $offerte->estimated_closing_date = $data['estimated_closing_date'];
         $offerte->save();
         $request->session()->flash('message', 'Je offerte is goed ontvangen');
-
-        //gegevens van het bedrijf mee doorsturen
         
-
+        //gegevens van de persoon(naam voornaam)
+        teamleaderController::reAuthTL();
+        $data['user'] =  TeamLeader::crm()->contact()->info(Auth::user()->teamleader_id)->data;
+        $companies = $data['user']->companies;
+        foreach($companies as $c){
+            if($c->company->id === $data['company_id']){
+                $data['position'] = $c->position;
+            }
+        }
+        //gegevens van het bedrijf mee doorsturen
+        $data['company'] = TeamLeader::crm()->company()->info($data['company_id'])->data;
         //mail versturen naar bert met nieuwe offerte
-        Mail::to('bert@vbdesign.be')->send(new NewOfferteMail($title, $summary, $estimated_value, $estimated_closing_date));
+        Mail::to('jonathan_verhaegen@hotmail.com')->send(new NewOfferteMail($data));
         //redirecten
         return redirect('/offerte');
 

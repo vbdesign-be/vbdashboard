@@ -28,6 +28,6 @@ class NewOfferteMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.newOfferte')->with($this->data);
+        return $this->view('emails.newOfferte')->with($this->data);
     }
 }

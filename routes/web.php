@@ -36,7 +36,9 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-Route::get('/test', [ShopController::class, "test"]);
+Route::get('/test', function(){
+    return view('emails.newOfferte');
+});
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
