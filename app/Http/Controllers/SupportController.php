@@ -19,11 +19,11 @@ class SupportController extends Controller
         return view('support/faq', $data);
     }
 
-    public function askQuestion(){
-
-        $data["user"] = Auth::user();
-        return view('support/ask', $data);
+    public function tickets(){
+        return view('support/tickets');
     }
+
+    
 
     public function status(){
         $data['user'] = Auth::user();

@@ -32,14 +32,14 @@
             </div>
           </div>
 
-          <div class="mb-8 flex flex-wrap items-center justify-center  gap-6">
-            <a href="/support/faq" class="titlecard w-5/12 rounded bg-white py-8 px-12 shadow">
+          <div class="mb-8 flex flex-wrap items-center justify-center  gap-16">
+            <a href="/support/faq" class="titlecard w-4/12 rounded bg-white py-8 px-12 shadow">
               <h1 class="text-center font-bold text-3xl">Faq</h1>
               <p class="text-center mx-auto w-8/12 my-8 text-base">Hier vind je de meest gestelde vragen door onze klanten.</p>
               <img src="" alt="logo faqs">
             </a>
 
-            <a href="support/tickets" class="titlecard w-5/12 rounded bg-white py-8 px-12 shadow">
+            <a href="support/tickets" class="titlecard w-4/12 rounded bg-white py-8 px-12 shadow">
               <h1 class="text-center font-bold text-3xl">Tickets</h1>
               <p class="text-center mx-auto w-8/12 my-8 text-base">Hier kan je ons een vraag stellen en je vragen opvolgen.</p>
               <img src="" alt="logo faqs">
