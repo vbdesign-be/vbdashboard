@@ -23,34 +23,23 @@ class SupportController extends Controller
         return view('support/tickets');
     }
 
+    public function addTicket(Request $request){
+        //checking credentials
+
+        //connectie maken met freshdesk api
+
+        //contactpersoon informatie verkrijgen
+
+        //ticket maken en info invullen(infortie + request)
+
+        //status message naar de gebruiker
+
+        //redirecten
+    }
+
     
 
-    public function status(){
-        $data['user'] = Auth::user();
-        $data["questions"] = Question::where('userid', Auth::id())->get();
-        return view('support/status', $data);
-    }
-
-    public function store(Request $request){
-
-        //checking
-        $credentials = $request->validate([
-            'onderwerp' => 'required|max:255',
-            'vraag' => 'required'
-        ]);
-
-        $question = new Question();
-        $question->userid = $request->input('userid');
-        $question->subject = $request->input('onderwerp');
-        $question->question = $request->input('vraag');
-        $question->save();
-
-        $request->session()->flash('message', "We hebben je vraag goed ontvangen en beantwoorden hem zo snel mogelijk");
-        return redirect('/status');
-
-
-        
-    }
+    
 
     
 }
