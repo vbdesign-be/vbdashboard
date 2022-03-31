@@ -131,7 +131,5 @@ class OfferteController extends Controller
         Mail::to('jonathan_verhaegen@hotmail.com')->send(new NewOfferteMail($data));
         //redirecten
         return redirect('/offerte');
-
-        
     }
 }

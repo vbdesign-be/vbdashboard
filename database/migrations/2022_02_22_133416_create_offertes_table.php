@@ -18,7 +18,7 @@ class CreateOffertesTable extends Migration
             $table->string('title');
             $table->longText('summary');
             $table->string('status')->default('aanvraag');
-            $table->string('reference');
+            $table->string('reference')->nullable();
             $table->string('company_id');
             $table->integer('estimated_value');
             $table->string('estimated_closing_date');
