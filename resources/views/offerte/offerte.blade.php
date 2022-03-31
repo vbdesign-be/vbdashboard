@@ -138,16 +138,20 @@
       <form id="offerteAanvragen" class="bg-white shadow rounded py-6 px-6" action="/offerte/post" method="post">
       @csrf
       <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
         <label class="block text-sm font-medium mb-2" for="titel">Titel offerte</label>
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" value="{{ old('titel') }}">
       </div>
       </div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" value="{{ old('kostprijs') }}">
+        <label class="block text-sm font-medium mb-2" for="bedrijf">Bedrijf</label>
+        <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="bedrijf">
+          @foreach($comps as $comp)
+          <option value="{{$comp->data->id}}">{{$comp->data->name}}</option>
+          @endforeach
+        <select>
       </div>
       </div>
       </div>
@@ -159,8 +163,11 @@
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" value="{{ old('deadline') }}">
       </div>
       </div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      
+      <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
+        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" value="{{ old('kostprijs') }}">
+      </div>
       </div>
       </div>
       
