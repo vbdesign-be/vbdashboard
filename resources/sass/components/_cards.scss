@@ -2,6 +2,13 @@
     animation: scale 0.4s forwards ease;
 }
 
+.titlecard{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    
+}
+
 
 @keyframes scale {
     0% { -webkit-transform: scale(1) }
