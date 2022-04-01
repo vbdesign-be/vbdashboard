@@ -20,6 +20,8 @@ use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\QboxController;
 use App\Http\Controllers\VimexxController;
 use App\Mail\UserLoginMail;
+use App\Models\Order;
+use App\Models\Vimexx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,7 +38,9 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-Route::get('/test', [ShopController::class, "test"]);
+Route::get('/test', function(){
+   
+});
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
