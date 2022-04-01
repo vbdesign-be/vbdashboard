@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EmailOrder;
 use App\Models\Order;
+use App\Models\Vimexx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +31,40 @@ class DomeinController extends Controller
         if(empty($order)){
             abort(403);
         }
+
+        //informatie over een bepaald domein vimexx
+        $vimexx = new Vimexx();
+        $info = $vimexx->getDomainInformation($domain);
+        //dd($info);
+            //datum
+            $datum= $info['Information']['expiration_date'];
+            $jaar = substr($datum, 0,4);
+            $maand = substr($datum, 5,2);
+            $dag = substr($datum, 8,2);
+            $data['expiration_date'] = $dag . '-' . $maand . '-' . $jaar;
+        
+            //alle nameservers
+            $data['nameservers'] = $info['Information']['nameservers'];
+
+            //aantal dns records
+            $check = CloudflareController::getOneDomain($domain);
+            $dns = CloudflareController::getDNSRecords($check[0]->id);
+            $data['numberDNS'] = count($dns);
+
+            //aantal emails
+            $emails = EmailOrder::where('order_id', $order->id)->get();
+            $data['numberEmails'] = count($emails);
+        $data['domain'] = $domain;
+        return view('domeinen/domeindetail', $data);
+    }
+
+    public function emailDetail($domain){
+        //order ophalen met dat domein
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
+
         //order ophalen van de emailboxen met dat domein
         $emails = EmailOrder::where('order_id', $order->id)->get();
         //enkel de betaalde emailboxen
@@ -46,7 +81,7 @@ class DomeinController extends Controller
         }
         $data['domain'] = $order->domain;
         $data['placeholder'] = "info@".$domain;
-        return view('domeinen/domeindetail', $data);
+        return view('domeinen/emaildetail', $data);
     }
 
     public function deleteEmail(Request $request){

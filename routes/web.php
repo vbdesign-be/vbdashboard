@@ -119,6 +119,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/domeinen', [DomeinController::class, "domeinen"]);
     Route::post('/domein/email/delete', [DomeinController::class, "deleteEmail"]);
     Route::get('/domein/{domein}', [DomeinController::class, "detail"]);
+    Route::get('/domein/{domein}/email', [DomeinController::class, 'emailDetail']);
     
 
     //offerte
