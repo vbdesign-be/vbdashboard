@@ -264,6 +264,8 @@ class Vimexx extends Model
             'sld' => $domainSplit[0],
             'tld' => $domainSplit[1]
         ]);
+        
+      
 
         if(!$response['result']) {
             $this->Error[] = $response['message'];
@@ -405,11 +407,17 @@ class Vimexx extends Model
      */
     function getDomainList($contactHandle = "")
     {
-        if ($contactHandle != "") {
-            $this->Error[] = 'Het filteren op een contact is momenteel niet mogelijk';
-        }
+        // if ($contactHandle != "") {
+        //     $this->Error[] = 'Het filteren op een contact is momenteel niet mogelijk';
+        // }
 
         $response = $this->request('POST', '/wefact/domains');
+
+        
+
+        if($response['message'] === 'ok'){
+            return $response['data']['domains'];
+        }
 
         if (!$response['result']) {
             $this->Error[] = $response['message'];

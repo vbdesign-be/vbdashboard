@@ -39,7 +39,28 @@ use Illuminate\Support\Facades\Storage;
 
 
 Route::get('/test', function(){
-   
+    
+        //domeinnamen uit de database halen
+        $orderDomains = Order::get();
+        $vimexx = new Vimexx();
+        $domains = $vimexx->getDomainList();
+
+        //elke domeinaamn chekken op beschikbaarheid
+        foreach($domains as $d){
+            $checkDomain[] = $d['domain'];
+        }
+        
+        foreach($orderDomains as $o){
+            if(in_array($o->domain, $checkDomain)){
+                $order = Order::find($o->id);
+                $order->status = "active";
+                $order->save();
+            }else{
+                $order = Order::find($o->id);
+                $order->status = "failed";
+                $order->save();
+            }
+        }
 });
 
 

@@ -39,25 +39,26 @@ class checkDomainStatus extends Command
      */
     public function handle()
     {
-        //domeinnamen uit de database halen
-        $domains = Order::get();
-
-        //elke domeinaamn chekken op beschikbaarheid
-        foreach($domains as $d){
-            $vimexx = new Vimexx();
-            $check = $vimexx->checkDomain($d->domain);
-        
-            if($check === "Niet beschikbaar"){
-                //niet beschikbaar->active zetten
-                $order = Order::find($d->id);
-                $order->status = "active";
-                $order->save();
-            }else{
-                //beschikbaar->op failed zetten
-                $order = Order::find($d->id);
-                $order->status = "failed";
-                $order->save();
-            }
-        }
+         //domeinnamen uit de database halen
+         $orderDomains = Order::get();
+         $vimexx = new Vimexx();
+         $domains = $vimexx->getDomainList();
+ 
+         //elke domeinaamn chekken op beschikbaarheid
+         foreach($domains as $d){
+             $checkDomain[] = $d['domain'];
+         }
+         
+         foreach($orderDomains as $o){
+             if(in_array($o->domain, $checkDomain)){
+                 $order = Order::find($o->id);
+                 $order->status = "active";
+                 $order->save();
+             }else{
+                 $order = Order::find($o->id);
+                 $order->status = "failed";
+                 $order->save();
+             }
+         }
     }
 }
