@@ -904,6 +904,7 @@ class Vimexx extends Model
         $domainSplit = explode('.', $domainName, 2);
 
         $nameservers = array();
+       
 
         if (!$nameserverList['ns1'] == null) {
             $nameservers[] = array('ns' => $nameserverList['ns1'], 'nsip' => '');
@@ -917,12 +918,16 @@ class Vimexx extends Model
             $nameservers[] = array('ns' => $nameserverList['ns3'], 'nsip' => '');
         }
 
+        
+
         $response = $this->request('PUT', '/wefact/nameservers', [
             'sld'           => $domainSplit[0],
             'tld'           => $domainSplit[1],
             'nameservers'   => $nameservers,
             'name'          => 'wefact-' . $domainSplit[0] . '.' . $domainSplit[1]
         ]);
+
+        
 
         if (!$response['result']) {
             $this->Error[] = $response['message'];

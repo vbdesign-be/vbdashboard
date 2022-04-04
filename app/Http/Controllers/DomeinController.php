@@ -99,7 +99,40 @@ class DomeinController extends Controller
         //succes message en redirect
         $request->session()->flash('message', $email." is verwijderd.");
         return redirect('domein/'.$order->domain);
-        
-        
     }
+
+    public function nameserversDetail($domain){
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
+        $vimexx = new Vimexx();
+        $info = $vimexx->getDomainInformation($domain);
+        $data['nameservers'] = $info['Information']['nameservers'];
+        $data['domain'] = $domain;
+        return view('domeinen/nameserversDetail', $data);
+    }
+
+    public function updateNameservers(Request $request){
+        $domain = $request->input('domain');
+        $nameserver1 = $request->input('nameserver1');
+        $nameserver2 = $request->input('nameserver2');
+        $nameserver3 = $request->input('nameserver3');
+
+        $servers['ns1'] = $nameserver1;
+        $servers['ns2'] = $nameserver2;
+        $servers['ns3'] = $nameserver3;
+        
+        $vimexx = new Vimexx();
+        $resp = $vimexx->updateNameServers($domain, $servers);
+
+        if($resp){
+            $request->session()->flash('message', 'De nameservers voor '.$domain.' zijn gewijzigd.');
+        }else{
+            $request->session()->flash('error', 'Er ging iets mis. De nameservers voor '.$domain.' zijn niet gewijzigd.');
+        }
+        return redirect('/domein/'.$domain);
+    }
+
+    
 }

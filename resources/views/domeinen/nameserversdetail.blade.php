@@ -67,46 +67,40 @@
 
     <div class="container px-4 mx-auto">
 
-    <section class="py-8">
-      <div class="container px-4 mx-auto">
-        <div class="pt-4 bg-white shadow rounded">
-          <div class="flex px-6 pb-4 border-b">
-            <h3 class="text-xl font-bold">Informatie {{$domain}}</h3>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto">
-            <p>Eindigd op: {{ $expiration_date }}</p>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
-            <div class="col-span-4">
-              <p class="text-lg mb-2">Actieve nameservers</p>
-              @foreach($nameservers as $n)
-              <p>{{ $n }}</p>
-              @endforeach
-            </div>
-            <div class="col-span-2">
-              <a href="/domein/{{$domain}}/nameservers">Beheer nameservers</a>
-            </div>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
-            <div class="col-span-4">
-              <p class="text-lg mb-2">Emailboxen</p>
-              <p>actieve emailboxen: {{$numberEmails}}</p>
-            </div>
-            <div class="col-span-2">
-              <a href="/domein/{{$domain}}/email">Beheer emailboxen</a>
-            </div>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
-            <div class="col-span-4">
-              <p class="text-lg mb-2">DNS records</p>
-              <p>actieve DNS records: {{ $numberDNS }}</p>
-            </div>
-            <div class="col-span-2">
-              <a href="/domein/{{$domain}}//dns">Beheer DNS records</a>
+      <section class="py-8">
+          <div class="container px-4 mx-auto">
+          <form class="mt-6 px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/nameservers/update" method="post">
+          @csrf
+            
+      
+            <p class="text-xl my-6 text-center text-base">Nameservers</p>
+      
+            <div class="container px-4 mx-auto w-6/12">
+            <div class="">
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="emailbox">Nameserver 1</label>
+                    <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="nameserver1" @if(!empty($nameservers[0]))value="{{$nameservers[0]}}" @endif>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="emailbox">Nameserver 2</label>
+                    <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="nameserver2" @if(!empty($nameservers[1]))value="{{$nameservers[1]}}" @endif>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2" for="emailbox">Nameserver 3</label>
+                    <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="nameserver3" @if(!empty($nameservers[2]))value="{{$nameservers[2]}}" @endif>
+                </div>
+                
+                <input type="hidden" name="domain" value="{{$domain}}">
+              </div>
+            <div class="form__btn">
+            <button class=" inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update</button>
             </div>
           </div>
-        </div>
-      </div>
+          </form>
+          </div>
       </section>
     </div>
 
