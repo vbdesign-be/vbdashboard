@@ -137,7 +137,7 @@
 
                 @if(!empty($dnsList))
                 @foreach($dnsList as $key => $dns)
-                <div class="editDns editDns--{{$key}} hidden">
+                <div class="editDns editDns--{{$key}}">
                 <form method="post" action="/domein/dns/edit">
                 @csrf
                     <div>
@@ -149,7 +149,7 @@
                     
                     <div>
                         <input type="submit" value="update DNS">
-                        <a href="">Verwijder</a>
+                        <a data-number="{{$key}}" class="dnsDelete" href="">Verwijder</a>
                     </div>
                     <input name="domain" type="hidden" value={{$domain}}>
                     <input name="zone" type="hidden" value={{$zone}}>
@@ -185,11 +185,39 @@
           </div>
         </div>
       </section>
+
+    @if(!empty($dnsList))
+    @foreach($dnsList as $key => $dns)
+      <div  class="hidden modal modal--{{$key}}">
+        <span class="close" title="Close"></span>
+        <form class="modal-content" action="/domein/dns/delete" method="POST">
+        @csrf
+            <div class="container">
+                <h1>Delete DNS</h1>
+                
+
+    
+            <div class="clearfix">
+                <button type="button"  class="cancelbtn">Cancel</button>
+                <input type="hidden" value="{{$dns->id}}" name="id">
+                <input type="hidden" value="{{$zone}}" name="zone">
+                <input type="hidden" value="{{$domain}}" name="domain">
+                <button type="submit"  class="deletebtn" >Delete</button>
+            </div>
+            </div>
+        </form>
+    </div>
+    @endforeach
+    @endif
+
+
+
+
+
+
       </div>
 
-        
+      
 
-        
-        
 
 @endsection

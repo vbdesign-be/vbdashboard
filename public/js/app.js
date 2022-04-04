@@ -2136,7 +2136,18 @@ if (addDNSBtn !== null) {
 
 
 var editDNSBtns = document.querySelectorAll('.editDNSBtn');
-console.log(editDNSBtns);
+var editForms = document.querySelectorAll('.editDns');
+editForms.forEach(function (edit) {
+  var deleteBtn = edit.querySelector('.dnsDelete');
+  deleteBtn.addEventListener('click', function (e) {
+    e.preventDefault(); //popup laten verschijnen
+
+    var number = deleteBtn.dataset.number;
+    var modal = document.querySelector('.modal--' + number);
+    modal.classList.remove('hidden');
+  });
+  edit.classList.add('hidden');
+});
 
 if (editDNSBtns !== null) {
   editDNSBtns.forEach(function (btn) {
@@ -2144,6 +2155,9 @@ if (editDNSBtns !== null) {
       e.preventDefault();
       var number = btn.dataset.number;
       var edit = document.querySelector(".editDns--".concat(number));
+      editForms.forEach(function (forms) {
+        forms.classList.add('hidden');
+      });
       edit.classList.remove('hidden');
     });
   });

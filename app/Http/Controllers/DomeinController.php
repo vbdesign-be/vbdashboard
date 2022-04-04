@@ -158,6 +158,11 @@ class DomeinController extends Controller
         $type = $request->input('type');
         $name = $request->input('name');
         $content = $request->input('content');
+
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
         
         
         $res = CloudflareController::createNewDNSRecord($zone, $type, $name, $content);
@@ -186,6 +191,11 @@ class DomeinController extends Controller
         $name = $request->input('name');
         $content = $request->input('content');
 
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
+
         $res = CloudflareController::editDNS($zone, $dns_id, $type, $name, $content);
         
         if($res->success){
@@ -196,6 +206,28 @@ class DomeinController extends Controller
         }
         return redirect('domein/'.$domain.'/dns');
 
+    }
+
+    public function dnsDelete(Request $request){
+        $zone = $request->input('zone');
+        $id = $request->input('id');
+        $domain = $request->input('domain');
+
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
+
+        $res = CloudflareController::deleteDNS($zone, $id);
+
+        if($res->success){
+            $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is verwijderd.');
+        }else{
+            $error = $res->errors[0]->message;
+            $request->session()->flash('error', 'Er ging iets mis: '.$error);
+        }
+        return redirect('domein/'.$domain.'/dns');
+       
     }
 
     

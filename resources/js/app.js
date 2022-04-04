@@ -111,19 +111,39 @@ if(addDNSBtn !== null){
 //dns edit 
 
 let editDNSBtns = document.querySelectorAll('.editDNSBtn');
-console.log(editDNSBtns);
+
+let editForms = document.querySelectorAll('.editDns');
+
+
+editForms.forEach((edit) => {
+    let deleteBtn = edit.querySelector('.dnsDelete');
+    deleteBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        //popup laten verschijnen
+        let number = deleteBtn.dataset.number;
+        let modal = document.querySelector('.modal--'+number);
+        modal.classList.remove('hidden');
+    });
+
+    edit.classList.add('hidden');
+})
 
 if(editDNSBtns !== null){
     editDNSBtns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            
             let number = btn.dataset.number;
             let edit = document.querySelector(`.editDns--${number}`);
+            editForms.forEach((forms) => {
+                forms.classList.add('hidden');
+            })
             edit.classList.remove('hidden');
         })
     })
 }
+
+
+
 
 
 
