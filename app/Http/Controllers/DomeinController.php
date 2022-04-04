@@ -230,5 +230,21 @@ class DomeinController extends Controller
        
     }
 
+    public function domaindelete(Request $request){
+        $domain = $request->input('domain');
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        };
+
+        $check = CloudflareController::getOneDomain($domain);
+        $zone = $check[0]->id;
+        //verwijderen uit cloudflare
+        //CloudflareController::deleteZone($zone);
+        //verwijderen uit qboxmail
+        //QboxController::deleteDomain($order->resource_code);
+        //verwijderen uit vimexx
+    }
+
     
 }

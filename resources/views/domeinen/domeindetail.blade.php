@@ -108,6 +108,32 @@
         </div>
       </div>
       </section>
+
+      <section class="py-8">
+        <div class="container px-4 mx-auto">
+          <div class="py-4 bg-white shadow rounded">
+            <div class="w-6/12 mx-auto flex justify-center">
+              <a class="deleteDomainBtn" href="">Verwijder {{$domain}}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal modal--deleteDomain hidden">
+        <span class="close" title="Close"></span>
+        <form class="modal-content" action="/domein/delete" method="POST">
+        @csrf
+            <div class="container--modal">
+                <h1>Delete {{$domain}}</h1>
+            <div class="clearfix">
+                <button type="button"  class="cancelbtn cancelDomainbtn">Cancel</button>
+                <input type="hidden" value="{{$domain}}" name="domain">
+                <button type="submit"  class="deletebtn" >Delete</button>
+            </div>
+            </div>
+        </form>
+    </div>
+
     </div>
 
 

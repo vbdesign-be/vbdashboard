@@ -194,11 +194,8 @@
         @csrf
             <div class="container--modal">
                 <h1>Delete DNS</h1>
-                
-
-    
             <div class="clearfix">
-                <button type="button"  class="cancelbtn">Cancel</button>
+                <button type="button" data-number={{$key}}  class="cancelbtn cancelDnsBtn">Cancel</button>
                 <input type="hidden" value="{{$dns->id}}" name="id">
                 <input type="hidden" value="{{$zone}}" name="zone">
                 <input type="hidden" value="{{$domain}}" name="domain">

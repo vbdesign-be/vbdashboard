@@ -114,19 +114,34 @@ let editDNSBtns = document.querySelectorAll('.editDNSBtn');
 
 let editForms = document.querySelectorAll('.editDns');
 
+if(editForms !== null){
+    editForms.forEach((edit) => {
+        let deleteBtn = edit.querySelector('.dnsDelete');
+        deleteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            //popup laten verschijnen
+            let number = deleteBtn.dataset.number;
+            let modalDns = document.querySelector('.modal--'+number);
+            modalDns.classList.remove('hidden');
+        });
+        
+    
+        edit.classList.add('hidden');
+    })
+}
 
-editForms.forEach((edit) => {
-    let deleteBtn = edit.querySelector('.dnsDelete');
-    deleteBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        //popup laten verschijnen
-        let number = deleteBtn.dataset.number;
-        let modal = document.querySelector('.modal--'+number);
-        modal.classList.remove('hidden');
-    });
+let cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
+console.log(cancelDnsBtns);
 
-    edit.classList.add('hidden');
-})
+if(cancelDnsBtns !== null){
+    cancelDnsBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            let modalDns = document.querySelector('.modal');
+            modalDns.classList.add('hidden');
+        })
+    })
+}
+
 
 if(editDNSBtns !== null){
     editDNSBtns.forEach((btn) => {
@@ -142,6 +157,24 @@ if(editDNSBtns !== null){
     })
 }
 
+//domain delete
+
+let domainDeleteBtn = document.querySelector('.deleteDomainBtn');
+let modalDomain = document.querySelector('.modal--deleteDomain');
+if(domainDeleteBtn !== null){
+    domainDeleteBtn.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        modalDomain.classList.remove('hidden');
+    })
+}
+
+let cancelDomainBtn = document.querySelector('.cancelDomainbtn');
+if(cancelDomainBtn !== null){
+    cancelDomainBtn.addEventListener('click', (e) =>{
+        modalDomain.classList.add('hidden');
+    })
+    
+}
 
 
 

@@ -95,4 +95,15 @@ class QboxController extends Controller
         return $data;
     }
 
+    public static function deleteDomain($code){
+        $url = 'https://api.qboxmail.com/api/domains/'.$code;
+        $token = 'cdwqFqPa6PQx0Gxab8ytj4JV3dU3abWk4nrZ5FPG-LSD-QTMA0peaEmd6Ah6G9rP';
+        $res = Http::withHeaders([
+            'X-Api-Token' => $token,
+        ])->delete($url);
+
+        $data = json_decode($res);
+        return $data;
+    }
+
 }

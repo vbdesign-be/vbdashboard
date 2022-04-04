@@ -2137,17 +2137,32 @@ if (addDNSBtn !== null) {
 
 var editDNSBtns = document.querySelectorAll('.editDNSBtn');
 var editForms = document.querySelectorAll('.editDns');
-editForms.forEach(function (edit) {
-  var deleteBtn = edit.querySelector('.dnsDelete');
-  deleteBtn.addEventListener('click', function (e) {
-    e.preventDefault(); //popup laten verschijnen
 
-    var number = deleteBtn.dataset.number;
-    var modal = document.querySelector('.modal--' + number);
-    modal.classList.remove('hidden');
+if (editForms !== null) {
+  editForms.forEach(function (edit) {
+    var deleteBtn = edit.querySelector('.dnsDelete');
+    deleteBtn.addEventListener('click', function (e) {
+      e.preventDefault(); //popup laten verschijnen
+
+      var number = deleteBtn.dataset.number;
+      var modalDns = document.querySelector('.modal--' + number);
+      modalDns.classList.remove('hidden');
+    });
+    edit.classList.add('hidden');
   });
-  edit.classList.add('hidden');
-});
+}
+
+var cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
+console.log(cancelDnsBtns);
+
+if (cancelDnsBtns !== null) {
+  cancelDnsBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var modalDns = document.querySelector('.modal');
+      modalDns.classList.add('hidden');
+    });
+  });
+}
 
 if (editDNSBtns !== null) {
   editDNSBtns.forEach(function (btn) {
@@ -2160,6 +2175,25 @@ if (editDNSBtns !== null) {
       });
       edit.classList.remove('hidden');
     });
+  });
+} //domain delete
+
+
+var domainDeleteBtn = document.querySelector('.deleteDomainBtn');
+var modalDomain = document.querySelector('.modal--deleteDomain');
+
+if (domainDeleteBtn !== null) {
+  domainDeleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    modalDomain.classList.remove('hidden');
+  });
+}
+
+var cancelDomainBtn = document.querySelector('.cancelDomainbtn');
+
+if (cancelDomainBtn !== null) {
+  cancelDomainBtn.addEventListener('click', function (e) {
+    modalDomain.classList.add('hidden');
   });
 }
 
