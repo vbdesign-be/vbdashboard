@@ -155,4 +155,48 @@ input[type="file"] {
 }
 
 
+.form-dnsAdd{
+    display: grid;
+    grid-template-columns: 1fr 4fr 4fr 2fr;
+    gap:5%;
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.form-editDns{
+    display:grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    row-gap: 5%;
+    
+}
+
+.form-editDns__type{
+    grid-row-start: 1;
+}
+
+.form-editDns__text{
+    grid-row-start: 2;
+    grid-column: 1 / span 3;
+}
+
+.form-editDns__btns{
+    grid-row-start: 1;
+    grid-column-start: 3;
+    display: flex;
+    gap:5%;
+    justify-content:end;
+    align-items:center;
+}
+
+.form-editDns input, .form-editDns textarea{
+    padding:2%;
+}
+
+
+
 

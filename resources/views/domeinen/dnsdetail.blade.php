@@ -84,10 +84,10 @@
                 </div>
 
                 <div class="dnsAdd hidden w-full mb-6">
-                    <form class="grid grid-cols-12" method="POST" action="/domein/dns/add">
+                    <form class="form-dnsAdd" method="POST" action="/domein/dns/add">
                     @csrf
 
-                    <div class="col-span-1 col-end-1 flex flex-col">
+                    <div class="form-dnsAdd__type flex flex-col">
                     <label for="type">Type</label>
                     <select name="type">
                         <option value="A">A</option>
@@ -114,12 +114,12 @@
                     </select>
                     </div>
 
-                    <div class="col-span-3 flex flex-col">
+                    <div class="form-dnsAdd__name flex flex-col">
                     <label for="name">Name</label>
                     <input name="name" type="text" class="border">
                     </div>
 
-                    <div class="col-span-3 flex flex-col">
+                    <div class="form-dnsAdd__content flex flex-col">
                     <label for="content">Content</label>
                     <input name="content" type="text" class="border">
                     </div>
@@ -127,7 +127,7 @@
                     <input name="zone" type="hidden" value="{{$zone}}">
                     <input name="domain" type="hidden" value="{{$domain}}">
 
-                    <div>
+                    <div class="form-dnsAdd__btn flex flex-col self-end">
                         <input type="submit" value="record toevoegen">
                     </div>
 
@@ -138,16 +138,16 @@
                 @if(!empty($dnsList))
                 @foreach($dnsList as $key => $dns)
                 <div class="editDns editDns--{{$key}}">
-                <form method="post" action="/domein/dns/edit">
+                <form class="form-editDns mb-6" method="post" action="/domein/dns/edit">
                 @csrf
-                    <div>
+                    <div class="form-editDns__type">
                         <p>type: {{$dns->type}}</p>
                         <input class="border" name="name" type="text" value="{{$dns->name}}">
                     </div>
 
-                    <textarea class="border" name="content" type="text">{{$dns->content}}</textarea>
+                    <textarea class="form-editDns__text border" name="content" type="text">{{$dns->content}}</textarea>
                     
-                    <div>
+                    <div class="form-editDns__btns">
                         <input type="submit" value="update DNS">
                         <a data-number="{{$key}}" class="dnsDelete" href="">Verwijder</a>
                     </div>
@@ -164,16 +164,16 @@
 
               <table class="table-auto w-full">
                 <thead>
-                  <tr class="text-xs text-gray-500 text-left"><th class="px-6 pb-3 font-medium">Type</th><th class="pb-3 font-medium">Name</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
+                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Type</th><th class="pb-3 font-medium">Name</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
                 </thead>
                 <tbody>
                 @if(!empty($dnsList))
                   @foreach($dnsList as $key => $dns)
-                  <tr class="table__item text-xs bg-gray-50">
+                  <tr class="table__item  text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">{{$dns->type}}</td>
-                    <td class="font-medium pr-6 ">{{$dns->name}}</td>
-                    <td class="font-medium pr-6">{{$dns->content}}</td>
-                    <td class="font-medium pr-6">{{$dns->ttl}}</td>
+                    <td class="font-medium">{{$dns->name}}</td>
+                    <td class="font-medium">{{substr($dns->content,0,25)}}...</td>
+                    <td class="font-medium">{{$dns->ttl}}</td>
                     <td><a class="editDNSBtn" data-number={{$key}} href="">bewerk knopje</a></td>
                   </tr>
                  @endforeach
@@ -192,7 +192,7 @@
         <span class="close" title="Close"></span>
         <form class="modal-content" action="/domein/dns/delete" method="POST">
         @csrf
-            <div class="container">
+            <div class="container--modal">
                 <h1>Delete DNS</h1>
                 
 
