@@ -117,11 +117,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     //domeinen
     Route::get('/domeinen', [DomeinController::class, "domeinen"]);
-    Route::get('/domein/{domein}', [DomeinController::class, "detail"]);
-    Route::get('/domein/{domein}/email', [DomeinController::class, 'emailDetail']);
+    Route::get('/domein/{domain}', [DomeinController::class, "detail"]);
+    Route::get('/domein/{domain}/email', [DomeinController::class, 'emailDetail']);
     Route::post('/domein/email/delete', [DomeinController::class, "deleteEmail"]);
-    Route::get('/domein/{domein}/nameservers', [DomeinController::class, 'nameserversDetail']);
+    Route::get('/domein/{domain}/nameservers', [DomeinController::class, 'nameserversDetail']);
     Route::post('/domein/nameservers/update', [DomeinController::class, 'updateNameservers']);
+    Route::get('/domein/{domain}/dns', [DomeinController::class, 'dnsDetail']);
     
 
     //offerte

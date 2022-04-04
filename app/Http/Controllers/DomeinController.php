@@ -134,5 +134,14 @@ class DomeinController extends Controller
         return redirect('/domein/'.$domain);
     }
 
+    public function dnsDetail($domain){
+        $data['domain'] = $domain;
+        $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        if(empty($order)){
+            abort(403);
+        }
+        return view('domeinen/dnsdetail', $data);
+    }
+
     
 }

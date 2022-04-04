@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', 'Domeinnaam')
+@section('title', 'DNS')
 
 @section('content')
 
@@ -13,7 +13,7 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">domeinnaam: {{ $domain }}</h2>
+            <h2 class="text-2xl font-bold">DNS</h2>
           </div>
         </div>
 
@@ -63,55 +63,43 @@
         @endcomponent
         @endif
 
-    
 
-    <div class="container px-4 mx-auto">
-
-    <section class="py-8">
       <div class="container px-4 mx-auto">
-        <div class="pt-4 bg-white shadow rounded">
-          <div class="flex px-6 pb-4 border-b">
-            <h3 class="text-xl font-bold">Informatie {{$domain}}</h3>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto">
-            <p>Eindigd op: {{ $expiration_date }}</p>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
-            <div class="col-span-4">
-              <p class="text-lg mb-2">Actieve nameservers</p>
-              @foreach($nameservers as $n)
-              <p>{{ $n }}</p>
-              @endforeach
+      <section class="py-8">
+        <div class="container px-4 mx-auto">
+          <div class="pt-4 bg-white shadow rounded">
+            <div class="flex px-6 pb-4 border-b">
+              <h3 class="text-xl font-bold">DNS management for {{$domain}}</h3>
             </div>
-            <div class="col-span-2">
-              <a href="/domein/{{$domain}}/nameservers">Beheer nameservers</a>
-            </div>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
-            <div class="col-span-4">
-              <p class="text-lg mb-2">Emailboxen</p>
-              <p>actieve emailboxen: {{$numberEmails}}</p>
-            </div>
-            <div class="col-span-2">
-              <a href="/domein/{{$domain}}/email">Beheer emailboxen</a>
-            </div>
-          </div>
-          <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
-            <div class="col-span-4">
-              <p class="text-lg mb-2">DNS records</p>
-              <p>actieve DNS records: {{ $numberDNS }}</p>
-            </div>
-            <div class="col-span-2">
-              <a href="/domein/{{$domain}}/dns">Beheer DNS records</a>
+            <div class="p-4 overflow-x-auto">
+              <table class="table-auto w-full">
+                <thead>
+                  <tr class="text-xs text-gray-500 text-left"><th class="px-6 pb-3 font-medium">Type</th><th class="pb-3 font-medium">Name</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
+                </thead>
+                <tbody>
+                  
+                  <tr class="table__item text-xs bg-gray-50">
+                    <td class="py-5 px-6 font-medium">test</td>
+
+                    <td class="font-medium ">
+                      test
+                    </td>
+                    
+                    <td>
+                        test
+                    </td>
+                    <td>900</td>
+                    <td>bewerk knopje</td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+              
             </div>
           </div>
         </div>
-      </div>
       </section>
-    </div>
-
-
-      
+      </div>
 
         
 
