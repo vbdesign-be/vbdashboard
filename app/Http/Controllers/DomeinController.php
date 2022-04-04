@@ -143,8 +143,34 @@ class DomeinController extends Controller
 
         $check = CloudflareController::getOneDomain($domain);
         $data['dnsList'] = CloudflareController::getDNSRecords($check[0]->id);
+        $data['zone'] = $check[0]->id;
         
         return view('domeinen/dnsdetail', $data);
+    }
+
+    public function dnsAdd(Request $request){
+        $credentials = $request->validate([
+            'type' => 'required',
+            'name' => 'required',
+            'content' => 'required'
+        ]);
+        $domain = $request->input('domain');
+        $zone = $request->input('zone');
+        $type = $request->input('type');
+        $name = $request->input('name');
+        $content = $request->input('content');
+        
+        $res = CloudflareController::createNewDNSRecord($zone, $type, $name, $content);
+        
+
+        if($res->success){
+            $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is toegevoegd.');
+        }else{
+            $error = $res->errors[0]->message;
+            $request->session()->flash('error', 'Er ging iets mis: '.$error);
+        }
+
+        return redirect('domein/'.$domain.'/dns');
     }
 
     
