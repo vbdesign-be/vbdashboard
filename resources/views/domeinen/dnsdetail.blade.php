@@ -135,6 +135,31 @@
                     </form>
                 </div>
 
+                @if(!empty($dnsList))
+                @foreach($dnsList as $key => $dns)
+                <div class="editDns editDns--{{$key}} hidden">
+                <form method="post" action="/domein/dns/edit">
+                @csrf
+                    <div>
+                        <p>type: {{$dns->type}}</p>
+                        <input class="border" name="name" type="text" value="{{$dns->name}}">
+                    </div>
+
+                    <textarea class="border" name="content" type="text">{{$dns->content}}</textarea>
+                    
+                    <div>
+                        <input type="submit" value="update DNS">
+                        <a href="">Verwijder</a>
+                    </div>
+                    <input name="domain" type="hidden" value={{$domain}}>
+                    <input name="zone" type="hidden" value={{$zone}}>
+                    <input name="dns_id" type="hidden" value={{$dns->id}}>
+                    <input name="type" type="hidden" value={{$dns->type}}>
+                    </form>
+                </div>
+                @endforeach
+                @endif
+
 
 
               <table class="table-auto w-full">
@@ -143,16 +168,13 @@
                 </thead>
                 <tbody>
                 @if(!empty($dnsList))
-                  @foreach($dnsList as $dns)
+                  @foreach($dnsList as $key => $dns)
                   <tr class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">{{$dns->type}}</td>
                     <td class="font-medium pr-6 ">{{$dns->name}}</td>
                     <td class="font-medium pr-6">{{$dns->content}}</td>
                     <td class="font-medium pr-6">{{$dns->ttl}}</td>
-                    <td><a href="">bewerk knopje</a></td>
-                  </tr>
-                  <tr>
-                      
+                    <td><a class="editDNSBtn" data-number={{$key}} href="">bewerk knopje</a></td>
                   </tr>
                  @endforeach
                  @endif

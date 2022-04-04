@@ -2125,12 +2125,27 @@ if (emailAddBtn !== null) {
 
 
 var dnsAdd = document.querySelector('.dnsAdd');
-var addBtn = document.querySelector('.dnsAddBtn');
+var addDNSBtn = document.querySelector('.dnsAddBtn');
 
-if (addBtn !== null) {
-  addBtn.addEventListener('click', function (e) {
+if (addDNSBtn !== null) {
+  addDNSBtn.addEventListener('click', function (e) {
     e.preventDefault();
     dnsAdd.classList.remove('hidden');
+  });
+} //dns edit 
+
+
+var editDNSBtns = document.querySelectorAll('.editDNSBtn');
+console.log(editDNSBtns);
+
+if (editDNSBtns !== null) {
+  editDNSBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var number = btn.dataset.number;
+      var edit = document.querySelector(".editDns--".concat(number));
+      edit.classList.remove('hidden');
+    });
   });
 }
 

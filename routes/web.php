@@ -124,6 +124,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/domein/nameservers/update', [DomeinController::class, 'updateNameservers']);
     Route::get('/domein/{domain}/dns', [DomeinController::class, 'dnsDetail']);
     Route::Post('/domein/dns/add', [DomeinController::class, 'dnsAdd']);
+    Route::Post('/domein/dns/edit', [DomeinController::class, 'dnsEdit']);
     
 
     //offerte

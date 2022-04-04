@@ -151,7 +151,6 @@ class DomeinController extends Controller
     public function dnsAdd(Request $request){
         $credentials = $request->validate([
             'type' => 'required',
-            'name' => 'required',
             'content' => 'required'
         ]);
         $domain = $request->input('domain');
@@ -159,6 +158,7 @@ class DomeinController extends Controller
         $type = $request->input('type');
         $name = $request->input('name');
         $content = $request->input('content');
+        
         
         $res = CloudflareController::createNewDNSRecord($zone, $type, $name, $content);
         
@@ -171,6 +171,31 @@ class DomeinController extends Controller
         }
 
         return redirect('domein/'.$domain.'/dns');
+    }
+
+    public function dnsEdit(Request $request){
+        $credentials = $request->validate([
+            'name' => 'required',
+            'content' => 'required'
+        ]);
+
+        $zone = $request->input('zone');
+        $domain = $request->input('domain');
+        $dns_id = $request->input('dns_id');
+        $type = $request->input('type');
+        $name = $request->input('name');
+        $content = $request->input('content');
+
+        $res = CloudflareController::editDNS($zone, $dns_id, $type, $name, $content);
+        
+        if($res->success){
+            $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is gewijzigd.');
+        }else{
+            $error = $res->errors[0]->message;
+            $request->session()->flash('error', 'Er ging iets mis: '.$error);
+        }
+        return redirect('domein/'.$domain.'/dns');
+
     }
 
     

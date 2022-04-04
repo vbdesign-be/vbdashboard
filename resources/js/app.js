@@ -98,14 +98,31 @@ if(emailAddBtn !== null){
 //dns ass input field
 
 let dnsAdd = document.querySelector('.dnsAdd');
-let addBtn = document.querySelector('.dnsAddBtn');
+let addDNSBtn = document.querySelector('.dnsAddBtn');
 
-if(addBtn !== null){
-    addBtn.addEventListener('click', (e) => {
+if(addDNSBtn !== null){
+    addDNSBtn.addEventListener('click', (e) => {
         e.preventDefault();
         dnsAdd.classList.remove('hidden');
     });
     
+}
+
+//dns edit 
+
+let editDNSBtns = document.querySelectorAll('.editDNSBtn');
+console.log(editDNSBtns);
+
+if(editDNSBtns !== null){
+    editDNSBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            let number = btn.dataset.number;
+            let edit = document.querySelector(`.editDns--${number}`);
+            edit.classList.remove('hidden');
+        })
+    })
 }
 
 
