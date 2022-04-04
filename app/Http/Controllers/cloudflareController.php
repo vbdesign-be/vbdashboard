@@ -61,7 +61,7 @@ class CloudflareController extends Controller
             'type' => 'A',
             'name' => $name,
             'content' => $ip,
-            'ttl' => 1
+            'ttl' => 900
         ]));
         
         $data = json_decode($res->body());
@@ -79,7 +79,7 @@ class CloudflareController extends Controller
             'type' => 'MX',
             'name' => '',
             'content' => 'mx0'.$number.'.qboxmail.com',
-            'ttl' => 1,
+            'ttl' => 900,
             'priority' => $number+0
         ]));
         
@@ -98,7 +98,7 @@ class CloudflareController extends Controller
             'type' => 'TXT',
             'name' => '',
             'content' => 'v=spf1 include:spf.qboxmail.com mx a -all',
-            'ttl' => 1,
+            'ttl' => 900,
         ]));
         
         $data = json_decode($res->body());
@@ -116,7 +116,7 @@ class CloudflareController extends Controller
             'type' => 'TXT',
             'name' => '',
             'content' => $record,
-            'ttl' => 1,
+            'ttl' => 900,
         ]));
         
         $data = json_decode($res->body());
@@ -134,7 +134,7 @@ class CloudflareController extends Controller
             'type' => 'TXT',
             'name' => '_dmarc.mycompany.com',
             'content' => 'v=DMARC1; p=quarantine; rua=mailto:rua@dmarc.qboxmail.com; ruf=mailto:ruf@dmarc.qboxmail.com',
-            'ttl' => 1,
+            'ttl' => 900,
         ]));
         
         $data = json_decode($res->body());
