@@ -67,11 +67,15 @@ items.forEach((item) => {
 let emailAddBtn = document.querySelector('.emailAddBtn');
 let emailAdd = document.querySelector('#emailAdd');
 
-emailAddBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    emailAdd.classList.remove('hidden');
-    window.location.href = '#emailAdd';
-});
+if(emailAddBtn !== null){
+    emailAddBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        emailAdd.classList.remove('hidden');
+        window.location.href = '#emailAdd';
+    });
+}
+
+
 
 //emaildelete
 
@@ -90,6 +94,20 @@ emailAddBtn.addEventListener('click', (e) => {
 
 //     });
 // })
+
+//dns ass input field
+
+let dnsAdd = document.querySelector('.dnsAdd');
+let addBtn = document.querySelector('.dnsAddBtn');
+
+if(addBtn !== null){
+    addBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        dnsAdd.classList.remove('hidden');
+    });
+    
+}
+
 
 
 

@@ -2104,11 +2104,14 @@ items.forEach(function (item) {
 
 var emailAddBtn = document.querySelector('.emailAddBtn');
 var emailAdd = document.querySelector('#emailAdd');
-emailAddBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-  emailAdd.classList.remove('hidden');
-  window.location.href = '#emailAdd';
-}); //emaildelete
+
+if (emailAddBtn !== null) {
+  emailAddBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    emailAdd.classList.remove('hidden');
+    window.location.href = '#emailAdd';
+  });
+} //emaildelete
 // let emails = document.querySelectorAll('#emailBoxes');
 // emails.forEach((email) => {
 //     let deleteBtn = email.querySelector('.emailDeleteBtn');
@@ -2118,6 +2121,18 @@ emailAddBtn.addEventListener('click', function (e) {
 //             //email.classList.add('hidden');
 //     });
 // })
+//dns ass input field
+
+
+var dnsAdd = document.querySelector('.dnsAdd');
+var addBtn = document.querySelector('.dnsAddBtn');
+
+if (addBtn !== null) {
+  addBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    dnsAdd.classList.remove('hidden');
+  });
+}
 
 /***/ }),
 

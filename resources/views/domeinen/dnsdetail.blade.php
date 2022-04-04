@@ -80,10 +80,10 @@
                         <input type="text" name="search" class="border w-10/12 ">
                         <input type="submit" value="Zoek">
                     </form>
-                    <a class="col-span-3" href="#">DNS record toevoegen</a>
+                    <a class="dnsAddBtn col-span-3" href="">DNS record toevoegen</a>
                 </div>
 
-                <div class="w-full mb-6">
+                <div class="dnsAdd hidden w-full mb-6">
                     <form class="grid grid-cols-12" method="POST" action="/domein/dns/add">
                     @csrf
 
@@ -150,6 +150,9 @@
                     <td class="font-medium pr-6">{{$dns->content}}</td>
                     <td class="font-medium pr-6">{{$dns->ttl}}</td>
                     <td><a href="">bewerk knopje</a></td>
+                  </tr>
+                  <tr>
+                      
                   </tr>
                  @endforeach
                  @endif
