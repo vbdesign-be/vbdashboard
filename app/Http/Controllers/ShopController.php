@@ -103,7 +103,7 @@ class ShopController extends Controller
         // dd($res);
 
         //domeinnaam reistreren via cloudflare
-        // $cloudflare = CloudflareController::createZone($order->domain);
+        $cloudflare = CloudflareController::createZone($order->domain);
 
         $check = $vimexx->checkDomain($order->domain);
         if($check === 'Niet beschikbaar'){
@@ -113,7 +113,7 @@ class ShopController extends Controller
 
         //message en redirect
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
-        return redirect('domeinen');
+        return redirect('/domein');
     }
 
     public function payedEmail(Request $request){

@@ -240,10 +240,23 @@ class DomeinController extends Controller
         $check = CloudflareController::getOneDomain($domain);
         $zone = $check[0]->id;
         //verwijderen uit cloudflare
-        //CloudflareController::deleteZone($zone);
+        CloudflareController::deleteZone($zone);
         //verwijderen uit qboxmail
-        //QboxController::deleteDomain($order->resource_code);
+        QboxController::deleteDomain($order->resource_code);
         //verwijderen uit vimexx
+        //$vimexx = new Vimexx();
+        //$vimexx->deleteDomain($domain);
+
+        //emails verwijderen
+        $emails = EmailOrder::where('order_id', $order->id)->get();
+        foreach($emails as $email){
+            $email->delete();
+        }
+        //order verwijderen 
+        $order->delete(); 
+
+        $request->session()->flash('message', $domain.' is verwijderd.');
+        return redirect('/domein');
     }
 
     
