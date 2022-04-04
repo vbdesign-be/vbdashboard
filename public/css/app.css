@@ -183,6 +183,10 @@ input[type=file] {
   border-bottom: solid white 10px;
 }
 
+.table__item--dns {
+  border-bottom: solid white 10px;
+}
+
 .project__icon__container {
   background-color: #2F4858;
 }

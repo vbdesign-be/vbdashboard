@@ -77,21 +77,17 @@
                   <tr class="text-xs text-gray-500 text-left"><th class="px-6 pb-3 font-medium">Type</th><th class="pb-3 font-medium">Name</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
                 </thead>
                 <tbody>
-                  
+                @if(!empty($dnsList))
+                  @foreach($dnsList as $dns)
                   <tr class="table__item text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">test</td>
-
-                    <td class="font-medium ">
-                      test
-                    </td>
-                    
-                    <td>
-                        test
-                    </td>
-                    <td>900</td>
-                    <td>bewerk knopje</td>
+                    <td class="py-5 px-6 font-medium">{{$dns->type}}</td>
+                    <td class="font-medium pr-6 ">{{$dns->name}}</td>
+                    <td class="font-medium pr-6">{{$dns->content}}</td>
+                    <td class="font-medium pr-6">{{$dns->ttl}}</td>
+                    <td><a href="">bewerk knopje</a></td>
                   </tr>
-                 
+                 @endforeach
+                 @endif
                 </tbody>
               </table>
               

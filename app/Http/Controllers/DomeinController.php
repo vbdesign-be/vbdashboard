@@ -140,6 +140,10 @@ class DomeinController extends Controller
         if(empty($order)){
             abort(403);
         }
+
+        $check = CloudflareController::getOneDomain($domain);
+        $data['dnsList'] = CloudflareController::getDNSRecords($check[0]->id);
+        
         return view('domeinen/dnsdetail', $data);
     }
 
