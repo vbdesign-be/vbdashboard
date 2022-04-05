@@ -78,7 +78,7 @@
                     <form class="col-span-8 flex flex-wrap gap-4" action="">
                     @csrf
                         <input type="text" name="search" class="border w-10/12 ">
-                        <input type="submit" value="Zoek">
+                        <button type="submit">Zoek</button>
                     </form>
                     <a class="dnsAddBtn col-span-3" href="">DNS record toevoegen</a>
                 </div>
@@ -128,7 +128,7 @@
                     <input name="domain" type="hidden" value="{{$domain}}">
 
                     <div class="form-dnsAdd__btn flex flex-col self-end">
-                        <input type="submit" value="record toevoegen">
+                        <button type="submit">Record toevoegen</button>
                     </div>
 
                     </div>
@@ -148,7 +148,7 @@
                     <textarea class="form-editDns__text border" name="content" type="text">{{$dns->content}}</textarea>
                     
                     <div class="form-editDns__btns">
-                        <input type="submit" value="update DNS">
+                        <button type="submit" value="update DNS">update DNS</button>
                         <a data-number="{{$key}}" class="dnsDelete" href="">Verwijder</a>
                     </div>
                     <input name="domain" type="hidden" value={{$domain}}>

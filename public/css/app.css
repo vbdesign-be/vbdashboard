@@ -135,7 +135,7 @@ input[type=file] {
 }
 
 /* Set a style for all buttons */
-button {
+.container--modal button {
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
@@ -152,19 +152,19 @@ button:hover {
 }
 
 /* Float cancel and delete buttons and add an equal width */
-.cancelbtn, .deletebtn {
+.container--modal .cancelbtn, .container--modal .deletebtn {
   float: left;
   width: 50%;
 }
 
 /* Add a color to the cancel button */
-.cancelbtn {
+.container--modal .cancelbtn {
   background-color: #ccc;
   color: black;
 }
 
 /* Add a color to the delete button */
-.deletebtn {
+.container--modal .deletebtn {
   background-color: #f44336;
 }
 
