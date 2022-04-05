@@ -17,51 +17,68 @@
           </div>
         </div>
 
-        <div class="px-4 mx-auto">
-        <h1 class="mb-2 text-4xl font-bold font-heading form__title">titel</h1>
-      
-      <form id="" class="bg-white shadow rounded py-6 px-6" action="" method="post">
-      @csrf
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="titel">Titel</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" value="{{ old('titel') }}">
-      </div>
-      </div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" value="{{ old('kostprijs') }}">
-      </div>
-      </div>
-      </div>
-      
-      <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="deadline">Gewenste deadline</label>
-        <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" value="{{ old('deadline') }}">
-      </div>
-      </div>
-        <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-      
-      </div>
-      </div>
-      
-      <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="samenvatting">Samenvatting</label>
-        <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" value="{{ old('samenvatting') }}"></textarea>
-      </div>
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
+            <div class="bg-white shadow rounded py-6 px-6">
+              <div class="zoekbalk">
+                <form class="zoekbalk__form flex gap-4" action="">
+                  <input class="border rounded" type="text" name="search">
+                  <button class="rounded bg-blue-500 text-white" type="submit">Zoek</button>
+                </form>
+                <a class="addTicketBtn zoekbalk__btn" href="">Ticket toevoegen</a>
+              </div>
+            </div>
 
-      <input class="hidden" type="text" name="company" value="">
-      
-      <div class="form__btn">
-      <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>
-      </div>
+          </div>
+        </section>
 
-      </form>
-      </div>
+        <section class="py-8 hidden form--addTicket">
+          <div class="container px-4 mx-auto">
+            <form  class="bg-white shadow rounded py-6 px-6" action="" method="post">
+            @csrf
+            <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+              <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+            <div class="mb-6">
+              <label class="block text-sm font-medium mb-2" for="titel">Titel</label>
+              <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" value="{{ old('titel') }}">
+            </div>
+            </div>
+            <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+              <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" value="{{ old('kostprijs') }}">
+              </div>
+            </div>
+            </div>
+      
+            <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+              <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+                <div class="mb-6">
+                  <label class="block text-sm font-medium mb-2" for="deadline">Gewenste deadline</label>
+                  <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" value="{{ old('deadline') }}">
+                </div>
+              </div>
+            </div>
+      
+            <div class="mb-6">
+              <label class="block text-sm font-medium mb-2" for="samenvatting">Samenvatting</label>
+              <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" value="{{ old('samenvatting') }}"></textarea>
+            </div>
+
+            <input class="hidden" type="text" name="company" value="">
+      
+            <div class="form__btn">
+              <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>
+            </div>
+
+          </form>
+          </div>
+
+        </section>
+
+      
+      
+      
 
         <section class="py-8">
         <div class="container px-4 mx-auto">

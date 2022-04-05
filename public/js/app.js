@@ -2060,6 +2060,9 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+    add = _require.add;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //faq opnenen
 
 
@@ -2094,6 +2097,17 @@ if (selectBtn) {
       companyForm.style.display = "block";
       userForm.style.display = "none";
     }
+  });
+} //addTicket
+
+
+var addTicketBtn = document.querySelector('.addTicketBtn');
+
+if (addTicketBtn !== null) {
+  addTicketBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    var addTicket = document.querySelector('.form--addTicket');
+    addTicket.classList.remove('hidden');
   });
 }
 

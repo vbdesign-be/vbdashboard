@@ -1,3 +1,5 @@
+const { add } = require('lodash');
+
 require('./bootstrap');
 
 
@@ -50,6 +52,19 @@ selectBtn.addEventListener('click', (e) => {
 })
 }
 
+
+
+//addTicket
+
+let addTicketBtn = document.querySelector('.addTicketBtn');
+
+if(addTicketBtn !== null){
+    addTicketBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let addTicket = document.querySelector('.form--addTicket');
+        addTicket.classList.remove('hidden');
+    })
+}
 
 
 
