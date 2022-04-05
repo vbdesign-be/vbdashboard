@@ -75,10 +75,10 @@
 
 
                 <div class="w-full mb-6 grid grid-cols-12 ">
-                    <form class="col-span-8 flex flex-wrap gap-4" action="">
+                    <form class="col-span-8 flex flex-wrap gap-4 form-zoek" action="">
                     @csrf
-                        <input type="text" name="search" class="border w-10/12 ">
-                        <button type="submit">Zoek</button>
+                        <input class="zoek__input border w-10/12" type="text" name="search">
+                        <button class="zoek__btn" type="submit">Zoek</button>
                     </form>
                     <a class="dnsAddBtn col-span-3" href="">DNS record toevoegen</a>
                 </div>
@@ -169,10 +169,10 @@
                 <tbody>
                 @if(!empty($dnsList))
                   @foreach($dnsList as $key => $dns)
-                  <tr class="table__item  text-xs bg-gray-50">
-                    <td class="py-5 px-6 font-medium">{{$dns->type}}</td>
-                    <td class="font-medium">{{$dns->name}}</td>
-                    <td class="font-medium">{{substr($dns->content,0,25)}}...</td>
+                  <tr class="table__item dns  text-xs bg-gray-50">
+                    <td class="py-5 px-6 dns__type font-medium">{{$dns->type}}</td>
+                    <td class="font-medium dns__name">{{$dns->name}}</td>
+                    <td class="font-medium dns__content">{{substr($dns->content,0,25)}}...</td>
                     <td class="font-medium">{{$dns->ttl}}</td>
                     <td><a class="editDNSBtn" data-number={{$key}} href="">bewerk knopje</a></td>
                   </tr>

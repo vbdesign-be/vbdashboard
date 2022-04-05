@@ -203,6 +203,44 @@ if(cancelEmailBtns !== null){
 }
 
 
+//zoekfunctie dns
+
+let zoek = document.querySelector('.form-zoek');
+
+if(zoek !== null){
+    let inputField = zoek.querySelector('.zoek__input');
+    let zoekBtn = document.querySelector('.zoek__btn');
+
+    zoekBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let input = inputField.value;
+        
+        
+        let dnsRecords = document.querySelectorAll('.dns');
+
+        dnsRecords.forEach((dns) => {
+
+            dns.classList.add('hidden');
+            
+            let type = dns.querySelector('.dns__type').innerHTML;
+            let name = dns.querySelector('.dns__name').innerHTML;
+            let content = dns.querySelector('.dns__content').innerHTML;
+            
+            let filterType = type.toLowerCase().indexOf(input.toLowerCase());
+            let filterName = name.toLowerCase().indexOf(input.toLowerCase());
+            let filterContent = content.toLowerCase().indexOf(input.toLowerCase());
+
+            if(filterType > -1 || filterName > -1 || filterContent > -1){
+                dns.classList.remove('hidden');
+            }
+            
+
+        })
+    })
+}
+
+
+
 
 
 
