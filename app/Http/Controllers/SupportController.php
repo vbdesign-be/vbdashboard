@@ -21,6 +21,10 @@ class SupportController extends Controller
 
     public function tickets(){
         //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
+        $email = Auth::user()->email;
+        $userFreshdeskId = FreshdeskController::getUserByEmail($email)->id;
+        $tickets = FreshdeskController::getTicketsByUser($userFreshdeskId);
+        dd($tickets);
         return view('support/tickets');
     }
 
