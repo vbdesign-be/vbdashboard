@@ -214,13 +214,24 @@ if(zoek !== null){
     zoekBtn.addEventListener('click', (e) => {
         e.preventDefault();
         let input = inputField.value;
-        
-        
         let dnsRecords = document.querySelectorAll('.dns');
+        dnsRecords.forEach((dns) => {
+            searchDns(dns, input);
+        })
+    })
 
+    inputField.addEventListener('keyup', (e) => {
+        let input = inputField.value;
+        let dnsRecords = document.querySelectorAll('.dns');
         dnsRecords.forEach((dns) => {
 
-            dns.classList.add('hidden');
+            searchDns(dns, input);
+            
+        })
+    })
+
+    function searchDns(dns, input){
+        dns.classList.add('hidden');
             
             let type = dns.querySelector('.dns__type').innerHTML;
             let name = dns.querySelector('.dns__name').innerHTML;
@@ -233,10 +244,7 @@ if(zoek !== null){
             if(filterType > -1 || filterName > -1 || filterContent > -1){
                 dns.classList.remove('hidden');
             }
-            
-
-        })
-    })
+    }
 }
 
 

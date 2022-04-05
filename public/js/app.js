@@ -2227,6 +2227,20 @@ if (cancelEmailBtns !== null) {
 var zoek = document.querySelector('.form-zoek');
 
 if (zoek !== null) {
+  var searchDns = function searchDns(dns, input) {
+    dns.classList.add('hidden');
+    var type = dns.querySelector('.dns__type').innerHTML;
+    var name = dns.querySelector('.dns__name').innerHTML;
+    var content = dns.querySelector('.dns__content').innerHTML;
+    var filterType = type.toLowerCase().indexOf(input.toLowerCase());
+    var filterName = name.toLowerCase().indexOf(input.toLowerCase());
+    var filterContent = content.toLowerCase().indexOf(input.toLowerCase());
+
+    if (filterType > -1 || filterName > -1 || filterContent > -1) {
+      dns.classList.remove('hidden');
+    }
+  };
+
   var inputField = zoek.querySelector('.zoek__input');
   var zoekBtn = document.querySelector('.zoek__btn');
   zoekBtn.addEventListener('click', function (e) {
@@ -2234,17 +2248,14 @@ if (zoek !== null) {
     var input = inputField.value;
     var dnsRecords = document.querySelectorAll('.dns');
     dnsRecords.forEach(function (dns) {
-      dns.classList.add('hidden');
-      var type = dns.querySelector('.dns__type').innerHTML;
-      var name = dns.querySelector('.dns__name').innerHTML;
-      var content = dns.querySelector('.dns__content').innerHTML;
-      var filterType = type.toLowerCase().indexOf(input.toLowerCase());
-      var filterName = name.toLowerCase().indexOf(input.toLowerCase());
-      var filterContent = content.toLowerCase().indexOf(input.toLowerCase());
-
-      if (filterType > -1 || filterName > -1 || filterContent > -1) {
-        dns.classList.remove('hidden');
-      }
+      searchDns(dns, input);
+    });
+  });
+  inputField.addEventListener('keyup', function (e) {
+    var input = inputField.value;
+    var dnsRecords = document.querySelectorAll('.dns');
+    dnsRecords.forEach(function (dns) {
+      searchDns(dns, input);
     });
   });
 }
