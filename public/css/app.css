@@ -219,18 +219,18 @@ input[type=file] {
     -webkit-transform: scale(1.1);
   }
 }
-.zoekbalk {
+.search {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   justify-items: center;
 }
 
-.zoekbalk__form {
+.search__form {
   grid-column-start: 5;
   grid-column-end: 9;
 }
 
-.zoekbalk__btn {
+.search__addBtn {
   grid-column-start: 10;
   grid-column-end: 12;
 }

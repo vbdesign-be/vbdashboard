@@ -20,12 +20,12 @@
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-              <div class="zoekbalk">
-                <form class="zoekbalk__form flex gap-4" action="">
-                  <input class="border rounded" type="text" name="search">
-                  <button class="rounded bg-blue-500 text-white" type="submit">Zoek</button>
+              <div class="search">
+                <form class="search__form search__form--ticket flex gap-4" action="">
+                  <input class="border search__input rounded" type="text" name="search">
+                  <button class="rounded search__btn bg-blue-500 text-white" type="submit">Zoek</button>
                 </form>
-                <a class="addTicketBtn zoekbalk__btn" href="">Ticket toevoegen</a>
+                <a class="addTicketBtn search__addBtn" href="">Ticket toevoegen</a>
               </div>
             </div>
 
@@ -83,14 +83,14 @@
         <section class="py-8">
         <div class="container px-4 mx-auto">
           <div class="flex flex-wrap -m-4">
-            <a href="#" class="w-full md:w-1/2 lg:w-1/4 p-4">
+            <a href="#" class="ticket w-full md:w-1/2 lg:w-1/4 p-4">
                 <div class="p-6 mb-4 bg-white rounded shadow">
                 <div class="flex justify-between items-center mb-6">
-                  <span class="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full">Status</span>
+                  <span class="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full ticket__status">Status</span>
                 </div>
                 <div class="mb-4">
-                  <h3 class="mb-2 font-medium">Ticket title</h3>
-                  <p class="text-sm text-gray-500">eerste paar woorden van ticket</p>
+                  <h3 class="mb-2 font-medium ticket__title">Ticket title</h3>
+                  <p class="text-sm text-gray-500 ticket__text">eerste paar woorden van ticket</p>
                 </div>
                 </div>
             </a>

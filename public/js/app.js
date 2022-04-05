@@ -2109,6 +2109,43 @@ if (addTicketBtn !== null) {
     var addTicket = document.querySelector('.form--addTicket');
     addTicket.classList.remove('hidden');
   });
+} //zoekfunctie tickets
+
+
+var searchTicket = document.querySelector('.search__form--ticket');
+
+if (searchTicket !== null) {
+  var searchTickets = function searchTickets(ticket, input) {
+    ticket.classList.add('hidden');
+    var title = ticket.querySelector('.ticket__title').innerHTML;
+    var text = ticket.querySelector('.ticket__text').innerHTML;
+    var status = ticket.querySelector('.ticket__status').innerHTML;
+    var filterTitle = title.toLowerCase().indexOf(input.toLowerCase());
+    var filterText = text.toLowerCase().indexOf(input.toLowerCase());
+    var filterStatus = status.toLowerCase().indexOf(input.toLowerCase());
+
+    if (filterTitle > -1 || filterText > -1 || filterStatus > -1) {
+      ticket.classList.remove('hidden');
+    }
+  };
+
+  var inputField = document.querySelector('.search__input');
+  var searchBtn = document.querySelector('.search__btn');
+  searchBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    var input = inputField.value;
+    var tickets = document.querySelectorAll('.ticket');
+    tickets.forEach(function (ticket) {
+      searchTickets(ticket, input);
+    });
+  });
+  inputField.addEventListener('keyup', function (e) {
+    var input = inputField.value;
+    var tickets = document.querySelectorAll('.ticket');
+    tickets.forEach(function (ticket) {
+      searchTickets(ticket, input);
+    });
+  });
 }
 
 /***/ }),
