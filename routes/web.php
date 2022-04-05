@@ -14,6 +14,7 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
+use App\Http\Controllers\FreshdeskController;
 use App\Mail\UserLoginMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-
+Route::get('/test', [FreshdeskController::class, "getTickets"]);
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
