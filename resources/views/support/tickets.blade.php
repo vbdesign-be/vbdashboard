@@ -83,7 +83,7 @@
         <section class="py-8">
         <div class="container px-4 mx-auto">
           <div class="flex flex-wrap -m-4">
-            <a href="#" class="ticket w-full md:w-1/2 lg:w-1/4 p-4">
+            <a href="/support/ticket/120" class="ticket w-full md:w-1/2 lg:w-1/4 p-4">
                 <div class="p-6 mb-4 bg-white rounded shadow">
                 <div class="flex justify-between items-center mb-6">
                   <span class="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full ticket__status">Status</span>

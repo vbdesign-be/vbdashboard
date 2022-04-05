@@ -46,23 +46,7 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-Route::get('/test', function() {
 
-    $folder = 'VB design';
-    $contents = collect(Storage::disk("google")->listContents('/', false));
-    $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first(); // There could be duplicate directory names!
-
-    if ( ! $dir) {
-        return 'No such folder!';
-    }
-
-    $files = collect(Storage::disk("google")->listContents($dir['path'], false))
-        ->where('type', '=', 'file');
-
-    dd($dir);
-});
 
 
 Route::group(['middleware' => ['auth']], function() {
@@ -102,6 +86,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/support', [SupportController::class, "support"]);
     Route::get('/support/faq', [SupportController::class, "faq"]);
     Route::get('/support/tickets', [SupportController::class, "tickets"]);
+    Route::get('/support/ticket/{ticket}',[SupportController::class, "ticketDetail"]);
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);

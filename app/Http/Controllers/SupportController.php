@@ -23,6 +23,10 @@ class SupportController extends Controller
         return view('support/tickets');
     }
 
+    public function ticketDetail($ticket_id){
+        return view('support/ticketsDetail');
+    }
+
     public function addTicket(Request $request){
         //checking credentials
 
