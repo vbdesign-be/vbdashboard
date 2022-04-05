@@ -74,13 +74,13 @@
             <div class="p-4 overflow-x-auto">
 
 
-                <div class="w-full mb-6 grid grid-cols-12 ">
-                    <form class="col-span-8 flex flex-wrap gap-4 form-zoekDns" action="">
+                <div class="w-full mb-6 grid grid-cols-12 search">
+                    <form class="col-span-8 flex flex-wrap gap-4 search__form" action="">
                     @csrf
-                        <input class="zoek__input border w-10/12" type="text" name="search">
-                        <button class="zoek__btn" type="submit">Zoek</button>
+                        <input class="search__input border w-10/12" type="text" name="search">
+                        <button class="search__btn" type="submit">Zoek</button>
                     </form>
-                    <a class="dnsAddBtn col-span-3" href="">DNS record toevoegen</a>
+                    <a class="search__addBtn col-span-3" href="">DNS record toevoegen</a>
                 </div>
 
                 <div class="dnsAdd hidden w-full mb-6">

@@ -2125,7 +2125,7 @@ if (emailAddBtn !== null) {
 
 
 var dnsAdd = document.querySelector('.dnsAdd');
-var addDNSBtn = document.querySelector('.dnsAddBtn');
+var addDNSBtn = document.querySelector('.search__addBtn');
 
 if (addDNSBtn !== null) {
   addDNSBtn.addEventListener('click', function (e) {
