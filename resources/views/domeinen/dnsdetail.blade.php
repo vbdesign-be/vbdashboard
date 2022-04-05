@@ -188,7 +188,7 @@
 
     @if(!empty($dnsList))
     @foreach($dnsList as $key => $dns)
-      <div  class="hidden modal modal--{{$key}}">
+      <div  class="hidden modal modal--deleteDns--{{$key}}">
         <span class="close" title="Close"></span>
         <form class="modal-content" action="/domein/dns/delete" method="POST">
         @csrf

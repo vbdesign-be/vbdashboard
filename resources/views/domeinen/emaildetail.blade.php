@@ -81,7 +81,7 @@
                 </thead>
                 <tbody>
                   @if(!empty($emails))
-                  @foreach($emails as $email)
+                  @foreach($emails as $key => $email)
                   <tr id="emailBoxes" class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">{{$email->email}}</td>
                     <td class="font-medium">{{$domain}}</td>
@@ -105,7 +105,7 @@
                           @endcomponent
                         @endif
                     </td>
-                    <td><form action="/domein/email/delete" method="post">@csrf<input type="hidden" name="email" value="{{$email->email}}"><input name="domain" type="hidden" value="{{$domain}}">@if($email->status === "active")<input type="submit" value="verwijder btn">@endif</form></td>
+                    <td><a data-number="{{$key}}" class="deleteEmailBtn" href="">Verwijder</a></td>
                   </tr>
                 </tbody>
                   @endforeach
@@ -158,6 +158,27 @@
           </form>
           </div>
       </section>
+
+      @if(!empty($emails))
+      @foreach($emails as $key => $email)
+      <div class="modal modal--deleteEmail modal--deleteEmail--{{$key}} hidden">
+        <span class="close" title="Close"></span>
+        <form class="modal-content" action="/domein/email/delete" method="POST">
+        @csrf
+            <div class="container--modal">
+                <h1>Delete {{$email->email}}</h1>
+            <div class="clearfix">
+                <button data-number="{{$key}}" type="button"  class="cancelbtn cancelEmailbtn">Cancel</button>
+                <input type="hidden" value="{{$domain}}" name="domain">
+                <input type="hidden" name="email" value="{{$email->email}}">
+                <button type="submit"  class="deletebtn" >Delete</button>
+            </div>
+            </div>
+        </form>
+    </div>
+    @endforeach
+    @endif
+
     </div>
 
 

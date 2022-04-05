@@ -2145,22 +2145,10 @@ if (editForms !== null) {
       e.preventDefault(); //popup laten verschijnen
 
       var number = deleteBtn.dataset.number;
-      var modalDns = document.querySelector('.modal--' + number);
+      var modalDns = document.querySelector('.modal--deleteDns--' + number);
       modalDns.classList.remove('hidden');
     });
     edit.classList.add('hidden');
-  });
-}
-
-var cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
-console.log(cancelDnsBtns);
-
-if (cancelDnsBtns !== null) {
-  cancelDnsBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      var modalDns = document.querySelector('.modal');
-      modalDns.classList.add('hidden');
-    });
   });
 }
 
@@ -2174,6 +2162,18 @@ if (editDNSBtns !== null) {
         forms.classList.add('hidden');
       });
       edit.classList.remove('hidden');
+    });
+  });
+}
+
+var cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
+
+if (cancelDnsBtns !== null) {
+  cancelDnsBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteDns--' + number);
+      modal.classList.add('hidden');
     });
   });
 } //domain delete
@@ -2194,6 +2194,32 @@ var cancelDomainBtn = document.querySelector('.cancelDomainbtn');
 if (cancelDomainBtn !== null) {
   cancelDomainBtn.addEventListener('click', function (e) {
     modalDomain.classList.add('hidden');
+  });
+} //email delete
+
+
+var deleteEmailBtns = document.querySelectorAll('.deleteEmailBtn');
+
+if (deleteEmailBtns !== null) {
+  deleteEmailBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteEmail--' + number);
+      modal.classList.remove('hidden');
+    });
+  });
+}
+
+var cancelEmailBtns = document.querySelectorAll('.cancelEmailbtn');
+
+if (cancelEmailBtns !== null) {
+  cancelEmailBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteEmail--' + number);
+      modal.classList.add('hidden');
+    });
   });
 }
 

@@ -121,7 +121,7 @@ if(editForms !== null){
             e.preventDefault();
             //popup laten verschijnen
             let number = deleteBtn.dataset.number;
-            let modalDns = document.querySelector('.modal--'+number);
+            let modalDns = document.querySelector('.modal--deleteDns--'+number);
             modalDns.classList.remove('hidden');
         });
         
@@ -129,19 +129,6 @@ if(editForms !== null){
         edit.classList.add('hidden');
     })
 }
-
-let cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
-console.log(cancelDnsBtns);
-
-if(cancelDnsBtns !== null){
-    cancelDnsBtns.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            let modalDns = document.querySelector('.modal');
-            modalDns.classList.add('hidden');
-        })
-    })
-}
-
 
 if(editDNSBtns !== null){
     editDNSBtns.forEach((btn) => {
@@ -153,6 +140,18 @@ if(editDNSBtns !== null){
                 forms.classList.add('hidden');
             })
             edit.classList.remove('hidden');
+        })
+    })
+}
+
+let cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
+
+if(cancelDnsBtns !== null){
+    cancelDnsBtns.forEach((btn) =>{
+        btn.addEventListener('click', (e) => {
+            let number = btn.dataset.number;
+            let modal = document.querySelector('.modal--deleteDns--'+number)
+            modal.classList.add('hidden');
         })
     })
 }
@@ -176,7 +175,32 @@ if(cancelDomainBtn !== null){
     
 }
 
+//email delete
 
+let deleteEmailBtns = document.querySelectorAll('.deleteEmailBtn');
+
+if(deleteEmailBtns !== null){
+deleteEmailBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) =>{
+        e.preventDefault();
+        let number = btn.dataset.number;
+        let modal = document.querySelector('.modal--deleteEmail--'+number);
+        modal.classList.remove('hidden');
+    })
+})
+}
+
+let cancelEmailBtns = document.querySelectorAll('.cancelEmailbtn');
+
+if(cancelEmailBtns !== null){
+    cancelEmailBtns.forEach((btn) =>{
+        btn.addEventListener('click', (e) => {
+            let number = btn.dataset.number;
+            let modal = document.querySelector('.modal--deleteEmail--'+number)
+            modal.classList.add('hidden');
+        })
+    })
+}
 
 
 

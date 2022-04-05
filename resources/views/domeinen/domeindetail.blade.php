@@ -113,7 +113,7 @@
         <div class="container px-4 mx-auto">
           <div class="py-4 bg-white shadow rounded">
             <div class="w-6/12 mx-auto flex justify-center">
-              <a class="deleteDomainBtn" href="">Verwijder {{$domain}}</a>
+              <a class="deleteDomainBtn bg-red-500 rounded p-2 text-white" href="">Verwijder {{$domain}}</a>
             </div>
           </div>
         </div>
