@@ -75,7 +75,7 @@
 
 
                 <div class="w-full mb-6 grid grid-cols-12 ">
-                    <form class="col-span-8 flex flex-wrap gap-4 form-zoek" action="">
+                    <form class="col-span-8 flex flex-wrap gap-4 form-zoekDns" action="">
                     @csrf
                         <input class="zoek__input border w-10/12" type="text" name="search">
                         <button class="zoek__btn" type="submit">Zoek</button>
