@@ -204,12 +204,12 @@ if(cancelEmailBtns !== null){
 
 
 //zoekfunctie dns
-let zoekDns = document.querySelector('.form-zoekDns');
-if(zoekDns !== null){
-    let inputField = zoekDns.querySelector('.zoek__input');
-    let zoekBtn = document.querySelector('.zoek__btn');
+let searchDNS = document.querySelector('.search__form--dns');
+if(searchDNS !== null){
+    let inputField = searchDNS.querySelector('.search__input');
+    let searchBtn = searchDNS.querySelector('.search__btn');
 
-    zoekBtn.addEventListener('click', (e) => {
+    searchBtn.addEventListener('click', (e) => {
         e.preventDefault();
         let input = inputField.value;
         let dnsRecords = document.querySelectorAll('.dns');

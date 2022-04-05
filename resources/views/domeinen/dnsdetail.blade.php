@@ -75,7 +75,7 @@
 
 
                 <div class="w-full mb-6 grid grid-cols-12 search">
-                    <form class="col-span-8 flex flex-wrap gap-4 search__form" action="">
+                    <form class="col-span-8 flex flex-wrap gap-4 search__form search__form--dns" action="">
                     @csrf
                         <input class="search__input border w-10/12" type="text" name="search">
                         <button class="search__btn" type="submit">Zoek</button>

@@ -2224,9 +2224,9 @@ if (cancelEmailBtns !== null) {
 } //zoekfunctie dns
 
 
-var zoekDns = document.querySelector('.form-zoekDns');
+var searchDNS = document.querySelector('.search__form--dns');
 
-if (zoekDns !== null) {
+if (searchDNS !== null) {
   var searchDns = function searchDns(dns, input) {
     dns.classList.add('hidden');
     var type = dns.querySelector('.dns__type').innerHTML;
@@ -2241,9 +2241,9 @@ if (zoekDns !== null) {
     }
   };
 
-  var inputField = zoekDns.querySelector('.zoek__input');
-  var zoekBtn = document.querySelector('.zoek__btn');
-  zoekBtn.addEventListener('click', function (e) {
+  var inputField = searchDNS.querySelector('.search__input');
+  var searchBtn = searchDNS.querySelector('.search__btn');
+  searchBtn.addEventListener('click', function (e) {
     e.preventDefault();
     var input = inputField.value;
     var dnsRecords = document.querySelectorAll('.dns');
