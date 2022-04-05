@@ -80,7 +80,7 @@
                         <input class="search__input border w-10/12" type="text" name="search">
                         <button class="search__btn" type="submit">Zoek</button>
                     </form>
-                    <a class="search__addBtn col-span-3" href="">DNS record toevoegen</a>
+                    <a class="search__addBtn addDnsBtn col-span-3" href="">DNS record toevoegen</a>
                 </div>
 
                 <div class="dnsAdd hidden w-full mb-6">

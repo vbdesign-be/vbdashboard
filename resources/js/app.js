@@ -98,7 +98,7 @@ if(emailAddBtn !== null){
 //dns ass input field
 
 let dnsAdd = document.querySelector('.dnsAdd');
-let addDNSBtn = document.querySelector('.search__addBtn');
+let addDNSBtn = document.querySelector('.addDnsBtn');
 
 if(addDNSBtn !== null){
     addDNSBtn.addEventListener('click', (e) => {
