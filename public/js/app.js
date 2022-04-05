@@ -2104,11 +2104,14 @@ items.forEach(function (item) {
 
 var emailAddBtn = document.querySelector('.emailAddBtn');
 var emailAdd = document.querySelector('#emailAdd');
-emailAddBtn.addEventListener('click', function (e) {
-  e.preventDefault();
-  emailAdd.classList.remove('hidden');
-  window.location.href = '#emailAdd';
-}); //emaildelete
+
+if (emailAddBtn !== null) {
+  emailAddBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    emailAdd.classList.remove('hidden');
+    window.location.href = '#emailAdd';
+  });
+} //emaildelete
 // let emails = document.querySelectorAll('#emailBoxes');
 // emails.forEach((email) => {
 //     let deleteBtn = email.querySelector('.emailDeleteBtn');
@@ -2118,6 +2121,107 @@ emailAddBtn.addEventListener('click', function (e) {
 //             //email.classList.add('hidden');
 //     });
 // })
+//dns ass input field
+
+
+var dnsAdd = document.querySelector('.dnsAdd');
+var addDNSBtn = document.querySelector('.dnsAddBtn');
+
+if (addDNSBtn !== null) {
+  addDNSBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    dnsAdd.classList.remove('hidden');
+  });
+} //dns edit 
+
+
+var editDNSBtns = document.querySelectorAll('.editDNSBtn');
+var editForms = document.querySelectorAll('.editDns');
+
+if (editForms !== null) {
+  editForms.forEach(function (edit) {
+    var deleteBtn = edit.querySelector('.dnsDelete');
+    deleteBtn.addEventListener('click', function (e) {
+      e.preventDefault(); //popup laten verschijnen
+
+      var number = deleteBtn.dataset.number;
+      var modalDns = document.querySelector('.modal--deleteDns--' + number);
+      modalDns.classList.remove('hidden');
+    });
+    edit.classList.add('hidden');
+  });
+}
+
+if (editDNSBtns !== null) {
+  editDNSBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var number = btn.dataset.number;
+      var edit = document.querySelector(".editDns--".concat(number));
+      editForms.forEach(function (forms) {
+        forms.classList.add('hidden');
+      });
+      edit.classList.remove('hidden');
+    });
+  });
+}
+
+var cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
+
+if (cancelDnsBtns !== null) {
+  cancelDnsBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteDns--' + number);
+      modal.classList.add('hidden');
+    });
+  });
+} //domain delete
+
+
+var domainDeleteBtn = document.querySelector('.deleteDomainBtn');
+var modalDomain = document.querySelector('.modal--deleteDomain');
+
+if (domainDeleteBtn !== null) {
+  domainDeleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    modalDomain.classList.remove('hidden');
+  });
+}
+
+var cancelDomainBtn = document.querySelector('.cancelDomainbtn');
+
+if (cancelDomainBtn !== null) {
+  cancelDomainBtn.addEventListener('click', function (e) {
+    modalDomain.classList.add('hidden');
+  });
+} //email delete
+
+
+var deleteEmailBtns = document.querySelectorAll('.deleteEmailBtn');
+
+if (deleteEmailBtns !== null) {
+  deleteEmailBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteEmail--' + number);
+      modal.classList.remove('hidden');
+    });
+  });
+}
+
+var cancelEmailBtns = document.querySelectorAll('.cancelEmailbtn');
+
+if (cancelEmailBtns !== null) {
+  cancelEmailBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteEmail--' + number);
+      modal.classList.add('hidden');
+    });
+  });
+}
 
 /***/ }),
 

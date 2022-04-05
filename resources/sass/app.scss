@@ -6,6 +6,7 @@
 @import 'components/table';
 @import 'components/calendar';
 @import 'components/projects';
+@import 'components/modal';
 @import 'abstracts/colors';
 
 
@@ -27,4 +28,8 @@ body{
 
 .container--companies{
     margin-top: 50px;
+}
+
+h2{
+    text-align:left;
 }

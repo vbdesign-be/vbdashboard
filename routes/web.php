@@ -20,6 +20,8 @@ use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\QboxController;
 use App\Http\Controllers\VimexxController;
 use App\Mail\UserLoginMail;
+use App\Models\Order;
+use App\Models\Vimexx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,7 +39,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 Route::get('/test', function(){
-    return view('emails.newOfferte');
+        return view('emails/userLogin');
 });
 
 
@@ -93,9 +95,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/payedTransfer', [ShopController::class, "payedTransfer"]);
 
     //domeinen
-    Route::get('/domeinen', [DomeinController::class, "domeinen"]);
+    Route::get('/domein', [DomeinController::class, "domeinen"]);
+    Route::get('/domein/{domain}', [DomeinController::class, "detail"]);
+    Route::get('/domein/{domain}/email', [DomeinController::class, 'emailDetail']);
     Route::post('/domein/email/delete', [DomeinController::class, "deleteEmail"]);
-    Route::get('/domein/{domein}', [DomeinController::class, "detail"]);
+    Route::get('/domein/{domain}/nameservers', [DomeinController::class, 'nameserversDetail']);
+    Route::post('/domein/nameservers/update', [DomeinController::class, 'updateNameservers']);
+    Route::get('/domein/{domain}/dns', [DomeinController::class, 'dnsDetail']);
+    Route::Post('/domein/dns/add', [DomeinController::class, 'dnsAdd']);
+    Route::Post('/domein/dns/edit', [DomeinController::class, 'dnsEdit']);
+    Route::Post('/domein/dns/delete', [DomeinController::class, 'dnsDelete']);
+    Route::Post('/domein/delete', [DomeinController::class, 'domainDelete']);
     
 
     //offerte

@@ -92,7 +92,7 @@
                     </td>
                     
                     <td>
-                    @if($order->status === "offline")
+                    @if($order->status === "failed")
                           @component('components/domainstatus')
                             @slot('color') red @endslot
                               {{$order->status}}

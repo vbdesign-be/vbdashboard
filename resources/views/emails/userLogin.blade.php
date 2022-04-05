@@ -67,7 +67,7 @@ body{
 
 
 <div class="mail">
-    <h1 class="mail__title">Hallo {{ $user->firstname }}</h1>
+    <h1 class="mail__title">Hallo {{ $user->first_name }}</h1>
     <p class="mail__text">Klik op de knop om in te loggen op het dashboard</p>
     <div class="mail__btn">
         <a class="btn" href="{{ $url }}">Login</a>

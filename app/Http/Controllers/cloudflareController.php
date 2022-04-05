@@ -61,7 +61,7 @@ class CloudflareController extends Controller
             'type' => 'A',
             'name' => $name,
             'content' => $ip,
-            'ttl' => 1
+            'ttl' => 900
         ]));
         
         $data = json_decode($res->body());
@@ -79,7 +79,7 @@ class CloudflareController extends Controller
             'type' => 'MX',
             'name' => '',
             'content' => 'mx0'.$number.'.qboxmail.com',
-            'ttl' => 1,
+            'ttl' => 900,
             'priority' => $number+0
         ]));
         
@@ -98,7 +98,7 @@ class CloudflareController extends Controller
             'type' => 'TXT',
             'name' => '',
             'content' => 'v=spf1 include:spf.qboxmail.com mx a -all',
-            'ttl' => 1,
+            'ttl' => 900,
         ]));
         
         $data = json_decode($res->body());
@@ -116,7 +116,7 @@ class CloudflareController extends Controller
             'type' => 'TXT',
             'name' => '',
             'content' => $record,
-            'ttl' => 1,
+            'ttl' => 900,
         ]));
         
         $data = json_decode($res->body());
@@ -134,10 +134,84 @@ class CloudflareController extends Controller
             'type' => 'TXT',
             'name' => '_dmarc.mycompany.com',
             'content' => 'v=DMARC1; p=quarantine; rua=mailto:rua@dmarc.qboxmail.com; ruf=mailto:ruf@dmarc.qboxmail.com',
-            'ttl' => 1,
+            'ttl' => 900,
         ]));
         
         $data = json_decode($res->body());
         return $data;
     }
+
+    public static function getDNSRecords($zone){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => '300860cc6227c1aa84c0943e4ab1faf4ae80f',
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => 'v1.0-4c1d29c10a1522177f175f20-1ff2845b62538aea7e1e829bf570d8c453ed099fd51d937acf7b761b02b5534dd198361822532e9356eba42ef01f8a621db3423545a53c73d18bdbaf1b8f43d2b7269e7a5d9f0b'
+        ])->get($url.'zones/'.$zone.'/dns_records');
+        $data = json_decode($res->body());
+        return $data->result;
+    }
+
+    public static function createNewDNSRecord($zone, $type, $name, $content){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => '300860cc6227c1aa84c0943e4ab1faf4ae80f',
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => 'v1.0-4c1d29c10a1522177f175f20-1ff2845b62538aea7e1e829bf570d8c453ed099fd51d937acf7b761b02b5534dd198361822532e9356eba42ef01f8a621db3423545a53c73d18bdbaf1b8f43d2b7269e7a5d9f0b'
+        ])->post($url.'zones/'.$zone.'/dns_records', ([
+            'type' => $type,
+            'name' => $name,
+            'content' => $content,
+            'ttl' => 900,
+        ]));
+        
+        $data = json_decode($res->body());
+        return $data;
+    }
+
+    public static function editDNS($zone, $dns_id, $type, $name, $content){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => '300860cc6227c1aa84c0943e4ab1faf4ae80f',
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => 'v1.0-4c1d29c10a1522177f175f20-1ff2845b62538aea7e1e829bf570d8c453ed099fd51d937acf7b761b02b5534dd198361822532e9356eba42ef01f8a621db3423545a53c73d18bdbaf1b8f43d2b7269e7a5d9f0b'
+        ])->put($url.'zones/'.$zone.'/dns_records/'.$dns_id, ([
+            'type' => $type,
+            'name' => $name,
+            'content' => $content,
+            'ttl' => 900,
+        ]));
+        
+        $data = json_decode($res->body());
+        return $data;
+    }
+
+    public static function deleteDNS($zone, $dns_id){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => '300860cc6227c1aa84c0943e4ab1faf4ae80f',
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => 'v1.0-4c1d29c10a1522177f175f20-1ff2845b62538aea7e1e829bf570d8c453ed099fd51d937acf7b761b02b5534dd198361822532e9356eba42ef01f8a621db3423545a53c73d18bdbaf1b8f43d2b7269e7a5d9f0b'
+        ])->delete($url.'zones/'.$zone.'/dns_records/'.$dns_id);
+        
+        $data = json_decode($res->body());
+        return $data;
+    }
+
+    public static function deleteZone($zone){
+        $url = "https://api.cloudflare.com/client/v4/";
+        $res = Http::withHeaders([
+            'X-Auth-Key' => '300860cc6227c1aa84c0943e4ab1faf4ae80f',
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => 'v1.0-4c1d29c10a1522177f175f20-1ff2845b62538aea7e1e829bf570d8c453ed099fd51d937acf7b761b02b5534dd198361822532e9356eba42ef01f8a621db3423545a53c73d18bdbaf1b8f43d2b7269e7a5d9f0b'
+        ])->delete($url.'zones/'.$zone);
+        
+        $data = json_decode($res->body());
+        return $data;
+    }
+
 }

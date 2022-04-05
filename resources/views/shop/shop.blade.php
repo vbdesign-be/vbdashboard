@@ -71,7 +71,7 @@
       
             <p class="mb-2 text-base">Bekijk of je domeinnaam nog beschikbaar is</p>
       
-            <div class="container px-4 mx-auto w-80 flex">
+            <div class="container px-4 mx-auto w-80 flex items-center">
             <div class="">
               <input class="block w-full px-4 py-3  text-sm placeholder-gray-500 bg-white border rounded" type="text" name="domeinnaam" @if(!empty($domain)) value="{{$domain}}" @endif placeholder="voorbeeld.be">
             </div>
