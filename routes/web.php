@@ -39,7 +39,6 @@ use Illuminate\Support\Facades\Storage;
 
 
 Route::get('/test', function(){
-
         return view('emails/userLogin');
 });
 

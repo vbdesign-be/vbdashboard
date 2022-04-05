@@ -5,8 +5,6 @@
 @section('content')
 
 
-
-
 <div class="">
 
     <x-menu />
