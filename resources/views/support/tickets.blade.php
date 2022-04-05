@@ -17,6 +17,41 @@
           </div>
         </div>
 
+        @if($errors->any())
+            @component('components/notification')
+            @slot('type') red @endslot
+            @slot('size') notification-profile   @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endcomponent
+        @endif
+
+        @if($flash = session('message'))
+        @component('components/notification')
+            @slot('type') green @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') green @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
+        @if($flash = session('notification'))
+        @component('components/notification')
+            @slot('type') indigo @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') indigo @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
@@ -34,35 +69,29 @@
 
         <section class="py-8 hidden form--addTicket">
           <div class="container px-4 mx-auto">
-            <form  class="bg-white shadow rounded py-6 px-6" action="" method="post">
+            <form  class="bg-white shadow rounded py-6 px-6" action="/support/ticket/add" method="post">
             @csrf
             <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
               <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
             <div class="mb-6">
-              <label class="block text-sm font-medium mb-2" for="titel">Titel</label>
-              <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="titel" value="{{ old('titel') }}">
+              <label class="block text-sm font-medium mb-2" for="onderwerp">Onderwerp</label>
+              <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="onderwerp" value="{{ old('onderwerp') }}">
             </div>
             </div>
             <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
               <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="kostprijs">Maximale kostprijs</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="kostprijs" value="{{ old('kostprijs') }}">
+                <label class="block text-sm font-medium mb-2" for="type">Type</label>
+                <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="type" value="{{ old('type') }}">
+                  <option value="">Test1</option>
+                  <option value="">Test2</option>
+                </select>
               </div>
             </div>
-            </div>
-      
-            <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-              <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-                <div class="mb-6">
-                  <label class="block text-sm font-medium mb-2" for="deadline">Gewenste deadline</label>
-                  <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="date" name="deadline" value="{{ old('deadline') }}">
-                </div>
-              </div>
             </div>
       
             <div class="mb-6">
-              <label class="block text-sm font-medium mb-2" for="samenvatting">Samenvatting</label>
-              <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="samenvatting" rows="5" value="{{ old('samenvatting') }}"></textarea>
+              <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
+              <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
             </div>
 
             <input class="hidden" type="text" name="company" value="">

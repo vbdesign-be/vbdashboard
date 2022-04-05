@@ -20,15 +20,26 @@ class SupportController extends Controller
     }
 
     public function tickets(){
+        //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
         return view('support/tickets');
     }
 
-    public function ticketDetail($ticket_id){
+    public function detailTicket($ticket_id){
+        //ticket id ophalen
+
+        //ticket ophalen
         return view('support/ticketsDetail');
     }
 
     public function addTicket(Request $request){
         //checking credentials
+        $credentials = $request->validate([
+            'onderwerp' => 'required|max:255',
+            'tags' => 'required',
+            'beschrijving' => 'required'
+        ]);
+
+        $request->flash();
 
         //connectie maken met freshdesk api
 
@@ -39,6 +50,7 @@ class SupportController extends Controller
         //status message naar de gebruiker
 
         //redirecten
+        return redirect('/support/tickets');
     }
 
     
