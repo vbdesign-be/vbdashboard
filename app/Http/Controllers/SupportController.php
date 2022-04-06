@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Faq;
 use App\Models\Question;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,11 +51,14 @@ class SupportController extends Controller
         if($contact->id !== $requester_id){
             abort(403);
         }
-
+        //dd($ticket);
         //ticket en conversatie ophalen
         $data['ticket'] = $ticket;
         $data['conversation'] = FreshdeskController::getConversationOfTicket($ticket->id);
-
+        $data['status'] = FreshdeskController::getTicketStatus($ticket->status);
+        //dd($data['conversation']);
+        $date = date_create($ticket->created_at);
+        $data['date'] = date_format($date,"d/m/Y H:i");
         return view('support/ticketsDetail', $data);
     }
 
