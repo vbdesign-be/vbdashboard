@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/test', function(){
-    FreshdeskController::getEmail();
+    FreshdeskController::getTicketType();
 });
 
 Route::get('/login', [LoginController::class, "login"])->name('login');

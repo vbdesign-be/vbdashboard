@@ -34,7 +34,7 @@ class SupportController extends Controller
                 ];
             $data['tickets'][] = $body;
         }
-
+        $data['types'] = FreshdeskController::getTicketType();
         return view('support/tickets', $data);
     }
 
@@ -56,9 +56,9 @@ class SupportController extends Controller
         $data['ticket'] = $ticket;
         $data['conversation'] = FreshdeskController::getConversationOfTicket($ticket->id);
         $data['status'] = FreshdeskController::getTicketStatus($ticket->status);
-        //dd($data['conversation']);
         $date = date_create($ticket->created_at);
         $data['date'] = date_format($date,"d/m/Y H:i");
+        
         return view('support/ticketsDetail', $data);
     }
 
@@ -66,18 +66,20 @@ class SupportController extends Controller
         //checking credentials
         $credentials = $request->validate([
             'onderwerp' => 'required|max:255',
-            'tags' => 'required',
-            'beschrijving' => 'required'
+            'type' => 'required',
+            'beschrijving' => 'required',
+            'attachment' => 'file|mimes:jpeg,jpg,png,pdf|max:50',
         ]);
-
         $request->flash();
 
-        //connectie maken met freshdesk api
-
+        $subject = $request->input('onderwerp');
+        $type = $request->input('type');
+        $summary = $request->input('beschrijving');
         //contactpersoon informatie verkrijgen
-
+        $user = FreshdeskController::getUserByEmail(Auth::user()->email);
         //ticket maken en info invullen(infortie + request)
-
+        //$test = FreshdeskController::makeTicket($summary, $subject, $type, $user->id);
+        //dd($test);
         //status message naar de gebruiker
 
         //redirecten

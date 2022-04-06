@@ -40,7 +40,7 @@
   margin-bottom: 50px;
 }
 
-input[type=file] {
+.avatar {
   display: none;
 }
 

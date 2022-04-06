@@ -69,7 +69,7 @@
 
         <section class="py-8 hidden form--addTicket">
           <div class="container px-4 mx-auto">
-            <form  class="bg-white shadow rounded py-6 px-6" action="/support/ticket/add" method="post">
+            <form  class="bg-white shadow rounded py-6 px-6" action="/support/ticket/add" method="post" enctype='multipart/form-data'>
             @csrf
             <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
               <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
@@ -82,10 +82,14 @@
               <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" for="type">Type</label>
                 <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="type" value="{{ old('type') }}">
-                  <option value="">Test1</option>
-                  <option value="">Test2</option>
+                  @foreach($types as $key => $type)
+                  <option value="{{$type}}">{{$type}}</option>
+                  @endforeach
                 </select>
               </div>
+            </div>
+            <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+              
             </div>
             </div>
       
@@ -93,6 +97,10 @@
               <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
               <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
             </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="attachment">Attachments</label>
+                <input name="attachment" type="file">
+              </div>
 
             <input class="hidden" type="text" name="company" value="">
       
