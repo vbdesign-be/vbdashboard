@@ -24,8 +24,14 @@ class SupportController extends Controller
         $email = Auth::user()->email;
         $userFreshdeskId = FreshdeskController::getUserByEmail($email)->id;
         $tickets = FreshdeskController::getTicketsByUser($userFreshdeskId);
-        $data['tickets'] = $tickets;
-        //dd($tickets);
+        foreach($tickets as $key => $ticket){
+            $status = FreshdeskController::getTicketStatus($ticket->status);
+            $body = [
+                    $ticket,
+                    $status,
+                ];
+            $data['tickets'][] = $body;
+        }
         return view('support/tickets', $data);
     }
 

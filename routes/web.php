@@ -30,7 +30,9 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/test', [FreshdeskController::class, "getTickets"]);
+Route::get('/test', function(){
+    FreshdeskController::getTicketStatus("2");
+});
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
