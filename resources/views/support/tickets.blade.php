@@ -114,14 +114,13 @@
           <div class="flex flex-wrap -m-4">
             @if(!empty($tickets))
             @foreach($tickets as $ticket)
-            <a href="/support/ticket/120" class="ticket w-full md:w-1/2 lg:w-1/4 p-4">
+            <a href="/support/ticket/{{$ticket[0]->id}}" class="ticket w-full md:w-1/2 lg:w-1/4 p-4">
                 <div class="p-6 mb-4 bg-white rounded shadow">
                 <div class="flex justify-between items-center mb-6">
                   <span class="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full ticket__status">{{$ticket[1]}}</span>
                 </div>
                 <div class="mb-4">
                   <h3 class="mb-2 font-medium ticket__title">{{$ticket[0]->subject}}</h3>
-                  <p class="text-sm text-gray-500 ticket__text">eerste paar woorden van ticket</p>
                 </div>
                 </div>
             </a>
