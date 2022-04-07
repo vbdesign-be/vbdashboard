@@ -55,14 +55,18 @@ class SupportController extends Controller
         if ($contact->id !== $requester_id) {
             abort(403);
         }
-        //dd($ticket);
+        
+
+        //alle verschillende statusen
+        $status = FreshdeskController::getTicketStatusField();
+        $data['statusTypes'] = $status;
         //ticket en conversatie ophalen
         $data['ticket'] = $ticket;
         $data['conversation'] = FreshdeskController::getConversationOfTicket($ticket->id);
         $data['status'] = FreshdeskController::getTicketStatus($ticket->status);
         $date = date_create($ticket->created_at);
         $data['date'] = date_format($date, "d/m/Y H:i");
-        
+        $data['requester_id'] = $requester_id;
         return view('support/ticketsDetail', $data);
     }
 
@@ -75,6 +79,8 @@ class SupportController extends Controller
             'beschrijving' => 'required',
             'attachment' => 'file|mimes:jpeg,jpg,png,pdf|max:20000',
         ]);
+
+        $request->flash();
         
 
         $subject = $request->input('onderwerp');
@@ -85,7 +91,16 @@ class SupportController extends Controller
         //contactpersoon informatie verkrijgen
         $user = FreshdeskController::getUserByEmail(Auth::user()->email);
         //ticket maken en info invullen(infortie + request)
-        $check = FreshdeskController::makeTicket($summary, $subject, $type, $user->id, $attachment);
+
+
+        
+        if(empty($attachment)){
+            $check = FreshdeskController::makeTicket($summary, $subject, $type, $user->id);
+        }else{
+            $check = FreshdeskController::makeTicketWithAttachment($summary, $subject, $type, $user->id, $attachment);
+        }
+
+
         //status message naar de gebruiker
         if($check) {
             $request->session()->flash('message', 'Het ticket: '.$subject.' wordt nu verwerkt');
@@ -95,5 +110,42 @@ class SupportController extends Controller
         }
         //redirecten
         return redirect('/support/tickets');
+    }
+
+    public function addReaction(Request $request){
+        //checking credentials
+        $credentials = $request->validate([
+            'reactie' => 'required',
+        ]);
+
+        $body = $request->input('reactie');
+        $ticket_id = $request->input('ticket_id');
+        $requester_id = $request->input('requester_id');
+        
+        //reactie toevoegen op ticket freshdesk
+        $check = FreshdeskController::createReply($ticket_id, $body, $requester_id);
+        dd($check);
+        //message naar gebruiker
+
+        //redirecten
+    }
+
+    public function statusUpdate(Request $request){
+        $status = $request->input('status');
+        $ticket_id = $request->input('ticket_id');
+         //security
+        
+         //update status
+         $check = FreshdeskController::updateTicketStatus($ticket_id, $status);
+
+         if($check) {
+             
+            $request->session()->flash('message', 'Het ticket is geupdate');
+        } else {
+            
+            $request->session()->flash('error', 'Er ging iets mis');
+        }
+        //redirecten
+        return redirect('/support/ticket/'.$ticket_id);
     }
 }

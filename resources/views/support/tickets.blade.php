@@ -41,6 +41,17 @@
         @endcomponent
         @endif
 
+        @if($flash = session('error'))
+        @component('components/notification')
+            @slot('type') red @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
         @if($flash = session('notification'))
         @component('components/notification')
             @slot('type') indigo @endslot
@@ -94,10 +105,10 @@
               <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
               <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
             </div>
-            <!--<div class="mb-6">
+            <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" for="attachment">Attachment</label>
                 <input name="attachment" type="file">
-              </div>-->
+              </div>
       
             <div class="form__btn">
               <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>
