@@ -171,20 +171,34 @@ class FreshdeskController extends Controller
         return $ticket[2]->choices;
     }
 
-    public static function makeTicket($summary, $subject, $type, $requester_id){
+    public static function makeTicket($summary, $subject, $type, $requester_id, $attachment){
         $apikey = env('FRESHDESK_API_KEY');
         $password = env('FRESHDESK_PASSWORD');
         $domain = env('FRESHDESK_DOMAIN');
         $url = "https://".$domain.".freshdesk.com/api/v2/tickets";
+        if(!empty($attachment)){
+            $ticket_data = json_encode(array(
+                "description" => $summary,
+                "subject" => $subject,
+                "priority" => 1,
+                "status" => 2,
+                "type" => $type,
+                "requester_id" => $requester_id,
+                "attachments" => array("data/".$attachment->getClientOriginalName(), $attachment->getClientMimeType(), $attachment->getClientOriginalName()),
+              ));
+        }else{
+            $ticket_data = json_encode(array(
+                "description" => $summary,
+                "subject" => $subject,
+                "priority" => 1,
+                "status" => 2,
+                "type" => $type,
+                "requester_id" => $requester_id,
+            ));
+        }
 
-        $ticket_data = json_encode(array(
-            "description" => $summary,
-            "subject" => $subject,
-            "priority" => 1,
-            "status" => 2,
-            "type" => $type,
-            "requester_id" => $requester_id,
-          ));
+       
+        
 
         $ch = curl_init($url);
 
@@ -201,8 +215,6 @@ class FreshdeskController extends Controller
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $headers = substr($server_output, 0, $header_size);
         $response = substr($server_output, $header_size);
-
-        dd($response);
 
         if($info['http_code'] == 201) {
             return true;

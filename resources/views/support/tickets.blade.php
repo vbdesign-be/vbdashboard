@@ -69,7 +69,7 @@
 
         <section class="py-8 hidden form--addTicket">
           <div class="container px-4 mx-auto">
-            <form  class="bg-white shadow rounded py-6 px-6" action="/support/ticket/add" method="post" enctype='multipart/form-data'>
+            <form enctype="multipart/form-data"  class="bg-white shadow rounded py-6 px-6" action="/support/ticket/add" method="post" >
             @csrf
             <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
               <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
@@ -88,21 +88,16 @@
                 </select>
               </div>
             </div>
-            <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
-              
-            </div>
             </div>
       
             <div class="mb-6">
               <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
               <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
             </div>
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="attachment">Attachments</label>
+            <!--<div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="attachment">Attachment</label>
                 <input name="attachment" type="file">
-              </div>
-
-            <input class="hidden" type="text" name="company" value="">
+              </div>-->
       
             <div class="form__btn">
               <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Offerte aanvragen</button>
