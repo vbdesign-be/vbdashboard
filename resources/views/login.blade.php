@@ -9,7 +9,7 @@
 
 <div class="">
 
-@if($errors->any())
+          @if($errors->any())
             @component('components/notification')
             @slot('type') red @endslot
             @slot('size') notification-profile   @endslot
@@ -50,7 +50,7 @@
       <h1 class="mb-2 text-5xl font-bold font-heading form__title">Login</h1>
       
       <div class="mb-6">
-        <label class="block text-sm font-medium mb-2" for="email">Test</label>
+        <label class="block text-sm font-medium mb-2" for="email">Email</label>
         <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="email" placeholder="Write a text" value="{{ old('email') }}"></div>
       
     <div class="form__btn">
