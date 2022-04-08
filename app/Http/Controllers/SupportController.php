@@ -27,20 +27,7 @@ class SupportController extends Controller
 
     public function tickets()
     {
-        //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
-        $email = Auth::user()->email;
-        $userFreshdeskId = FreshdeskController::getUserByEmail($email)->id;
-        $tickets = FreshdeskController::getTicketsByUser($userFreshdeskId);
-        foreach ($tickets as $key => $ticket) {
-            $status = FreshdeskController::getTicketStatus($ticket->status);
-            $body = [
-                    $ticket,
-                    $status,
-                ];
-            $data['tickets'][] = $body;
-        }
-        $data['types'] = FreshdeskController::getTicketType();
-        return view('support/tickets', $data);
+        return view('support/tickets');
     }
 
     public function detailTicket($ticket_id)
