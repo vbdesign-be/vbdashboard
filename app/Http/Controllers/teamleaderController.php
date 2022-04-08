@@ -13,10 +13,11 @@ class teamleaderController extends Controller
     
 
     public function requestToken(){
-        
         TeamLeader::setRedirectUrl('https://vbdashboard.test/teamleader');
         $redirect = TeamLeader::getAuthorizationUrl();
         return redirect($redirect);
+
+        
         
     }
     
