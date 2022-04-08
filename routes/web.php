@@ -33,11 +33,9 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/test', function(){
-    return redirect('/support/recieveEmail');
+   
 });
 
-//support2
-Route::post('/support/recieveEmail', [SupportController::class, "recieveEmail"]);
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);

@@ -150,8 +150,7 @@ class SupportController extends Controller
     }
 
     public function recieveEmail(Request $request){
-        $test = new Emailtest();
-        $test->test = "ontvangen";
-        $test->save();
+        return 'succes';
+
     }
 }
