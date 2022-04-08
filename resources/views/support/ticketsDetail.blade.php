@@ -13,7 +13,7 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">Ticket: {{$ticket->id}}</h2>
+            <h2 class="text-2xl font-bold">Ticket: </h2>
           </div>
         </div>
 
@@ -56,25 +56,19 @@
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
               <div class="grid grid-cols-2">
-                <p class="">{{$ticket->subject}}</p>
+                <p class="">ticket</p>
                 <div class="justify-self-end"><form method="post" action="/support/ticket/statusUpdate">
                 @csrf
                   <select name="status" id="">
-                    @foreach($statusTypes as $key => $t)
-                    @if($t[1] === $status)
-                    <option selected name="status" value="{{$key}}">{{$t[1]}}</option>
-                    @else
-                    <option name="status" value="{{$key}}">{{$t[1]}}</option>
-                    @endif
-                    @endforeach
+                    <option name="status" value="status">status</option>
                 </select>
-                <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
+                <input type="hidden" value="" name="ticket_id">
                 <button>Status wijzigen</button>
                 </form></div>
-                <p class="italic">{{$date}}</p>
+                <p class="italic">datum</p>
               </div>
               <div class="mt-6">
-                <p class="">{{$ticket->description_text}}</p>
+                <p class="">description</p>
               </div>
             </div>
           </div>
@@ -83,17 +77,11 @@
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-              @foreach($conversation as $c)
-              @if($c->user_id === $ticket->requester_id)
+        
               <div class="bg-blue-200 shadow rounded mb-6 py-6 px-6">
-                <p>{{$c->body_text}}</p>
+                <p>test reactie</p>
               </div>
-              @else
-              <div class="bg-gray-200 shadow rounded mb-6 py-6 px-6">
-                <p>{{$c->body_text}}</p>
-              </div>
-              @endif
-              @endforeach
+              
             </div>
           </div>
         </section>
@@ -104,8 +92,6 @@
               <form action="/support/ticket/conversation/add" method="post">
               @csrf
                 <textarea class="w-full border p-5" name="reactie" rows="5" placeholder="Schrijf hier je reactie"></textarea>
-                <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
-                <input type="hidden" name="requester_id" value="{{$requester_id}}">
                 <div class="flex justify-end mt-6">
                 <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Reactie plaatsen</button>
                 </div>
