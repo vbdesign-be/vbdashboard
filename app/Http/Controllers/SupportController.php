@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
+use App\Models\Test;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
@@ -139,13 +141,17 @@ class SupportController extends Controller
          $check = FreshdeskController::updateTicketStatus($ticket_id, $status);
 
          if($check) {
-             
             $request->session()->flash('message', 'Het ticket is geupdate');
         } else {
-            
             $request->session()->flash('error', 'Er ging iets mis');
         }
         //redirecten
         return redirect('/support/ticket/'.$ticket_id);
+    }
+
+    public function recieveEmail(Request $request){
+        $test = new Emailtest();
+        $test->test = "ontvangen";
+        $test->save();
     }
 }

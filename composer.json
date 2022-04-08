@@ -10,6 +10,7 @@
         "grosv/laravel-passwordless-login": "^1.7",
         "guzzlehttp/guzzle": "^7.4",
         "janhenkes/teamleader-php-sdk": "^2.9",
+        "jjaffeux/postmark-inbound-php": "^3.0",
         "justijndepover/teamleader-api": "^0.6.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",

@@ -16,7 +16,9 @@ use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
 use App\Http\Controllers\FreshdeskController;
 use App\Mail\UserLoginMail;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -31,8 +33,11 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/test', function(){
-    FreshdeskController::getTicketType();
+    return redirect('/support/recieveEmail');
 });
+
+//support2
+Route::post('/support/recieveEmail', [SupportController::class, "recieveEmail"]);
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
@@ -93,6 +98,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/support/ticket/add', [SupportController::class, "addTicket"]);
     Route::post('/support/ticket/conversation/add', [SupportController::class, "addReaction"]);
     Route::post('/support/ticket/statusUpdate', [SupportController::class, "statusUpdate"]);
+
+    
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);

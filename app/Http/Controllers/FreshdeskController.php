@@ -237,11 +237,11 @@ class FreshdeskController extends Controller
         $apikey = env('FRESHDESK_API_KEY');
         $password = env('FRESHDESK_PASSWORD');
         $domain = env('FRESHDESK_DOMAIN');
-        $url = "https://".$domain.".freshdesk.com/api/v2/tickets/".$ticket_id."/reply";
+        $url = "https://".$domain.".freshdesk.com/api/v2/tickets/".$ticket_id."/reply ";
         
         $ticket_data = json_encode(array(
             "body" => $body,
-            "user_id" => $requester_id,
+            "user_id" => intval($requester_id),
         ));
         
         $ch = curl_init($url);
@@ -250,7 +250,7 @@ class FreshdeskController extends Controller
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_USERPWD, $apikey.":".$password);
+        curl_setopt($ch, CURLOPT_USERPWD, $apikey.":Test12345");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $ticket_data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
