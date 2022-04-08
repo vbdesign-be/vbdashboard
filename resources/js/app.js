@@ -1,3 +1,5 @@
+const { add } = require('lodash');
+
 require('./bootstrap');
 
 
@@ -52,7 +54,62 @@ selectBtn.addEventListener('click', (e) => {
 
 
 
+//addTicket
 
+let addTicketBtn = document.querySelector('.addTicketBtn');
+
+if(addTicketBtn !== null){
+    addTicketBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let addTicket = document.querySelector('.form--addTicket');
+        addTicket.classList.remove('hidden');
+    })
+}
+
+
+
+//zoekfunctie tickets
+let searchTicket = document.querySelector('.search__form--ticket');
+
+if(searchTicket !== null){
+    let inputField = document.querySelector('.search__input');
+    let searchBtn = document.querySelector('.search__btn')
+
+    searchBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        let input = inputField.value;
+        let tickets = document.querySelectorAll('.ticket');
+        tickets.forEach((ticket) => {
+            searchTickets(ticket, input);
+        })
+    })
+
+    inputField.addEventListener('keyup', (e) => {
+        let input = inputField.value;
+        let tickets = document.querySelectorAll('.ticket');
+        tickets.forEach((ticket) => {
+
+            searchTickets(ticket, input);
+            
+        })
+    })
+
+    function searchTickets(ticket, input){
+        ticket.classList.add('hidden');
+            
+            let title = ticket.querySelector('.ticket__title').innerHTML;
+            let text = ticket.querySelector('.ticket__text').innerHTML;
+            let status = ticket.querySelector('.ticket__status').innerHTML;
+            
+            let filterTitle = title.toLowerCase().indexOf(input.toLowerCase());
+            let filterText = text.toLowerCase().indexOf(input.toLowerCase());
+            let filterStatus = status.toLowerCase().indexOf(input.toLowerCase());
+
+            if(filterTitle > -1 || filterText > -1 || filterStatus > -1){
+                ticket.classList.remove('hidden');
+            }
+    }
+}
 
 
 

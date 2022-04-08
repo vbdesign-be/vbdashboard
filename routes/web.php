@@ -14,8 +14,11 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
+use App\Http\Controllers\FreshdeskController;
 use App\Mail\UserLoginMail;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 /*
@@ -29,6 +32,9 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
+Route::get('/test', function(){
+   
+});
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
@@ -46,23 +52,7 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-Route::get('/test', function() {
 
-    $folder = 'VB design';
-    $contents = collect(Storage::disk("google")->listContents('/', false));
-    $dir = $contents->where('type', '=', 'dir')
-        ->where('filename', '=', $folder)
-        ->first(); // There could be duplicate directory names!
-
-    if ( ! $dir) {
-        return 'No such folder!';
-    }
-
-    $files = collect(Storage::disk("google")->listContents($dir['path'], false))
-        ->where('type', '=', 'file');
-
-    dd($dir);
-});
 
 
 Route::group(['middleware' => ['auth']], function() {
@@ -99,7 +89,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
 
     //support
-    Route::get('/faq', [SupportController::class, "support"]);
+    Route::get('/support', [SupportController::class, "support"]);
+    Route::get('/support/faq', [SupportController::class, "faq"]);
+    Route::get('/support/tickets', [SupportController::class, "tickets"]);
+    Route::get('/support/ticket/{ticket}',[SupportController::class, "detailTicket"]);
+    Route::post('/support/ticket/add', [SupportController::class, "addTicket"]);
+    Route::post('/support/ticket/conversation/add', [SupportController::class, "addReaction"]);
+    Route::post('/support/ticket/statusUpdate', [SupportController::class, "statusUpdate"]);
+
+    
+
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);
     Route::get('/status', [SupportController::class, "status"]);
