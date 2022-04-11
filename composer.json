@@ -11,13 +11,12 @@
         "grosv/laravel-passwordless-login": "^1.7",
         "guzzlehttp/guzzle": "^7.4",
         "janhenkes/teamleader-php-sdk": "^2.9",
-        "jjaffeux/postmark-inbound-php": "^3.0",
         "justijndepover/teamleader-api": "^0.6.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "vbdesign/teamleader": "^1.4.0",
         "nao-pon/flysystem-google-drive": "~1.1"
+        
     },
     "require-dev": {
         "facade/ignition": "^2.5",

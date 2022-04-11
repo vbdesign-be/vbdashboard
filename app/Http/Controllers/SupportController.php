@@ -103,11 +103,14 @@ class SupportController extends Controller
     }
 
     public function recieveEmail(Request $request){
-        $json = $request->body();
-        $test = new Emailtest();
-        $test->test = $json;
-        $test->save();
+        
+        $json = file_get_contents('php://input');
+        $Source = Json_decode($json);
+        $email = $Source->FromFull->Email;
 
+        $test = new Emailtest();
+        $test->test = $email;
+        $test->save();
         return "succes";
 
     }
