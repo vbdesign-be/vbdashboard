@@ -1,0 +1,16 @@
+{
+    "name": "vbdesign/teamleader",
+    "description": "teamleader api package",
+    "autoload": {
+        "psr-4": {
+            "Vbdesign\\Teamleader\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "jonathanverhaegen",
+            "email": "jonathan_verhaegen@hotmail.com"
+        }
+    ],
+    "require": {}
+}

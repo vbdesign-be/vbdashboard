@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\UserLoginMail;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
-use MadeITBelgium\TeamLeader\Facade\TeamLeader;
+use Vbdesign\Teamleader\Facade\Teamleader;
 use App\Models\Teamleader as TeamleaderConnection;
 
 class UserController extends Controller
@@ -27,7 +27,7 @@ class UserController extends Controller
             $userUpdate->save();
         }
         
-        $resp = TeamLeader::crm()->contact()->info($dataUser->teamleader_id);
+        $resp = Teamleader::crm()->contact()->info($dataUser->teamleader_id);
         $user = $resp->data;
         $phone = "";
         $mobile = "";
@@ -54,7 +54,7 @@ class UserController extends Controller
         
         foreach($companies as $c){
             $company_id = $c->company->id;
-            $comps[] = TeamLeader::crm()->company()->info($company_id);
+            $comps[] = Teamleader::crm()->company()->info($company_id);
         }
 
         
@@ -89,28 +89,28 @@ class UserController extends Controller
         $mobile = $request->input('gsm');
         
         if(empty($phone) && empty($mobile)){
-            TeamLeader::crm()->contact()->update($teamleader_id, [
+            Teamleader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
                 'telephones' => [],
             ]);
         }elseif(empty($phone)){
-            TeamLeader::crm()->contact()->update($teamleader_id, [
+            Teamleader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
                 'telephones' => ['object' => ['type' => "mobile", 'number' => $mobile]]
             ]);
         }elseif(empty($mobile)){
-            TeamLeader::crm()->contact()->update($teamleader_id, [
+            Teamleader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,
                 'telephones' => ['object' => ['type' => "phone", 'number' => $phone]]
             ]);
         }else{
-            TeamLeader::crm()->contact()->update($teamleader_id, [
+            Teamleader::crm()->contact()->update($teamleader_id, [
                 'emails' => ['object' => ['type' => "primary", 'email' => $email]], 
                 'first_name' => $firstname, 
                 'last_name' => $lastname,

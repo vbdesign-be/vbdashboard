@@ -4,46 +4,45 @@
 
 @section('content')
 
+@if($errors->any())
+    @component('components/notification')
+        @slot('type') red @endslot
+        @slot('size') notification-mini  @endslot
+        @slot('textcolor') red @endslot
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endcomponent
+@endif
 
+@if($flash = session('error'))
+@component('components/notification')
+        @slot('type') red @endslot
+        @slot('size') notification-mini  @endslot
+        @slot('textcolor') red @endslot
+        <ul>
+            <li>{{ $flash }}</li>
+        </ul>
+    @endcomponent
+@endif
+
+@if($flash = session('message'))
+@component('components/notification')
+        @slot('type') green @endslot
+        @slot('size') notification-mini  @endslot
+        @slot('textcolor') green @endslot
+        <ul>
+            <li>{{ $flash }}</li>
+        </ul>
+    @endcomponent
+@endif
 
 
 <div class="">
-
-          @if($errors->any())
-            @component('components/notification')
-            @slot('type') red @endslot
-            @slot('size') notification-profile   @endslot
-            @slot('textcolor') red @endslot
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            @endcomponent
-        @endif
-
-        @if($flash = session('message'))
-        @component('components/notification')
-            @slot('type') green @endslot
-            @slot('size')  notification-profile  @endslot
-            @slot('textcolor') green @endslot
-            <ul>
-                <li>{{ $flash }}</li>
-            </ul>
-        @endcomponent
-        @endif
-
-        @if($flash = session('notification'))
-        @component('components/notification')
-            @slot('type') indigo @endslot
-            @slot('size')  notification-profile  @endslot
-            @slot('textcolor') indigo @endslot
-            <ul>
-                <li>{{ $flash }}</li>
-            </ul>
-        @endcomponent
-        @endif
-
+        
+      
         
       <form action="/user/login" method="post" class="form--mini shadow-md">
       @csrf

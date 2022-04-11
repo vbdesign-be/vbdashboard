@@ -163,11 +163,16 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
         
+        
 
         /*
          * Package Service Providers...
          */
-
+        Vbdesign\Calculator\CalculatorServiceProvider::class,
+        Vbdesign\Teamleader\ServiceProvider\Teamleader::class,
+        
+        
+        
         /*
          * Application Service Providers...
          */
@@ -231,8 +236,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'TeamLeader' => MadeITBelgium\TeamLeader\Facade\TeamLeader::class,
-        
+        'Teamleader' => Vbdesign\Teamleader\Facade\Teamleader::class,
         
 
     ],

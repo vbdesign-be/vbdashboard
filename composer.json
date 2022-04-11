@@ -16,7 +16,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        
+        "vbdesign/teamleader": "^1.4.0",
         "nao-pon/flysystem-google-drive": "~1.1"
     },
     "require-dev": {
@@ -30,8 +30,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Vbdesign\\Calculator\\": "packages/vbdesign/calculator/src",
+            "Vbdesign\\Teamleader\\": "packages/vbdesign/teamleader/src"
         }
     },
     "autoload-dev": {
