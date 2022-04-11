@@ -108,5 +108,7 @@ class SupportController extends Controller
         $test->test = $json;
         $test->save();
 
+        return "succes";
+
     }
 }
