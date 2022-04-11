@@ -240,7 +240,7 @@ class Teamleader
             'redirect_uri'  => $this->redirectUri,
         ];
 
-        $url = "https://focus.teamleader.eu/oauth2/authorize?client_id=d4edfc96ff1d0814c57f3ed0a72cebc8&response_type=code&state=test&redirect_uri=https://vbdashboard.test/teamleader";
+        $url = "https://focus.teamleader.eu/oauth2/authorize?client_id=d4edfc96ff1d0814c57f3ed0a72cebc8&response_type=code&state=test&redirect_uri=https://dashboard.vbdesign.be/teamleader";
         header("Location: {$url}");
         exit;
     }
@@ -253,7 +253,7 @@ class Teamleader
                 'code'          => $code,
                 'client_id'     => 'd4edfc96ff1d0814c57f3ed0a72cebc8',
                 'client_secret' => '5970126c1d1c11eecda444da5c4a4a85',
-                'redirect_uri'  => 'https://vbdashboard.test/teamleader',
+                'redirect_uri'  => 'https://dashboard.vbdesign.be/teamleader',
                 'grant_type'    => 'authorization_code',
             ]),
         ]);
