@@ -106,7 +106,7 @@ class SupportController extends Controller
         
         $json = file_get_contents('php://input');
         $Source = Json_decode($json);
-        $email = $Source->FromFull->Email;
+        $email = $Source->TextBody;
 
         $test = new Emailtest();
         $test->test = $email;
