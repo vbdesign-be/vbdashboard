@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
+use App\Models\Reaction;
 use App\Models\Test;
 use App\Models\Ticket;
 use App\Models\User;
@@ -86,7 +87,7 @@ class SupportController extends Controller
         return redirect('/support/tickets');
     }
 
-    public function addReaction(Request $request){
+    public function addReactionUser(Request $request){
         //checking credentials
         $credentials = $request->validate([
             'reactie' => 'required',
@@ -94,21 +95,36 @@ class SupportController extends Controller
 
         $body = $request->input('reactie');
         $ticket_id = $request->input('ticket_id');
-        $requester_id = $request->input('requester_id');
-        
-        //reactie toevoegen op ticket freshdesk
-        
-        //message naar gebruiker
+        //security
+        $ticket = Ticket::find($ticket_id);
+        if($ticket->user_id !== Auth::id()){
+            abort(403);
+        }
+
+        //reactie opslaan
+        $reaction = new Reaction();
+        $reaction->ticket_id = $ticket_id;
+        $reaction->user_id = Auth::id();
+        $reaction->text = $body;
+        $reaction->save();
 
         //redirecten
+        $request->session()->flash('message', 'Je reactie is opgeslagen');
+        return redirect('/support/ticket/'.$ticket_id);
+
     }
 
     public function statusUpdate(Request $request){
         $status = $request->input('status');
         $ticket_id = $request->input('ticket_id');
          //security
-        
-         //update status
+         $ticket = Ticket::find($ticket_id);
+         if($ticket->user_id !== Auth::id()){
+             abort(403);
+         }
+        //update status
+        $ticket->status = $status;
+        $ticket->save();
         
         //redirecten
         return redirect('/support/ticket/'.$ticket_id);
@@ -137,6 +153,8 @@ class SupportController extends Controller
             $ticket->type = "Vraag";
             $ticket->agent_id = 1;
             $ticket->save();
+
+            //attachments
         }else{
             $ticket = new Ticket();
             $ticket->email = $sender;
@@ -147,6 +165,8 @@ class SupportController extends Controller
             $ticket->type = "Vraag";
             $ticket->agent_id = 1;
             $ticket->save();
+
+            //attachments
         }
 
     }
