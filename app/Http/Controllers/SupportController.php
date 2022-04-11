@@ -6,6 +6,8 @@ use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
 use App\Models\Test;
+use App\Models\Ticket;
+use App\Models\User;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
@@ -28,17 +30,23 @@ class SupportController extends Controller
     public function tickets()
     {
         //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
-        $test = Emailtest::get();
-        $data['test'] = $test;
-       
+        $tickets = Ticket::where('user_id', Auth::id())->get();
+        $data['tickets'] = $tickets;
         return view('support/tickets', $data);
     }
 
     public function detailTicket($ticket_id)
     {
-        //ticket id ophalen
-       
-        return view('support/ticketsDetail');
+        //security
+        $ticket = Ticket::find($ticket_id);
+        
+        if($ticket->user_id !== Auth::id()){
+            abort(403);
+        }
+
+        $data['ticket'] = $ticket;
+        $data['status'] = ["Open", "In behandeling", "Gesloten"];
+        return view('support/ticketsDetail', $data);
     }
 
     public function addTicket(Request $request)
@@ -59,16 +67,20 @@ class SupportController extends Controller
         $summary = $request->input('beschrijving');
         $attachment = $request->file('attachment');
         
-        //contactpersoon informatie verkrijgen
         
         //ticket maken en info invullen(infortie + request)
-
-
-        
-       
-
+        $ticket = new Ticket();
+        $ticket->user_id = Auth::id();
+        $ticket->subject = $subject;
+        $ticket->body = $summary;
+        $ticket->status = 'Open';
+        $ticket->priority = 'Laag';
+        $ticket->type = $type;
+        $ticket->agent_id = 1;
+        $ticket->save();
 
         //status message naar de gebruiker
+        $request->session()->flash('message', 'Je support ticket is opgeslagen');
         
         //redirecten
         return redirect('/support/tickets');
@@ -103,15 +115,39 @@ class SupportController extends Controller
     }
 
     public function recieveEmail(Request $request){
-        
+        //mail binnenkrijgen
         $json = file_get_contents('php://input');
-        $Source = Json_decode($json);
-        $email = $Source->TextBody;
+        $email = Json_decode($json);
+        
+        $sender = $email->FromFull->Email;
+        $subject = $email->Subject;
+        $body = $email->HtmlBody;
 
-        $test = new Emailtest();
-        $test->test = $email;
-        $test->save();
-        return "succes";
+        //kijken of emailadress een klant is van ons
+
+        $user = User::where('email', $sender)->first();
+
+        if(!empty($user)){
+            $ticket = new Ticket();
+            $ticket->user_id = $user->id;
+            $ticket->subject = $subject;
+            $ticket->body = $body;
+            $ticket->status = 'Open';
+            $ticket->priority = 'Laag';
+            $ticket->type = "Vraag";
+            $ticket->agent_id = 1;
+            $ticket->save();
+        }else{
+            $ticket = new Ticket();
+            $ticket->email = $sender;
+            $ticket->subject = $subject;
+            $ticket->body = $body;
+            $ticket->status = 'Open';
+            $ticket->priority = 'Laag';
+            $ticket->type = "Vraag";
+            $ticket->agent_id = 1;
+            $ticket->save();
+        }
 
     }
 }

@@ -13,7 +13,7 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">Ticket: </h2>
+            <h2 class="text-2xl font-bold">Ticket: {{$ticket->id}}</h2>
           </div>
         </div>
 
@@ -60,17 +60,22 @@
                 <div class="justify-self-end"><form method="post" action="/support/ticket/statusUpdate">
                 @csrf
                   <select name="status" id="">
+                    @foreach($status as $s)
+                    @if($s === $ticket->status)
+                    <option selected value="{{$s}}">{{$s}}</option>
+                    @else
+                    <option value="{{$s}}">{{$s}}</option>
+                    @endif
                     
-                    <option selected name="status" value="status">status</option>
-                    
+                    @endforeach
                 </select>
                 <input type="hidden" value="id" name="ticket_id">
                 <button>Status wijzigen</button>
                 </form></div>
-                <p class="italic">Datum</p>
+                <p class="italic">{{$ticket->created_at}}</p>
               </div>
               <div class="mt-6">
-                <p class="">description</p>
+                <p class="">{{$ticket->body}}</p>
               </div>
             </div>
           </div>
