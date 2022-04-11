@@ -240,20 +240,30 @@ class Teamleader
             'redirect_uri'  => $this->redirectUri,
         ];
 
-        $url = "https://focus.teamleader.eu/oauth2/authorize?client_id=d4edfc96ff1d0814c57f3ed0a72cebc8&response_type=code&state=test&redirect_uri=https://dashboard.vbdesign.be/teamleader";
+        $clientId = env('TEAMLEADER_ID');
+        $clientSecret = env('TEAMLEADER_SECRET');
+        $redirect = env('TEAMLEADER_REDIRECT');
+
+        
+
+        $url = "https://focus.teamleader.eu/oauth2/authorize?client_id=".$clientId."&response_type=code&state=test&redirect_uri=".$redirect;
         header("Location: {$url}");
         exit;
     }
 
     public function requestAccessToken($code)
     {
+
+        $clientId = env('TEAMLEADER_ID');
+        $clientSecret = env('TEAMLEADER_SECRET');
+        $redirect = env('TEAMLEADER_REDIRECT');
         
         $result = $this->postCall('/oauth2/access_token', [
             'body' => json_encode([
                 'code'          => $code,
-                'client_id'     => 'd4edfc96ff1d0814c57f3ed0a72cebc8',
-                'client_secret' => '5970126c1d1c11eecda444da5c4a4a85',
-                'redirect_uri'  => 'https://dashboard.vbdesign.be/teamleader',
+                'client_id'     => $clientId,
+                'client_secret' => $clientSecret,
+                'redirect_uri'  => $redirect,
                 'grant_type'    => 'authorization_code',
             ]),
         ]);

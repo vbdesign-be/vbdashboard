@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Http;
 class ClickupController extends Controller
 {
     public function requestToken(){
-        $clientId = "3IZ02H56T08C2CLIBF4MRWJR8B3HV059";
-        $clientSecret = "3D3NTYAT911Y1U4UHXE6MR36XQUGN2VJUFX4L6FNS8UKHHWZZFB5US7UC6ORXNIC";
-        $redirectUri = 'https://vbdashboard.test/clickup';
+        $clientId = env('CLICKUP_ID');
+        $clientSecret = env('CLICKUP_SECRET');
+        $redirectUri = env('CLICKUP_REDIRECT');
         
         $url = 'https://app.clickup.com/api?client_id='. $clientId .'&redirect_uri='.$redirectUri;
         header("Location: {$url}");
@@ -21,8 +21,9 @@ class ClickupController extends Controller
 
     public function accessToken(Request $request){
         $code = $request->input('code');
-        $clientId = "3IZ02H56T08C2CLIBF4MRWJR8B3HV059";
-        $clientSecret = "3D3NTYAT911Y1U4UHXE6MR36XQUGN2VJUFX4L6FNS8UKHHWZZFB5US7UC6ORXNIC";
+        $clientId = env('CLICKUP_ID');
+        $clientSecret = env('CLICKUP_SECRET');
+        $redirectUri = env('CLICKUP_REDIRECT');
 
         $url = 'https://app.clickup.com/api/v2/oauth/token';
 
