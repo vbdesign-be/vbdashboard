@@ -28,8 +28,10 @@ class SupportController extends Controller
     public function tickets()
     {
         //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
+        $test = Emailtest::get();
+        $data['test'] = $test;
        
-        return view('support/tickets');
+        return view('support/tickets', $data);
     }
 
     public function detailTicket($ticket_id)
@@ -101,7 +103,10 @@ class SupportController extends Controller
     }
 
     public function recieveEmail(Request $request){
-        return 'succes';
+        $json = $request->body();
+        $test = new Emailtest();
+        $test->test = $json;
+        $test->save();
 
     }
 }

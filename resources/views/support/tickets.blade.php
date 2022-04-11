@@ -142,6 +142,10 @@
         </div>
       </section>
 
+      @foreach($test as $t)
+      <p>{{$t->test}}</p>
+      @endforeach
+
 
         
         
