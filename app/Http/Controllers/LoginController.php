@@ -10,7 +10,8 @@ use App\Mail\UserLoginMail;
 use App\Models\Company;
 use App\Models\Emailtest;
 use Illuminate\Support\Facades\Auth;
-use MadeITBelgium\TeamLeader\Facade\TeamLeader;
+use Vbdesign\Teamleader\Facade\Teamleader;
+
 
 class LoginController extends Controller
 {
@@ -91,7 +92,7 @@ class LoginController extends Controller
             //generating the loginlink for in the mail
             $data['url'] = $generator->generate();
             teamleaderController::reAuthTL();
-            $data['user'] = $resp = TeamLeader::crm()->contact()->info($user->teamleader_id)->data;
+            $data['user'] = Teamleader::crm()->contact()->info($user->teamleader_id)->data;
 
             //sending the email
             Mail::to($user->email)->send(new UserLoginMail($data));

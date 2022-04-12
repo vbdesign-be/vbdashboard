@@ -270,7 +270,6 @@ button:hover {
   color: #ffffff;
 }
 
-
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -340,6 +339,7 @@ hr {
   content: "";
   clear: both;
   display: table;
+}
 
 .titlecard:hover {
   -webkit-animation: scale 0.4s forwards ease;
