@@ -98,27 +98,27 @@
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
                 <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
                 <p>{!! $reaction->text !!}</p>
-                @if(!empty($reaction->attachmentsReaction->items))
+                
                 <div class="mt-6">
                 <p>Attachments:</p>
                 @foreach($reaction->attachmentsReaction as $att)
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
                 </div>
-                @endif
+                
               </div>
               @else
               <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
                 <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
                 <p>{!! $reaction->text !!}</p>
-                @if(!empty($reaction->attachmentsReaction->items))
+                
                 <div class="mt-6">
                 <p>Attachments:</p>
                 @foreach($reaction->attachmentsReaction as $att)
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
                 </div>
-                @endif
+                
               </div>
               @endif
              @endforeach
