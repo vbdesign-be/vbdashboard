@@ -16,6 +16,7 @@ class CreateAttachmentTicketsTable extends Migration
         Schema::create('attachment_tickets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('src');
             $table->foreignId('ticket_id');
             $table->timestamps();
         });

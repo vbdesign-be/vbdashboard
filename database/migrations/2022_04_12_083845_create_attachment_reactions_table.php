@@ -16,6 +16,7 @@ class CreateAttachmentReactionsTable extends Migration
         Schema::create('attachment_reactions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('src');
             $table->foreignId('reaction_id');
             $table->timestamps();
         });

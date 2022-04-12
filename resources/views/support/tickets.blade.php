@@ -107,7 +107,7 @@
             </div>
             <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" for="attachment">Attachment</label>
-                <input name="attachments[]" type="file" multiple>
+                <input name="attachments[]" type="file" accept=".png, .jpg, .jpeg, .pdf" multiple>
               </div>
       
             <div class="form__btn">

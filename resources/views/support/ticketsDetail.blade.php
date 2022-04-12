@@ -77,6 +77,12 @@
               <div class="mt-6">
                 <p>{!! $ticket->body !!}</p>
               </div>
+              <div class="mt-6">
+                <p>Attachments:</p>
+                @foreach($ticket->attachmentsTicket as $att)
+                <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
+                @endforeach
+              </div>
             </div>
           </div>
         </section>
@@ -109,6 +115,10 @@
               <form action="/support/ticket/reaction/add" method="post">
               @csrf
                 <textarea id="myeditorinstance" class="w-full border p-5" name="reactie" rows="5" placeholder="Schrijf hier je reactie"></textarea>
+                <div class="my-6">
+                <label class="block text-sm font-medium mb-2" for="attachment">Attachment</label>
+                <input name="attachments[]" type="file" accept=".png, .jpg, .jpeg, .pdf" multiple>
+                </div>
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                 <div class="flex justify-end mt-6">
                 <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Reactie plaatsen</button>
