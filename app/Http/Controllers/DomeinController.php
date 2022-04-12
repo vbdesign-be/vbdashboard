@@ -113,7 +113,7 @@ class DomeinController extends Controller
         $info = $vimexx->getDomainInformation($domain);
         $data['nameservers'] = $info['Information']['nameservers'];
         $data['domain'] = $domain;
-        return view('domeinen/nameserversDetail', $data);
+        return view('domeinen.nameserversDetail', $data);
     }
 
     public function updateNameservers(Request $request){
