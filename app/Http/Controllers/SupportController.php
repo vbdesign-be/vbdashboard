@@ -170,7 +170,7 @@ class SupportController extends Controller
 
         $word = "<script>";
 
-        if(strpos($body, $word) !== false){
+        if(strpos($body, $word) !== false || strpos($subject, $word) !== false){
             exit;
         }else{
             //kijken of emailadress een klant is van ons
