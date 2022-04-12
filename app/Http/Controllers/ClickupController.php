@@ -40,6 +40,8 @@ class ClickupController extends Controller
         $clickup = new Clickup();
         $clickup->token = $data->access_token;
         $clickup->save();
+        
+        return redirect('/login');
 
     }
 

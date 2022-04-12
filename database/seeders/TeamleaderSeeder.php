@@ -17,5 +17,6 @@ class TeamleaderSeeder extends Seeder
         $teamleader = new Teamleader();
         $teamleader->type = "first";
         $teamleader->save();
+
     }
 }

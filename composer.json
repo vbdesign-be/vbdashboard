@@ -10,8 +10,6 @@
         "fruitcake/laravel-cors": "^3.0",
         "grosv/laravel-passwordless-login": "^1.7",
         "guzzlehttp/guzzle": "^7.4",
-        "janhenkes/teamleader-php-sdk": "^2.9",
-        "justijndepover/teamleader-api": "^0.6.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",

@@ -34,10 +34,6 @@ class ProjectController extends Controller
         }
 
         //voor elk bedrijf de projecten eruit filteren
-
-        
-        
-
         foreach($comps as $c){
             $data['projects'] = Teamleader::crm()->company()->getProjects($c->data->id)->data;
         }
@@ -101,6 +97,10 @@ class ProjectController extends Controller
             if($folder->name === $data['project']->title){
                 $projectFolder = $folder;
             }
+        }
+
+        if(empty($projectFolder)){
+            abort(404);
         }
 
         $url2 = 'https://app.clickup.com/api/v2/list/'.$projectFolder->lists[1]->id.'/task';

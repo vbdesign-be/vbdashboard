@@ -147,5 +147,11 @@ class UserController extends Controller
         return redirect('/profiel');
 
     }
+
+    public static function getUser(){
+        teamleaderController::reAuthTL();
+        $user = TeamLeader::crm()->contact()->info(Auth::user()->teamleader_id);
+        return $user;
+    }
     
 }

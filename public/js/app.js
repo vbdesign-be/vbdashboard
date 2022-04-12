@@ -2080,23 +2080,149 @@ faqs.forEach(function (faq) {
       click = 0;
     }
   });
-}); //profile form
+}); //winkelmandje
+// let winkelmandje = document.querySelector('#winkelmandje');
+// let select = document.querySelector('#selectMailbox');
+// let mailbox = document.querySelector('#mailbox');
+// select.addEventListener('change', (e) => {
+//     e.preventDefault();
+//     if(select.value === 'true'){
+//        mailbox.classList.remove('hidden');
+//     }
+//     if(select.value === 'false'){
+//         mailbox.classList.add('hidden');
+//     }
+// })
 
-var selectBtn = document.querySelector('.selectForm');
-var userForm = document.querySelector('.form--user');
-var companyForm = document.querySelector('.form--company');
+var items = document.querySelectorAll('#winkelmandje');
+items.forEach(function (item) {
+  var deleteBtn = item.querySelector('.delete');
+  var domain = item.querySelector('.domein');
+  deleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    domain.value = "";
+    item.classList.add('hidden');
+  });
+}); //emailadd
 
-if (selectBtn) {
-  selectBtn.addEventListener('click', function (e) {
-    var value = selectBtn.value;
+var emailAddBtn = document.querySelector('.emailAddBtn');
+var emailAdd = document.querySelector('#emailAdd');
 
-    if (value === "profiel") {
-      companyForm.style.display = "none";
-      userForm.style.display = "block";
-    } else if (value === "company") {
-      companyForm.style.display = "block";
-      userForm.style.display = "none";
-    }
+if (emailAddBtn !== null) {
+  emailAddBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    emailAdd.classList.remove('hidden');
+    window.location.href = '#emailAdd';
+  });
+} //emaildelete
+// let emails = document.querySelectorAll('#emailBoxes');
+// emails.forEach((email) => {
+//     let deleteBtn = email.querySelector('.emailDeleteBtn');
+//     deleteBtn.addEventListener('click', (e) => {
+//         e.preventDefault();
+//         //formdata verzenden;
+//             //email.classList.add('hidden');
+//     });
+// })
+//dns ass input field
+
+
+var dnsAdd = document.querySelector('.dnsAdd');
+var addDNSBtn = document.querySelector('.dnsAddBtn');
+
+if (addDNSBtn !== null) {
+  addDNSBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    dnsAdd.classList.remove('hidden');
+  });
+} //dns edit 
+
+
+var editDNSBtns = document.querySelectorAll('.editDNSBtn');
+var editForms = document.querySelectorAll('.editDns');
+
+if (editForms !== null) {
+  editForms.forEach(function (edit) {
+    var deleteBtn = edit.querySelector('.dnsDelete');
+    deleteBtn.addEventListener('click', function (e) {
+      e.preventDefault(); //popup laten verschijnen
+
+      var number = deleteBtn.dataset.number;
+      var modalDns = document.querySelector('.modal--deleteDns--' + number);
+      modalDns.classList.remove('hidden');
+    });
+    edit.classList.add('hidden');
+  });
+}
+
+if (editDNSBtns !== null) {
+  editDNSBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var number = btn.dataset.number;
+      var edit = document.querySelector(".editDns--".concat(number));
+      editForms.forEach(function (forms) {
+        forms.classList.add('hidden');
+      });
+      edit.classList.remove('hidden');
+    });
+  });
+}
+
+var cancelDnsBtns = document.querySelectorAll('.cancelDnsBtn');
+
+if (cancelDnsBtns !== null) {
+  cancelDnsBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteDns--' + number);
+      modal.classList.add('hidden');
+    });
+  });
+} //domain delete
+
+
+var domainDeleteBtn = document.querySelector('.deleteDomainBtn');
+var modalDomain = document.querySelector('.modal--deleteDomain');
+
+if (domainDeleteBtn !== null) {
+  domainDeleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    modalDomain.classList.remove('hidden');
+  });
+}
+
+var cancelDomainBtn = document.querySelector('.cancelDomainbtn');
+
+if (cancelDomainBtn !== null) {
+  cancelDomainBtn.addEventListener('click', function (e) {
+    modalDomain.classList.add('hidden');
+  });
+} //email delete
+
+
+var deleteEmailBtns = document.querySelectorAll('.deleteEmailBtn');
+
+if (deleteEmailBtns !== null) {
+  deleteEmailBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteEmail--' + number);
+      modal.classList.remove('hidden');
+    });
+  });
+}
+
+var cancelEmailBtns = document.querySelectorAll('.cancelEmailbtn');
+
+if (cancelEmailBtns !== null) {
+  cancelEmailBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      var number = btn.dataset.number;
+      var modal = document.querySelector('.modal--deleteEmail--' + number);
+      modal.classList.add('hidden');
+    });
   });
 } //addTicket
 

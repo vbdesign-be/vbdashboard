@@ -3,9 +3,10 @@
 @import 'components/notification';
 @import 'components/mail';
 @import 'components/question';
-@import 'components/offerte';
+@import 'components/table';
 @import 'components/calendar';
 @import 'components/projects';
+@import 'components/modal';
 @import 'components/cards';
 @import 'components/search';
 @import 'abstracts/colors';
@@ -31,4 +32,8 @@ body{
     margin-top: 50px;
 }
 
+
+h2{
+    text-align:left;
+}
 
