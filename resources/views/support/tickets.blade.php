@@ -7,7 +7,7 @@
 <div class="">
         
         <div>
-          
+        <x-head.tinymce-config/>
         <x-menu/>
         
           <div class="mx-auto lg:ml-80">
@@ -103,7 +103,7 @@
       
             <div class="mb-6">
               <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
-              <textarea class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
+              <textarea id="myeditorinstance" class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
             </div>
             <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" for="attachment">Attachment</label>

@@ -75,7 +75,7 @@
                 <p class="italic">{{$ticket->created_at}}</p>
               </div>
               <div class="mt-6">
-                <p>{{$ticket->body}}</p>
+                <p>{!! $ticket->body !!}</p>
               </div>
             </div>
           </div>
