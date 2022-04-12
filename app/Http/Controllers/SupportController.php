@@ -182,7 +182,6 @@ class SupportController extends Controller
             $ticket->type = "Vraag";
             $ticket->agent_id = 1;
             $ticket->save();
-
             //attachments
         }else{
             $ticket = new Ticket();
