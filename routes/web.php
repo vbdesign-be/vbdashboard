@@ -15,7 +15,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
 
-use App\Http\Controllers\cloudflareController;
+use App\Http\Controllers\CloudflareController;
 use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\QboxController;
 use App\Http\Controllers\VimexxController;
