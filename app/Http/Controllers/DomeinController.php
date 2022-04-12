@@ -245,8 +245,8 @@ class DomeinController extends Controller
         //verwijderen uit qboxmail
         QboxController::deleteDomain($order->resource_code);
         //verwijderen uit vimexx
-        //$vimexx = new Vimexx();
-        //$vimexx->deleteDomain($domain);
+        $vimexx = new Vimexx();
+        $vimexx->deleteDomain($domain);
 
         //emails verwijderen
         $emails = EmailOrder::where('order_id', $order->id)->get();
