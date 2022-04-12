@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttachmentTicket;
 use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
@@ -58,7 +59,7 @@ class SupportController extends Controller
             'onderwerp' => 'required|max:255',
             'type' => 'required',
             'beschrijving' => 'required',
-            'attachment' => 'file|mimes:jpeg,jpg,png,pdf|max:20000',
+            'attachment' => 'file|mimes:jpeg,jpg,png,pdf|max:2048',
         ]);
 
         $request->flash();
@@ -67,9 +68,9 @@ class SupportController extends Controller
         $subject = $request->input('onderwerp');
         $type = $request->input('type');
         $summary = $request->input('beschrijving');
-        $attachment = $request->file('attachment');
+        $attachments = $request->file('attachment');
         
-        
+
         //ticket maken en info invullen(infortie + request)
         $ticket = new Ticket();
         $ticket->user_id = Auth::id();
@@ -80,6 +81,18 @@ class SupportController extends Controller
         $ticket->type = $type;
         $ticket->agent_id = 1;
         $ticket->save();
+
+        //attachments 
+        foreach($request->file('attachments') as $attachment){
+            $imageName = time().'.'.$attachment->extension();
+            $attachment->move(public_path('attachments'), $imageName);
+
+            $newAttach = new AttachmentTicket();
+            $newAttach->name = $imageName;
+            $newAttach->ticket_id = $ticket->id;
+            $newAttach->save();
+            sleep(1);
+        }
 
         //status message naar de gebruiker
         $request->session()->flash('message', 'Je support ticket is opgeslagen');
