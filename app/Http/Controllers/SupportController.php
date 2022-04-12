@@ -123,31 +123,37 @@ class SupportController extends Controller
         $subject = $email->Subject;
         $body = $email->HtmlBody;
 
-        //kijken of emailadress een klant is van ons
+        $word = "<script>";
 
-        $user = User::where('email', $sender)->first();
-
-        if(!empty($user)){
-            $ticket = new Ticket();
-            $ticket->user_id = $user->id;
-            $ticket->subject = $subject;
-            $ticket->body = $body;
-            $ticket->status = 'Open';
-            $ticket->priority = 'Laag';
-            $ticket->type = "Vraag";
-            $ticket->agent_id = 1;
-            $ticket->save();
+        if(strpos($body, $word) !== false){
+            exit;
         }else{
-            $ticket = new Ticket();
-            $ticket->email = $sender;
-            $ticket->subject = $subject;
-            $ticket->body = $body;
-            $ticket->status = 'Open';
-            $ticket->priority = 'Laag';
-            $ticket->type = "Vraag";
-            $ticket->agent_id = 1;
-            $ticket->save();
+            //kijken of emailadress een klant is van ons
+            $user = User::where('email', $sender)->first();
+            if(!empty($user)){
+                $ticket = new Ticket();
+                $ticket->user_id = $user->id;
+                $ticket->subject = $subject;
+                $ticket->body = $body;
+                $ticket->status = 'Open';
+                $ticket->priority = 'Laag';
+                $ticket->type = "Vraag";
+                $ticket->agent_id = 1;
+                $ticket->save();
+            }else{
+                $ticket = new Ticket();
+                $ticket->email = $sender;
+                $ticket->subject = $subject;
+                $ticket->body = $body;
+                $ticket->status = 'Open';
+                $ticket->priority = 'Laag';
+                $ticket->type = "Vraag";
+                $ticket->agent_id = 1;
+                $ticket->save();
+            }
         }
 
+
+        
     }
 }
