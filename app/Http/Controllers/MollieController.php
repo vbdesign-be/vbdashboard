@@ -24,7 +24,7 @@ class MollieController extends Controller
                 'value' => $price
             ],
             'description' => 'aankoop domeinnaam: '.$domeinnaam,
-            'redirectUrl' => 'https://vbdashboard.test/payed?order_id='.$order->id,
+            'redirectUrl' => 'https://dashboard.vbdesign.be/payed?order_id='.$order->id,
             'metadata' => [
                 'type' => 'Order',
                 'order_id' => $order->id,
@@ -48,7 +48,7 @@ class MollieController extends Controller
                 'value' => $price
             ],
             'description' => 'aankoop emailbox: '.$email,
-            'redirectUrl' => 'https://vbdashboard.test/payedEmail?emailorder_id='.$emailOrder->id.'&front='.$front.'&password='.$password,
+            'redirectUrl' => 'https://dashboard.vbdesign.be/payedEmail?emailorder_id='.$emailOrder->id.'&front='.$front.'&password='.$password,
             'metadata' => [
                 'type' => 'EmailOrder',
                 'emailOrder_id' => $emailOrder->id,
@@ -71,7 +71,7 @@ class MollieController extends Controller
                 'value' => $price
             ],
             'description' => 'verhuis domeinnaam: '.$domain,
-            'redirectUrl' => 'https://vbdashboard.test/payedTransfer?order_id='.$order->id.'&code='.$code,
+            'redirectUrl' => 'https://dashboard.vbdesign.be/payedTransfer?order_id='.$order->id.'&code='.$code,
             'metadata' => [
                 'type' => 'Order',
                 'order_id' => $order->id,
