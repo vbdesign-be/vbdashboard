@@ -118,9 +118,11 @@ class UserController extends Controller
             ]);
         }
 
-        $newUser = User::find(Auth::id());
-        $newUser->email = $email;
-        $newUser->save();
+        $updateUser = User::find(Auth::id());
+        $updateUser->email = $email;
+        $updateUser->firstname = $firstname;
+        $updateUser->lastname = $lastname;
+        $updateUser->save();
 
         $request->session()->flash('message', 'je account is geüpdate');
         return redirect('/profiel');

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttachmentReaction;
+use App\Models\AttachmentTicket;
 use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
+use App\Models\Reaction;
 use App\Models\Test;
 use App\Models\Ticket;
 use App\Models\User;
@@ -12,6 +15,7 @@ use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class SupportController extends Controller
 {
@@ -30,7 +34,7 @@ class SupportController extends Controller
     public function tickets()
     {
         //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
-        $tickets = Ticket::where('user_id', Auth::id())->get();
+        $tickets = Ticket::where('user_id', Auth::id())->orderBy('id', 'DESC')->get();
         $data['tickets'] = $tickets;
         return view('support/tickets', $data);
     }
@@ -39,12 +43,12 @@ class SupportController extends Controller
     {
         //security
         $ticket = Ticket::find($ticket_id);
-        
         if($ticket->user_id !== Auth::id()){
             abort(403);
         }
 
         $data['ticket'] = $ticket;
+        $data['reactions'] = Reaction::where('ticket_id', $ticket_id)->get();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
         return view('support/ticketsDetail', $data);
     }
@@ -56,18 +60,15 @@ class SupportController extends Controller
             'onderwerp' => 'required|max:255',
             'type' => 'required',
             'beschrijving' => 'required',
-            'attachment' => 'file|mimes:jpeg,jpg,png,pdf|max:20000',
         ]);
 
         $request->flash();
-        
 
         $subject = $request->input('onderwerp');
         $type = $request->input('type');
         $summary = $request->input('beschrijving');
-        $attachment = $request->file('attachment');
         
-        
+
         //ticket maken en info invullen(infortie + request)
         $ticket = new Ticket();
         $ticket->user_id = Auth::id();
@@ -79,6 +80,19 @@ class SupportController extends Controller
         $ticket->agent_id = 1;
         $ticket->save();
 
+        //attachments 
+        foreach($request->file('attachments') as $attachment){
+            $imageSrc = time().'.'.$attachment->extension();
+            $attachment->move(public_path('attachments'), $imageSrc);
+
+            $newAttach = new AttachmentTicket();
+            $newAttach->name = $attachment->getClientOriginalName();
+            $newAttach->src = $imageSrc;
+            $newAttach->ticket_id = $ticket->id;
+            $newAttach->save();
+            sleep(1);
+        }
+
         //status message naar de gebruiker
         $request->session()->flash('message', 'Je support ticket is opgeslagen');
         
@@ -86,7 +100,7 @@ class SupportController extends Controller
         return redirect('/support/tickets');
     }
 
-    public function addReaction(Request $request){
+    public function addReactionUser(Request $request){
         //checking credentials
         $credentials = $request->validate([
             'reactie' => 'required',
@@ -94,21 +108,52 @@ class SupportController extends Controller
 
         $body = $request->input('reactie');
         $ticket_id = $request->input('ticket_id');
-        $requester_id = $request->input('requester_id');
+
         
-        //reactie toevoegen op ticket freshdesk
-        
-        //message naar gebruiker
+        //security
+        $ticket = Ticket::find($ticket_id);
+        if($ticket->user_id !== Auth::id()){
+            abort(403);
+        }
+
+        //reactie opslaan
+        $reaction = new Reaction();
+        $reaction->ticket_id = $ticket_id;
+        $reaction->user_id = Auth::id();
+        $reaction->text = $body;
+        $reaction->save();
+
+        //attachments 
+        foreach($request->file('attachments') as $attachment){
+            $imageSrc = time().'.'.$attachment->extension();
+            $attachment->move(public_path('attachments'), $imageSrc);
+
+            $newAttach = new AttachmentReaction();
+            $newAttach->name = $attachment->getClientOriginalName();
+            $newAttach->src = $imageSrc;
+            $newAttach->reaction_id = $reaction->id;
+            $newAttach->save();
+            sleep(1);
+        }
+
 
         //redirecten
+        $request->session()->flash('message', 'Je reactie is opgeslagen');
+        return redirect('/support/ticket/'.$ticket_id);
+
     }
 
     public function statusUpdate(Request $request){
         $status = $request->input('status');
         $ticket_id = $request->input('ticket_id');
          //security
-        
-         //update status
+         $ticket = Ticket::find($ticket_id);
+         if($ticket->user_id !== Auth::id()){
+             abort(403);
+         }
+        //update status
+        $ticket->status = $status;
+        $ticket->save();
         
         //redirecten
         return redirect('/support/ticket/'.$ticket_id);

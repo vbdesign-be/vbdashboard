@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ce4ed804fe4a9908a7d723213bbe7b7",
+    "content-hash": "5cde1c5e8fb39acb6ca094a9e7cd53b1",
     "packages": [
         {
             "name": "beyondcode/laravel-mailbox",
@@ -1373,55 +1373,6 @@
                 "source": "https://github.com/janhenkes/teamleader-php-sdk/tree/2.9.4"
             },
             "time": "2022-01-10T09:40:03+00:00"
-        },
-        {
-            "name": "jjaffeux/postmark-inbound-php",
-            "version": "3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jjaffeux/postmark-inbound-php.git",
-                "reference": "5f7905183dcb10c714434e6e15323583faadb5ba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jjaffeux/postmark-inbound-php/zipball/5f7905183dcb10c714434e6e15323583faadb5ba",
-                "reference": "5f7905183dcb10c714434e6e15323583faadb5ba",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Postmark": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joffrey Jaffeux",
-                    "email": "j.jaffeux@gmail.com",
-                    "homepage": "http://www.twitter.com/joffreyjaffeux"
-                }
-            ],
-            "description": "Postmark Inbound PHP Wrapper",
-            "homepage": "https://github.com/jjaffeux/postmark-inbound-php",
-            "keywords": [
-                "api",
-                "inbound",
-                "mails",
-                "postmark",
-                "wrapper"
-            ],
-            "support": {
-                "issues": "https://github.com/jjaffeux/postmark-inbound-php/issues",
-                "source": "https://github.com/jjaffeux/postmark-inbound-php/tree/master"
-            },
-            "time": "2015-09-21T12:48:41+00:00"
         },
         {
             "name": "justijndepover/teamleader-api",
@@ -6119,6 +6070,65 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.4"
             },
             "time": "2021-12-08T09:12:39+00:00"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "8898185c29290f52515bbd1ce53816181ce37c0f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/8898185c29290f52515bbd1ce53816181ce37c0f",
+                "reference": "8898185c29290f52515bbd1ce53816181ce37c0f",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js",
+                        "models/*/model.js",
+                        "icons/*/icons.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "models/*/model.min.js",
+                        "skins/**",
+                        "icons/*/icons.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT-only"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "https://www.tiny.cloud/",
+            "keywords": [
+                "contenteditable",
+                "editing",
+                "html",
+                "javascript",
+                "rich editor",
+                "rich text",
+                "rich text editor",
+                "richtext",
+                "rte",
+                "text",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "support": {
+                "source": "https://github.com/tinymce/tinymce-dist/tree/6.0.1"
+            },
+            "time": "2022-03-23T02:04:52+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
