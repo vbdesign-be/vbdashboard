@@ -1,0 +1,348 @@
+<?php
+
+namespace Vbdesign\Teamleader;
+
+use Carbon\Carbon;
+use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use Illuminate\Support\Facades\Http;
+use Vbdesign\Teamleader\Crm\Crm;
+use Vbdesign\Teamleader\Deals\Deal;
+use Vbdesign\Teamleader\General\General;
+use Vbdesign\Teamleader\Webhooks\Webhook;
+
+/**
+ * TeamLeader Laravel PHP SDK.
+ *
+ * @version    1.0.0
+ *
+ * @copyright  Copyright (c) 2018 Made I.T. (https://www.madeit.be)
+ * @author     Tjebbe Lievens <tjebbe.lievens@madeit.be>
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-3.txt    LGPL
+ */
+class Teamleader
+{
+    protected $version = '1.3.0';
+    protected $apiVersion = '1.0';
+    private $apiServer = 'https://api.focus.teamleader.eu';
+    private $authServer = 'https://focus.teamleader.eu';
+    private $clientId;
+    private $clientSecret;
+    private $accessToken;
+    private $refreshToken;
+    private $expiresAt;
+    private $scope;
+    private $redirectUri;
+
+    private $client;
+
+    /**
+     * Construct.
+     *
+     * @param $clientId
+     * @param $clientSecret;
+     * @param $client
+     */
+    public function __construct($apiUrl, $authUrl, $clientId, $clientSecret, $redirectUri, $client = null)
+    {
+        $this->apiServer = $apiUrl;
+        $this->authServer = $authUrl;
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+        $this->redirectUri = $redirectUri;
+
+        if ($client == null) {
+            $this->createClient();
+        } else {
+            $this->client = $client;
+        }
+    }
+
+    private function createClient()
+    {
+        $this->client = new Client([
+            'timeout'  => 10.0,
+            'headers'  => [
+                'User-Agent' => 'Made I.T. PHP SDK V'.$this->version,
+                'Accept'     => 'application/json',
+            ],
+            'verify' => true,
+        ]);
+    }
+
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+    }
+
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    public function setRefreshToken($refreshToken)
+    {
+        $this->refreshToken = $refreshToken;
+    }
+
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
+
+    public function setExpiresAt($expiresAt)
+    {
+        $this->expiresAt = Carbon::parse($expiresAt);
+    }
+
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    public function setClientId($clientId)
+    {
+        $this->clientId = $clientId;
+    }
+
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    public function setClientSecret($clientSecret)
+    {
+        $this->clientSecret = $clientSecret;
+    }
+
+    public function getClientSecret()
+    {
+        return $this->clientSecret;
+    }
+
+    public function setRedirectUrl($redirectUri)
+    {
+        $this->redirectUri = $redirectUri;
+    }
+
+    public function getRedirectUrl($redirectUri)
+    {
+        return $this->redirectUri;
+    }
+
+    /**
+     * Execute API call.
+     *
+     * @param $requestType
+     * @param $endPoint
+     * @param $data
+     */
+    private function call($requestType, $endPoint, $data = null)
+    {
+        $body = [];
+        if ($data !== null && isset($data['multipart'])) {
+            $body = $data;
+        } elseif ($data !== null && isset($data['body'])) {
+            $body = $data;
+        } elseif ($data !== null) {
+            $body = ['form_params' => $data];
+        }
+
+        $headers = $this->buildHeader();
+
+        if (strpos($endPoint, 'oauth2') === false) {
+            $endPoint = trim($this->apiServer, '/').'/'.ltrim($endPoint, '/');
+        } else {
+            $endPoint = trim($this->authServer, '/').'/'.ltrim($endPoint, '/');
+        }
+
+        try {
+            $response = $this->client->request($requestType, $endPoint, $body + $headers);
+        } catch (ServerException $e) {
+            throw $e;
+        } catch (ClientException $e) {
+            \Log::info($e->getResponse()->getBody());
+
+            throw $e;
+            if ($e->getCode() == 400) {
+                throw new Exception($e->getResponse(), $e->getCode(), $e); //Bad reqeust
+            } elseif ($e->getCode() == 401) {
+                throw new Exception($e->getResponse(), $e->getCode(), $e); //Unauthorized
+            } elseif ($e->getCode() == 403) {
+                throw new Exception($e->getResponse(), $e->getCode(), $e); //Forbidden
+            } elseif ($e->getCode() == 404) {
+                throw new Exception($e->getResponse(), $e->getCode(), $e); // Not Found
+            } elseif ($e->getCode() == 429) {
+                throw new Exception($e->getResponse(), $e->getCode(), $e); //To Many Requests
+            } elseif ($e->getCode() == 500) {
+                throw new Exception($e->getResponse(), $e->getCode(), $e); //Internal server error
+            }
+
+            throw $e;
+        }
+
+        if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201 || $response->getStatusCode() == 204) {
+            $body = (string) $response->getBody();
+        } else {
+            throw new Exception('Invalid teamleader statuscode', $response->getStatusCode());
+        }
+
+        return json_decode($body);
+    }
+
+    public function buildHeader()
+    {
+        $headers = ['headers' => ['Content-Type' => 'application/json']];
+        if (!empty($this->accessToken)) {
+            $headers['headers']['Authorization'] = 'Bearer '.$this->accessToken;
+        }
+
+        return $headers;
+    }
+
+    public function postCall($endPoint, $data)
+    {
+        return $this->call('POST', $endPoint, $data);
+    }
+
+    public function getCall($endPoint)
+    {
+        return $this->call('GET', $endPoint);
+    }
+
+    public function putCall($endPoint, $data)
+    {
+        return $this->call('PUT', $endPoint, $data);
+    }
+
+    public function deleteCall($endPoint)
+    {
+        return $this->call('DELETE', $endPoint);
+    }
+
+    public function getAuthorizationUrl()
+    {
+        $query = [
+            'client_id'     => $this->clientId,
+            'response_type' => 'code',
+            'redirect_uri'  => $this->redirectUri,
+        ];
+
+        $clientId = env('TEAMLEADER_ID');
+        $clientSecret = env('TEAMLEADER_SECRET');
+        $redirect = env('TEAMLEADER_REDIRECT');
+
+        
+
+        $url = "https://focus.teamleader.eu/oauth2/authorize?client_id=".$clientId."&response_type=code&state=test&redirect_uri=".$redirect;
+        header("Location: {$url}");
+        exit;
+    }
+
+    public function requestAccessToken($code)
+    {
+
+        $clientId = env('TEAMLEADER_ID');
+        $clientSecret = env('TEAMLEADER_SECRET');
+        $redirect = env('TEAMLEADER_REDIRECT');
+        
+        $result = $this->postCall('/oauth2/access_token', [
+            'body' => json_encode([
+                'code'          => $code,
+                'client_id'     => $clientId,
+                'client_secret' => $clientSecret,
+                'redirect_uri'  => $redirect,
+                'grant_type'    => 'authorization_code',
+            ]),
+        ]);
+
+        
+
+        $this->accessToken = $result->access_token;
+        $this->expiresAt = Carbon::now()->addSeconds($result->expires_in);
+        $this->refreshToken = $result->refresh_token;
+
+        return $result;
+    }
+
+    public function regenerateAccessToken()
+    {
+
+        $result = $this->postCall('/oauth2/access_token', [
+            'body' => json_encode([ 
+                'client_id'     => 'd4edfc96ff1d0814c57f3ed0a72cebc8',
+                'client_secret' => '5970126c1d1c11eecda444da5c4a4a85',
+                'grant_type'    => 'refresh_token',
+                'refresh_token' => $this->refreshToken,
+            ]),
+        ]);
+
+        $this->accessToken = $result->access_token;
+        $this->expiresAt = Carbon::now()->addSeconds($result->expires_in);
+        $this->refreshToken = $result->refresh_token;
+        return $result;
+    }
+
+    public function checkAndDoRefresh()
+    {
+        if (Carbon::now()->gt($this->expiresAt)) {
+            $result = $this->regenerateAccessToken();
+
+            return $result;
+        }
+
+        return false;
+    }
+
+    public function general()
+    {
+        return new General($this);
+    }
+
+    public function crm()
+    {
+        return new Crm($this);
+    }
+
+    public function deals()
+    {
+        return new Deal($this);
+    }
+
+    public function calendar()
+    {
+    }
+
+    public function invoicing()
+    {
+    }
+
+    public function product()
+    {
+    }
+
+    public function project()
+    {
+    }
+
+    public function timeTracking()
+    {
+    }
+
+    public function webhooks()
+    {
+        return new Webhook($this);
+    }
+}

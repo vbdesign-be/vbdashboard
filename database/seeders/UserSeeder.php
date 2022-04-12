@@ -15,11 +15,12 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->firstname = "Jonathan";
-        $user->lastname = "Verhaegen";
-        $user->email = "jonathan_verhaegen@hotmail.com";
-        $user->gsm = "0498413706";
+        $user->email = "bert@vbdesign.be";
+        $user->firstname = "Bert";
+        $user->lastname = "Vanhees";
+        $user->tag = 'Agent';
+        $user->didLogin = 1;
+        $user->isAgent = 1;
         $user->save();
-        
     }
 }

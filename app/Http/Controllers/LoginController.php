@@ -8,6 +8,7 @@ use Grosv\LaravelPasswordlessLogin\LoginUrl;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserLoginMail;
 use App\Models\Company;
+use App\Models\Emailtest;
 use Illuminate\Support\Facades\Auth;
 use MadeITBelgium\TeamLeader\Facade\TeamLeader;
 
@@ -15,7 +16,9 @@ class LoginController extends Controller
 {
     //return login view
     public function login(){
-        return view('login');
+        $test = Emailtest::get();
+        $data['test'] = $test;
+        return view('login', $data);
     }
 
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Teamleader as TeamleaderConnection;
 use App\Models\User;
 use Illuminate\Http\Request;
-use MadeITBelgium\TeamLeader\Facade\TeamLeader;
+use Vbdesign\Teamleader\Facade\Teamleader;
 
 class teamleaderController extends Controller
 {
@@ -13,21 +13,20 @@ class teamleaderController extends Controller
     
 
     public function requestToken(){
-        
-        TeamLeader::setRedirectUrl('https://vbdashboard.test/teamleader');
-        $redirect = TeamLeader::getAuthorizationUrl();
+        $redirect = env('TEAMLEADER_REDIRECT');
+        Teamleader::setRedirectUrl($redirect);
+        $redirect = Teamleader::getAuthorizationUrl();
         return redirect($redirect);
-        
     }
     
 
     public function teamleader(Request $request){
         
-        $accessTokenResult = TeamLeader::requestAccessToken($request->get('code'));
+        $accessTokenResult = Teamleader::requestAccessToken($request->get('code'));
         
-        $access_token = TeamLeader::getAccessToken();
-        $refresh_token = TeamLeader::getRefreshToken();
-        $expired_at = TeamLeader::getExpiresAt();
+        $access_token = Teamleader::getAccessToken();
+        $refresh_token = Teamleader::getRefreshToken();
+        $expired_at = Teamleader::getExpiresAt();
 
         
         $teamleaderConnection = TeamleaderConnection::find(1)->first();
@@ -48,7 +47,7 @@ class teamleaderController extends Controller
         $this->reAuthTL();
 
         for ($x = 1; $x <= 10; $x++) {
-            $resp[] = TeamLeader::crm()->contact()->list([ 'page' => ['number' => $x, 'size' => 100]]);
+            $resp[] = Teamleader::crm()->contact()->list([ 'page' => ['number' => $x, 'size' => 100]]);
         }
 
         foreach($resp as $r){
@@ -99,17 +98,17 @@ class teamleaderController extends Controller
     {
         $apiConnection = TeamleaderConnection::where('type', 'teamleader')->first();
         
-        TeamLeader::setAccessToken($apiConnection->accesToken);
-        TeamLeader::setRefreshToken($apiConnection->refreshToken);
-        TeamLeader::setExpiresAt($apiConnection->expiresAt);
+        Teamleader::setAccessToken($apiConnection->accesToken);
+        Teamleader::setRefreshToken($apiConnection->refreshToken);
+        Teamleader::setExpiresAt($apiConnection->expiresAt);
 
         
-        $refresh = TeamLeader::checkAndDoRefresh();
+        $refresh = Teamleader::checkAndDoRefresh();
         
         if (false !== $refresh) {
-            $access_token = TeamLeader::getAccessToken();
-            $refresh_token = TeamLeader::getRefreshToken();
-            $expired_at = TeamLeader::getExpiresAt();
+            $access_token = Teamleader::getAccessToken();
+            $refresh_token = Teamleader::getRefreshToken();
+            $expired_at = Teamleader::getExpiresAt();
 
             $teamleaderConnection = TeamleaderConnection::find(1)->first();
             $teamleaderConnection->accesToken = $access_token;

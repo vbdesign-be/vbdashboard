@@ -8,8 +8,8 @@ use App\Models\Offerte;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use MadeITBelgium\TeamLeader\Facade\TeamLeader;
+use Vbdesign\Teamleader\Facade\Teamleader;
+
 
 class OfferteController extends Controller
 {
@@ -17,18 +17,18 @@ class OfferteController extends Controller
         teamleaderController::reAuthTL();
 
         $userId = Auth::user()->teamleader_id;
-        $user = TeamLeader::crm()->contact()->info($userId)->data;
+        $user = Teamleader::crm()->contact()->info($userId)->data;
         $companies = $user->companies;
         foreach($companies as $c){
             $company_id = $c->company->id;
-            $comps[] = TeamLeader::crm()->company()->info($company_id);
+            $comps[] = Teamleader::crm()->company()->info($company_id);
         }
 
         $data['comps'] = $comps;
        
         foreach ($comps as $c) {
             //kunnen maar dan 20 zijn dus enkele instantie in de array moet een offerte zijn
-            $offertes[] = TeamLeader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
+            $offertes[] = Teamleader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
         }
         $data['offertes'] = $offertes;
     
@@ -57,7 +57,7 @@ class OfferteController extends Controller
 
         //lijst met alle quotations in
         for($x = 1; $x <= 10; $x++){
-            $quotations [] = TeamLeader::deals()->getQuotations(['page' => ['number' => $x, 'size' => 50]])->data;
+            $quotations [] = Teamleader::deals()->getQuotations(['page' => ['number' => $x, 'size' => 50]])->data;
         }
 
         
@@ -69,13 +69,13 @@ class OfferteController extends Controller
         }
 
         foreach($offertes as $f){
-            $test = TeamLeader::deals()->getInfoQuotation($f->id);
+            $test = Teamleader::deals()->getInfoQuotation($f->id);
             if($test->data->deal->id === $dealId){
                 $offerte = $test;
             }
         }
 
-        $download = TeamLeader::deals()->downloadQuotation(['id' => $offerte->data->id, 'format' => 'pdf']);
+        $download = Teamleader::deals()->downloadQuotation(['id' => $offerte->data->id, 'format' => 'pdf']);
 
         $redirect = $download->data->location;
 

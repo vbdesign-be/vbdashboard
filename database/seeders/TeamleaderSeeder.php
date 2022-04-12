@@ -15,7 +15,7 @@ class TeamleaderSeeder extends Seeder
     public function run()
     {
         $teamleader = new Teamleader();
-        $teamleader->type = "test";
+        $teamleader->type = "first";
         $teamleader->save();
 
     }
