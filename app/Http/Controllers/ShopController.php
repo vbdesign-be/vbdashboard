@@ -9,6 +9,8 @@ use App\Models\Vimexx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\CloudflareController;
+use App\Http\Controllers\QboxController;
 
 
 class ShopController extends Controller
