@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
+
 class ShopController extends Controller
 {
     public function shop(){
@@ -98,12 +99,13 @@ class ShopController extends Controller
         $order->save();
 
         //domeinnaam registeren via vimexx
-        $vimexx = new Vimexx();
+        //$vimexx = new Vimexx();
         $res = $vimexx->registerDomain($order->domain);
         
 
         //domeinnaam reistreren via cloudflare
         $cloudflare = CloudflareController::createZone($order->domain);
+        
 
         $check = $vimexx->checkDomain($order->domain);
         if($check === 'Niet beschikbaar'){
@@ -257,8 +259,8 @@ class ShopController extends Controller
         $order->save();
 
         //domeinnaam verhuizen
-        $vimexx = new Vimexx();
-        $vimexx->transferDomain($order->domain,'', '', $code);
+        //$vimexx = new Vimexx();
+        //$vimexx->transferDomain($order->domain,'', '', $code);
 
         //toevoegen aan cloudflare
         CloudflareController::createZone($order->domain);
@@ -267,11 +269,7 @@ class ShopController extends Controller
         return redirect('domein/'.$order->domain);
     }
 
-    public function test(){
-        $vimexx = new Vimexx();
-        $vimexx->doPending('krits.be', '');
-        dd($vimexx);
-    }
+   
 
     
 

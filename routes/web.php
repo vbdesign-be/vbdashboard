@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -11,11 +11,25 @@ use App\Http\Controllers\OfferteController;
 use App\Http\Controllers\AfspraakController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SupportController;
-
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
 
+use App\Http\Controllers\cloudflareController;
 use App\Http\Controllers\DomeinController;
+use App\Http\Controllers\QboxController;
+use App\Http\Controllers\VimexxController;
+use App\Mail\UserLoginMail;
+use App\Models\Order;
+use App\Models\Vimexx;
+
+use App\Http\Controllers\FreshdeskController;
+
+
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------

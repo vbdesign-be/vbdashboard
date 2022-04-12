@@ -18,13 +18,14 @@ class MollieController extends Controller
     public static function createPayment($price, $domeinnaam){
         $order = Order::where('domain', $domeinnaam)->first();
         $token = env('MOLLIE_TOKEN');
+        $url = env('MOLLIE_URL');
         $data = [
             'amount' => [
                 'currency' => 'EUR',
                 'value' => $price
             ],
             'description' => 'aankoop domeinnaam: '.$domeinnaam,
-            'redirectUrl' => 'https://dashboard.vbdesign.be/payed?order_id='.$order->id,
+            'redirectUrl' => $url.'/payed?order_id='.$order->id,
             'metadata' => [
                 'type' => 'Order',
                 'order_id' => $order->id,
@@ -42,13 +43,14 @@ class MollieController extends Controller
     public static function createPaymentEmail($price, $email, $front, $password){
         $emailOrder = EmailOrder::where('email', $email)->first();
         $token = env('MOLLIE_TOKEN');
+        $url = env('MOLLIE_URL');
         $data = [
             'amount' => [
                 'currency' => 'EUR',
                 'value' => $price
             ],
             'description' => 'aankoop emailbox: '.$email,
-            'redirectUrl' => 'https://dashboard.vbdesign.be/payedEmail?emailorder_id='.$emailOrder->id.'&front='.$front.'&password='.$password,
+            'redirectUrl' => $url.'/payedEmail?emailorder_id='.$emailOrder->id.'&front='.$front.'&password='.$password,
             'metadata' => [
                 'type' => 'EmailOrder',
                 'emailOrder_id' => $emailOrder->id,
@@ -65,13 +67,14 @@ class MollieController extends Controller
     public static function createPaymentTransfer($price, $domain, $code){
         $order = Order::where('domain', $domain)->first();
         $token = env('MOLLIE_TOKEN');
+        $url = env('MOLLIE_URL');
         $data = [
             'amount' => [
                 'currency' => 'EUR',
                 'value' => $price
             ],
             'description' => 'verhuis domeinnaam: '.$domain,
-            'redirectUrl' => 'https://dashboard.vbdesign.be/payedTransfer?order_id='.$order->id.'&code='.$code,
+            'redirectUrl' => $url.'/payedTransfer?order_id='.$order->id.'&code='.$code,
             'metadata' => [
                 'type' => 'Order',
                 'order_id' => $order->id,
