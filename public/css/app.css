@@ -135,7 +135,7 @@
 }
 
 /* Set a style for all buttons */
-button {
+.container--modal button {
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
@@ -147,7 +147,7 @@ button {
   border-radius: 0.25rem;
 }
 
-button:hover {
+.container--modal button:hover {
   opacity: 1;
 }
 
