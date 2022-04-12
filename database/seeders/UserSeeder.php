@@ -16,6 +16,8 @@ class UserSeeder extends Seeder
     {
         $user = new User();
         $user->email = "bert@vbdesign.be";
+        $user->firstname = "Bert";
+        $user->lastname = "Vanhees";
         $user->tag = 'Agent';
         $user->didLogin = 1;
         $user->isAgent = 1;

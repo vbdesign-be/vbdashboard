@@ -64,12 +64,16 @@ class checkUserCommand extends Command
                         if (empty($checkUser)) {
                             $newUser = new User();
                             $newUser->email = $email;
+                            $newUser->firstname = $u->first_name;
+                            $newUser->lastname = $u->last_name;
                             $newUser->teamleader_id = $u->id;
                             $newUser->tag = $u->tags[0];
                             $newUser->save();
                         } else {
                             $user = User::where('teamleader_id', $u->id)->first();
                             $user->email = $email;
+                            $user->firstname = $u->first_name;
+                            $user->lastname = $u->last_name;
                             $user->teamleader_id = $u->id;
                             $user->tag = $u->tags[0];
                             $user->save();
