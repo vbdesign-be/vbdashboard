@@ -4,7 +4,8 @@
   tinymce.init({
     selector: 'textarea#myeditorinstance', // Replace this CSS selector to match the placeholder element for TinyMCE
     plugins: 'code table lists',
-    toolbar: 'blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+    toolbar: 'bold italic |  bullist numlist',
+    menubar: false
   });
 </script>
 </div>
