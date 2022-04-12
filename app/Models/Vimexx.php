@@ -137,9 +137,9 @@ class Vimexx extends Model
             $data = array(
                 'grant_type' => 'password',
                 'client_id' => '2004',
-                'client_secret' => 'o8Ycs7SdMTaqiKoioMwOcIZ2EEo8AeCPkwJB5zAd',
+                'client_secret' => env('VIMEXX_CLIENT_SECRET'),
                 'username' => 'bert@vbdesign.be',
-                'password' => '3OwBDg3J5suF',
+                'password' => env('VIMEXX_PASSWORD'),
                 'scope' => 'whmcs-access',
             );
 

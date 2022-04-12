@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Http;
 class MollieController extends Controller
 {
     public static  function getPayments(){
-        $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
+        $token = env('MOLLIE_TOKEN');
         $response = Http::withToken($token)->get('https://api.mollie.com/v2/payments');
         return json_decode($response)->_embedded;
     }
 
     public static function createPayment($price, $domeinnaam){
         $order = Order::where('domain', $domeinnaam)->first();
-        $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
+        $token = env('MOLLIE_TOKEN');
         $data = [
             'amount' => [
                 'currency' => 'EUR',
@@ -41,7 +41,7 @@ class MollieController extends Controller
 
     public static function createPaymentEmail($price, $email, $front, $password){
         $emailOrder = EmailOrder::where('email', $email)->first();
-        $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
+        $token = env('MOLLIE_TOKEN');
         $data = [
             'amount' => [
                 'currency' => 'EUR',
@@ -64,7 +64,7 @@ class MollieController extends Controller
 
     public static function createPaymentTransfer($price, $domain, $code){
         $order = Order::where('domain', $domain)->first();
-        $token = "test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC";
+        $token = env('MOLLIE_TOKEN');
         $data = [
             'amount' => [
                 'currency' => 'EUR',
