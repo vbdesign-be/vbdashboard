@@ -58,7 +58,7 @@ class DomeinController extends Controller
             $emails = EmailOrder::where('order_id', $order->id)->get();
             $data['numberEmails'] = count($emails);
         $data['domain'] = $domain;
-        return view('domeinen/domeinDetail', $data);
+        return view('domeinen/domeindetail', $data);
     }
 
     public function emailDetail($domain){
@@ -84,7 +84,7 @@ class DomeinController extends Controller
         }
         $data['domain'] = $order->domain;
         $data['placeholder'] = "info@".$domain;
-        return view('domeinen/emailDetail', $data);
+        return view('domeinen/emaildetail', $data);
     }
 
     public function deleteEmail(Request $request){
@@ -113,7 +113,7 @@ class DomeinController extends Controller
         $info = $vimexx->getDomainInformation($domain);
         $data['nameservers'] = $info['Information']['nameservers'];
         $data['domain'] = $domain;
-        return view('domeinen.nameserversDetail', $data);
+        return view('domeinen/nameserversdetail', $data);
     }
 
     public function updateNameservers(Request $request){
