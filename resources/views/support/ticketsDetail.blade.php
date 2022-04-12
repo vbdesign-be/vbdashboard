@@ -89,7 +89,7 @@
           </div>
         </section>
 
-        @if(!empty($reactions->items))
+       
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
@@ -125,7 +125,7 @@
             </div>
           </div>
         </section>
-        @endif
+       
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
