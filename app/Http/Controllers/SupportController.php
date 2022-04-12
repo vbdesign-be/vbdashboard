@@ -67,7 +67,6 @@ class SupportController extends Controller
         $subject = $request->input('onderwerp');
         $type = $request->input('type');
         $summary = $request->input('beschrijving');
-        $attachments = $request->file('attachments');
         
 
         //ticket maken en info invullen(infortie + request)
@@ -109,7 +108,8 @@ class SupportController extends Controller
 
         $body = $request->input('reactie');
         $ticket_id = $request->input('ticket_id');
-        $attachment = $request->file('attachments');
+
+        
         //security
         $ticket = Ticket::find($ticket_id);
         if($ticket->user_id !== Auth::id()){
@@ -131,7 +131,7 @@ class SupportController extends Controller
             $newAttach = new AttachmentReaction();
             $newAttach->name = $attachment->getClientOriginalName();
             $newAttach->src = $imageSrc;
-            $newAttach->ticket_id = $reaction->id;
+            $newAttach->reaction_id = $reaction->id;
             $newAttach->save();
             sleep(1);
         }
