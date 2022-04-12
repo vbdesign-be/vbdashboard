@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\Models\Vimexx;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\CloudflareController;
+use App\Http\Controllers\cloudflareController;
 use App\Http\Controllers\QboxController;
 
 
