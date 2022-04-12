@@ -31,7 +31,7 @@ class SupportController extends Controller
     public function tickets()
     {
         //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
-        $tickets = Ticket::where('user_id', Auth::id())->get();
+        $tickets = Ticket::where('user_id', Auth::id())->orderBy('id', 'DESC')->get();
         $data['tickets'] = $tickets;
         return view('support/tickets', $data);
     }
@@ -46,6 +46,7 @@ class SupportController extends Controller
         }
 
         $data['ticket'] = $ticket;
+        $data['reactions'] = Reaction::where('ticket_id', $ticket_id)->get();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
         return view('support/ticketsDetail', $data);
     }

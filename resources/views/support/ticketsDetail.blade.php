@@ -84,11 +84,21 @@
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-             
-              <div class="bg-blue-200 shadow rounded mb-6 py-6 px-6">
-                <p>reacties</p>
+            @if(!empty($reactions))
+             @foreach($reactions as $reaction)
+              @if($reaction->user->id === $ticket->user_id)
+              <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
+                <p>{{$reaction->user->email}} schreef: </p>
+                <p>{{$reaction->text}}</p>
               </div>
-             
+              @else
+              <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
+                <p>{{$reaction->user->email}} schreef: </p>
+                <p>{{$reaction->text}}</p>
+              </div>
+              @endif
+             @endforeach
+            @endif
             </div>
           </div>
         </section>

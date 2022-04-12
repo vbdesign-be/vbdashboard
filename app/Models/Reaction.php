@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Reaction extends Model
 {
     use HasFactory;
+    protected $with = ["user"];
+
+    // public function ticket(){
+    //     return $this->belongsTo(\App\Models\Ticket::class);
+    // }
+
+    public function user(){
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }
