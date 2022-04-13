@@ -61,13 +61,13 @@
                 @csrf
                   <select name="status" id="">
                     @foreach($status as $s)
-                    
+                    @if($s != "In behandeling")
                     @if($s === $ticket->status)
                     <option selected value="{{$s}}">{{$s}}</option>
                     @else
                     <option value="{{$s}}">{{$s}}</option>
                     @endif
-                   
+                    @endif
                     @endforeach
                 </select>
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
