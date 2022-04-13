@@ -158,5 +158,15 @@ class Deal
             'body' => json_encode($data)
         ]);
     }
+
+    public function getInvoices($data = []){
+        return $this->teamleader->getCall('invoices.list?'.http_build_query($data));
+    }
+
+    public function downloadInvoice($data = []){
+        return $this->teamleader->postCall('invoices.download', [
+            'body' => json_encode($data)
+        ]);
+    }
     
 }

@@ -2272,6 +2272,42 @@ if (searchTicket !== null) {
       searchTickets(ticket, input);
     });
   });
+} //zoekfunctie facturen
+
+
+var searchFieldFactuur = document.querySelector('.search__form--factuur');
+var inputFactuur = searchFieldFactuur.querySelector('.search__input');
+var btnFactuur = searchFieldFactuur.querySelector('.search__btn');
+var facturen = document.querySelectorAll('.facturen');
+inputFactuur.addEventListener('keyup', function (e) {
+  e.preventDefault();
+  var value = inputFactuur.value;
+  searchFactuur(value, facturen);
+});
+btnFactuur.addEventListener('click', function (e) {
+  e.preventDefault();
+  var value = inputFactuur.value;
+  searchFactuur(value, facturen);
+});
+
+function searchFactuur(value, facturen) {
+  facturen.forEach(function (factuur) {
+    factuur.classList.add('hidden');
+    var number = factuur.querySelector('.factuur__number').innerHTML;
+    var name = factuur.querySelector('.factuur__name').innerHTML;
+    var amount = factuur.querySelector('.factuur__amount').innerHTML;
+    var date = factuur.querySelector('.factuur__date').innerHTML;
+    var status = factuur.querySelector('.factuur__status').innerHTML;
+    var filterNumber = number.toLowerCase().indexOf(value.toLowerCase());
+    var filterName = name.toLowerCase().indexOf(value.toLowerCase());
+    var filterAmount = amount.toLowerCase().indexOf(value.toLowerCase());
+    var filterDate = date.toLowerCase().indexOf(value.toLowerCase());
+    var filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+
+    if (filterNumber > -1 || filterName > -1 || filterAmount > -1 || filterDate > -1 || filterStatus > -1) {
+      factuur.classList.remove('hidden');
+    }
+  });
 }
 
 /***/ }),
