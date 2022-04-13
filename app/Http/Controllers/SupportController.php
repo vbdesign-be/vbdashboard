@@ -170,6 +170,8 @@ class SupportController extends Controller
         $sender = $email->FromFull->Email;
         $subject = $email->Subject;
         $body = $email->HtmlBody;
+        $attachments = $email->Attachments;
+        
 
         $word = "<script>";
 
@@ -188,6 +190,22 @@ class SupportController extends Controller
                 $ticket->type = "Vraag";
                 $ticket->agent_id = 1;
                 $ticket->save();
+
+                if(!empty($attachments)){
+                    foreach($attachments as $attachment){
+                        $attach = base64_decode(chunk_split($attachment->Content));
+                        // $imageSrc = time().'.'.$attach->extension();
+                        // $attach->move(public_path('attachments'), $imageSrc);
+
+                        $attachmentTicket = new AttachmentTicket();
+                        $attachmentTicket->name = $attachment->Name;
+                        $attachmentTicket->src = $attach;
+                        $attachmentTicket->reaction_id = $ticket->id;
+                        $attachmentTicket->save();
+                        sleep(1);
+                    }
+                }
+
             }else{
                 $ticket = new Ticket();
                 $ticket->email = $sender;
