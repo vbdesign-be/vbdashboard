@@ -193,13 +193,13 @@ class SupportController extends Controller
 
                 if(!empty($attachments)){
                     foreach($attachments as $attachment){
-                        $attach = base64_decode(chunk_split($attachment->Content));
+                        //$attach = base64_decode(chunk_split($attachment->Content));
                         // $imageSrc = time().'.'.$attach->extension();
                         // $attach->move(public_path('attachments'), $imageSrc);
 
                         $attachmentTicket = new AttachmentTicket();
                         $attachmentTicket->name = $attachment->Name;
-                        $attachmentTicket->src = $attach;
+                        $attachmentTicket->src = "test";
                         $attachmentTicket->reaction_id = $ticket->id;
                         $attachmentTicket->save();
                         sleep(1);
