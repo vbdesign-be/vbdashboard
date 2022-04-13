@@ -2080,20 +2080,7 @@ faqs.forEach(function (faq) {
       click = 0;
     }
   });
-}); //winkelmandje
-// let winkelmandje = document.querySelector('#winkelmandje');
-// let select = document.querySelector('#selectMailbox');
-// let mailbox = document.querySelector('#mailbox');
-// select.addEventListener('change', (e) => {
-//     e.preventDefault();
-//     if(select.value === 'true'){
-//        mailbox.classList.remove('hidden');
-//     }
-//     if(select.value === 'false'){
-//         mailbox.classList.add('hidden');
-//     }
-// })
-
+});
 var items = document.querySelectorAll('#winkelmandje');
 items.forEach(function (item) {
   var deleteBtn = item.querySelector('.delete');
@@ -2124,7 +2111,44 @@ if (emailAddBtn !== null) {
 //             //email.classList.add('hidden');
 //     });
 // })
-//dns ass input field
+//zoekfunctie dns
+
+
+var searchFieldDns = document.querySelector('.search__form--dns');
+
+if (searchFieldDns !== null) {
+  var searchDns = function searchDns(value, dnss) {
+    dnss.forEach(function (dns) {
+      dns.classList.add('hidden');
+      var type = dns.querySelector('.dns__type').innerHTML;
+      var name = dns.querySelector('.dns__name').innerHTML;
+      var content = dns.querySelector('.dns__content').innerHTML;
+      var ttl = dns.querySelector('.dns__ttl').innerHTML;
+      var filterType = type.toLowerCase().indexOf(value.toLowerCase());
+      var filterName = name.toLowerCase().indexOf(value.toLowerCase());
+      var filterContent = content.toLowerCase().indexOf(value.toLowerCase());
+      var filterTtl = ttl.toLowerCase().indexOf(value.toLowerCase());
+
+      if (filterType > -1 || filterName > -1 || filterContent > -1 || filterTtl > -1) {
+        dns.classList.remove('hidden');
+      }
+    });
+  };
+
+  var inputDns = searchFieldDns.querySelector('.search__input');
+  var btnDns = searchFieldDns.querySelector('.search__btn');
+  var dnss = document.querySelectorAll('.dns');
+  inputDns.addEventListener('keyup', function (e) {
+    e.preventDefault();
+    var value = inputDns.value;
+    searchDns(value, dnss);
+  });
+  btnDns.addEventListener('click', function (e) {
+    e.preventDefault();
+    var value = inputDns.value;
+    searchDns(value, dnss);
+  });
+} //dns ass input field
 
 
 var dnsAdd = document.querySelector('.dnsAdd');

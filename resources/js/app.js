@@ -31,24 +31,7 @@ faqs.forEach((faq) => {
 })
 
 
-//winkelmandje
 
-// let winkelmandje = document.querySelector('#winkelmandje');
-// let select = document.querySelector('#selectMailbox');
-// let mailbox = document.querySelector('#mailbox');
-
-
-// select.addEventListener('change', (e) => {
-//     e.preventDefault();
-
-//     if(select.value === 'true'){
-//        mailbox.classList.remove('hidden');
-//     }
-//     if(select.value === 'false'){
-//         mailbox.classList.add('hidden');
-//     }
-    
-// })
 
 let items = document.querySelectorAll('#winkelmandje');
 
@@ -96,6 +79,54 @@ if(emailAddBtn !== null){
 
 //     });
 // })
+
+//zoekfunctie dns
+let searchFieldDns = document.querySelector('.search__form--dns');
+
+if(searchFieldDns !== null){
+
+let inputDns = searchFieldDns.querySelector('.search__input');
+let btnDns = searchFieldDns.querySelector('.search__btn');
+let dnss = document.querySelectorAll('.dns');
+
+
+inputDns.addEventListener('keyup', (e) => {
+    e.preventDefault();
+    let value = inputDns.value;
+    searchDns(value, dnss);
+});
+
+btnDns.addEventListener('click', (e) => {
+    e.preventDefault();
+    let value = inputDns.value;
+    searchDns(value, dnss);
+})
+
+function searchDns(value, dnss){
+    dnss.forEach((dns) => {
+        dns.classList.add('hidden');
+
+        let type = dns.querySelector('.dns__type').innerHTML;
+        let name = dns.querySelector('.dns__name').innerHTML;
+        let content = dns.querySelector('.dns__content').innerHTML;
+        let ttl = dns.querySelector('.dns__ttl').innerHTML;
+        
+
+        let filterType = type.toLowerCase().indexOf(value.toLowerCase());
+        let filterName = name.toLowerCase().indexOf(value.toLowerCase());
+        let filterContent = content.toLowerCase().indexOf(value.toLowerCase());
+        let filterTtl = ttl.toLowerCase().indexOf(value.toLowerCase());
+        
+
+        if(filterType > -1 || filterName > -1 || filterContent > -1 || filterTtl > -1){
+            dns.classList.remove('hidden');
+        }
+
+
+    })
+}
+}
+
 
 //dns ass input field
 
