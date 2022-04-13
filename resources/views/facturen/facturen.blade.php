@@ -79,14 +79,30 @@
                 @if(!empty($facturen))
                 @for($x = 0; $x < count($facturen); $x++)
                 @foreach($facturen[$x] as $fac)
+                    @if(date('d/m/y') > date('d/m/Y', strtotime($fac->due_on)) && $fac->status === "outstanding")
+                    <tr class="table__item text-xs bg-red-50">
+                    @else
                     <tr class="table__item text-xs bg-gray-50">
+                    @endif
                       <td class="flex items-center py-4 px-6 font-medium">
                         <p>{{$fac->invoice_number}}</p>
                       </td>
                       <td class="font-medium">{{$fac->invoicee->name}}</td>
                       <td class="font-medium">€{{$fac->total->tax_inclusive->amount}}</td>
-                      <td class="font-medium">{{$fac->due_on}}</td>
-                      <td class="font-medium">{{$fac->status}}</td>
+                      <td class="font-medium">{{ date('d/m/Y', strtotime($fac->due_on))}}</td>
+                      <td class="font-medium">
+                          @switch($fac->status)
+                            @case("matched")
+                                Betaald
+                                @break
+                            @case("draft")
+                                Nog niet ingebracht
+                                @break
+                            @case("outstanding")
+                                Nog te betalen
+                                @break
+                          @endswitch
+                      </td>
                       <td><a class="btn--download" target="_blank" href="/factuur/download/{{$fac->id}}">download icon</a></td>
                     </tr>
                 @endforeach

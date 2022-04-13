@@ -53,7 +53,7 @@ class FacturenController extends Controller
                 }
             }
         }
-        
+
         if(!empty($download)){
             return redirect($download->data->location);
         }else{
