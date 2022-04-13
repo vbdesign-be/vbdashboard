@@ -22,7 +22,9 @@ class CreateTicketsTable extends Migration
             $table->string('status');
             $table->string('priority');
             $table->string('type');
+            $table->mediumText('tag');
             $table->foreignId('agent_id');
+            $table->boolean('isOpen');
             $table->timestamps();
         });
     }

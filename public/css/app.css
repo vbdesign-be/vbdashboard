@@ -235,6 +235,15 @@
   grid-column-end: 12;
 }
 
+.ticket {
+  display: grid;
+  grid-template-columns: 4fr 4fr 4fr;
+}
+
+.ticket--new {
+  border-left: solid 5px green;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -14,9 +14,9 @@ class TicketController extends Controller
             abort(403);
         }
 
-        $tickets = Ticket::get();
-        dd($tickets);
-
+        $data['tickets'] = Ticket::where('agent_id', Auth::id())->orderBy('id', 'desc')->get();
         
+        //dd($data['tickets']);
+        return view('tickets/tickets', $data);
     }
 }

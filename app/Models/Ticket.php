@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
     
-    protected $with = ["attachmentsTicket", "reactions"];
+    protected $with = ["attachmentsTicket", "reactions", "user"];
     public function attachmentsTicket(){
         return $this->hasMany(\App\Models\AttachmentTicket::class);
     }
@@ -17,4 +17,9 @@ class Ticket extends Model
     public function reactions(){
         return $this->hasMany(\App\Models\Reaction::class);
     }
+
+    public function user(){
+        return $this->belongsTo(\App\Models\User::class);
+    }
+    
 }
