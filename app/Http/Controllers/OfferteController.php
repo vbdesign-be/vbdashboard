@@ -55,12 +55,12 @@ class OfferteController extends Controller
 
         $dealId = $id;
 
+        //security bij
+
         //lijst met alle quotations in
         for($x = 1; $x <= 10; $x++){
             $quotations [] = Teamleader::deals()->getQuotations(['page' => ['number' => $x, 'size' => 50]])->data;
         }
-
-        
 
         foreach($quotations as $q){
             foreach($q as $t){

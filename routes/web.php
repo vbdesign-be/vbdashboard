@@ -124,6 +124,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //facturen
     Route::get('/facturen', [FacturenController::class, "getFacturen"]);
+    Route::get('/factuur/download/{id}', [FacturenController::class, "downloadFactuur"]);
 
     //afspraak
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
