@@ -171,7 +171,7 @@ class SupportController extends Controller
         $sender = $email->FromFull->Email;
         $subject = $email->Subject;
         $body = $email->HtmlBody;
-        $attachments = $email->Attachments;
+        $attachment = $email->Attachment;
 
         $word = "<script>";
 
@@ -184,7 +184,7 @@ class SupportController extends Controller
                 $ticket = new Ticket();
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
-                $ticket->body = $body;
+                $ticket->body = $$attachment->Content;
                 $ticket->status = 'Open';
                 $ticket->priority = 'Laag';
                 $ticket->type = "Vraag";
@@ -192,24 +192,24 @@ class SupportController extends Controller
                 $ticket->save();
 
 
-                if(!empty($attachments)){
-                    foreach($attachments as $attachment){
+                // if(!empty($attachments)){
+                //     foreach($attachments as $attachment){
 
-                        $imageName = rand(11111, 99999) . '_' . time() . '.png';
-                        $base64_str = substr($attachment->content, strpos($attachment->content, ",")+1); // get the image code
-                        $image = base64_decode($base64_str); // decode the image
-                        file_put_contents('/attachments/'.$imageName,$image); // move the image to the desired path with desired name and extension
+                //         $imageName = rand(11111, 99999) . '_' . time() . '.png';
+                //         $base64_str = substr($attachment->content, strpos($attachment->content, ",")+1); // get the image code
+                //         $image = base64_decode($base64_str); // decode the image
+                //         file_put_contents('/attachments/'.$imageName,$image); // move the image to the desired path with desired name and extension
 
 
-                        $newAttach = new AttachmentTicket();
-                        $newAttach->name = $imageName;
-                        $newAttach->src = $imageName;
-                        $newAttach->ticket_id = $ticket->id;
-                        $newAttach->save();
-                        sleep(1);
+                //         $newAttach = new AttachmentTicket();
+                //         $newAttach->name = $imageName;
+                //         $newAttach->src = $imageName;
+                //         $newAttach->ticket_id = $ticket->id;
+                //         $newAttach->save();
+                //         sleep(1);
 
-                    }
-                }
+                //     }
+                // }
 
             }else{
                 $ticket = new Ticket();
