@@ -220,51 +220,50 @@ if(addTicketBtn !== null){
 
 
 //zoekfunctie tickets
-let searchTicket = document.querySelector('.search__form--ticket');
+let searchFieldTicket = document.querySelector('.search__form--ticket');
 
-if(searchTicket !== null){
-    let inputField = document.querySelector('.search__input');
-    let searchBtn = document.querySelector('.search__btn')
-
-    searchBtn.addEventListener('click', (e) => {
+if(searchFieldTicket !== null){
+    let inputTicket = searchFieldTicket.querySelector('.search__input');
+    let btnTicket = searchFieldTicket.querySelector('.search__btn');
+    let tickets = document.querySelectorAll('.ticket');
+    btnTicket.addEventListener('click', (e) => {
         e.preventDefault();
-        let input = inputField.value;
-        let tickets = document.querySelectorAll('.ticket');
-        tickets.forEach((ticket) => {
-            searchTickets(ticket, input);
-        })
+        let value = inputTicket.value;
+        searchTicket(value, tickets);
     })
 
-    inputField.addEventListener('keyup', (e) => {
-        let input = inputField.value;
-        let tickets = document.querySelectorAll('.ticket');
-        tickets.forEach((ticket) => {
-
-            searchTickets(ticket, input);
-            
-        })
+    inputTicket.addEventListener('keyup', (e) => {
+        e.preventDefault();
+        let value = inputTicket.value;
+        searchTicket(value, tickets);
     })
 
-    function searchTickets(ticket, input){
-        ticket.classList.add('hidden');
-            
-            let title = ticket.querySelector('.ticket__title').innerHTML;
-            let text = ticket.querySelector('.ticket__text').innerHTML;
+    function searchTicket(value, tickets){
+        tickets.forEach((ticket) => {
+            ticket.classList.add('hidden');
+    
             let status = ticket.querySelector('.ticket__status').innerHTML;
+            let title = ticket.querySelector('.ticket__title').innerHTML;
             
-            let filterTitle = title.toLowerCase().indexOf(input.toLowerCase());
-            let filterText = text.toLowerCase().indexOf(input.toLowerCase());
-            let filterStatus = status.toLowerCase().indexOf(input.toLowerCase());
-
-            if(filterTitle > -1 || filterText > -1 || filterStatus > -1){
+    
+            let filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+            let filterTitle = title.toLowerCase().indexOf(value.toLowerCase());
+            
+    
+            if(filterStatus > -1 || filterTitle > -1){
                 ticket.classList.remove('hidden');
             }
+    
+    
+        })
     }
 }
 
 
 //zoekfunctie facturen
 let searchFieldFactuur = document.querySelector('.search__form--factuur');
+
+if(searchFieldFactuur !== null){
 
 let inputFactuur = searchFieldFactuur.querySelector('.search__input');
 let btnFactuur = searchFieldFactuur.querySelector('.search__btn');
@@ -307,5 +306,5 @@ function searchFactuur(value, facturen){
 
     })
 }
-
+}
 

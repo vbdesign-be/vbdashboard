@@ -2238,75 +2238,74 @@ if (addTicketBtn !== null) {
 } //zoekfunctie tickets
 
 
-var searchTicket = document.querySelector('.search__form--ticket');
+var searchFieldTicket = document.querySelector('.search__form--ticket');
 
-if (searchTicket !== null) {
-  var searchTickets = function searchTickets(ticket, input) {
-    ticket.classList.add('hidden');
-    var title = ticket.querySelector('.ticket__title').innerHTML;
-    var text = ticket.querySelector('.ticket__text').innerHTML;
-    var status = ticket.querySelector('.ticket__status').innerHTML;
-    var filterTitle = title.toLowerCase().indexOf(input.toLowerCase());
-    var filterText = text.toLowerCase().indexOf(input.toLowerCase());
-    var filterStatus = status.toLowerCase().indexOf(input.toLowerCase());
+if (searchFieldTicket !== null) {
+  var searchTicket = function searchTicket(value, tickets) {
+    tickets.forEach(function (ticket) {
+      ticket.classList.add('hidden');
+      var status = ticket.querySelector('.ticket__status').innerHTML;
+      var title = ticket.querySelector('.ticket__title').innerHTML;
+      var filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+      var filterTitle = title.toLowerCase().indexOf(value.toLowerCase());
 
-    if (filterTitle > -1 || filterText > -1 || filterStatus > -1) {
-      ticket.classList.remove('hidden');
-    }
+      if (filterStatus > -1 || filterTitle > -1) {
+        ticket.classList.remove('hidden');
+      }
+    });
   };
 
-  var inputField = document.querySelector('.search__input');
-  var searchBtn = document.querySelector('.search__btn');
-  searchBtn.addEventListener('click', function (e) {
+  var inputTicket = searchFieldTicket.querySelector('.search__input');
+  var btnTicket = searchFieldTicket.querySelector('.search__btn');
+  var tickets = document.querySelectorAll('.ticket');
+  btnTicket.addEventListener('click', function (e) {
     e.preventDefault();
-    var input = inputField.value;
-    var tickets = document.querySelectorAll('.ticket');
-    tickets.forEach(function (ticket) {
-      searchTickets(ticket, input);
-    });
+    var value = inputTicket.value;
+    searchTicket(value, tickets);
   });
-  inputField.addEventListener('keyup', function (e) {
-    var input = inputField.value;
-    var tickets = document.querySelectorAll('.ticket');
-    tickets.forEach(function (ticket) {
-      searchTickets(ticket, input);
-    });
+  inputTicket.addEventListener('keyup', function (e) {
+    e.preventDefault();
+    var value = inputTicket.value;
+    searchTicket(value, tickets);
   });
 } //zoekfunctie facturen
 
 
 var searchFieldFactuur = document.querySelector('.search__form--factuur');
-var inputFactuur = searchFieldFactuur.querySelector('.search__input');
-var btnFactuur = searchFieldFactuur.querySelector('.search__btn');
-var facturen = document.querySelectorAll('.facturen');
-inputFactuur.addEventListener('keyup', function (e) {
-  e.preventDefault();
-  var value = inputFactuur.value;
-  searchFactuur(value, facturen);
-});
-btnFactuur.addEventListener('click', function (e) {
-  e.preventDefault();
-  var value = inputFactuur.value;
-  searchFactuur(value, facturen);
-});
 
-function searchFactuur(value, facturen) {
-  facturen.forEach(function (factuur) {
-    factuur.classList.add('hidden');
-    var number = factuur.querySelector('.factuur__number').innerHTML;
-    var name = factuur.querySelector('.factuur__name').innerHTML;
-    var amount = factuur.querySelector('.factuur__amount').innerHTML;
-    var date = factuur.querySelector('.factuur__date').innerHTML;
-    var status = factuur.querySelector('.factuur__status').innerHTML;
-    var filterNumber = number.toLowerCase().indexOf(value.toLowerCase());
-    var filterName = name.toLowerCase().indexOf(value.toLowerCase());
-    var filterAmount = amount.toLowerCase().indexOf(value.toLowerCase());
-    var filterDate = date.toLowerCase().indexOf(value.toLowerCase());
-    var filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+if (searchFieldFactuur !== null) {
+  var searchFactuur = function searchFactuur(value, facturen) {
+    facturen.forEach(function (factuur) {
+      factuur.classList.add('hidden');
+      var number = factuur.querySelector('.factuur__number').innerHTML;
+      var name = factuur.querySelector('.factuur__name').innerHTML;
+      var amount = factuur.querySelector('.factuur__amount').innerHTML;
+      var date = factuur.querySelector('.factuur__date').innerHTML;
+      var status = factuur.querySelector('.factuur__status').innerHTML;
+      var filterNumber = number.toLowerCase().indexOf(value.toLowerCase());
+      var filterName = name.toLowerCase().indexOf(value.toLowerCase());
+      var filterAmount = amount.toLowerCase().indexOf(value.toLowerCase());
+      var filterDate = date.toLowerCase().indexOf(value.toLowerCase());
+      var filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
 
-    if (filterNumber > -1 || filterName > -1 || filterAmount > -1 || filterDate > -1 || filterStatus > -1) {
-      factuur.classList.remove('hidden');
-    }
+      if (filterNumber > -1 || filterName > -1 || filterAmount > -1 || filterDate > -1 || filterStatus > -1) {
+        factuur.classList.remove('hidden');
+      }
+    });
+  };
+
+  var inputFactuur = searchFieldFactuur.querySelector('.search__input');
+  var btnFactuur = searchFieldFactuur.querySelector('.search__btn');
+  var facturen = document.querySelectorAll('.facturen');
+  inputFactuur.addEventListener('keyup', function (e) {
+    e.preventDefault();
+    var value = inputFactuur.value;
+    searchFactuur(value, facturen);
+  });
+  btnFactuur.addEventListener('click', function (e) {
+    e.preventDefault();
+    var value = inputFactuur.value;
+    searchFactuur(value, facturen);
   });
 }
 
