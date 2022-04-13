@@ -80,7 +80,8 @@ class SupportController extends Controller
         $ticket->agent_id = 1;
         $ticket->save();
 
-        //attachments 
+        //attachments
+        if(!empty($request->file('attachments'))){
         foreach($request->file('attachments') as $attachment){
             $imageSrc = time().'.'.$attachment->extension();
             $attachment->move(public_path('attachments'), $imageSrc);
@@ -92,6 +93,8 @@ class SupportController extends Controller
             $newAttach->save();
             sleep(1);
         }
+        }
+
 
         //status message naar de gebruiker
         $request->session()->flash('message', 'Je support ticket is opgeslagen');
