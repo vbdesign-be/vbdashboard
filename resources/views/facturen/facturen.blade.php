@@ -47,20 +47,25 @@
                     <th class="flex items-center pl-6 py-4 font-medium">
                       <input class="mr-3 invisible" type="checkbox" name="" id="">
                       <a class="flex items-center" href="#">
-                        <span>Titel</span>
+                        <span>Nr.</span>
                         
                       </a>
                     </th>
                     <th class="py-4 font-medium">
                       <a class="flex items-center" href="#">
-                        <span>Reference nr.</span>
+                        <span>title</span>
                         
                       </a>
                     </th>
                     <th class="py-4 font-medium">
                       <a class="flex items-center" href="#">
-                        <span>Waarde</span>
+                        <span>Bedrag</span>
                         
+                      </a>
+                    </th>
+                    <th class="py-4 font-medium">
+                      <a class="flex items-center" href="#">
+                        <span>Datum</span>
                       </a>
                     </th>
                     <th class="py-4 font-medium">
@@ -68,27 +73,25 @@
                         <span>Status</span>
                       </a>
                     </th>
-                    <th class="py-4 font-medium">
-                      <a class="flex items-center" href="#">
-                        <span>Bekijken</span>
-                      </a>
-                    </th>
                   </tr>
                 </thead>
                 <tbody>
-               
+                @if(!empty($facturen))
+                @for($x = 0; $x < count($facturen); $x++)
+                @foreach($facturen[$x] as $fac)
                     <tr class="table__item text-xs bg-gray-50">
                       <td class="flex items-center py-4 px-6 font-medium">
-                        <p>title</p>
+                        <p>{{$fac->invoice_number}}</p>
                       </td>
-                      <td class="font-medium">referencie</td>
-                      <td class="font-medium">centjes</td>
-                      <td>
-                        status
-                      </td>
-                      <td><a class="btn--download" target="_blank" href="">download icon</a></td>
+                      <td class="font-medium">{{$fac->invoicee->name}}</td>
+                      <td class="font-medium">€{{$fac->total->tax_inclusive->amount}}</td>
+                      <td class="font-medium">{{$fac->due_on}}</td>
+                      <td class="font-medium">{{$fac->status}}</td>
+                      <td><a class="btn--download" target="_blank" href="/factuur/download/{{$fac->id}}">download icon</a></td>
                     </tr>
-                
+                @endforeach
+                @endfor
+                @endif
                 </tbody>
               </table>
             </div>

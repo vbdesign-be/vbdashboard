@@ -158,5 +158,9 @@ class Deal
             'body' => json_encode($data)
         ]);
     }
+
+    public function getInvoices($data = []){
+        return $this->teamleader->getCall('invoices.list?'.http_build_query($data));
+    }
     
 }
