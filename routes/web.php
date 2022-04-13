@@ -15,6 +15,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
 use App\Http\Controllers\FreshdeskController;
+use App\Http\Controllers\TicketController;
 use App\Mail\UserLoginMail;
 
 use Illuminate\Http\Request;
@@ -97,6 +98,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/support/ticket/reaction/add', [SupportController::class, "addReactionUser"]);
     Route::post('/support/ticket/statusUpdate', [SupportController::class, "statusUpdate"]);
 
+    //tickets
+    Route::get('/tickets', [TicketController::class, "getTickets"]);
     
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);
