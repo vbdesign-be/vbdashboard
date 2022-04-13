@@ -72,7 +72,7 @@
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
                 <button>Status wijzigen</button>
                 </form></div>
-                <p class="italic">{{$ticket->created_at}}</p>
+                <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
               </div>
               <div class="mt-6">
                 <p>{!! $ticket->body !!}</p>
