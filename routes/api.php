@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/incomming', [SupportController::class, "recieveEmail"]);
+Route::post('/file', [SupportController::class, "recieveFile"]);

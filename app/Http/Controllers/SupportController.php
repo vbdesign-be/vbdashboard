@@ -15,6 +15,7 @@ use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class SupportController extends Controller
@@ -190,19 +191,23 @@ class SupportController extends Controller
                 $ticket->agent_id = 1;
                 $ticket->save();
 
+
                 if(!empty($attachments)){
                     foreach($attachments as $attachment){
-                        $b64 = $attachment->Content;
-                        $bin = base64_decode($b64);
-                        
+
+                        $imageName = rand(11111, 99999) . '_' . time() . '.png';
+                        $base64_str = substr($attachment->content, strpos($attachment->content, ",")+1); // get the image code
+                        $image = base64_decode($base64_str); // decode the image
+                        file_put_contents('/attachments/'.$imageName,$image); // move the image to the desired path with desired name and extension
 
 
-                        $attachmentTicket = new AttachmentTicket();
-                        $attachmentTicket->name = $attachment->Name;
-                        $attachmentTicket->src = $bin;
-                        $attachmentTicket->ticket_id = $ticket->id;
-                        $attachmentTicket->save();
+                        $newAttach = new AttachmentTicket();
+                        $newAttach->name = $imageName;
+                        $newAttach->src = $imageName;
+                        $newAttach->ticket_id = $ticket->id;
+                        $newAttach->save();
                         sleep(1);
+
                     }
                 }
 
@@ -218,8 +223,11 @@ class SupportController extends Controller
                 $ticket->save();
             }
         }
+    }
 
-
-        
+    public function recieveFile(Request $request){
+        $code = $request->input('code');
+        $encode = base64_decode($code);
+        return $encode;
     }
 }
