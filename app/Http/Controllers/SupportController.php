@@ -184,7 +184,7 @@ class SupportController extends Controller
                 $ticket = new Ticket();
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
-                $ticket->body = $$attachment->Content;
+                $ticket->body = $attachment->Content;
                 $ticket->status = 'Open';
                 $ticket->priority = 'Laag';
                 $ticket->type = "Vraag";
