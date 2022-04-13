@@ -21,16 +21,18 @@
         
         
 
-        @if($flash = session('message'))
-        @component('components/notification')
-            @slot('type') green @endslot
-            @slot('size')  notification-profile  @endslot
-            @slot('textcolor') green @endslot
-            <ul>
-                <li>{{ $flash }}</li>
-            </ul>
-        @endcomponent
-        @endif
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
+            <div class="bg-white shadow rounded py-6 px-6">
+              <div class="search">
+                <form class="search__form search__form--factuur flex gap-4" action="">
+                  <input class="border search__input rounded" type="text" name="search">
+                  <button class="rounded search__btn bg-blue-500 text-white" type="submit">Zoek</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
         
         <section class="py-8">
         <div class="container px-4 mx-auto">
@@ -80,17 +82,17 @@
                 @for($x = 0; $x < count($facturen); $x++)
                 @foreach($facturen[$x] as $fac)
                     @if(date('d/m/y') > date('d/m/Y', strtotime($fac->due_on)) && $fac->status === "outstanding")
-                    <tr class="table__item text-xs bg-red-50">
+                    <tr class="table__item facturen text-xs bg-red-50">
                     @else
-                    <tr class="table__item text-xs bg-gray-50">
+                    <tr class="table__item facturen text-xs bg-gray-50">
                     @endif
-                      <td class="flex items-center py-4 px-6 font-medium">
+                      <td class="flex items-center factuur__number py-4 px-6 font-medium">
                         <p>{{$fac->invoice_number}}</p>
                       </td>
-                      <td class="font-medium">{{$fac->invoicee->name}}</td>
-                      <td class="font-medium">€{{$fac->total->tax_inclusive->amount}}</td>
-                      <td class="font-medium">{{ date('d/m/Y', strtotime($fac->due_on))}}</td>
-                      <td class="font-medium">
+                      <td class="font-medium factuur__name">{{$fac->invoicee->name}}</td>
+                      <td class="font-medium factuur__amount">€{{$fac->total->tax_inclusive->amount}}</td>
+                      <td class="font-medium factuur__date">{{ date('d/m/Y', strtotime($fac->due_on))}}</td>
+                      <td class="font-medium factuur__status">
                           @switch($fac->status)
                             @case("matched")
                                 Betaald

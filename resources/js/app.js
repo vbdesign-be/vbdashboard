@@ -205,17 +205,6 @@ if(cancelEmailBtns !== null){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 //addTicket
 
 let addTicketBtn = document.querySelector('.addTicketBtn');
@@ -274,5 +263,49 @@ if(searchTicket !== null){
 }
 
 
+//zoekfunctie facturen
+let searchFieldFactuur = document.querySelector('.search__form--factuur');
+
+let inputFactuur = searchFieldFactuur.querySelector('.search__input');
+let btnFactuur = searchFieldFactuur.querySelector('.search__btn');
+let facturen = document.querySelectorAll('.facturen');
+
+
+inputFactuur.addEventListener('keyup', (e) => {
+    e.preventDefault();
+    let value = inputFactuur.value;
+    searchFactuur(value, facturen);
+    
+});
+
+btnFactuur.addEventListener('click', (e) => {
+    e.preventDefault();
+    let value = inputFactuur.value;
+    searchFactuur(value, facturen);
+})
+
+function searchFactuur(value, facturen){
+    facturen.forEach((factuur) => {
+        factuur.classList.add('hidden');
+
+        let number = factuur.querySelector('.factuur__number').innerHTML;
+        let name = factuur.querySelector('.factuur__name').innerHTML;
+        let amount = factuur.querySelector('.factuur__amount').innerHTML;
+        let date = factuur.querySelector('.factuur__date').innerHTML;
+        let status = factuur.querySelector('.factuur__status').innerHTML;
+
+        let filterNumber = number.toLowerCase().indexOf(value.toLowerCase());
+        let filterName = name.toLowerCase().indexOf(value.toLowerCase());
+        let filterAmount = amount.toLowerCase().indexOf(value.toLowerCase());
+        let filterDate = date.toLowerCase().indexOf(value.toLowerCase());
+        let filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+
+        if(filterNumber > -1 || filterName > -1 || filterAmount > -1 || filterDate > -1 || filterStatus > -1){
+            factuur.classList.remove('hidden');
+        }
+
+
+    })
+}
 
 
