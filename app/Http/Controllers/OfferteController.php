@@ -50,12 +50,29 @@ class OfferteController extends Controller
         return view('offerte/offerte', $data);
     }
 
-    public function getDeal($id){
+    public function getDeal($deal_id){
         teamleaderController::reAuthTL();
-
-        $dealId = $id;
-
+        
         //security bij
+        $userId = Auth::user()->teamleader_id;
+        $user = Teamleader::crm()->contact()->info($userId)->data;
+        $companies = $user->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+            $comps[] = Teamleader::crm()->company()->info($company_id)->data;
+        }
+        
+        
+        foreach($comps as $c){
+            $deal = Teamleader::deals()->list(['filter'=> ['ids' => [$deal_id]]])->data[0];
+            if($deal->lead->customer->id !== $c->id){
+                abort(403);
+            }
+        }
+        
+        if(empty($deal)){
+            abort(403);
+        }
 
         //lijst met alle quotations in
         for($x = 1; $x <= 10; $x++){
@@ -70,7 +87,7 @@ class OfferteController extends Controller
 
         foreach($offertes as $f){
             $test = Teamleader::deals()->getInfoQuotation($f->id);
-            if($test->data->deal->id === $dealId){
+            if($test->data->deal->id === $deal_id){
                 $offerte = $test;
             }
         }
@@ -85,13 +102,13 @@ class OfferteController extends Controller
 
     public function post(Request $request){
 
-        // $credentials = $request->validate([
-        //     'titel' => 'required|max:255',
-        //     'bedrijf' => 'required',
-        //     'kostprijs' => 'required',
-        //     'deadline' => 'required',
-        //     'samenvatting' => 'required',
-        // ]);
+        $credentials = $request->validate([
+            'titel' => 'required|max:255',
+            'bedrijf' => 'required',
+            'kostprijs' => 'required',
+            'deadline' => 'required',
+            'samenvatting' => 'required',
+        ]);
 
         $data['title'] = $request->input('titel');
         $data['company_id'] = $request->input('bedrijf');
