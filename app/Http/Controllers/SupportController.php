@@ -171,7 +171,6 @@ class SupportController extends Controller
         $subject = $email->Subject;
         $body = $email->HtmlBody;
         $attachments = $email->Attachments;
-        
 
         $word = "<script>";
 
@@ -193,14 +192,15 @@ class SupportController extends Controller
 
                 if(!empty($attachments)){
                     foreach($attachments as $attachment){
-                        //$attach = base64_decode(chunk_split($attachment->Content));
-                        // $imageSrc = time().'.'.$attach->extension();
-                        // $attach->move(public_path('attachments'), $imageSrc);
+                        $b64 = $attachment->Content;
+                        $bin = base64_decode($b64);
+                        
+
 
                         $attachmentTicket = new AttachmentTicket();
                         $attachmentTicket->name = $attachment->Name;
-                        $attachmentTicket->src = "test";
-                        $attachmentTicket->reaction_id = $ticket->id;
+                        $attachmentTicket->src = $bin;
+                        $attachmentTicket->ticket_id = $ticket->id;
                         $attachmentTicket->save();
                         sleep(1);
                     }
