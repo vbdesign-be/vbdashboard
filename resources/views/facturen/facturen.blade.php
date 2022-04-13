@@ -37,7 +37,7 @@
           <div class="pt-6 bg-white shadow rounded">
             <div class="px-6 border-b">
               <div class="flex flex-wrap items-center mb-6">
-                <h3 class="text-xl font-bold">Recente offertes</h3>
+                <h3 class="text-xl font-bold">Overzicht Facturen</h3>
               </div>
             </div>
             <div class="p-4 overflow-x-auto">
@@ -79,7 +79,7 @@
                
                     <tr class="table__item text-xs bg-gray-50">
                       <td class="flex items-center py-4 px-6 font-medium">
-                        <p>{{ $f->title }}</p>
+                        <p>title</p>
                       </td>
                       <td class="font-medium">referencie</td>
                       <td class="font-medium">centjes</td>

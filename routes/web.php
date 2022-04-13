@@ -17,6 +17,7 @@ use App\Http\Controllers\ClickupController;
 
 use App\Http\Controllers\CloudflareController;
 use App\Http\Controllers\DomeinController;
+use App\Http\Controllers\FacturenController;
 use App\Http\Controllers\QboxController;
 use App\Http\Controllers\VimexxController;
 use App\Mail\UserLoginMail;
@@ -121,6 +122,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/offerte/post', [OfferteController::class, "post"]);
     Route::get('getDeal/{id}', [OfferteController::class, "getDeal"]);
 
+    //facturen
+    Route::get('/facturen', [FacturenController::class, "getFacturen"]);
+
+    //afspraak
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);
 
     //support
