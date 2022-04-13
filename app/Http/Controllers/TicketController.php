@@ -19,4 +19,13 @@ class TicketController extends Controller
         //dd($data['tickets']);
         return view('tickets/tickets', $data);
     }
+
+    public function detailTicket($ticket_id){
+        $data['ticket'] = Ticket::find($ticket_id);
+        if($data['ticket']->agent_id !== Auth::id()){
+            abort(403);
+        }
+        $data['status'] = ["Open", "In behandeling", "Gesloten"];
+        return view('tickets/ticketDetail', $data);
+    }
 }
