@@ -204,7 +204,8 @@ class SupportController extends Controller
                         $newFileName = time().$fileExtension;
 
                         $content = $att->Content;
-                        $file = base64_decode(chunk_split($content));
+                        $file = base64_decode($content);
+                        file_put_contents("public/attachments/".$newFileName, $file);
 
                         $attachment = new AttachmentTicket();
                         $attachment->name = $fileName;
