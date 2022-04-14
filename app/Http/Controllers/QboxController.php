@@ -10,6 +10,7 @@ class QboxController extends Controller
     public static function getAllDomains(){
         $url = 'https://api.qboxmail.com/api/domains';
         $token = env('QBOX_TOKEN');
+        dd($token);
         $res = Http::withHeaders([
             'X-Api-Token' => $token,
         ])->get($url);

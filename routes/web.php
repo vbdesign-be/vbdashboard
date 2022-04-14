@@ -43,14 +43,10 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/test', function(){
-   
-});
+;
 
 
-Route::get('/test', function(){
-        return view('emails/userLogin');
-});
+Route::get('/test', [QboxController::class, "getAllDomains"]);
 
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
