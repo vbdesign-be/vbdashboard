@@ -208,7 +208,7 @@ class SupportController extends Controller
 
                         $attachment = new AttachmentTicket();
                         $attachment->name = $fileName;
-                        $attachment->src = $file;
+                        $attachment->src = $newFileName;
                         $attachment->ticket_id = $ticket->id;
                         $attachment->save();
                         sleep(1);
