@@ -10,7 +10,7 @@ class QboxController extends Controller
     public static function getAllDomains(){
         $url = 'https://api.qboxmail.com/api/domains';
         $token = env('QBOX_TOKEN');
-        dd($token);
+        
         $res = Http::withHeaders([
             'X-Api-Token' => $token,
         ])->get($url);
@@ -52,9 +52,10 @@ class QboxController extends Controller
         
     }
  
-    public static function checkDns($code){
-       $url = 'https://api.qboxmail.com/api/domains/'.$code.'/dns_ownership_check';
+    public static function checkDns(){
+       $url = 'https://api.qboxmail.com/api/domains/'."test".'/dns_ownership_check';
        $token = env('QBOX_TOKEN');
+       dd($token. "   ". $url);
         $res = Http::withHeaders([
             'X-Api-Token' => $token,
         ])->put($url);
