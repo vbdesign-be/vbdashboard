@@ -51,6 +51,7 @@ class SupportController extends Controller
         $data['ticket'] = $ticket;
         $data['reactions'] = Reaction::where('ticket_id', $ticket_id)->get();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
+        dd($data['ticket']);
         return view('support/ticketsDetail', $data);
     }
 
