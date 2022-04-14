@@ -20,33 +20,26 @@
 
         
         
-
-        <section class="py-8">
-          <div class="container px-4 mx-auto">
-            <div class="bg-white shadow rounded py-6 px-6">
-              <div class="search">
-                <form class="search__form  flex gap-4" action="">
-                  <input class="border search__input rounded" type="text" name="search">
-                  <button class="rounded search__btn bg-blue-500 text-white" type="submit">Zoek</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
-        
         <section class="py-8">
         <div class="container px-4 mx-auto">
           <div class="pt-6 bg-white shadow rounded">
             <div class="px-6 border-b">
               <div class="flex flex-wrap items-center mb-6">
-                <h3 class="text-xl font-bold">Overzicht Tickets voor {{Auth::user()->firstname}}</h3>
+                <h3 class="text-xl font-bold">Tickets {{$user->firstname}} {{$user->lastname}}</h3>
               </div>
             </div>
-            <div class="p-4 bg-gray-200 overflow-x-auto">
+            <div class="menu--horizontal pb-2 bg-gray-200 px-6">
+                    <a class="menu--horizontal__item menu--horizontal--active" href="">Tickets</a>
+                    <a class="menu--horizontal__item" href="">Tijdlijn</a>
+            </div>
+          </div>
+        </div>
+    </section>
 
-                @forelse($tickets as $ticket)
-                   
-                    <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
+    <section class="py-8 tickets">
+        <div class="container px-4 mx-auto">
+            @forelse($tickets as $ticket)
+            <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
                     <div class="ticket__info">
                         @if($ticket->isOpen === 0) <p>NIEUW</p> @endif
                         <p>Nr: {{$ticket->id}}  <a href="/ticket/{{$ticket->id}}"><strong>{{$ticket->subject}}</strong></a></p>
@@ -66,13 +59,11 @@
                         <p>{{$ticket->type}}</p>
                     </div>
                 </div>
-                
-                @empty
-                <p class="p-4 bg-white">Geen Tickets</p>
-                @endforelse
-
+            @empty
+            <div class="pt-6 bg-white shadow rounded mb-2">
+                <p>Deze gebruiker heeft momenteel geen tickets</p>
             </div>
-          </div>
+            @endforelse
         </div>
     </section>
         
