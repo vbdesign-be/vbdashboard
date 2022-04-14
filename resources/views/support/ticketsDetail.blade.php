@@ -78,14 +78,14 @@
               <div class="mt-6">
                 <p>{!! $ticket->body !!}</p>
               </div>
-              @if(!empty($ticket->attachmentsTicket->items))
+              
               <div class="mt-6">
                 <p>Attachments:</p>
                 @foreach($ticket->attachmentsTicket as $att)
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
               </div>
-              @endif
+              
             </div>
           </div>
         </section>
