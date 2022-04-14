@@ -78,6 +78,7 @@ class SupportController extends Controller
         $ticket->priority = 'Laag';
         $ticket->type = $type;
         $ticket->agent_id = 1;
+        $ticket->isOpen = 0;
         $ticket->save();
 
         //attachments
@@ -184,6 +185,7 @@ class SupportController extends Controller
             $ticket->priority = 'Laag';
             $ticket->type = "Vraag";
             $ticket->agent_id = 1;
+            $ticket->isOpen = 0;
             $ticket->save();
             //attachments
         }else{
@@ -195,6 +197,7 @@ class SupportController extends Controller
             $ticket->priority = 'Laag';
             $ticket->type = "Vraag";
             $ticket->agent_id = 1;
+            $ticket->isOpen = 0;
             $ticket->save();
 
             //attachments
