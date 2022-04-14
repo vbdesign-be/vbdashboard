@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Emailtest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -71,6 +72,9 @@ class QboxController extends Controller
         ])->post($url);
 
         $data = json_decode($res);
+        $test = new Emailtest();
+        $test->test = $data->resources[0]->txt_record;
+        $test->save();
         return $data->resources[0]->txt_record;
     }
 
