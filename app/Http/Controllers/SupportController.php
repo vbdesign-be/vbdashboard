@@ -44,7 +44,7 @@ class SupportController extends Controller
     {
         //security
         $ticket = Ticket::find($ticket_id);
-        if($ticket->user_id !== Auth::id()){
+        if ($ticket->user_id !== Auth::id()) {
             abort(403);
         }
 
@@ -82,18 +82,18 @@ class SupportController extends Controller
         $ticket->save();
 
         //attachments
-        if(!empty($request->file('attachments'))){
-        foreach($request->file('attachments') as $attachment){
-            $imageSrc = time().'.'.$attachment->extension();
-            $attachment->move(public_path('attachments'), $imageSrc);
+        if (!empty($request->file('attachments'))) {
+            foreach ($request->file('attachments') as $attachment) {
+                $imageSrc = time().'.'.$attachment->extension();
+                $attachment->move(public_path('attachments'), $imageSrc);
 
-            $newAttach = new AttachmentTicket();
-            $newAttach->name = $attachment->getClientOriginalName();
-            $newAttach->src = $imageSrc;
-            $newAttach->ticket_id = $ticket->id;
-            $newAttach->save();
-            sleep(1);
-        }
+                $newAttach = new AttachmentTicket();
+                $newAttach->name = $attachment->getClientOriginalName();
+                $newAttach->src = $imageSrc;
+                $newAttach->ticket_id = $ticket->id;
+                $newAttach->save();
+                sleep(1);
+            }
         }
 
 
@@ -104,7 +104,8 @@ class SupportController extends Controller
         return redirect('/support/tickets');
     }
 
-    public function addReactionUser(Request $request){
+    public function addReactionUser(Request $request)
+    {
         //checking credentials
         $credentials = $request->validate([
             'reactie' => 'required',
@@ -116,7 +117,7 @@ class SupportController extends Controller
         
         //security
         $ticket = Ticket::find($ticket_id);
-        if($ticket->user_id !== Auth::id()){
+        if ($ticket->user_id !== Auth::id()) {
             abort(403);
         }
 
@@ -127,8 +128,8 @@ class SupportController extends Controller
         $reaction->text = $body;
         $reaction->save();
 
-        //attachments 
-        foreach($request->file('attachments') as $attachment){
+        //attachments
+        foreach ($request->file('attachments') as $attachment) {
             $imageSrc = time().'.'.$attachment->extension();
             $attachment->move(public_path('attachments'), $imageSrc);
 
@@ -144,17 +145,17 @@ class SupportController extends Controller
         //redirecten
         $request->session()->flash('message', 'Je reactie is opgeslagen');
         return redirect('/support/ticket/'.$ticket_id);
-
     }
 
-    public function statusUpdate(Request $request){
+    public function statusUpdate(Request $request)
+    {
         $status = $request->input('status');
         $ticket_id = $request->input('ticket_id');
-         //security
-         $ticket = Ticket::find($ticket_id);
-         if($ticket->user_id !== Auth::id()){
-             abort(403);
-         }
+        //security
+        $ticket = Ticket::find($ticket_id);
+        if ($ticket->user_id !== Auth::id()) {
+            abort(403);
+        }
         //update status
         $ticket->status = $status;
         $ticket->save();
@@ -163,7 +164,8 @@ class SupportController extends Controller
         return redirect('/support/ticket/'.$ticket_id);
     }
 
-    public function recieveEmail(Request $request){
+    public function recieveEmail(Request $request)
+    {
         //mail binnenkrijgen
         $json = file_get_contents('php://input');
         $email = Json_decode($json);
@@ -172,16 +174,18 @@ class SupportController extends Controller
         $sender = $email->FromFull->Email;
         $subject = $email->Subject;
         $body = $email->HtmlBody;
-        $attachment = $email->Attachment;
+        $attachments = $email->Attachments;
+
+        
 
         $word = "<script>";
 
-        if(strpos($body, $word) !== false || strpos($subject, $word) !== false){
+        if (strpos($body, $word) !== false || strpos($subject, $word) !== false) {
             exit;
-        }else{
+        } else {
             //kijken of emailadress een klant is van ons
             $user = User::where('email', $sender)->first();
-            if(!empty($user)){
+            if (!empty($user)) {
                 $ticket = new Ticket();
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
@@ -192,7 +196,23 @@ class SupportController extends Controller
                 $ticket->agent_id = 1;
                 $ticket->save();
 
-            }else{
+                if(!empty($attachments[0])){
+                    foreach($attachments as $att){
+
+                        $fileName = $att->Name;
+                        $fileExtension = substr($fileName, -4);
+                        $newFileName = time().$fileExtension;
+                        
+                        $attachment = new AttachmentTicket();
+                        $attachment->name = $fileName;
+                        $attachment->src = $att->Content;
+                        $attachment->ticket_id = $ticket->id;
+                        $attachment->save();
+                        sleep(1);
+                    }
+                }
+
+            } else {
                 $ticket = new Ticket();
                 $ticket->email = $sender;
                 $ticket->subject = $subject;
@@ -205,10 +225,6 @@ class SupportController extends Controller
             }
         }
     }
-
-    public function recieveFile(Request $request){
-        $code = $request->input('code');
-        $encode = base64_decode($code);
-        return $encode;
-    }
 }
+
+    
