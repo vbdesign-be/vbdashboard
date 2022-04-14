@@ -39,7 +39,7 @@ class TicketController extends Controller
         }
 
         $data['user'] = User::find($user_id);
-        $data['tickets'] = Ticket::where('user_id', $user_id)->get();
+        $data['tickets'] = Ticket::where('user_id', $user_id)->orderBy('id', 'desc')->get();
 
         return view('tickets/userpage', $data);
     }
