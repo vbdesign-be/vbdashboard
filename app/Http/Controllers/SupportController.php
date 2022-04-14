@@ -202,10 +202,13 @@ class SupportController extends Controller
                         $fileName = $att->Name;
                         $fileExtension = substr($fileName, -4);
                         $newFileName = time().$fileExtension;
-                        
+
+                        $content = $att->Content;
+                        $file = base64_decode(chunk_split($content));
+
                         $attachment = new AttachmentTicket();
                         $attachment->name = $fileName;
-                        $attachment->src = $att->Content;
+                        $attachment->src = $file;
                         $attachment->ticket_id = $ticket->id;
                         $attachment->save();
                         sleep(1);
