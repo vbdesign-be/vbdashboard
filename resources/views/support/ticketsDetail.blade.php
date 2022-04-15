@@ -75,10 +75,18 @@
                 </form></div>
                 <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
               </div>
+              @if(!empty($ticket->cc[0]))
+                <div class="flex">
+                  cc:
+                  @foreach($ticket->cc as $cc)
+                  {{$cc->email}},
+                  @endForeach
+                </div>
+              @endif
+
               <div class="mt-6">
                 <p>{!! $ticket->body !!}</p>
               </div>
-              
               @if(!empty($ticket->attachmentsTicket[0]))
               <div class="mt-6">
                 <p>Attachments:</p>
