@@ -97,16 +97,18 @@ class TicketController extends Controller
         $reaction->save();
 
         //attachments 
-        foreach($request->file('attachments') as $attachment){
-            $imageSrc = time().'.'.$attachment->extension();
-            $attachment->move(public_path('attachments'), $imageSrc);
+        if (!empty($request->file('attachments'))) {
+            foreach ($request->file('attachments') as $attachment) {
+                $imageSrc = time().'.'.$attachment->extension();
+                $attachment->move(public_path('attachments'), $imageSrc);
 
-            $newAttach = new AttachmentReaction();
-            $newAttach->name = $attachment->getClientOriginalName();
-            $newAttach->src = $imageSrc;
-            $newAttach->reaction_id = $reaction->id;
-            $newAttach->save();
-            sleep(1);
+                $newAttach = new AttachmentReaction();
+                $newAttach->name = $attachment->getClientOriginalName();
+                $newAttach->src = $imageSrc;
+                $newAttach->reaction_id = $reaction->id;
+                $newAttach->save();
+                sleep(1);
+            }
         }
 
 

@@ -97,7 +97,7 @@
              @foreach($ticket->reactions as $reaction)
               @if($reaction->user->id === $ticket->user_id)
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
-                <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
+                <p class="mb-4">Jij schreef: </p>
                 <p>{!! $reaction->text !!}</p>
                 @if(!empty($reaction->attachmentsReaction[0]))
                 <div class="mt-6">
