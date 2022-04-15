@@ -67,10 +67,5 @@ body{
 
 
 <div class="mail">
-    <h1 class="mail__title">Hallo {{ $user->firstname }}</h1>
-    <p class="mail__text">Er is een nieuwe reactie op ticket </p>
-    <p class="mail__text">Klik op de button om naar het ticket te gaan</p>
-    <div class="mail__btn">
-        <a class="btn" href="{{ $url }}">Login</a>
-    </div>
+    {!! $body !!}
 </div>
