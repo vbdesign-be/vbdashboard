@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "beyondcode/laravel-mailbox": "^2.2",
+        "coconutcraig/laravel-postmark": "^2.11",
         "fruitcake/laravel-cors": "^3.0",
         "grosv/laravel-passwordless-login": "^1.7",
         "guzzlehttp/guzzle": "^7.4",
@@ -14,6 +15,9 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "nao-pon/flysystem-google-drive": "~1.1",
+        "symfony/http-client": "^5.4",
+        "symfony/mailer": "^5.4",
+        "symfony/postmark-mailer": "^5.4",
         "tinymce/tinymce": "^6.0"
     },
     "require-dev": {

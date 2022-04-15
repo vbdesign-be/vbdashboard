@@ -22,6 +22,7 @@ return [
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
+        'secret' => env('POSTMARK_SECRET')
     ],
 
     'ses' => [
