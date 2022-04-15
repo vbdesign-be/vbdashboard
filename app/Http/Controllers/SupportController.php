@@ -82,6 +82,7 @@ class SupportController extends Controller
         $ticket->type = $type;
         $ticket->agent_id = 1;
         $ticket->isOpen = 0;
+        $ticket->tag="";
         $ticket->save();
 
         //attachments
@@ -209,15 +210,14 @@ class SupportController extends Controller
                 
 
             } else {
-                $ticket = new Ticket();
-                $ticket->email = $sender;
-                $ticket->subject = $subject;
-                $ticket->body = $body;
-                $ticket->status = 'Open';
-                $ticket->priority = 'Laag';
-                $ticket->type = "Vraag";
-                $ticket->agent_id = 1;
-                $ticket->save();
+                $word2 = "re:";
+
+                if(strpos(strtolower($subject), $word2) === false){
+                    //is een reactie op een ticket
+                     $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
+                 }else{
+                     $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
+                 }
             }
         }
     }
@@ -283,6 +283,52 @@ class SupportController extends Controller
 
 
     }
+
+    private function makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs){
+        $ticket = new Ticket();
+        $ticket->email = $sender;
+        $ticket->subject = $subject;
+        $ticket->body = $body;
+        $ticket->status = 'Open';
+        $ticket->priority = 'Laag';
+        $ticket->type = "Vraag";
+        $ticket->agent_id = 1;
+        $ticket->isOpen = 0;
+        $ticket->tag = "";
+        $ticket->save();
+
+        
+        if(!empty($ccs[0])){
+            foreach($ccs as $c){
+                $cc = new Cc();
+                $cc->ticket_id = $ticket->id;
+                $cc->email = $c->Email;
+                $cc->name = $c->Name;
+                $cc->save();
+            }
+        }
+
+        if(!empty($attachments[0])){
+            foreach($attachments as $att){
+
+                $fileName = $att->Name;
+                $fileExtension = substr($fileName, -4);
+                $newFileName = time().$fileExtension;
+
+                $content = $att->Content;
+                $file = base64_decode($content);
+                $path = public_path("attachments/".$newFileName);
+                file_put_contents($path, $file);
+
+                $attachment = new AttachmentTicket();
+                $attachment->name = $fileName;
+                $attachment->src = $newFileName;
+                $attachment->ticket_id = $ticket->id;
+                $attachment->save();
+                sleep(1);
+            }
+        }
+}
 }
 
     

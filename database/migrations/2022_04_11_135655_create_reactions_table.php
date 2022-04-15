@@ -16,7 +16,8 @@ class CreateReactionsTable extends Migration
         Schema::create('reactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
+            $table->string('email')->nullable();
             $table->longText('text');
             $table->timestamps();
         });

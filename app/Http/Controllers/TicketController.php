@@ -117,9 +117,14 @@ class TicketController extends Controller
 
         //mailtje sturen naar klant dat er een antwoord is gekomen met link
         $data['url'] = env('APP_URL')."/ticket/".$ticket_id;
-        $data['user'] = User::find($ticket->user_id);
         $data['body'] = $body;
-        Mail::to($ticket->user->email)->send(new TicketReactionMail($data));
+        $data['subject'] = $ticket->subject;
+        
+        if(!empty($ticket->user_id)){
+            Mail::to($ticket->user->email)->send(new TicketReactionMail($data));
+        }else{
+            Mail::to($ticket->email)->send(new TicketReactionMail($data));
+        }
 
         //redirecten
         $request->session()->flash('message', 'Je reactie is opgeslagen');

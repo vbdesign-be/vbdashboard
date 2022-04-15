@@ -29,6 +29,8 @@ class TicketReactionMail extends Mailable
     public function build()
     {
         return $this->view('emails.ticketReaction')
+        ->from('laravel@vbdesign.be')
+        ->subject($this->data['subject'])
         ->with($this->data);
     }
 }
