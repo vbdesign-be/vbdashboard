@@ -44,9 +44,8 @@
             </div>
             <div class="p-4 bg-gray-200 overflow-x-auto">
 
-                @forelse($tickets as $ticket)
-                   
-                    <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
+                @foreach($tickets as $ticket)
+                    <div class="ticket--agent p-4 mb-4 bg-white shadow rounded w-full mx-auto">
                     <div class="ticket__info">
                         @if($ticket->isOpen === 0) <p>NIEUW</p> @endif
                         <p>Nr: {{$ticket->id}}  <a href="/ticket/{{$ticket->id}}"><strong>{{$ticket->subject}}</strong></a></p>
@@ -66,11 +65,7 @@
                         <p>{{$ticket->type}}</p>
                     </div>
                 </div>
-                
-                @empty
-                <p class="p-4 bg-white">Geen Tickets</p>
-                @endforelse
-
+                @endforeach
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AttachmentReaction;
 use App\Models\Reaction;
 use App\Models\Ticket;
 use App\Models\User;
@@ -28,6 +29,8 @@ class TicketController extends Controller
         if ($data['ticket']->agent_id !== Auth::id()) {
             abort(403);
         }
+        $data['ticket']->isOpen = 1;
+        $data['ticket']->save();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
         return view('tickets/ticketDetail', $data);
     }
@@ -68,6 +71,49 @@ class TicketController extends Controller
         
         //redirecten
         return redirect('/ticket/'.$ticket_id);
+    }
+
+    public function addReactionAgent(Request $request){
+        //checking credentials
+        $credentials = $request->validate([
+            'reactie' => 'required',
+        ]);
+
+        $body = $request->input('reactie');
+        $ticket_id = $request->input('ticket_id');
+
+        
+        //security
+        $ticket = Ticket::find($ticket_id);
+        if($ticket->agent_id !== Auth::id()){
+            abort(403);
+        }
+
+        //reactie opslaan
+        $reaction = new Reaction();
+        $reaction->ticket_id = $ticket_id;
+        $reaction->user_id = Auth::id();
+        $reaction->text = $body;
+        $reaction->save();
+
+        //attachments 
+        foreach($request->file('attachments') as $attachment){
+            $imageSrc = time().'.'.$attachment->extension();
+            $attachment->move(public_path('attachments'), $imageSrc);
+
+            $newAttach = new AttachmentReaction();
+            $newAttach->name = $attachment->getClientOriginalName();
+            $newAttach->src = $imageSrc;
+            $newAttach->reaction_id = $reaction->id;
+            $newAttach->save();
+            sleep(1);
+        }
+
+
+        //redirecten
+        $request->session()->flash('message', 'Je reactie is opgeslagen');
+        return redirect('/ticket/'.$ticket_id);
+
     }
 
     

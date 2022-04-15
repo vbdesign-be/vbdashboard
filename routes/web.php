@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/ticket/account/{id}', [TicketController::class, "getUser"]);
     Route::get('/ticket/{id}', [TicketController::class, "detailTicket"]);
     Route::post('/ticket/statusUpdate', [TicketController::class, "statusUpdate"]);
+    Route::post('/ticket/reaction/add', [TicketController::class, "addReactionAgent"]);
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);

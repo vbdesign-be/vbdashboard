@@ -66,7 +66,6 @@
                     @else
                     <option value="{{$s}}">{{$s}}</option>
                     @endif
-                    
                     @endforeach
                 </select>
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
@@ -77,7 +76,8 @@
               <div class="mt-6">
                 <p>{!! $ticket->body !!}</p>
               </div>
-              @if(!empty($ticket->attachmentsTicket->items))
+              
+              @if(!empty($ticket->attachmentsTicket[0]))
               <div class="mt-6">
                 <p>Attachments:</p>
                 @foreach($ticket->attachmentsTicket as $att)
@@ -85,20 +85,21 @@
                 @endforeach
               </div>
               @endif
+              
             </div>
           </div>
         </section>
 
-        @if(!empty($reactions->items))
+        @if(!empty($ticket->reactions[0]))
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-             @foreach($reactions as $reaction)
+             @foreach($ticket->reactions as $reaction)
               @if($reaction->user->id === $ticket->user_id)
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
                 <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
                 <p>{!! $reaction->text !!}</p>
-                @if(!empty($reaction->attachmentsReaction->items))
+                @if(!empty($reaction->attachmentsReaction[0]))
                 <div class="mt-6">
                 <p>Attachments:</p>
                 @foreach($reaction->attachmentsReaction as $att)
@@ -111,7 +112,7 @@
               <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
                 <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
                 <p>{!! $reaction->text !!}</p>
-                @if(!empty($reaction->attachmentsReaction->items))
+                @if(!empty($reaction->attachmentsReaction[0]))
                 <div class="mt-6">
                 <p>Attachments:</p>
                 @foreach($reaction->attachmentsReaction as $att)

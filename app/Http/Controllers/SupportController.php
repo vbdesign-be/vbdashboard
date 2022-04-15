@@ -48,7 +48,6 @@ class SupportController extends Controller
         }
 
         $data['ticket'] = $ticket;
-        $data['reactions'] = Reaction::where('ticket_id', $ticket_id)->get();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
         return view('support/ticketsDetail', $data);
     }
@@ -101,7 +100,7 @@ class SupportController extends Controller
         $request->session()->flash('message', 'Je support ticket is opgeslagen');
         
         //redirecten
-        return redirect('/support/tickets');
+        return redirect('/support/ticket/'.$ticket->id);
     }
 
     public function addReactionUser(Request $request){
@@ -127,17 +126,20 @@ class SupportController extends Controller
         $reaction->text = $body;
         $reaction->save();
 
+        
         //attachments 
-        foreach($request->file('attachments') as $attachment){
-            $imageSrc = time().'.'.$attachment->extension();
-            $attachment->move(public_path('attachments'), $imageSrc);
+        if (!empty($request->file('attachments'))) {
+            foreach ($request->file('attachments') as $attachment) {
+                $imageSrc = time().'.'.$attachment->extension();
+                $attachment->move(public_path('attachments'), $imageSrc);
 
-            $newAttach = new AttachmentReaction();
-            $newAttach->name = $attachment->getClientOriginalName();
-            $newAttach->src = $imageSrc;
-            $newAttach->reaction_id = $reaction->id;
-            $newAttach->save();
-            sleep(1);
+                $newAttach = new AttachmentReaction();
+                $newAttach->name = $attachment->getClientOriginalName();
+                $newAttach->src = $imageSrc;
+                $newAttach->reaction_id = $reaction->id;
+                $newAttach->save();
+                sleep(1);
+            }
         }
 
 
