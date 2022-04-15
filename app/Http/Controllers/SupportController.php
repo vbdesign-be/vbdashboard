@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AttachmentReaction;
 use App\Models\AttachmentTicket;
+use App\Models\Cc;
 use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
@@ -180,6 +181,7 @@ class SupportController extends Controller
         $subject = $email->Subject;
         $body = $email->HtmlBody;
         $attachments = $email->Attachments;
+        $ccs = $email->CcFull;
 
         $word = "<script>";
 
@@ -198,6 +200,16 @@ class SupportController extends Controller
                 $ticket->type = "Vraag";
                 $ticket->agent_id = 1;
                 $ticket->save();
+
+                if(!empty($ccs[0])){
+                    foreach($ccs as $c){
+                        $cc = new Cc();
+                        $cc->ticket_id = $ticket->id;
+                        $cc->email = $c->Email;
+                        $cc->name = $c->Name;
+                        $cc->save();
+                    }
+                }
 
                 if(!empty($attachments[0])){
                     foreach($attachments as $att){
