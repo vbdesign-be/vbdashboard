@@ -49,7 +49,6 @@ class SupportController extends Controller
         }
 
         $data['ticket'] = $ticket;
-        $data['reactions'] = Reaction::where('ticket_id', $ticket_id)->get();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
         //dd($data['ticket']);
         return view('support/ticketsDetail', $data);
@@ -80,6 +79,7 @@ class SupportController extends Controller
         $ticket->priority = 'Laag';
         $ticket->type = $type;
         $ticket->agent_id = 1;
+        $ticket->isOpen = 0;
         $ticket->save();
 
         //attachments
@@ -102,7 +102,7 @@ class SupportController extends Controller
         $request->session()->flash('message', 'Je support ticket is opgeslagen');
         
         //redirecten
-        return redirect('/support/tickets');
+        return redirect('/support/ticket/'.$ticket->id);
     }
 
     public function addReactionUser(Request $request)
@@ -129,17 +129,20 @@ class SupportController extends Controller
         $reaction->text = $body;
         $reaction->save();
 
-        //attachments
-        foreach ($request->file('attachments') as $attachment) {
-            $imageSrc = time().'.'.$attachment->extension();
-            $attachment->move(public_path('attachments'), $imageSrc);
+        
+        //attachments 
+        if (!empty($request->file('attachments'))) {
+            foreach ($request->file('attachments') as $attachment) {
+                $imageSrc = time().'.'.$attachment->extension();
+                $attachment->move(public_path('attachments'), $imageSrc);
 
-            $newAttach = new AttachmentReaction();
-            $newAttach->name = $attachment->getClientOriginalName();
-            $newAttach->src = $imageSrc;
-            $newAttach->reaction_id = $reaction->id;
-            $newAttach->save();
-            sleep(1);
+                $newAttach = new AttachmentReaction();
+                $newAttach->name = $attachment->getClientOriginalName();
+                $newAttach->src = $imageSrc;
+                $newAttach->reaction_id = $reaction->id;
+                $newAttach->save();
+                sleep(1);
+            }
         }
 
 
@@ -161,6 +164,7 @@ class SupportController extends Controller
         $ticket->status = $status;
         $ticket->save();
         
+        $request->session()->flash('message', 'Ticket is geupdate');
         //redirecten
         return redirect('/support/ticket/'.$ticket_id);
     }
@@ -177,7 +181,36 @@ class SupportController extends Controller
         $body = $email->HtmlBody;
         $attachments = $email->Attachments;
 
-        
+        //kijken of emailadress een klant is van ons
+
+        $user = User::where('email', $sender)->first();
+
+        if(!empty($user)){
+            $ticket = new Ticket();
+            $ticket->user_id = $user->id;
+            $ticket->subject = $subject;
+            $ticket->body = $body;
+            $ticket->status = 'Open';
+            $ticket->priority = 'Laag';
+            $ticket->type = "Vraag";
+            $ticket->agent_id = 1;
+            $ticket->isOpen = 0;
+            $ticket->save();
+            //attachments
+        }else{
+            $ticket = new Ticket();
+            $ticket->email = $sender;
+            $ticket->subject = $subject;
+            $ticket->body = $body;
+            $ticket->status = 'Open';
+            $ticket->priority = 'Laag';
+            $ticket->type = "Vraag";
+            $ticket->agent_id = 1;
+            $ticket->isOpen = 0;
+            $ticket->save();
+
+            //attachments
+        }
 
         $word = "<script>";
 

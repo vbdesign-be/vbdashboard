@@ -14,17 +14,13 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
-
-use App\Http\Controllers\CloudflareController;
-use App\Http\Controllers\DomeinController;
-use App\Http\Controllers\FacturenController;
-use App\Http\Controllers\QboxController;
-use App\Http\Controllers\VimexxController;
+use App\Http\Controllers\FreshdeskController;
+use App\Http\Controllers\TicketController;
 use App\Mail\UserLoginMail;
 use App\Models\Order;
 use App\Models\Vimexx;
 
-use App\Http\Controllers\FreshdeskController;
+
 
 
 
@@ -130,7 +126,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/support/ticket/reaction/add', [SupportController::class, "addReactionUser"]);
     Route::post('/support/ticket/statusUpdate', [SupportController::class, "statusUpdate"]);
 
-    
+    //tickets
+    Route::get('/tickets', [TicketController::class, "getTickets"]);
+    Route::get('/ticket/account/{id}', [TicketController::class, "getUser"]);
+    Route::get('/ticket/{id}', [TicketController::class, "detailTicket"]);
+    Route::post('/ticket/statusUpdate', [TicketController::class, "statusUpdate"]);
+    Route::post('/ticket/reaction/add', [TicketController::class, "addReactionAgent"]);
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);

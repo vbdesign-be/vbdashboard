@@ -57,16 +57,16 @@
             <div class="bg-white shadow rounded py-6 px-6">
               <div class="grid grid-cols-2">
                 <p class="">{{$ticket->subject}}</p>
-                <div class="justify-self-end"><form method="post" action="/support/ticket/statusUpdate">
+                <div class="justify-self-end"><form method="post" action="/ticket/statusUpdate">
                 @csrf
                   <select name="status" id="">
                     @foreach($status as $s)
-                    @if($s != "In behandeling")
                     @if($s === $ticket->status)
                     <option selected value="{{$s}}">{{$s}}</option>
                     @else
                     <option value="{{$s}}">{{$s}}</option>
                     @endif
+                    
                     @endforeach
                 </select>
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
@@ -77,7 +77,6 @@
               <div class="mt-6">
                 <p>{!! $ticket->body !!}</p>
               </div>
-              
               @if(!empty($ticket->attachmentsTicket[0]))
               <div class="mt-6">
                 <p>Attachments:</p>
@@ -86,7 +85,6 @@
                 @endforeach
               </div>
               @endif
-              
             </div>
           </div>
         </section>
@@ -96,7 +94,7 @@
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
              @foreach($ticket->reactions as $reaction)
-              @if($reaction->user->id === $ticket->user_id)
+              @if($reaction->user->id === $ticket->agent_id)
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
                 <p class="mb-4">Jij schreef: </p>
                 <p>{!! $reaction->text !!}</p>
@@ -107,7 +105,7 @@
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
                 </div>
-                
+                @endif
               </div>
               @else
               <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
@@ -120,19 +118,19 @@
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
                 </div>
-                
+                @endif
               </div>
               @endif
              @endforeach
             </div>
           </div>
         </section>
-       
+        @endif
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-              <form enctype="multipart/form-data" action="/support/ticket/reaction/add" method="post">
+              <form enctype="multipart/form-data" action="/ticket/reaction/add" method="post">
               @csrf
                 <textarea id="myeditorinstance" class="w-full border p-5" name="reactie" rows="5" placeholder="Schrijf hier je reactie"></textarea>
                 <div class="my-6">
