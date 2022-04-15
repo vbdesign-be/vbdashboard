@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Mime\Email;
 
 class SupportController extends Controller
 {
@@ -172,25 +173,33 @@ class SupportController extends Controller
 
     public function recieveEmail(Request $request)
     {
+        $test = new Emailtest();
         //mail binnenkrijgen
         $json = file_get_contents('php://input');
         $email = Json_decode($json);
-        
+        $test->test = "json ophalen";
+        $test->save();
         
         $sender = $email->FromFull->Email;
         $subject = $email->Subject;
         $body = $email->HtmlBody;
         $attachments = $email->Attachments;
         $ccs = $email->CcFull;
+        $test->test = "alles eruit";
+        $test->save();
 
         $word = "<script>";
 
         if (strpos($body, $word) !== false || strpos($subject, $word) !== false) {
+            $test->test = "script erin";
+            $test->save();
             exit;
         } else {
             //kijken of emailadress een klant is van ons
             $user = User::where('email', $sender)->first();
             if (!empty($user)) {
+                $test->test = "user is klant";
+                $test->save();
                 $ticket = new Ticket();
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
@@ -199,17 +208,22 @@ class SupportController extends Controller
                 $ticket->priority = 'Laag';
                 $ticket->type = "Vraag";
                 $ticket->agent_id = 1;
+                $ticket->isOpen = 0;
                 $ticket->save();
+                $test->test = "json ophalen";
+                $test->save();
 
-                if(!empty($ccs[0])){
-                    foreach($ccs as $c){
-                        $cc = new Cc();
-                        $cc->ticket_id = $ticket->id;
-                        $cc->email = $c->Email;
-                        $cc->name = $c->Name;
-                        $cc->save();
-                    }
-                }
+                $test->test = "ticket opgeslagen";
+                $test->save();
+                // if(!empty($ccs[0])){
+                //     foreach($ccs as $c){
+                //         $cc = new Cc();
+                //         $cc->ticket_id = $ticket->id;
+                //         $cc->email = $c->Email;
+                //         $cc->name = $c->Name;
+                //         $cc->save();
+                //     }
+                // }
 
                 if(!empty($attachments[0])){
                     foreach($attachments as $att){
