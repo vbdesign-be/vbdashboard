@@ -181,37 +181,6 @@ class SupportController extends Controller
         $body = $email->HtmlBody;
         $attachments = $email->Attachments;
 
-        //kijken of emailadress een klant is van ons
-
-        $user = User::where('email', $sender)->first();
-
-        if(!empty($user)){
-            $ticket = new Ticket();
-            $ticket->user_id = $user->id;
-            $ticket->subject = $subject;
-            $ticket->body = $body;
-            $ticket->status = 'Open';
-            $ticket->priority = 'Laag';
-            $ticket->type = "Vraag";
-            $ticket->agent_id = 1;
-            $ticket->isOpen = 0;
-            $ticket->save();
-            //attachments
-        }else{
-            $ticket = new Ticket();
-            $ticket->email = $sender;
-            $ticket->subject = $subject;
-            $ticket->body = $body;
-            $ticket->status = 'Open';
-            $ticket->priority = 'Laag';
-            $ticket->type = "Vraag";
-            $ticket->agent_id = 1;
-            $ticket->isOpen = 0;
-            $ticket->save();
-
-            //attachments
-        }
-
         $word = "<script>";
 
         if (strpos($body, $word) !== false || strpos($subject, $word) !== false) {
