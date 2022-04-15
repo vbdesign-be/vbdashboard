@@ -274,10 +274,11 @@ class SupportController extends Controller
         
         if(!empty($user)){
             $ticket = Ticket::where('subject', $realSub)->first();
+
             $reaction = new Reaction();
             $reaction->ticket_id = $ticket->id;
             $reaction->user_id = $user->id;
-            $reaction->body = $body;
+            $reaction->text = $body;
             $reaction->save();
         }
 
