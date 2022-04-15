@@ -34,6 +34,7 @@ class TicketController extends Controller
         $data['ticket']->isOpen = 1;
         $data['ticket']->save();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
+        //dd($data['ticket']);
         return view('tickets/ticketDetail', $data);
     }
 
