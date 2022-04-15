@@ -200,6 +200,7 @@ class SupportController extends Controller
             if (!empty($user)) {
                 $test->test = "user is klant";
                 $test->save();
+
                 $ticket = new Ticket();
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
@@ -209,9 +210,8 @@ class SupportController extends Controller
                 $ticket->type = "Vraag";
                 $ticket->agent_id = 1;
                 $ticket->isOpen = 0;
+                $ticket->tag = "";
                 $ticket->save();
-                $test->test = "json ophalen";
-                $test->save();
 
                 $test->test = "ticket opgeslagen";
                 $test->save();
