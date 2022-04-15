@@ -51,5 +51,24 @@ class TicketController extends Controller
         return view('tickets/userpage', $data);
     }
 
+    public function statusUpdate(Request $request){
+        $status = $request->input('status');
+        $ticket_id = $request->input('ticket_id');
+         //security
+         $ticket = Ticket::find($ticket_id);
+         if($ticket->agent_id !== Auth::id()){
+             abort(403);
+         }
+        //update status
+        $ticket->status = $status;
+        $ticket->save();
+
+        //commentaar
+        $request->session()->flash('message', 'Ticket is geupdate');
+        
+        //redirecten
+        return redirect('/ticket/'.$ticket_id);
+    }
+
     
 }

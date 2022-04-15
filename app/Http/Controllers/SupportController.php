@@ -159,6 +159,7 @@ class SupportController extends Controller
         $ticket->status = $status;
         $ticket->save();
         
+        $request->session()->flash('message', 'Ticket is geupdate');
         //redirecten
         return redirect('/support/ticket/'.$ticket_id);
     }

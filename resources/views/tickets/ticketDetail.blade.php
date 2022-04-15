@@ -57,7 +57,7 @@
             <div class="bg-white shadow rounded py-6 px-6">
               <div class="grid grid-cols-2">
                 <p class="">{{$ticket->subject}}</p>
-                <div class="justify-self-end"><form method="post" action="">
+                <div class="justify-self-end"><form method="post" action="/ticket/statusUpdate">
                 @csrf
                   <select name="status" id="">
                     @foreach($status as $s)
