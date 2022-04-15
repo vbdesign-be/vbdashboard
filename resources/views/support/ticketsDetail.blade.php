@@ -108,7 +108,7 @@
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
                 </div>
-                
+                @endif
               </div>
               @else
               <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
@@ -121,14 +121,14 @@
                 <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
                 @endforeach
                 </div>
-                
+                @endif
               </div>
               @endif
              @endforeach
             </div>
           </div>
         </section>
-       
+       @endif
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
