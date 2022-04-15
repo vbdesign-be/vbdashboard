@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
+use App\Models\Cc;
 use App\Models\Reaction;
 use App\Models\Ticket;
 use App\Models\User;
@@ -120,6 +121,7 @@ class TicketController extends Controller
         $data['body'] = $body;
         $data['subject'] = $ticket->subject;
         $data['attachments'] = AttachmentReaction::where('reaction_id', $reaction->id)->get();
+        $data['cc'] = Cc::where('ticket_id', $ticket_id)->get();
         
         if(!empty($ticket->user_id)){
             Mail::to($ticket->user->email)->send(new TicketReactionMail($data));

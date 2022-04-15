@@ -34,11 +34,19 @@ class TicketReactionMail extends Mailable
                     ->subject($this->data['subject'])
                     ->with($this->data);
 
-        if(!empty($this->data['attachments'])) {
+        if(!empty($this->data['attachments'][0])) {
             foreach ($this->data['attachments'] as $att) {
                 $email->attach(public_path() .'/attachments/'.$att->src);
             }
         }
+
+        if(!empty($this->data['cc'][0])){
+            foreach($this->data['cc'] as $cc){
+                $email->cc($cc->email);
+            }
+        }
+
+        
         
         return $email;
     }
