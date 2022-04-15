@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
 use App\Models\Reaction;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
@@ -89,6 +91,7 @@ class TicketController extends Controller
             abort(403);
         }
 
+        
         //reactie opslaan
         $reaction = new Reaction();
         $reaction->ticket_id = $ticket_id;
@@ -111,6 +114,10 @@ class TicketController extends Controller
             }
         }
 
+        //mailtje sturen naar klant dat er een antwoord is gekomen met link
+        $data['url'] = env('APP_URL')."/ticket/".$ticket_id;
+        $data['user'] = User::find($ticket->user_id);
+        Mail::to($ticket->user->email)->send(new TicketReactionMail($data));
 
         //redirecten
         $request->session()->flash('message', 'Je reactie is opgeslagen');
