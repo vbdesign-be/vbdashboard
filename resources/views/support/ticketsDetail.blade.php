@@ -67,6 +67,7 @@
                     @else
                     <option value="{{$s}}">{{$s}}</option>
                     @endif
+                    @endif
                     @endforeach
                 </select>
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
