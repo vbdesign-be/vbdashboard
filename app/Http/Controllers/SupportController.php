@@ -196,9 +196,9 @@ class SupportController extends Controller
             $user = User::where('email', $sender)->first();
             if (!empty($user)) {
 
-                $word2 = "RE:";
-
-                if(strpos($subject, $word2) === false){
+                $word2 = "re:";
+                
+                if(strpos(strtolower($subject), $word2) === false){
                    //is een reactie op een ticket
                     $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
                 }else{
@@ -274,7 +274,6 @@ class SupportController extends Controller
         
         if(!empty($user)){
             $ticket = Ticket::where('subject', $realSub)->first();
-
             $reaction = new Reaction();
             $reaction->ticket_id = $ticket->id;
             $reaction->user_id = $user->id;
