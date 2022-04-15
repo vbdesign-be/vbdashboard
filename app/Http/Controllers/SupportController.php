@@ -195,8 +195,34 @@ class SupportController extends Controller
             //kijken of emailadress een klant is van ons
             $user = User::where('email', $sender)->first();
             if (!empty($user)) {
+
+                $word2 = "RE:";
+
+                if(strpos($subject, $word2) === false){
+                   //is een reactie op een ticket
+                    $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
+                }else{
+                    $this->makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs);
+                }
                 
 
+                
+
+            } else {
+                $ticket = new Ticket();
+                $ticket->email = $sender;
+                $ticket->subject = $subject;
+                $ticket->body = $body;
+                $ticket->status = 'Open';
+                $ticket->priority = 'Laag';
+                $ticket->type = "Vraag";
+                $ticket->agent_id = 1;
+                $ticket->save();
+            }
+        }
+    }
+
+    private function makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs){
                 $ticket = new Ticket();
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
@@ -240,19 +266,22 @@ class SupportController extends Controller
                         sleep(1);
                     }
                 }
+    }
 
-            } else {
-                $ticket = new Ticket();
-                $ticket->email = $sender;
-                $ticket->subject = $subject;
-                $ticket->body = $body;
-                $ticket->status = 'Open';
-                $ticket->priority = 'Laag';
-                $ticket->type = "Vraag";
-                $ticket->agent_id = 1;
-                $ticket->save();
-            }
+    private function makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs){
+        $user = User::where('email', $sender)->first();
+        $realSub = substr($subject,  4);  
+        
+        if(!empty($user)){
+            $ticket = Ticket::where('subject', $realSub)->where('user_id', $user->id)->first();
+            $reaction = new Reaction();
+            $reaction->ticket_id = $ticket->id;
+            $reaction->user_id = $user->id;
+            $reaction->body = $body;
+            $reaction->save();
         }
+
+
     }
 }
 
