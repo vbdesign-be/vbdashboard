@@ -119,6 +119,7 @@ class TicketController extends Controller
         $data['url'] = env('APP_URL')."/ticket/".$ticket_id;
         $data['body'] = $body;
         $data['subject'] = $ticket->subject;
+        $data['attachments'] = AttachmentReaction::where('reaction_id', $reaction->id)->get();
         
         if(!empty($ticket->user_id)){
             Mail::to($ticket->user->email)->send(new TicketReactionMail($data));

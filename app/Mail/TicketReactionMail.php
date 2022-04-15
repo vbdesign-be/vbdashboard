@@ -28,9 +28,18 @@ class TicketReactionMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.ticketReaction')
-        ->from('laravel@vbdesign.be')
-        ->subject($this->data['subject'])
-        ->with($this->data);
+        
+        $email = $this->view('emails.ticketReaction')
+                    ->from('laravel@vbdesign.be')
+                    ->subject($this->data['subject'])
+                    ->with($this->data);
+
+        if(!empty($this->data['attachments'])) {
+            foreach ($this->data['attachments'] as $att) {
+                $email->attach(public_path() .'/attachments/'.$att->src);
+            }
+        }
+        
+        return $email;
     }
 }
