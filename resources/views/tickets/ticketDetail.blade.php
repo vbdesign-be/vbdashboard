@@ -55,6 +55,11 @@
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
+            @if(!empty($ticket->user_id))
+            <p>{{$ticket->user->firstname}}</p>
+            @else
+            <p>{{$ticket->email}}</p>
+            @endif
               <div class="grid grid-cols-2">
                 <p class="">{{$ticket->subject}}</p>
                 <div class="justify-self-end"><form method="post" action="/ticket/statusUpdate">
@@ -102,6 +107,7 @@
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
              @foreach($ticket->reactions as $reaction)
+              @if(!empty($reaction->user_id))
               @if($reaction->user->id === $ticket->agent_id)
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
                 <p class="mb-4">Jij schreef: </p>
@@ -117,7 +123,25 @@
               </div>
               @else
               <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
+                @if(!empty($reaction->user_id))
                 <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
+                @else
+                <p class="mb-4">{{$reaction->email}} schreef: </p>
+                @endif
+                <p>{!! $reaction->text !!}</p>
+                @if(!empty($reaction->attachmentsReaction[0]))
+                <div class="mt-6">
+                <p>Attachments:</p>
+                @foreach($reaction->attachmentsReaction as $att)
+                <a href="/attachments/{{$att->src}}" download>{{$att->name}}</a>
+                @endforeach
+                </div>
+                @endif
+              </div>
+              @endif
+              @else
+              <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
+                <p class="mb-4">{{$reaction->email}} schreef: </p>
                 <p>{!! $reaction->text !!}</p>
                 @if(!empty($reaction->attachmentsReaction[0]))
                 <div class="mt-6">

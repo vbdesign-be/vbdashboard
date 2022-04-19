@@ -357,6 +357,27 @@ class SupportController extends Controller
         $reaction->email = $sender;
         $reaction->text = $body;
         $reaction->save();
+
+        if(!empty($attachments[0])){
+            foreach($attachments as $att){
+
+                $fileName = $att->Name;
+                $fileExtension = substr($fileName, -4);
+                $newFileName = time().$fileExtension;
+
+                $content = $att->Content;
+                $file = base64_decode($content);
+                $path = public_path("attachments/".$newFileName);
+                file_put_contents($path, $file);
+
+                $attachment = new AttachmentReaction();
+                $attachment->name = $fileName;
+                $attachment->src = $newFileName;
+                $attachment->reaction_id = $reaction->id;
+                $attachment->save();
+                sleep(1);
+            }
+        }
         
         
     }
