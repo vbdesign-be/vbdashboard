@@ -147,8 +147,6 @@ class SupportController extends Controller
                 sleep(1);
             }
         }
-
-
         //redirecten
         $request->session()->flash('message', 'Je reactie is opgeslagen');
         return redirect('/support/ticket/'.$ticket_id);
@@ -188,7 +186,8 @@ class SupportController extends Controller
         
 
         $word = "<script>";
-
+        $test->test = "voor script";
+        $test->save();
         if (strpos($body, $word) !== false || strpos($subject, $word) !== false) {
             
             exit;
