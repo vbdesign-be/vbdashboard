@@ -48,11 +48,11 @@ class checkDnsINfo implements ShouldQueue
         $test = new Emailtest();
         $test->test = "voor check";
         $test->save();
-        sleep(20);
+        $this->WaitForSec(20);
         QboxController::checkDns(strtolower($this->resource_code));
         $test->test = "na check";
         $test->save();
-        sleep(40);
+        $this->WaitForSec(40);
         $record = QboxController::getDKIM(strtolower($this->resource_code));
         $test->test = "na dkim";
         $test->save();
@@ -81,6 +81,17 @@ class checkDnsINfo implements ShouldQueue
         $this->emailOrder->resource_code = $newEmail->resource_code;
         $this->emailOrder->save();          
                     
+    }
+
+    public function WaitForSec($sec){
+        $i = 1;
+        $last_time = $_SERVER['REQUEST_TIME'];
+        while($i > 0){
+            $total = $_SERVER['REQUEST_TIME'] - $last_time;
+            if($total >= 2){
+                return 1;
+                $i = -1;
+            }
         
     }
 }
