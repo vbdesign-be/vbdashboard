@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
+        Arcanedev\LaravelNotes\LaravelNotesServiceProvider::class,
         
         
 

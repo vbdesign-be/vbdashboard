@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
 use App\Models\Cc;
+use App\Models\Note;
 use App\Models\Reaction;
 use App\Models\Ticket;
 use App\Models\User;
@@ -134,6 +135,26 @@ class TicketController extends Controller
 
         //redirecten
         $request->session()->flash('message', 'Je reactie is opgeslagen');
+        return redirect('/ticket/'.$ticket_id);
+
+    }
+
+    public function noteUpdate(Request $request){
+        $textNote = $request->input('note');
+        $ticket_id = $request->input('ticket_id');
+
+        $note = Note::where('ticket_id', $ticket_id)->first();
+        if(empty($note)){
+            $newNote = new Note();
+            $newNote->ticket_id = $ticket_id;
+            $newNote->text = $textNote;
+            $newNote->save();
+        }else{
+            $note->text = $textNote;
+            $note->save();
+        }
+        
+        $request->session()->flash('message', 'notitie opgeslagen');
         return redirect('/ticket/'.$ticket_id);
 
     }
