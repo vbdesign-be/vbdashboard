@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class CloudflareController extends Controller
+class cloudflareController extends Controller
 {
     public function test(){
         $url = "https://api.cloudflare.com/client/v4/";

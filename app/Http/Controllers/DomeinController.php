@@ -50,8 +50,9 @@ class DomeinController extends Controller
             $data['nameservers'] = $info['Information']['nameservers'];
 
             //aantal dns records
-            $check = CloudflareController::getOneDomain($domain);
-            $dns = CloudflareController::getDNSRecords($check[0]->id);
+            
+            $check = cloudflareController::getOneDomain($domain);
+            $dns = cloudflareController::getDNSRecords($check[0]->id);
             $data['numberDNS'] = count($dns);
 
             //aantal emails
@@ -144,8 +145,8 @@ class DomeinController extends Controller
             abort(403);
         }
 
-        $check = CloudflareController::getOneDomain($domain);
-        $data['dnsList'] = CloudflareController::getDNSRecords($check[0]->id);
+        $check = cloudflareController::getOneDomain($domain);
+        $data['dnsList'] = cloudflareController::getDNSRecords($check[0]->id);
         $data['zone'] = $check[0]->id;
         
         return view('domeinen/dnsdetail', $data);
@@ -168,7 +169,7 @@ class DomeinController extends Controller
         }
         
         
-        $res = CloudflareController::createNewDNSRecord($zone, $type, $name, $content);
+        $res = cloudflareController::createNewDNSRecord($zone, $type, $name, $content);
         
 
         if($res->success){
@@ -199,7 +200,7 @@ class DomeinController extends Controller
             abort(403);
         }
 
-        $res = CloudflareController::editDNS($zone, $dns_id, $type, $name, $content);
+        $res = cloudflareController::editDNS($zone, $dns_id, $type, $name, $content);
         
         if($res->success){
             $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is gewijzigd.');
@@ -221,7 +222,7 @@ class DomeinController extends Controller
             abort(403);
         }
 
-        $res = CloudflareController::deleteDNS($zone, $id);
+        $res = cloudflareController::deleteDNS($zone, $id);
 
         if($res->success){
             $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is verwijderd.');
@@ -240,10 +241,10 @@ class DomeinController extends Controller
             abort(403);
         };
 
-        $check = CloudflareController::getOneDomain($domain);
+        $check = cloudflareController::getOneDomain($domain);
         $zone = $check[0]->id;
         //verwijderen uit cloudflare
-        CloudflareController::deleteZone($zone);
+        cloudflareController::deleteZone($zone);
         //verwijderen uit qboxmail
         QboxController::deleteDomain($order->resource_code);
         //verwijderen uit vimexx
