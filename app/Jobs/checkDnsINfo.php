@@ -45,10 +45,13 @@ class checkDnsINfo implements ShouldQueue
      */
     public function handle()
     {
-        
+        $test = new Emailtest();
+        $test->test = "aangemaakt";
+        $test->save();
         sleep(20);
         QboxController::checkDns(strtolower($this->resource_code));
-        
+        $test->test = "check dns";
+        $test->save();
         sleep(40);
         $record = QboxController::getDKIM(strtolower($this->resource_code));
         

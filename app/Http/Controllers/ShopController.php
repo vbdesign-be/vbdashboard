@@ -16,7 +16,6 @@ use App\Http\Controllers\QboxController;
 class ShopController extends Controller
 {
     public function shop(){
-        
         return view('shop/shop');
     }
 
@@ -132,8 +131,6 @@ class ShopController extends Controller
 
         $user = UserController::getUser();
 
-        
-
         $order = Order::find($emailOrder->order_id);
         //pas hier de logica toepassen van na de aankoop
 
@@ -169,7 +166,6 @@ class ShopController extends Controller
             $order->save();
             //emailbox toevoegen
             
-
              //toevoegen aan de cloudflare domein
                 //create a cloudflare domein als dat er nog niet is
                 $check = CloudflareController::getOneDomain($order->domain);
@@ -189,7 +185,6 @@ class ShopController extends Controller
                     CloudflareController::createDnsRecord($check[0]->id, $name, $ip);
                     //qboxmail check doen liefts async
                     $this->dispatch(new checkDnsINfo($resource_code, $check, $front, $password, $user, $emailOrder));
-                    
                 }
         }
 
