@@ -65,6 +65,9 @@ class QboxController extends Controller
     }
 
     public static function getDKIM($code){
+        $test = new Emailtest();
+        $test->test = "raak ik hier zelfs wel";
+        $test->save();
         $url = 'https://api.qboxmail.com/api/domains/'.$code.'/dkim';
         $token = env('QBOX_TOKEN');
         $res = Http::withHeaders([
@@ -72,9 +75,9 @@ class QboxController extends Controller
         ])->post($url);
 
         $data = json_decode($res);
-        $test = new Emailtest();
-        $test->test = $data->resources[0]->txt_record;
-        $test->save();
+        $test2 = new Emailtest();
+        $test2->test = $data->resources[0]->txt_record;
+        $test2->save();
         return $data->resources[0]->txt_record;
     }
 
