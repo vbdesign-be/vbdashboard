@@ -40,11 +40,11 @@ class TicketReactionMail extends Mailable
             }
         }
 
-        if(!empty($this->data['cc'][0])){
-            foreach($this->data['cc'] as $cc){
-                $email->cc($cc->email);
-            }
-        }
+        // if(!empty($this->data['cc'][0])){
+        //     foreach($this->data['cc'] as $cc){
+        //         $email->cc($cc->email);
+        //     }
+        // }
 
         
         

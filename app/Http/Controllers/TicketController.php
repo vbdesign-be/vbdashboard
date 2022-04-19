@@ -126,7 +126,15 @@ class TicketController extends Controller
         if(!empty($ticket->user_id)){
             Mail::to($ticket->user->email)->send(new TicketReactionMail($data));
         }else{
-            Mail::to($ticket->email)->send(new TicketReactionMail($data));
+            if(empty([$data['cc'][0]])){
+                Mail::to($ticket->email)->send(new TicketReactionMail($data));
+            }else{
+                Mail::to($ticket->email)->send(new TicketReactionMail($data));
+                foreach($data['cc'] as $cc){
+                    Mail::to($cc->email)->send(new TicketReactionMail($data));
+                }
+            }
+            
         }
 
         //redirecten
