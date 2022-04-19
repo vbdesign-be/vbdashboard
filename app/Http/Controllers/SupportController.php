@@ -207,8 +207,6 @@ class SupportController extends Controller
                 }
                 
 
-                
-
             } else {
                 $word2 = "re:";
 
@@ -281,7 +279,26 @@ class SupportController extends Controller
             $reaction->save();
         }
 
+        if(!empty($attachments[0])){
+            foreach($attachments as $att){
 
+                $fileName = $att->Name;
+                $fileExtension = substr($fileName, -4);
+                $newFileName = time().$fileExtension;
+
+                $content = $att->Content;
+                $file = base64_decode($content);
+                $path = public_path("attachments/".$newFileName);
+                file_put_contents($path, $file);
+
+                $attachment = new AttachmentReaction();
+                $attachment->name = $fileName;
+                $attachment->src = $newFileName;
+                $attachment->reaction_id = $reaction->id;
+                $attachment->save();
+                sleep(1);
+            }
+        }
     }
 
     private function makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs){
@@ -328,7 +345,21 @@ class SupportController extends Controller
                 sleep(1);
             }
         }
-}
+    }
+
+    private function makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs){
+        $realSub = substr($subject,  4);  
+        
+        
+        $ticket = Ticket::where('subject', $realSub)->first();
+        $reaction = new Reaction();
+        $reaction->ticket_id = $ticket->id;
+        $reaction->email = $sender;
+        $reaction->text = $body;
+        $reaction->save();
+        
+        
+    }
 }
 
     
