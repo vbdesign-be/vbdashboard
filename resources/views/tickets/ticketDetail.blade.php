@@ -194,6 +194,21 @@
           </div>
         </section>
 
+        <section class="py-6">
+        <form enctype="multipart/form-data" action="/ticket/spam/add" method="post">
+              @csrf
+                @if(!empty($ticket->email))
+                <input type="hidden" name="email" value="{{$ticket->email}}">
+                @else
+                <input type="hidden" name="email" value="{{$ticket->user->email}}">
+                @endif
+                <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+                <div class="flex justify-center mt-6">
+                <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">spam</button>
+                </div>
+              </form>
+        </section>
+
 
         
         

@@ -8,6 +8,7 @@ use App\Models\Cc;
 use App\Models\Note;
 use App\Models\Notitie;
 use App\Models\Reaction;
+use App\Models\Spam;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -158,6 +159,20 @@ class TicketController extends Controller
         $request->session()->flash('message', 'notitie opgeslagen');
         return redirect('/ticket/'.$ticket_id);
 
+    }
+
+    public function spam(Request $request){
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+        $email = $request->input('email');
+        $ticket_id = $request->input('ticket_id');
+        $spam = new Spam();
+        $spam->email = $email;
+        $spam->save();
+
+        $request->session()->flash('message', 'emailadres in spam gezet');
+        return redirect('/ticket/'.$ticket_id);
     }
 
     

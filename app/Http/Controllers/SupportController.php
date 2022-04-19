@@ -9,6 +9,7 @@ use App\Models\Emailtest;
 use App\Models\Faq;
 use App\Models\Question;
 use App\Models\Reaction;
+use App\Models\Spam;
 use App\Models\Test;
 use App\Models\Ticket;
 use App\Models\User;
@@ -192,6 +193,8 @@ class SupportController extends Controller
             
             exit;
         } else {
+            //kijken naar spam
+            $this->checkSpam($sender);
             //kijken of emailadress een klant is van ons
             $user = User::where('email', $sender)->first();
             if (!empty($user)) {
@@ -384,6 +387,13 @@ class SupportController extends Controller
             }
         }
         }else{
+            exit;
+        }
+    }
+
+    private function checkSpam($sender){
+        $spam = Spam::where('email', $sender)->first();
+        if(!empty($spam)){
             exit;
         }
     }
