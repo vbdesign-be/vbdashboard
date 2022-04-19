@@ -6,6 +6,7 @@ use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
 use App\Models\Cc;
 use App\Models\Note;
+use App\Models\Notitie;
 use App\Models\Reaction;
 use App\Models\Ticket;
 use App\Models\User;
@@ -143,9 +144,9 @@ class TicketController extends Controller
         $textNote = $request->input('note');
         $ticket_id = $request->input('ticket_id');
 
-        $note = Note::where('ticket_id', $ticket_id)->first();
+        $note = Notitie::where('ticket_id', $ticket_id)->first();
         if(empty($note)){
-            $newNote = new Note();
+            $newNote = new Notitie();
             $newNote->ticket_id = $ticket_id;
             $newNote->text = $textNote;
             $newNote->save();
