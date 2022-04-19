@@ -36,7 +36,7 @@
         </div>
     </section>
 
-    <section class="py-8 tickets">
+    <section class="py-8 AgentTickets">
         <div class="container px-4 mx-auto">
             @forelse($tickets as $ticket)
             <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
@@ -58,6 +58,27 @@
                         <p>{{$ticket->status}}</p>
                         <p>{{$ticket->type}}</p>
                     </div>
+                </div>
+            @empty
+            <div class="pt-6 bg-white shadow rounded mb-2">
+                <p>Deze gebruiker heeft momenteel geen tickets</p>
+            </div>
+            @endforelse
+        </div>
+    </section>
+
+    <section class="py-8 AgentTimeline">
+        <div class="container px-4 mx-auto">
+          timeline
+            @forelse($timeline as $time)
+            <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
+                    @if(isset($time['ticket_id']))
+                    reactie
+                    @else
+                    ticket
+                    @endif
+                    
+                    
                 </div>
             @empty
             <div class="pt-6 bg-white shadow rounded mb-2">

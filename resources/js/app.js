@@ -337,5 +337,10 @@ function searchFactuur(value, facturen){
 
     })
 }
+
+//tickets/timeline
+
+    let agentTickets = document.querySelector('.agentTickets');
+    let agentTimeline = document.querySelector('.agentTimeline'); 
 }
 

@@ -51,10 +51,12 @@ class TicketController extends Controller
 
         $tickets = $data['tickets']->toArray();
         $reactions = $data['reactions']->toArray();
-    
         $everything = array_merge($tickets, $reactions);
+        $timeLine = collect($everything)->sortByDesc('created_at')->all();
+        
+        
 
-        $timeLine = collect($everything)->sortBy('created_at')->all();
+        $data['timeline'] = $timeLine;
         return view('tickets/userpage', $data);
     }
 
