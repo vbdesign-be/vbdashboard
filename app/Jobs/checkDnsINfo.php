@@ -95,3 +95,5 @@ class checkDnsINfo implements ShouldQueue
         
     }
 }
+
+}
