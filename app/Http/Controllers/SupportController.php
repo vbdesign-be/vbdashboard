@@ -268,6 +268,7 @@ class SupportController extends Controller
     private function makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs){
         $user = User::where('email', $sender)->first();
         $realSub = substr($subject,  4);  
+        return "test";
         
         if(!empty($user)){
             $ticket = Ticket::where('subject', $realSub)->first();
@@ -351,7 +352,12 @@ class SupportController extends Controller
         
         
         $ticket = Ticket::where('subject', $realSub)->first();
-        $reaction = new Reaction();
+
+        $checkCC = Cc::where('email', $sender)->where('ticket_id', $ticket->id)->first();
+       
+        //checken op originele en cc
+        if($sender === $ticket->email || !empty($checkCC)){
+            $reaction = new Reaction();
         $reaction->ticket_id = $ticket->id;
         $reaction->email = $sender;
         $reaction->text = $body;
@@ -377,8 +383,9 @@ class SupportController extends Controller
                 sleep(1);
             }
         }
-        
-        
+        }else{
+            exit;
+        }
     }
 }
 
