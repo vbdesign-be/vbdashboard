@@ -23,9 +23,6 @@ return [
         'model' => App\User::class,
     ],
 
-    'notes' => [
-        'table' => 'notes',
-        'model' => Arcanedev\LaravelNotes\Models\Note::class
-    ],
+    
 
 ];
