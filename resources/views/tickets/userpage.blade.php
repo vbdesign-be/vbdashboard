@@ -29,14 +29,14 @@
               </div>
             </div>
             <div class="menu--horizontal pb-2 bg-gray-200 px-6">
-                    <a class="menu--horizontal__item menu--horizontal--active" href="">Tickets</a>
-                    <a class="menu--horizontal__item" href="">Tijdlijn</a>
+                    <a class="menu--horizontal__item menu--horizontal--active ticketsBtn" href="">Tickets</a>
+                    <a class="menu--horizontal__item timelineBtn" href="">Tijdlijn</a>
             </div>
           </div>
         </div>
     </section>
 
-    <section class="py-8 AgentTickets">
+    <section class="py-8 agentTickets ">
         <div class="container px-4 mx-auto">
             @forelse($tickets as $ticket)
             <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
@@ -67,7 +67,7 @@
         </div>
     </section>
 
-    <section class="py-8 AgentTimeline">
+    <section class="py-8 agentTimeline hidden">
         <div class="container px-4 mx-auto">
           timeline
             @forelse($timeline as $time)

@@ -2063,7 +2063,33 @@ module.exports = {
 var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
     add = _require.add;
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //faq opnenen
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //tickets/timeline
+
+
+var agentTickets = document.querySelector('.agentTickets');
+var agentTimeline = document.querySelector('.agentTimeline');
+var ticketsBtn = document.querySelector('.ticketsBtn');
+var timelineBtn = document.querySelector('.timelineBtn');
+
+if (timelineBtn !== null) {
+  timelineBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    agentTickets.classList.add('hidden');
+    agentTimeline.classList.remove('hidden');
+    ticketsBtn.classList.remove('menu--horizontal--active');
+    timelineBtn.classList.add('menu--horizontal--active');
+  });
+}
+
+if (ticketsBtn !== null) {
+  ticketsBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    agentTimeline.classList.add('hidden');
+    agentTickets.classList.remove('hidden');
+    timelineBtn.classList.remove('menu--horizontal--active');
+    ticketsBtn.classList.add('menu--horizontal--active');
+  });
+} //faq opnenen
 
 
 var faqs = document.querySelectorAll('#faq-item');

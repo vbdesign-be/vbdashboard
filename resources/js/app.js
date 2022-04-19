@@ -2,6 +2,40 @@ const { add } = require('lodash');
 
 require('./bootstrap');
 
+//tickets/timeline
+
+let agentTickets = document.querySelector('.agentTickets');
+let agentTimeline = document.querySelector('.agentTimeline'); 
+
+let ticketsBtn = document.querySelector('.ticketsBtn');
+let timelineBtn = document.querySelector('.timelineBtn');
+
+
+
+if(timelineBtn !== null){
+timelineBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    agentTickets.classList.add('hidden');
+    agentTimeline.classList.remove('hidden');
+
+    ticketsBtn.classList.remove('menu--horizontal--active');
+    timelineBtn.classList.add('menu--horizontal--active');
+})
+}
+
+if(ticketsBtn !== null){
+    ticketsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        agentTimeline.classList.add('hidden');
+        agentTickets.classList.remove('hidden');
+
+        timelineBtn.classList.remove('menu--horizontal--active');
+        ticketsBtn.classList.add('menu--horizontal--active');
+    })
+}
+
+
+
 
 
 //faq opnenen
@@ -338,9 +372,5 @@ function searchFactuur(value, facturen){
     })
 }
 
-//tickets/timeline
-
-    let agentTickets = document.querySelector('.agentTickets');
-    let agentTimeline = document.querySelector('.agentTimeline'); 
 }
 
