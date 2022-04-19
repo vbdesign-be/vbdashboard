@@ -46,27 +46,37 @@ class checkDnsINfo implements ShouldQueue
     public function handle()
     {
         $test = new Emailtest();
-        
+        $test->test = "voor check";
+        $test->save();
         sleep(20);
         QboxController::checkDns(strtolower($this->resource_code));
-        
+        $test->test = "na check";
+        $test->save();
         sleep(40);
         $record = QboxController::getDKIM(strtolower($this->resource_code));
-        
+        $test->test = "na dkim";
+        $test->save();
         cloudflareController::createMXRecord($this->check[0]->id, 1);
-        
+        $test->test = "na mx";
+        $test->save();
         cloudflareController::createMXRecord($this->check[0]->id, 2);
-        
+        $test->test = "na mx2";
+        $test->save();
         cloudflareController::createSPFRecord($this->check[0]->id);
-        
+        $test->test = "na spfr";
+        $test->save();
         cloudflareController::createDKIMRecord($this->check[0]->id, $record);
-        
+        $test->test = "na cdkim";
+        $test->save();
         cloudflareController::createDMARCRecord($this->check[0]->id);
-        
+        $test->test = "na mark";
+        $test->save();
         $newEmail = QboxController::makeEmail($this->front, $this->resource_code, $this->password, $this->user->data->first_name);
-        
+        $test->test = "na email";
+        $test->save();
         QboxController::verifyMX(strtolower($this->resource_code));
-        
+        $test->test = "na verify";
+        $test->save();
         $this->emailOrder->status = "active";
         $this->emailOrder->resource_code = $newEmail->resource_code;
         $this->emailOrder->save();          
