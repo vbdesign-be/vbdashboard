@@ -122,11 +122,7 @@ class TicketController extends Controller
         $data['subject'] = $ticket->subject;
         $data['attachments'] = AttachmentReaction::where('reaction_id', $reaction->id)->get();
         $data['cc'] = Cc::where('ticket_id', $ticket_id)->get();
-        // if(empty($data['cc'][0])){
-        //     dd('cc leeg');
-        // }else{
-        //     dd('cc niet leeg');
-        // }
+        
         
         if(!empty($ticket->user_id)){
             Mail::to($ticket->user->email)->send(new TicketReactionMail($data));
@@ -139,7 +135,6 @@ class TicketController extends Controller
                     Mail::to($cc->email)->send(new TicketReactionMail($data));
                 }
             }
-            
         }
 
         //redirecten
