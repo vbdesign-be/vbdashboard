@@ -16,6 +16,7 @@ use App\Http\Controllers\teamleaderController;
 use App\Http\Controllers\ClickupController;
 use App\Http\Controllers\FreshdeskController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\DomeinController;
 use App\Mail\UserLoginMail;
 use App\Models\Order;
 use App\Models\Vimexx;
