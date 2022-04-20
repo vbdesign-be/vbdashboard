@@ -67,11 +67,11 @@
                   <form method="post" action="/ticket/statusUpdate">
                   @csrf
                   <select name="status" id="">
-                    @foreach($status as $s)
-                    @if($s === $ticket->status)
-                    <option selected value="{{$s}}">{{$s}}</option>
+                    @foreach($statuses as $s)
+                    @if($s->id === $ticket->status_id)
+                    <option selected value="{{$s->id}}">{{$s->name}}</option>
                     @else
-                    <option value="{{$s}}">{{$s}}</option>
+                    <option value="{{$s->id}}">{{$s->name}}</option>
                     @endif
                     
                     @endforeach
@@ -83,11 +83,11 @@
                 <form method="post" action="/ticket/priorityUpdate">
                   @csrf
                   <select name="priority" id="">
-                    @foreach($priority as $p)
-                    @if($p === $ticket->priority)
-                    <option selected value="{{$p}}">{{$p}}</option>
+                    @foreach($priorities as $p)
+                    @if($p->id === $ticket->priority_id)
+                    <option selected value="{{$p->id}}">{{$p->name}}</option>
                     @else
-                    <option value="{{$p}}">{{$p}}</option>
+                    <option value="{{$p->id}}">{{$p->name}}</option>
                     @endif
                     
                     @endforeach
@@ -99,11 +99,11 @@
                 <form method="post" action="/ticket/typeUpdate">
                   @csrf
                   <select name="type" id="">
-                    @foreach($type as $t)
-                    @if($t === $ticket->type)
-                    <option selected value="{{$t}}">{{$t}}</option>
+                    @foreach($types as $t)
+                    @if($t->id === $ticket->type_id)
+                    <option selected value="{{$t->id}}">{{$t->name}}</option>
                     @else
-                    <option value="{{$t}}">{{$t}}</option>
+                    <option value="{{$t->id}}">{{$t->name}}</option>
                     @endif
                     
                     @endforeach

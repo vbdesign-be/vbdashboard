@@ -61,12 +61,12 @@
                 <div class="justify-self-end"><form method="post" action="/support/ticket/statusUpdate">
                 @csrf
                   <select name="status" id="">
-                    @foreach($status as $s)
-                    @if($s != "In behandeling")
-                    @if($s === $ticket->status)
-                    <option selected value="{{$s}}">{{$s}}</option>
+                    @foreach($statuses as $s)
+                    @if($s->name != "In behandeling")
+                    @if($s->id === $ticket->status_id)
+                    <option selected value="{{$s->id}}">{{$s->name}}</option>
                     @else
-                    <option value="{{$s}}">{{$s}}</option>
+                    <option value="{{$s->id}}">{{$s->name}}</option>
                     @endif
                     @endif
                     @endforeach

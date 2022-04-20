@@ -7,9 +7,12 @@ use App\Models\AttachmentReaction;
 use App\Models\Cc;
 use App\Models\Note;
 use App\Models\Notitie;
+use App\Models\Priority;
 use App\Models\Reaction;
 use App\Models\Spam;
+use App\Models\Status;
 use App\Models\Ticket;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +40,9 @@ class TicketController extends Controller
         }
         $data['ticket']->isOpen = 1;
         $data['ticket']->save();
-        $data['status'] = ["Open", "In behandeling", "Gesloten"];
-        $data['priority'] = ["Laag", "Gemiddeld", "Hoog", "Urgend"];
-        $data['type'] = ["Vraag", "Probleem", "Incident"];
+        $data['statuses'] = Status::get();
+        $data['priorities'] = Priority::get();
+        $data['types'] = Type::get();
         //dd($data['ticket']);
         return view('tickets/ticketDetail', $data);
     }
@@ -59,7 +62,7 @@ class TicketController extends Controller
         $everything = array_merge($tickets, $reactions);
         $timeLine = collect($everything)->sortByDesc('created_at')->all();
         
-        
+        //dd($timeLine);
 
         $data['timeline'] = $timeLine;
         return view('tickets/userpage', $data);
@@ -74,7 +77,7 @@ class TicketController extends Controller
              abort(403);
          }
         //update status
-        $ticket->status = $status;
+        $ticket->status_id = $status;
         $ticket->save();
 
         //commentaar
@@ -93,7 +96,7 @@ class TicketController extends Controller
              abort(403);
          }
         //update status
-        $ticket->priority = $priority;
+        $ticket->priority_id = $priority;
         $ticket->save();
 
         //commentaar
@@ -112,7 +115,7 @@ class TicketController extends Controller
              abort(403);
          }
         //update status
-        $ticket->type = $type;
+        $ticket->type_id = $type;
         $ticket->save();
 
         //commentaar

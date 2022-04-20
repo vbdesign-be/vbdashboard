@@ -19,9 +19,9 @@ class CreateTicketsTable extends Migration
             $table->string('email')->nullable();
             $table->string('subject');
             $table->longtext('body');
-            $table->string('status');
-            $table->string('priority');
-            $table->string('type');
+            $table->foreignId('status_id');
+            $table->foreignId('priority_id');
+            $table->ForeignId('type_id');
             $table->mediumText('tag');
             $table->foreignId('agent_id');
             $table->boolean('isOpen');

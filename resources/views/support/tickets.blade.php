@@ -93,9 +93,9 @@
               <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" for="type">Type</label>
                 <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="type" value="{{ old('type') }}">
-                  <option value="Vraag">Vraag</option>
-                  <option value="Probleem">Probleem</option>
-                  <option value="Incident">Incident</option>
+                  @foreach($types as $type)
+                  <option value="{{$type->id}}">{{$type->name}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>
@@ -131,7 +131,7 @@
             <a href="/support/ticket/{{$ticket->id}}" class="ticket w-full md:w-1/2 lg:w-1/4 p-4">
                 <div class="p-6 mb-4 bg-white rounded shadow">
                 <div class="flex justify-between items-center mb-6">
-                  <span class="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full ticket__status">{{$ticket->status}}</span>
+                  <span class="inline-block py-1 px-2 bg-blue-50 text-xs text-blue-500 rounded-full ticket__status">{{$ticket->status->name}}</span>
                 </div>
                 <div class="mb-4">
                   <h3 class="mb-2 font-medium ticket__title">{{$ticket->subject}}</h3>

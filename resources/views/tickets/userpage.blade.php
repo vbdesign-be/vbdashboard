@@ -54,9 +54,9 @@
                         <p>{{$ticket->tag}}</p>
                     </div>
                     <div class="ticket_filters self-end">
-                        <p>{{$ticket->priority}}</p>
-                        <p>{{$ticket->status}}</p>
-                        <p>{{$ticket->type}}</p>
+                        <p>{{$ticket->priority->name}}</p>
+                        <p>{{$ticket->status->name}}</p>
+                        <p>{{$ticket->type->name}}</p>
                     </div>
                 </div>
             @empty
@@ -94,9 +94,9 @@
                         <p>{{$time['tag']}}</p>
                     </div>
                     <div class="ticket_filters self-end">
-                        <p>{{$time['priority']}}</p>
-                        <p>{{$time['status']}}</p>
-                        <p>{{$ticket['type']}}</p>
+                        <p>{{$time['priority']['name']}}</p>
+                        <p>{{$time['status']['name']}}</p>
+                        <p>{{$time['type']['name']}}</p>
                     </div>
                 </div>
                     @endif

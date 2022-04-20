@@ -60,9 +60,9 @@
                         <p>{{$ticket->tag}}</p>
                     </div>
                     <div class="ticket_filters self-end">
-                        <p>{{$ticket->priority}}</p>
-                        <p>{{$ticket->status}}</p>
-                        <p>{{$ticket->type}}</p>
+                        <p>{{$ticket->priority->name}}</p>
+                        <p>{{$ticket->status->name}}</p>
+                        <p>{{$ticket->type->name}}</p>
                     </div>
                 </div>
                 @endforeach

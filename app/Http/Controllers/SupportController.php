@@ -10,8 +10,10 @@ use App\Models\Faq;
 use App\Models\Question;
 use App\Models\Reaction;
 use App\Models\Spam;
+use App\Models\Status;
 use App\Models\Test;
 use App\Models\Ticket;
+use App\Models\Type;
 use App\Models\User;
 use DateInterval;
 use DateTime;
@@ -40,6 +42,7 @@ class SupportController extends Controller
         //lijst met alle tickets filteren op een email van een persoon(oud naar nieuw)
         $tickets = Ticket::where('user_id', Auth::id())->orderBy('id', 'DESC')->get();
         $data['tickets'] = $tickets;
+        $data['types'] = Type::get();
         return view('support/tickets', $data);
     }
 
@@ -52,7 +55,7 @@ class SupportController extends Controller
         }
 
         $data['ticket'] = $ticket;
-        $data['status'] = ["Open", "In behandeling", "Gesloten"];
+        $data['statuses'] = Status::get();
         //dd($data['ticket']);
         return view('support/ticketsDetail', $data);
     }
@@ -78,9 +81,9 @@ class SupportController extends Controller
         $ticket->user_id = Auth::id();
         $ticket->subject = $subject;
         $ticket->body = $summary;
-        $ticket->status = 'Open';
-        $ticket->priority = 'Laag';
-        $ticket->type = $type;
+        $ticket->status_id = 1;
+        $ticket->priority_id = 1;
+        $ticket->type_id = $type;
         $ticket->agent_id = 1;
         $ticket->isOpen = 0;
         $ticket->tag="";
@@ -163,7 +166,7 @@ class SupportController extends Controller
             abort(403);
         }
         //update status
-        $ticket->status = $status;
+        $ticket->status_id = $status;
         $ticket->save();
         
         $request->session()->flash('message', 'Ticket is geupdate');
