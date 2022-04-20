@@ -86,7 +86,6 @@ class SupportController extends Controller
         $ticket->type_id = $type;
         $ticket->agent_id = 1;
         $ticket->isOpen = 0;
-        $ticket->tag="";
         $ticket->save();
 
         //attachments

@@ -22,7 +22,6 @@ class CreateTicketsTable extends Migration
             $table->foreignId('status_id');
             $table->foreignId('priority_id');
             $table->ForeignId('type_id');
-            $table->mediumText('tag');
             $table->foreignId('agent_id');
             $table->boolean('isOpen');
             $table->timestamps();

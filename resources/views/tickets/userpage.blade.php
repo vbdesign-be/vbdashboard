@@ -51,9 +51,11 @@
                     </div>
                     <div class="ticket_tags">
                         <p>Tag:</p>
-                        <p>{{$ticket->tag}}</p>
+                        @foreach($ticket->tickets_tags as $t)
+                        <p>{{$t->tag->name}}</p>
+                        @endforeach
                     </div>
-                    <div class="ticket_filters self-end">
+                    <div class="ticket_filters">
                         <p>{{$ticket->priority->name}}</p>
                         <p>{{$ticket->status->name}}</p>
                         <p>{{$ticket->type->name}}</p>
@@ -104,9 +106,11 @@
                     </div>
                     <div class="ticket_tags">
                         <p>Tag:</p>
-                        <p>{{$time['tag']}}</p>
+                        @foreach($time['tickets_tags'] as $t)
+                        <p>{{$t['tag']['name']}}</p>
+                        @endforeach
                     </div>
-                    <div class="ticket_filters self-end">
+                    <div class="ticket_filters">
                         <p>{{$time['priority']['name']}}</p>
                         <p>{{$time['status']['name']}}</p>
                         <p>{{$time['type']['name']}}</p>

@@ -111,6 +111,20 @@
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
                 <button>Type wijzigen</button>
                 </form>
+                <div class="mt-2">
+                    <ul>
+                      @foreach($ticket->tickets_tags as $t)
+                        <li>{{$t->tag->name}}</li>
+                      @endforeach
+                    </ul>
+                </div>
+                <!-- Tag toevoegen -->
+                <form method="post" action="/ticket/addTag">
+                  @csrf
+                  <input class="border" type="text" name="tag" value="">
+                  <input type="hidden" value="{{$ticket->id}}" name="ticket_id" value="{{$ticket->tag}}">
+                  <button>Tag toevoegen</button>
+                </form>
               </div>
                 <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
               </div>

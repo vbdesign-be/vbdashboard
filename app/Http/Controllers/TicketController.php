@@ -11,7 +11,9 @@ use App\Models\Priority;
 use App\Models\Reaction;
 use App\Models\Spam;
 use App\Models\Status;
+use App\Models\Tag;
 use App\Models\Ticket;
+use App\Models\Tickets_Tags;
 use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,7 +45,6 @@ class TicketController extends Controller
         $data['statuses'] = Status::get();
         $data['priorities'] = Priority::get();
         $data['types'] = Type::get();
-        //dd($data['ticket']);
         return view('tickets/ticketDetail', $data);
     }
 
@@ -202,7 +203,36 @@ class TicketController extends Controller
         
         $request->session()->flash('message', 'notitie opgeslagen');
         return redirect('/ticket/'.$ticket_id);
+    }
 
+    public function addTag(Request $request){
+        $textTag = $request->input('tag');
+        $ticket_id = $request->input('ticket_id');
+
+        //tags splisten dankzij de komma en spatie
+        $tags = explode(', ', $textTag);
+
+        //tag id gaan halen of tag maken
+        foreach($tags as $tag){
+            $oldTag = Tag::where('name', $tag)->first();
+            if(empty($oldTag)){
+                $newTag = new Tag();
+                $newTag->name = $tag;
+                $newTag->save();
+                $ticketsTags = new Tickets_Tags();
+                $ticketsTags->ticket_id = $ticket_id;
+                $ticketsTags->tag_id = $newTag->id;
+                $ticketsTags->save();
+            }else{
+                $ticketsTags = new Tickets_Tags();
+                $ticketsTags->ticket_id = $ticket_id;
+                $ticketsTags->tag_id = $oldTag->id;
+                $ticketsTags->save();
+            }
+        }
+        
+        $request->session()->flash('message', 'tags opgeslagen');
+        return redirect('/ticket/'.$ticket_id);
     }
 
     public function spam(Request $request){
