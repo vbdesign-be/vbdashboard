@@ -114,7 +114,7 @@
                
                 <livewire:show-tag :ticket_id="$ticket->id">
     
-                <livewire:add-tag :ticket_id="$ticket->id">
+                
                   
               </div>
                 <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
