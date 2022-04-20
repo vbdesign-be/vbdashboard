@@ -202,28 +202,6 @@ class TicketController extends Controller
 
     }
 
-    public function noteUpdate(Request $request){
-        if (Auth::user()->isAgent !== 1) {
-            abort(403);
-        }
-        $textNote = $request->input('note');
-        $ticket_id = $request->input('ticket_id');
-
-        $note = Notitie::where('ticket_id', $ticket_id)->first();
-        if(empty($note)){
-            $newNote = new Notitie();
-            $newNote->ticket_id = $ticket_id;
-            $newNote->text = $textNote;
-            $newNote->save();
-        }else{
-            $note->text = $textNote;
-            $note->save();
-        }
-        
-        $request->session()->flash('message', 'notitie opgeslagen');
-        return redirect('/ticket/'.$ticket_id);
-    }
-
 
     public function spam(Request $request){
         if(Auth::user()->isAgent !== 1){

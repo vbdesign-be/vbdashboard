@@ -113,8 +113,6 @@
                 </form>
                
                 <livewire:show-tag :ticket_id="$ticket->id">
-    
-                
                   
               </div>
                 <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
@@ -142,21 +140,9 @@
           </div>
         </section>
 
-        <section class="py-8">
-          <div class="container px-4 mx-auto">
-            <div class="bg-white shadow rounded py-6 px-6">
-              <p>notitie toevoegen</p>
-              <form enctype="multipart/form-data" action="/ticket/note/update" method="post">
-              @csrf
-                <textarea class="w-full border p-5" name="note" rows="5" placeholder="">@if(!empty($ticket->notitie->text)){{$ticket->notitie->text}}@endif</textarea>
-                <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
-                <div class="flex justify-end mt-6">
-                <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update note</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </section>
+        
+
+        <livewire:note :ticket_id="$ticket->id"/>
 
         @if(!empty($ticket->reactions[0]))
         <section class="py-8">
