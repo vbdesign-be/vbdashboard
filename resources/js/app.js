@@ -2,8 +2,9 @@ const { add } = require('lodash');
 
 require('./bootstrap');
 
-//tickets/timeline
 
+
+//tickets/timeline
 let agentTickets = document.querySelector('.agentTickets');
 let agentTimeline = document.querySelector('.agentTimeline'); 
 

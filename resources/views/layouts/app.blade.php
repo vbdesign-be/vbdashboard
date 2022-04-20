@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-tailwind.png">
     <script src="js/main.js"></script>
-    
+    @livewireStyles
   </head>
   <body class="antialiased bg-body text-body font-body">
 
@@ -23,6 +23,6 @@
     <script src="js/charts-demo.js"></script>
     <script src="{{ URL::asset('js/app.js') }}"></script>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
-    
+    @livewireScripts
 </body>
 </html>

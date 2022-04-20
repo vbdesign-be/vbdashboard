@@ -18,6 +18,7 @@ use App\Http\Controllers\FreshdeskController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\FacturenController;
+use App\Http\Livewire\AddTag;
 use App\Mail\UserLoginMail;
 use App\Models\Order;
 use App\Models\Vimexx;
@@ -137,7 +138,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ticket/typeUpdate', [TicketController::class, "typeUpdate"]);
     Route::post('/ticket/reaction/add', [TicketController::class, "addReactionAgent"]);
     Route::post('/ticket/note/update', [TicketController::class, "noteUpdate"]);
-    Route::post('/ticket/addTag', [TicketController::class, "addTag"]);
+    Route::post('/ticket/addTag', [AddTag::class, "addTag"]);
     Route::post('/ticket/spam/add', [TicketController::class, "spam"]);
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);

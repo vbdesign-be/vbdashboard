@@ -36,6 +36,10 @@ class TicketController extends Controller
 
     public function detailTicket($ticket_id)
     {
+        if (Auth::user()->isAgent !== 1) {
+            abort(403);
+        }
+
         $data['ticket'] = Ticket::find($ticket_id);
         if ($data['ticket']->agent_id !== Auth::id()) {
             abort(403);
@@ -71,6 +75,9 @@ class TicketController extends Controller
     }
 
     public function statusUpdate(Request $request){
+        if (Auth::user()->isAgent !== 1) {
+            abort(403);
+        }
         $status = $request->input('status');
         $ticket_id = $request->input('ticket_id');
          //security
@@ -90,6 +97,9 @@ class TicketController extends Controller
     }
 
     public function priorityUpdate(Request $request){
+        if (Auth::user()->isAgent !== 1) {
+            abort(403);
+        }
         $priority = $request->input('priority');
         $ticket_id = $request->input('ticket_id');
          //security
@@ -109,6 +119,9 @@ class TicketController extends Controller
     }
 
     public function typeUpdate(Request $request){
+        if (Auth::user()->isAgent !== 1) {
+            abort(403);
+        }
         $type = $request->input('type');
         $ticket_id = $request->input('ticket_id');
          //security
@@ -128,6 +141,9 @@ class TicketController extends Controller
     }
 
     public function addReactionAgent(Request $request){
+        if (Auth::user()->isAgent !== 1) {
+            abort(403);
+        }
         //checking credentials
         $credentials = $request->validate([
             'reactie' => 'required',
@@ -187,6 +203,9 @@ class TicketController extends Controller
     }
 
     public function noteUpdate(Request $request){
+        if (Auth::user()->isAgent !== 1) {
+            abort(403);
+        }
         $textNote = $request->input('note');
         $ticket_id = $request->input('ticket_id');
 
@@ -205,35 +224,6 @@ class TicketController extends Controller
         return redirect('/ticket/'.$ticket_id);
     }
 
-    public function addTag(Request $request){
-        $textTag = $request->input('tag');
-        $ticket_id = $request->input('ticket_id');
-
-        //tags splisten dankzij de komma en spatie
-        $tags = explode(', ', $textTag);
-
-        //tag id gaan halen of tag maken
-        foreach($tags as $tag){
-            $oldTag = Tag::where('name', $tag)->first();
-            if(empty($oldTag)){
-                $newTag = new Tag();
-                $newTag->name = $tag;
-                $newTag->save();
-                $ticketsTags = new Tickets_Tags();
-                $ticketsTags->ticket_id = $ticket_id;
-                $ticketsTags->tag_id = $newTag->id;
-                $ticketsTags->save();
-            }else{
-                $ticketsTags = new Tickets_Tags();
-                $ticketsTags->ticket_id = $ticket_id;
-                $ticketsTags->tag_id = $oldTag->id;
-                $ticketsTags->save();
-            }
-        }
-        
-        $request->session()->flash('message', 'tags opgeslagen');
-        return redirect('/ticket/'.$ticket_id);
-    }
 
     public function spam(Request $request){
         if(Auth::user()->isAgent !== 1){
