@@ -38,6 +38,8 @@ class TicketController extends Controller
         $data['ticket']->isOpen = 1;
         $data['ticket']->save();
         $data['status'] = ["Open", "In behandeling", "Gesloten"];
+        $data['priority'] = ["Laag", "Gemiddeld", "Hoog", "Urgend"];
+        $data['type'] = ["Vraag", "Probleem", "Incident"];
         //dd($data['ticket']);
         return view('tickets/ticketDetail', $data);
     }
@@ -73,6 +75,44 @@ class TicketController extends Controller
          }
         //update status
         $ticket->status = $status;
+        $ticket->save();
+
+        //commentaar
+        $request->session()->flash('message', 'Ticket is geupdate');
+        
+        //redirecten
+        return redirect('/ticket/'.$ticket_id);
+    }
+
+    public function priorityUpdate(Request $request){
+        $priority = $request->input('priority');
+        $ticket_id = $request->input('ticket_id');
+         //security
+         $ticket = Ticket::find($ticket_id);
+         if($ticket->agent_id !== Auth::id()){
+             abort(403);
+         }
+        //update status
+        $ticket->priority = $priority;
+        $ticket->save();
+
+        //commentaar
+        $request->session()->flash('message', 'Ticket is geupdate');
+        
+        //redirecten
+        return redirect('/ticket/'.$ticket_id);
+    }
+
+    public function typeUpdate(Request $request){
+        $type = $request->input('type');
+        $ticket_id = $request->input('ticket_id');
+         //security
+         $ticket = Ticket::find($ticket_id);
+         if($ticket->agent_id !== Auth::id()){
+             abort(403);
+         }
+        //update status
+        $ticket->type = $type;
         $ticket->save();
 
         //commentaar

@@ -62,8 +62,10 @@
             @endif
               <div class="grid grid-cols-2">
                 <p class="">{{$ticket->subject}}</p>
-                <div class="justify-self-end"><form method="post" action="/ticket/statusUpdate">
-                @csrf
+                <div class="justify-self-end">
+                  <!-- Status wijzigen -->
+                  <form method="post" action="/ticket/statusUpdate">
+                  @csrf
                   <select name="status" id="">
                     @foreach($status as $s)
                     @if($s === $ticket->status)
@@ -76,7 +78,40 @@
                 </select>
                 <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
                 <button>Status wijzigen</button>
-                </form></div>
+                </form>
+                <!-- Priority wijzigen -->
+                <form method="post" action="/ticket/priorityUpdate">
+                  @csrf
+                  <select name="priority" id="">
+                    @foreach($priority as $p)
+                    @if($p === $ticket->priority)
+                    <option selected value="{{$p}}">{{$p}}</option>
+                    @else
+                    <option value="{{$p}}">{{$p}}</option>
+                    @endif
+                    
+                    @endforeach
+                </select>
+                <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
+                <button>Priority wijzigen</button>
+                </form>
+                <!-- Type wijzigen -->
+                <form method="post" action="/ticket/typeUpdate">
+                  @csrf
+                  <select name="type" id="">
+                    @foreach($type as $t)
+                    @if($t === $ticket->type)
+                    <option selected value="{{$t}}">{{$t}}</option>
+                    @else
+                    <option value="{{$t}}">{{$t}}</option>
+                    @endif
+                    
+                    @endforeach
+                </select>
+                <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
+                <button>Type wijzigen</button>
+                </form>
+              </div>
                 <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
               </div>
               @if(!empty($ticket->cc[0]))
@@ -108,7 +143,7 @@
               <p>notitie toevoegen</p>
               <form enctype="multipart/form-data" action="/ticket/note/update" method="post">
               @csrf
-                <textarea class="w-full border p-5" name="note" rows="5" placeholder="">@if(!empty($ticket->notitie->text)){{$ticket->note->text}}@endif</textarea>
+                <textarea class="w-full border p-5" name="note" rows="5" placeholder="">@if(!empty($ticket->notitie->text)){{$ticket->notitie->text}}@endif</textarea>
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                 <div class="flex justify-end mt-6">
                 <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update note</button>

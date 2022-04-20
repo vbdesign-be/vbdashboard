@@ -133,6 +133,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/ticket/account/{id}', [TicketController::class, "getUser"]);
     Route::get('/ticket/{id}', [TicketController::class, "detailTicket"]);
     Route::post('/ticket/statusUpdate', [TicketController::class, "statusUpdate"]);
+    Route::post('/ticket/priorityUpdate', [TicketController::class, "priorityUpdate"]);
+    Route::post('/ticket/typeUpdate', [TicketController::class, "typeUpdate"]);
     Route::post('/ticket/reaction/add', [TicketController::class, "addReactionAgent"]);
     Route::post('/ticket/note/update', [TicketController::class, "noteUpdate"]);
     Route::post('/ticket/spam/add', [TicketController::class, "spam"]);
