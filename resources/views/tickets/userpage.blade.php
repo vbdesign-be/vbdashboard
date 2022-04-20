@@ -39,7 +39,7 @@
     <section class="py-8 agentTickets ">
         <div class="container px-4 mx-auto">
             @forelse($tickets as $ticket)
-            <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
+            <div class="ticket p-4 mb-4 bg-white shadow flex gap-20 rounded w-full mx-auto">
                     <div class="ticket__info">
                         @if($ticket->isOpen === 0) <p>NIEUW</p> @endif
                         <p>Nr: {{$ticket->id}}  <a href="/ticket/{{$ticket->id}}"><strong>{{$ticket->subject}}</strong></a></p>
@@ -73,14 +73,27 @@
             @forelse($timeline as $time)
             <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
                     @if(isset($time['ticket_id']))
-                    <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
+                    <div class="ticket p-4 mb-4 bg-white shadow flex gap-20 rounded w-full mx-auto">
+                    <div class="ticket_time">
+                      <p>{{ date('d/m/Y', strtotime($time['created_at']))}}</p>
+                      <p>{{ date('h:i:s', strtotime($time['created_at']))}}</p>
+                    </div>
                     <div class="ticket__info">
-                        <p>Reactie</p>
-                        <p>Nr: {{$time['ticket_id']}}  <a href="/ticket/{{$time['ticket_id']}}"><strong>{{substr($time['text'],0,25)}}...</strong></a></p>
+                        <p>Reactie op ticket nr: {{$time['ticket_id']}}</p>
+                        @if($time['user']['id'] === Auth::id())
+                        <p>Jij schreef:</p>
+                        @else
+                        <p>{{$time['user']['firstname']}} schreef:</p>
+                        @endif
+                        <a href="/ticket/{{$time['ticket_id']}}"><strong>{{substr($time['text'],0,25)}}...</strong></a>
                     </div>
                 </div>
                     @else
-                    <div class="ticket p-4 mb-4 bg-white shadow rounded w-full mx-auto">
+                    <div class="ticket p-4 mb-4 bg-white shadow rounded flex gap-20 w-full mx-auto">
+                    <div class="ticket_time">
+                      <p>{{ date('d/m/Y', strtotime($time['created_at']))}}</p>
+                      <p>{{ date('h:i:s', strtotime($time['created_at']))}}</p>
+                    </div>
                     <div class="ticket__info">
                       <p>Ticket</p>
                         

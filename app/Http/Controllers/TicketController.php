@@ -55,15 +55,16 @@ class TicketController extends Controller
 
         $data['user'] = User::find($user_id);
         $data['tickets'] = Ticket::where('user_id', $user_id)->orderBy('id', 'desc')->get();
-        $data['reactions'] = Reaction::where('user_id', $user_id)->orderBy('id', 'desc')->get();
+        foreach($data['tickets'] as $ticket){
+            $allReactions[] = Reaction::where('ticket_id', $ticket->id)->get();
+        }
+        $data['reactions'] = $allReactions[0];
 
         $tickets = $data['tickets']->toArray();
         $reactions = $data['reactions']->toArray();
         $everything = array_merge($tickets, $reactions);
         $timeLine = collect($everything)->sortByDesc('created_at')->all();
-        
         //dd($timeLine);
-
         $data['timeline'] = $timeLine;
         return view('tickets/userpage', $data);
     }
