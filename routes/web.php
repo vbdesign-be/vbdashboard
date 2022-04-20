@@ -137,9 +137,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ticket/priorityUpdate', [TicketController::class, "priorityUpdate"]);
     Route::post('/ticket/typeUpdate', [TicketController::class, "typeUpdate"]);
     Route::post('/ticket/reaction/add', [TicketController::class, "addReactionAgent"]);
-    Route::post('/ticket/note/update', [TicketController::class, "noteUpdate"]);
-    Route::post('/ticket/addTag', [AddTag::class, "addTag"]);
     Route::post('/ticket/spam/add', [TicketController::class, "spam"]);
+    Route::get('/ticket/samenvoegen/{id}', [TicketController::class, "samenvoegPage"]);
+    Route::post('/tickets/merge', [TicketController::class, "ticketsMerge"]);
+
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);
     Route::post('/support/addQuestion', [SupportController::class, "store"]);

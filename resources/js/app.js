@@ -2,6 +2,22 @@ const { add } = require('lodash');
 
 require('./bootstrap');
 
+//tickets samenvoegen
+
+let ticketsMerge = document.querySelectorAll('.ticket--merge');
+
+if(ticketsMerge != null){
+    ticketsMerge.forEach((ticket) => {
+        ticket.addEventListener('click', (e) => {
+            ticketsMerge.forEach((t) => {
+                t.style.scale = "1";
+            });
+            ticket.style.scale = "0.9";
+            let id = ticket.dataset.id;
+            document.querySelector('.ticket2').value = id;
+        })
+    })
+}
 
 
 //tickets/timeline
@@ -10,8 +26,6 @@ let agentTimeline = document.querySelector('.agentTimeline');
 
 let ticketsBtn = document.querySelector('.ticketsBtn');
 let timelineBtn = document.querySelector('.timelineBtn');
-
-
 
 if(timelineBtn !== null){
 timelineBtn.addEventListener('click', (e) => {

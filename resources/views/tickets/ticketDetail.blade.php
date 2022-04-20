@@ -235,6 +235,10 @@
               </form>
         </section>
 
+        <section class="py-6">
+          <a href="/ticket/samenvoegen/{{$ticket->id}}">Ticket samenvoegen</a>
+        </section>
+
 
         
         

@@ -229,12 +229,11 @@ class SupportController extends Controller
                 $ticket->user_id = $user->id;
                 $ticket->subject = $subject;
                 $ticket->body = $body;
-                $ticket->status = 'Open';
-                $ticket->priority = 'Laag';
-                $ticket->type = "Vraag";
+                $ticket->status_id = 1;
+                $ticket->priority_id = 1;
+                $ticket->type_id = 1;
                 $ticket->agent_id = 1;
                 $ticket->isOpen = 0;
-                $ticket->tag = "";
                 $ticket->save();
 
                 
@@ -311,12 +310,11 @@ class SupportController extends Controller
         $ticket->email = $sender;
         $ticket->subject = $subject;
         $ticket->body = $body;
-        $ticket->status = 'Open';
-        $ticket->priority = 'Laag';
-        $ticket->type = "Vraag";
+        $ticket->status_id = 1;
+        $ticket->priority_id = 1;
+        $ticket->type_id = 1;
         $ticket->agent_id = 1;
         $ticket->isOpen = 0;
-        $ticket->tag = "";
         $ticket->save();
 
         

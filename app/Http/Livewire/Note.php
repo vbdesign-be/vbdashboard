@@ -27,7 +27,10 @@ class Note extends Component
 
     public function mount(){
         $note = Notitie::where('ticket_id', $this->ticket_id)->first();
-        $this->textNote = $note->text;
+        if(!empty($note)){
+            $this->textNote = $note->text;
+        }
+        
     }
 
     public function render()

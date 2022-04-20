@@ -217,5 +217,40 @@ class TicketController extends Controller
         return redirect('/ticket/'.$ticket_id);
     }
 
+    public function samenvoegPage($ticket_id){
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+
+        $ticket = Ticket::find($ticket_id);
+        $allTickets = Ticket::where('user_id', $ticket->user->id)->where('id', '!=', $ticket_id)->get();
+
+        $data['ticket'] = $ticket;
+        $data['allTickets'] = $allTickets;
+        return view('tickets/ticketsamenvoeg', $data);
+
+    }
+
+    public function ticketsMerge(Request $request){
+        if(empty($request->input('ticket2'))){
+            $request->session()->flash('error', 'Kies hieronder een ticket om samen te voegen');
+            return redirect('/ticket/samenvoegen/'.$request->input('ticket1'));
+        }
+
+        $ticket1 = Ticket::find($request->input('ticket1'));
+        $ticket2 = Ticket::find($request->input('ticket2'));
+
+        if($ticket1->created_at > $ticket2->created_at){
+            $this->mergeTickets($ticket1, $ticket2);
+        }else{
+            $this->mergeTickets($ticket2, $ticket1);
+        }
+
+    }
+
+    private function mergeTickets($old, $new){
+        
+    }
+
     
 }

@@ -2063,7 +2063,23 @@ module.exports = {
 var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
     add = _require.add;
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //tickets/timeline
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //tickets samenvoegen
+
+
+var ticketsMerge = document.querySelectorAll('.ticket--merge');
+
+if (ticketsMerge != null) {
+  ticketsMerge.forEach(function (ticket) {
+    ticket.addEventListener('click', function (e) {
+      ticketsMerge.forEach(function (t) {
+        t.style.scale = "1";
+      });
+      ticket.style.scale = "0.9";
+      var id = ticket.dataset.id;
+      document.querySelector('.ticket2').value = id;
+    });
+  });
+} //tickets/timeline
 
 
 var agentTickets = document.querySelector('.agentTickets');
