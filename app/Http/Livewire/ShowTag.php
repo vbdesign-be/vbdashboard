@@ -32,7 +32,7 @@ class ShowTag extends Component
                 $ticketsTags->tag_id = $newTag->id;
                 $ticketsTags->save();
             }else{
-                $checkTags = Tickets_Tags::find($oldTag->id);
+                $checkTags = Tickets_Tags::where('tag_id', $oldTag->id)->where('ticket_id', $this->ticket_id)->first();
                 if(empty($checkTags)){
                     $ticketsTags = new Tickets_Tags();
                     $ticketsTags->ticket_id = $this->ticket_id;

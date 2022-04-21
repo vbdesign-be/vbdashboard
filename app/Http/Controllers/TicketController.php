@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
+use App\Models\AttachmentTicket;
 use App\Models\Cc;
 use App\Models\Note;
 use App\Models\Notitie;
@@ -46,6 +47,7 @@ class TicketController extends Controller
         }
         $data['ticket']->isOpen = 1;
         $data['ticket']->save();
+        $data['reactions'] = Reaction::where('ticket_id', $ticket_id)->orderBy('created_at')->get();
         $data['statuses'] = Status::get();
         $data['priorities'] = Priority::get();
         $data['types'] = Type::get();
@@ -223,7 +225,12 @@ class TicketController extends Controller
         }
 
         $ticket = Ticket::find($ticket_id);
-        $allTickets = Ticket::where('user_id', $ticket->user->id)->where('id', '!=', $ticket_id)->get();
+        if(empty($ticket->email)){
+            $allTickets = Ticket::where('user_id', $ticket->user->id)->where('id', '!=', $ticket_id)->get();
+        }else{
+            $allTickets = Ticket::where('email', $ticket->email)->where('id', '!=', $ticket_id)->get();
+        }
+        
 
         $data['ticket'] = $ticket;
         $data['allTickets'] = $allTickets;
@@ -237,19 +244,99 @@ class TicketController extends Controller
             return redirect('/ticket/samenvoegen/'.$request->input('ticket1'));
         }
 
+
         $ticket1 = Ticket::find($request->input('ticket1'));
         $ticket2 = Ticket::find($request->input('ticket2'));
 
-        if($ticket1->created_at > $ticket2->created_at){
-            $this->mergeTickets($ticket1, $ticket2);
+        
+        //kijken welke de oudste is
+        if($ticket1->created_at < $ticket2->created_at){
+            $merged = $this->mergeTickets($ticket1, $ticket2);
         }else{
-            $this->mergeTickets($ticket2, $ticket1);
+            $merged = $this->mergeTickets($ticket2, $ticket1);
         }
 
+        $request->session()->flash('message', 'Tickets zijn samengevoegd');
+        return redirect('/ticket/'.$merged);
     }
 
     private function mergeTickets($old, $new){
+        //van het nieuw ticket een reactie maken
+        //dd($new);
+        $newReaction = new Reaction();
+        $newReaction->ticket_id = $old->id;
+        if(!empty($new->user_id)){
+            $newReaction->user_id = $new->user->id;
+        }else{
+            $newReaction->email = $new->email;
+        }
+        $newReaction->text = $new->body;
+        $newReaction->created_at = $new->created_at;
+        $newReaction->save();
+
+        //alle attachments van dat ticket tot attachment reactie maken
         
+        $allAttachments = $new->attachmentsTicket;
+        foreach($allAttachments as $att){
+            $newAtt = new AttachmentReaction();
+            $newAtt->name = $att->name;
+            $newAtt->src = $att->src;
+            $newAtt->reaction_id = $newReaction->id;
+            $newAtt->save();
+        }
+
+        //cc bij het originele ticket zetten
+        //checken op dubbel
+        $allCC = $new->cc;
+        foreach($allCC as $cc){
+            $cc->ticket_id = $old->id;
+            $checkCC = Cc::where('ticket_id', $old->id)->where('email', $cc->email)->first();
+            if(empty($checkCC)){
+                $cc->save();
+            }
+        }
+
+        //tags bij het originele ticket zetten
+        //checken op dubbel
+        $tags = $new->tickets_tags;
+        foreach($tags as $tag){
+            $tag->ticket_id = $old->id;
+            $checkTag = Tickets_Tags::where('ticket_id', $old->id)->where('tag_id', $tag->tag_id)->first();
+            if(empty($checkTag)){
+                $tag->save();
+            }
+            
+        }
+
+        //alle reacties een ander ticket id geven
+        $allReactions = $new->reactions;
+        foreach($allReactions as $reaction){
+            $reaction->ticket_id = $old->id;
+            $reaction->save();
+        }
+
+        // //notitie samenvoegen
+        $notitie = $new->notitie;
+        $oldNotitie = $old->notitie;
+        if(!empty($oldNotitie) && !empty($notitie)){
+            $mergerNotitie = $oldNotitie->text . " ||| " . $notitie->text;
+            $oldNotitie->text = $mergerNotitie;
+            $oldNotitie->save();
+            $notitie->delete();
+        }elseif(!empty($notitie)){
+            $newNotitie = new Notitie();
+            $newNotitie->ticket_id = $old->id;
+            $newNotitie->text = $notitie->text;
+            $newNotitie->save();
+            $notitie->delete();
+        }
+        
+        
+
+        //new ticket verwijderen
+        $new->delete();
+        
+        return $old->id;
     }
 
     

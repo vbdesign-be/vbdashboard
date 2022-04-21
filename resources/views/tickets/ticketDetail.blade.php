@@ -144,11 +144,11 @@
 
         <livewire:note :ticket_id="$ticket->id"/>
 
-        @if(!empty($ticket->reactions[0]))
+        @if(!empty($reactions[0]))
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-             @foreach($ticket->reactions as $reaction)
+             @foreach($reactions as $reaction)
               @if(!empty($reaction->user_id))
               @if($reaction->user->id === $ticket->agent_id)
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
