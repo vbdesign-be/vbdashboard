@@ -52,6 +52,17 @@
         @endcomponent
         @endif
 
+        @if($flash = session('error'))
+        @component('components/notification')
+            @slot('type') red @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
@@ -237,7 +248,7 @@
 
         
 
-        <section class="py-8">
+      <section class="py-8">
         <div class="container px-4 mx-auto">
           <div class="py-4">
             <div class="w-6/12 mx-auto flex justify-center">
@@ -246,6 +257,27 @@
           </div>
         </div>
       </section>
+
+      <section class="py-8">
+          <div class="container px-4 mx-auto">
+            <div class="bg-white shadow rounded py-6 px-6">
+              <p>Ticket doorsturen</p>
+              <form enctype="multipart/form-data" action="/ticket/send" method="post">
+              @csrf
+                
+                <div class="my-6">
+                <label class="block text-sm font-medium mb-2" for="email">Email</label>
+                <input class="border" type="text" name="email">
+                </div>
+                <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+                <div class="flex justify-center mt-6">
+                <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Doorsturen</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      
 
       <section class="py-8">
         <div class="container px-4 mx-auto">

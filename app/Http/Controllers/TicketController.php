@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\sendTicket;
 use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
 use App\Models\AttachmentTicket;
@@ -371,6 +372,45 @@ class TicketController extends Controller
 
         $request->session()->flash('message', 'Ticket nr: '.$request->input('ticket_id').' is verwijderd');
         return redirect('/tickets');
+    }
+
+    public function ticketSend(Request $request){
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+
+        $credentials = $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request->input('email');
+        $ticket_id = $request->input('ticket_id');
+
+        //ticket ophalen
+        $ticket = Ticket::find($ticket_id);
+        //kijken of email niet gelijk is aan de sender van het ticket
+        if(!empty($ticket->user_id) && $ticket->user->email === $email){
+            $request->session()->flash('error', 'Email kan niet het originele adress zijn');
+            return redirect('/ticket/'.$ticket_id);
+        }
+
+        if(!empty($ticket->email) && $ticket->email === $email){
+            $request->session()->flash('error', 'Email kan niet het originele adress zijn');
+            return redirect('/ticket/'.$ticket_id);
+        }
+        $data['ticket'] = $ticket;
+
+        //mail versturen met het originele ticket in
+       
+        if(!empty($ticket->user_id)){
+            $data['email'] = $ticket->user->email;
+            Mail::to($email)->send(new sendTicket($data));
+        }else{
+            $data['email'] = $ticket->email;
+            Mail::to($email)->send(new sendTicket($data));
+        }
+
+
     }
 
     
