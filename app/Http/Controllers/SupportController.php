@@ -206,8 +206,10 @@ class SupportController extends Controller
                 $fw = "fw:";
                 $fwd = "fwd:";
 
-                if(strpos(strtolower($subject), $re) === false){
+                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
                     $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
+                }else if(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
+                    return "doogestuurd";
                 }else{
                     $this->makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs);
                 }
@@ -221,8 +223,10 @@ class SupportController extends Controller
                 $re = "re:";
                 $fw = "fw:";
                 $fwd = "fwd:";
-                if(strpos(strtolower($subject), $re) === false){
+                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
                      $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
+                 }else if(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
+                    return "doogestuurd";
                  }else{
                      $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
                  }
