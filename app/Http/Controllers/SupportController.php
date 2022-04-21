@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\recievedSupport;
 use App\Models\AttachmentReaction;
 use App\Models\AttachmentTicket;
 use App\Models\Cc;
@@ -20,6 +21,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Mime\Email;
 
@@ -221,6 +223,8 @@ class SupportController extends Controller
                      $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
                  }
             }
+
+            Mail::to($sender)->send(new recievedSupport());
         }
     }
 
