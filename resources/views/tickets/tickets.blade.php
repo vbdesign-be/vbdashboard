@@ -78,10 +78,17 @@
               </div>
               <div class="mb-6">
                 Filteren op: <select class="filterSelect" name="" id="">
+                  @if(!empty($filter))
+                  <option @if($filter === "date") selected @endif value="date">Datum</option>
+                  <option @if($filter === "status") selected @endif  value="status">Status</option>
+                  <option @if($filter === "priority") selected @endif  value="priority">Priority</option>
+                  <option @if($filter === "type") selected @endif  value="type">type</option>
+                  @else
                   <option value="date">Datum</option>
                   <option value="status">Status</option>
                   <option value="priority">Priority</option>
                   <option value="type">type</option>
+                  @endif
                 </select>
               </div>
             </div>
