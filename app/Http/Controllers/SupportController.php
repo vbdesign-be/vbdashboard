@@ -191,8 +191,7 @@ class SupportController extends Controller
         
 
         $script = "<script>";
-        $test->test = "voor script";
-        $test->save();
+        
         if (strpos($body, $script) !== false || strpos($subject, $script) !== false) {
             
             exit;
@@ -206,11 +205,9 @@ class SupportController extends Controller
                 $re = "re:";
                 $fw = "fw:";
                 $fwd = "fwd:";
-                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
-                   //is een reactie op een ticket
+
+                if(strpos(strtolower($subject), $re) === false){
                     $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
-                }else if(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
-                    return "doogestuurd";
                 }else{
                     $this->makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs);
                 }
@@ -224,11 +221,8 @@ class SupportController extends Controller
                 $re = "re:";
                 $fw = "fw:";
                 $fwd = "fwd:";
-                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
-                    //is een reactie op een ticket
+                if(strpos(strtolower($subject), $re) === false){
                      $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
-                 }else if(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
-                    return "doogestuurd";
                  }else{
                      $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
                  }
