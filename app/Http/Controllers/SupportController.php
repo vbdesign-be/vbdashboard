@@ -190,10 +190,10 @@ class SupportController extends Controller
         $ccs = $email->CcFull;
         
 
-        $word = "<script>";
+        $script = "<script>";
         $test->test = "voor script";
         $test->save();
-        if (strpos($body, $word) !== false || strpos($subject, $word) !== false) {
+        if (strpos($body, $script) !== false || strpos($subject, $script) !== false) {
             
             exit;
         } else {
@@ -203,22 +203,32 @@ class SupportController extends Controller
             $user = User::where('email', $sender)->first();
             if (!empty($user)) {
 
-                $word2 = "re:";
-                
-                if(strpos(strtolower($subject), $word2) === false){
+                $re = "re:";
+                $fw = "fw:";
+                $fwd = "fwd:";
+                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
                    //is een reactie op een ticket
                     $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
+                }else if(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
+                    return "doogestuurd";
                 }else{
                     $this->makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs);
                 }
+
+                
+
+
                 
 
             } else {
-                $word2 = "re:";
-
-                if(strpos(strtolower($subject), $word2) === false){
+                $re = "re:";
+                $fw = "fw:";
+                $fwd = "fwd:";
+                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
                     //is een reactie op een ticket
                      $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
+                 }else if(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
+                    return "doogestuurd";
                  }else{
                      $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
                  }
