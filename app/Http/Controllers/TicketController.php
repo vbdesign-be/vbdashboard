@@ -23,13 +23,33 @@ use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
-    public function getTickets()
+    public function getTickets(Request $request)
     {
         if (Auth::user()->isAgent !== 1) {
             abort(403);
         }
 
-        $data['tickets'] = Ticket::where('agent_id', Auth::id())->orderBy('id', 'desc')->get();
+        $filterInput = $request->input('filter');
+        switch($filterInput){
+            case("priority"):
+                $filter = "priority_id";
+                $direction = "desc";
+                break;
+            case('status'):
+                $filter = "status_id";
+                $direction = "desc";
+                break;
+            case('type'):
+                $filter = "type_id";
+                $direction = "desc";
+                break;
+            default:
+                $filter = "id";
+                $direction = "desc";
+                break;
+        }
+
+        $data['tickets'] = Ticket::where('agent_id', Auth::id())->orderBy($filter, $direction)->get();
         
         //dd($data['tickets']);
         return view('tickets/tickets', $data);
