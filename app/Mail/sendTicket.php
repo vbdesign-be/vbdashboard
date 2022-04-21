@@ -32,7 +32,7 @@ class sendTicket extends Mailable
         
         $email = $this->view('emails.sendTicket')
                     ->from('laravel@vbdesign.be')
-                    ->subject('Doorsturen supportticket nr: ' . $this->data['ticket']->id)
+                    ->subject('Fwd: ' . $this->data['ticket']->subject)
                     ->with($this->data);
         
         if (!empty($this->data['ticket']->attachmentsTicket[0])) {

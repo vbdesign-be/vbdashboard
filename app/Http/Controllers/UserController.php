@@ -153,5 +153,6 @@ class UserController extends Controller
         $user = TeamLeader::crm()->contact()->info(Auth::user()->teamleader_id);
         return $user;
     }
+
     
 }

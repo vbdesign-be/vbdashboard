@@ -2,8 +2,8 @@ const { add } = require('lodash');
 
 require('./bootstrap');
 
-//tickets samenvoegen
 
+//tickets samenvoegen
 let ticketsMerge = document.querySelectorAll('.ticket--merge');
 
 if(ticketsMerge != null){
@@ -398,9 +398,10 @@ if(searchFieldTicketAgent !== null){
 
 //filter tickets agent
 let filterSelect = document.querySelector('.filterSelect');
-let url = document.location.href;
-let realUrl = url.split("?")[0];
+
 if(filterSelect !== null){
+    let url = document.location.href;
+    let realUrl = url.split("?")[0];
     filterSelect.addEventListener('change', (e) => {
         e.preventDefault();
         let filter = filterSelect.value;

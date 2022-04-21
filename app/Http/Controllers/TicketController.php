@@ -410,6 +410,9 @@ class TicketController extends Controller
             Mail::to($email)->send(new sendTicket($data));
         }
 
+        $request->session()->flash('message', 'Email succesvol doorgestuurd');
+        return redirect('/ticket/'.$ticket_id);
+
 
     }
 

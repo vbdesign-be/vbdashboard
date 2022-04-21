@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/user/update', [UserController::class, "updateUser"]);
     Route::post('/user/updateAvatar', [UserController::class, "updateAvatar"]);
     
+    
     //company
     Route::get('/company/{id}', [CompanyController::class, "company"]);
     Route::post('company/update', [CompanyController::class, "updateCompany"]);

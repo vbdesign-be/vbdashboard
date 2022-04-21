@@ -2396,10 +2396,10 @@ if (searchFieldTicketAgent !== null) {
 
 
 var filterSelect = document.querySelector('.filterSelect');
-var url = document.location.href;
-var realUrl = url.split("?")[0];
 
 if (filterSelect !== null) {
+  var url = document.location.href;
+  var realUrl = url.split("?")[0];
   filterSelect.addEventListener('change', function (e) {
     e.preventDefault();
     var filter = filterSelect.value;
