@@ -339,6 +339,63 @@ if(searchFieldTicket !== null){
     }
 }
 
+//ticket agent delete
+let ticketDeleteBtn = document.querySelector('.deleteTicketBtn');
+let modalTicket = document.querySelector('.modal--deleteTicket');
+if(ticketDeleteBtn !== null){
+    ticketDeleteBtn.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        modalTicket.classList.remove('hidden');
+    })
+}
+
+let cancelTicketBtn = document.querySelector('.cancelTicketbtn');
+if(cancelTicketBtn !== null){
+    cancelTicketBtn.addEventListener('click', (e) =>{
+        modalTicket.classList.add('hidden');
+    })
+    
+}
+
+//zoekfunctie tickets agents
+let searchFieldTicketAgent = document.querySelector('.search__form--agent');
+
+if(searchFieldTicketAgent !== null){
+    let inputTicket = searchFieldTicketAgent.querySelector('.search__input');
+    let btnTicket = searchFieldTicketAgent.querySelector('.search__btn');
+    let tickets = document.querySelectorAll('.ticket--agent');
+    btnTicket.addEventListener('click', (e) => {
+        e.preventDefault();
+        let value = inputTicket.value;
+        searchTicket(value, tickets);
+    })
+
+    inputTicket.addEventListener('keyup', (e) => {
+        e.preventDefault();
+        let value = inputTicket.value;
+        searchTicket(value, tickets);
+    })
+
+    function searchTicket(value, tickets){
+       
+        tickets.forEach((ticket) => {
+            ticket.style.display = "none";
+    
+            let info = ticket.querySelector('.ticket__subject').innerHTML;
+            
+            let filterInfo = info.toLowerCase().indexOf(value.toLowerCase());
+            
+            if(filterInfo > -1){
+                ticket.style.display = "grid";
+            }
+    
+    
+        })
+    }
+}
+
+
+
 
 //zoekfunctie facturen
 let searchFieldFactuur = document.querySelector('.search__form--factuur');

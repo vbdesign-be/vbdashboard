@@ -239,6 +239,10 @@ class TicketController extends Controller
     }
 
     public function ticketsMerge(Request $request){
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+
         if(empty($request->input('ticket2'))){
             $request->session()->flash('error', 'Kies hieronder een ticket om samen te voegen');
             return redirect('/ticket/samenvoegen/'.$request->input('ticket1'));
@@ -337,6 +341,17 @@ class TicketController extends Controller
         $new->delete();
         
         return $old->id;
+    }
+
+    public function deleteTicket(Request $request){
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+        $ticket = Ticket::find($request->input('ticket_id'));
+        $ticket->delete();
+
+        $request->session()->flash('message', 'Ticket nr: '.$request->input('ticket_id').' is verwijderd');
+        return redirect('/tickets');
     }
 
     

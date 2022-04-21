@@ -2334,6 +2334,62 @@ if (searchFieldTicket !== null) {
     var value = inputTicket.value;
     searchTicket(value, tickets);
   });
+} //ticket agent delete
+
+
+var ticketDeleteBtn = document.querySelector('.deleteTicketBtn');
+var modalTicket = document.querySelector('.modal--deleteTicket');
+
+if (ticketDeleteBtn !== null) {
+  ticketDeleteBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    modalTicket.classList.remove('hidden');
+  });
+}
+
+var cancelTicketBtn = document.querySelector('.cancelTicketbtn');
+
+if (cancelTicketBtn !== null) {
+  cancelTicketBtn.addEventListener('click', function (e) {
+    modalTicket.classList.add('hidden');
+  });
+} //zoekfunctie tickets agents
+
+
+var searchFieldTicketAgent = document.querySelector('.search__form--agent');
+
+if (searchFieldTicketAgent !== null) {
+  var _searchTicket = function _searchTicket(value, tickets) {
+    tickets.forEach(function (ticket) {
+      ticket.style.display = "none";
+      var info = ticket.querySelector('.ticket__subject').innerHTML;
+      var filterInfo = info.toLowerCase().indexOf(value.toLowerCase());
+
+      if (filterInfo > -1) {
+        ticket.style.display = "grid";
+      }
+    });
+  };
+
+  var _inputTicket = searchFieldTicketAgent.querySelector('.search__input');
+
+  var _btnTicket = searchFieldTicketAgent.querySelector('.search__btn');
+
+  var _tickets = document.querySelectorAll('.ticket--agent');
+
+  _btnTicket.addEventListener('click', function (e) {
+    e.preventDefault();
+    var value = _inputTicket.value;
+
+    _searchTicket(value, _tickets);
+  });
+
+  _inputTicket.addEventListener('keyup', function (e) {
+    e.preventDefault();
+    var value = _inputTicket.value;
+
+    _searchTicket(value, _tickets);
+  });
 } //zoekfunctie facturen
 
 

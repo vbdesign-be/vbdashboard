@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.10",
+        "mediconesystems/livewire-datatables": "^0.9.4",
         "nao-pon/flysystem-google-drive": "~1.1",
         "symfony/http-client": "^5.4",
         "symfony/mailer": "^5.4",

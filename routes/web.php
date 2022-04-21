@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ticket/spam/add', [TicketController::class, "spam"]);
     Route::get('/ticket/samenvoegen/{id}', [TicketController::class, "samenvoegPage"]);
     Route::post('/tickets/merge', [TicketController::class, "ticketsMerge"]);
+    Route::post('/ticket/delete', [TicketController::class, "deleteTicket"]);
 
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);

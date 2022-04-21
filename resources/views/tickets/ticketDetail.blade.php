@@ -235,9 +235,42 @@
               </form>
         </section>
 
-        <section class="py-6">
-          <a href="/ticket/samenvoegen/{{$ticket->id}}">Ticket samenvoegen</a>
-        </section>
+        
+
+        <section class="py-8">
+        <div class="container px-4 mx-auto">
+          <div class="py-4">
+            <div class="w-6/12 mx-auto flex justify-center">
+              <a class="mergeTicketBtn bg-indigo-500 rounded p-2 text-white" href="/ticket/samenvoegen/{{$ticket->id}}">Samenvoegen</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-8">
+        <div class="container px-4 mx-auto">
+          <div class="py-4 bg-white shadow rounded">
+            <div class="w-6/12 mx-auto flex justify-center">
+              <a class="deleteTicketBtn bg-red-500 rounded p-2 text-white" href="">Verwijder ticket</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal modal--deleteTicket hidden">
+        <span class="close" title="Close"></span>
+        <form class="modal-content" action="/ticket/delete" method="POST">
+        @csrf
+            <div class="container--modal">
+                <h1>Delete ticket nr: {{$ticket->id}}</h1>
+            <div class="clearfix">
+                <button type="button"  class="cancelbtn cancelTicketbtn">Cancel</button>
+                <input type="hidden" value="{{$ticket->id}}" name="ticket_id">
+                <button type="submit"  class="deletebtn" >Delete</button>
+            </div>
+            </div>
+        </form>
+    </div>
 
 
         
