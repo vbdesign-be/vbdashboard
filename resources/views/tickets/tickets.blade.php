@@ -76,6 +76,14 @@
               <div class="flex flex-wrap items-center mb-6">
                 <h3 class="text-xl font-bold">Overzicht Tickets voor {{Auth::user()->firstname}}</h3>
               </div>
+              <div class="mb-6">
+                Filteren op: <select class="filterSelect" name="" id="">
+                  <option value="date">Datum</option>
+                  <option value="status">Status</option>
+                  <option value="priority">Priority</option>
+                  <option value="type">type</option>
+                </select>
+              </div>
             </div>
             <div class="p-4 bg-gray-200 overflow-x-auto">
 
@@ -85,9 +93,9 @@
                         @if($ticket->isOpen === 0) <p>NIEUW</p> @endif
                         <p>Nr: {{$ticket->id}}  <a href="/ticket/{{$ticket->id}}"><strong class="ticket__subject">{{$ticket->subject}}</strong></a></p>
                         @if(!empty($ticket->email))
-                            <p>{{$ticket->email}}</p>
+                            <p class="ticket__sender">{{$ticket->email}}</p>
                         @else
-                            <a href="/ticket/account/{{$ticket->user->id}}">{{$ticket->user->firstname}} {{$ticket->user->lastname}}</a>
+                            <a class="ticket__sender" href="/ticket/account/{{$ticket->user->id}}">{{$ticket->user->firstname}} {{$ticket->user->lastname}}</a>
                         @endif
                     </div>
                     <div class="ticket_tags">

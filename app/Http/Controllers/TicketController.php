@@ -28,7 +28,6 @@ class TicketController extends Controller
         if (Auth::user()->isAgent !== 1) {
             abort(403);
         }
-
         $filterInput = $request->input('filter');
         switch($filterInput){
             case("priority"):
@@ -50,7 +49,7 @@ class TicketController extends Controller
         }
 
         $data['tickets'] = Ticket::where('agent_id', Auth::id())->orderBy($filter, $direction)->get();
-        
+        $data['filter'] = $filterInput;
         //dd($data['tickets']);
         return view('tickets/tickets', $data);
     }

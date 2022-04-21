@@ -2363,9 +2363,11 @@ if (searchFieldTicketAgent !== null) {
     tickets.forEach(function (ticket) {
       ticket.style.display = "none";
       var info = ticket.querySelector('.ticket__subject').innerHTML;
+      var sender = ticket.querySelector('.ticket__sender').innerHTML;
       var filterInfo = info.toLowerCase().indexOf(value.toLowerCase());
+      var filterSender = sender.toLowerCase().indexOf(value.toLowerCase());
 
-      if (filterInfo > -1) {
+      if (filterInfo > -1 || filterSender > -1) {
         ticket.style.display = "grid";
       }
     });
@@ -2389,6 +2391,19 @@ if (searchFieldTicketAgent !== null) {
     var value = _inputTicket.value;
 
     _searchTicket(value, _tickets);
+  });
+} //filter tickets agent
+
+
+var filterSelect = document.querySelector('.filterSelect');
+var url = document.location.href;
+var realUrl = url.split("?")[0];
+
+if (filterSelect !== null) {
+  filterSelect.addEventListener('change', function (e) {
+    e.preventDefault();
+    var filter = filterSelect.value;
+    window.location.href = realUrl + "?filter=" + filter;
   });
 } //zoekfunctie facturen
 

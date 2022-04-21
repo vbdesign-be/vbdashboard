@@ -382,10 +382,12 @@ if(searchFieldTicketAgent !== null){
             ticket.style.display = "none";
     
             let info = ticket.querySelector('.ticket__subject').innerHTML;
+            let sender = ticket.querySelector('.ticket__sender').innerHTML;
             
             let filterInfo = info.toLowerCase().indexOf(value.toLowerCase());
+            let filterSender = sender.toLowerCase().indexOf(value.toLowerCase());
             
-            if(filterInfo > -1){
+            if(filterInfo > -1 || filterSender > -1){
                 ticket.style.display = "grid";
             }
     
@@ -393,6 +395,19 @@ if(searchFieldTicketAgent !== null){
         })
     }
 }
+
+//filter tickets agent
+let filterSelect = document.querySelector('.filterSelect');
+let url = document.location.href;
+let realUrl = url.split("?")[0];
+if(filterSelect !== null){
+    filterSelect.addEventListener('change', (e) => {
+        e.preventDefault();
+        let filter = filterSelect.value;
+        window.location.href = realUrl + "?filter="+filter;
+    })
+}
+
 
 
 
