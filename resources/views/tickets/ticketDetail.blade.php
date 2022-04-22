@@ -277,7 +277,7 @@
                 </div>
                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                 <div class="flex justify-center mt-6">
-                <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Doorsturen</button>
+                <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Wijzig</button>
                 </div>
               </form>
             </div>
