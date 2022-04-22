@@ -207,38 +207,65 @@ class SupportController extends Controller
                 $fw = "fw:";
                 $fwd = "fwd:";
 
-                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
-                    $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
-                }elseif(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
-                    $this->handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text);
-                }else{
+                if(strpos(strtolower($subject), $re) !== false){
                     $this->makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs);
                 }
 
+                if(strpos(strtolower($subject), $fwd) !== false || strpos(strtolower($subject), $fw) !== false){
+                    $this->handleForward($user ,$sender, $subject, $body, $attachments, $ccs, $text);
+                }
+
+                if (strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fwd) === false && strpos(strtolower($subject), $fw) === false) {
+                    $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
+                }
+
             } else {
+                
                 $re = "re:";
                 $fw = "fw:";
                 $fwd = "fwd:";
-                if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
-                     $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
-                 }elseif(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
-                    $this->handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text);
-                 }else{
-                     $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
-                 }
+
+                if(strpos(strtolower($subject), $re) !== false){
+                    $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
+                }
+
+                if(strpos(strtolower($subject), $fwd) !== false || strpos(strtolower($subject), $fw) !== false){
+                    $this->handleForward($user ,$sender, $subject, $body, $attachments, $ccs, $text);
+                }
+
+                if (strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fwd) === false && strpos(strtolower($subject), $fw) === false) {
+                    $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
+                }
+                 
             }
 
             Mail::to($sender)->send(new recievedSupport());
         }
     }
 
-    private function handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text){
-        // $explode = explode("\r\nAan:", $text);
-        // $explode2 = explode("mailto:", $explode[1]);
-        // $explode3 = explode(">", $explode2[1]);
-        $test = new Emailtest();
-        $test->test = "test";
-        $test->save();
+    private function handleForward($user ,$sender, $subject, $body, $attachments, $ccs, $text){
+        $explode = explode("\r\nVan:", $text);
+        $explode2 = explode("<", $explode[1]);
+        $explode3 = explode(">", $explode2[1]);
+        $ogSender = $explode3[0];
+
+        //realsubject
+        $split = explode(": ", strtolower($subject));
+        $realSubject = $split[1];
+
+        //realticket
+
+        $splitBody = explode("\r\n\r\n\r\n\r\n\r\n\r\n", $body);
+        $realBody = substr($splitBody[1], 0, -14);
+        
+        $checkUser = User::where('email', $ogSender)->first();
+        if(!empty($checkUser)){
+            $this->makeEmailTicket($checkUser ,$ogSender, $realSubject, $realBody, $attachments, $ccs);
+        }else{
+            $this->makeEmailTicketStrange($ogSender, $realSubject, $realBody, $attachments, $ccs);
+        }
+        
+        
     }
 
     private function makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs){
