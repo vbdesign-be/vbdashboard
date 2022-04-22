@@ -8,6 +8,7 @@ use App\Models\AttachmentTicket;
 use App\Models\Cc;
 use App\Models\Emailtest;
 use App\Models\Faq;
+use App\Models\Notitie;
 use App\Models\Question;
 use App\Models\Reaction;
 use App\Models\Spam;
@@ -193,8 +194,7 @@ class SupportController extends Controller
 
         $script = "<script>";
         
-        if (strpos($body, $script) !== false || strpos($subject, $script) !== false) {
-            
+        if (strpos($body, $script) !== false || strpos($subject, $script) !== false || strpos($text, $script) !== false) {
             exit;
         } else {
             //kijken naar spam
@@ -257,17 +257,22 @@ class SupportController extends Controller
 
         $splitBody = explode("\r\n\r\n\r\n\r\n\r\n\r\n", $body);
         $realBody = substr($splitBody[1], 0, -24);
-        $test = new Emailtest();
-        $test->test = $realBody;
-        $test->save();
+        
+        
         
         $checkUser = User::where('email', $ogSender)->first();
         if(!empty($checkUser)){
-            $this->makeEmailTicket($checkUser ,$ogSender, $realSubject, $realBody, $attachments, $ccs);
+            $ticket_id = $this->makeEmailTicket($checkUser ,$ogSender, $realSubject, $realBody, $attachments, $ccs);
         }else{
-            $this->makeEmailTicketStrange($ogSender, $realSubject, $realBody, $attachments, $ccs);
+            $ticket_id = $this->makeEmailTicketStrange($ogSender, $realSubject, $realBody, $attachments, $ccs);
         }
-        
+
+        //real note
+        $splitText = explode("\r\n\r\n---------- Forwarded message ---------\r\n", $text);
+        $notitie = new Notitie();
+        $notitie->text = $splitText[0];
+        $notitie->ticket_id = $ticket_id;
+        $notitie->save();
         
     }
 
@@ -314,6 +319,8 @@ class SupportController extends Controller
                         sleep(1);
                     }
                 }
+
+                return $ticket->id;
     }
 
     private function makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs){
@@ -395,6 +402,8 @@ class SupportController extends Controller
                 sleep(1);
             }
         }
+
+        return $ticket->id;
     }
 
     private function makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs){
