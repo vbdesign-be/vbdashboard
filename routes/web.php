@@ -143,6 +143,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/tickets/merge', [TicketController::class, "ticketsMerge"]);
     Route::post('/ticket/delete', [TicketController::class, "deleteTicket"]);
     Route::post('/ticket/send', [TicketController::class, "ticketSend"]);
+    Route::post('/ticket/changeuser', [TicketController::class, "changeUser"]);
 
 
     Route::get('/ask', [SupportController::class, "askQuestion"]);

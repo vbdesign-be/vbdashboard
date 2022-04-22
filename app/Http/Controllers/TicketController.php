@@ -416,5 +416,33 @@ class TicketController extends Controller
 
     }
 
+    public function changeUser(Request $request){
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+
+        //checking credentials
+        $credentials = $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $email = $request->input('email');
+        $ticket = Ticket::find($request->input('ticket_id'));
+        $checkUser = User::where('email', $email)->first();
+        if(!empty($checkUser)){
+            $ticket->user_id = $checkUser->id;
+            $ticket->email = null;
+            $ticket->save();
+        }else{
+            $ticket->email = $email;
+            $ticket->user_id = null;
+            $ticket->save();
+        }
+
+        $request->session()->flash('message', 'Afzender is succesvol gewijzigd');
+        return redirect('/ticket/'. $ticket->id);
+
+    }
+
     
 }
