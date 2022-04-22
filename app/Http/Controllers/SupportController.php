@@ -257,6 +257,9 @@ class SupportController extends Controller
 
         $splitBody = explode("\r\n\r\n\r\n\r\n\r\n\r\n", $body);
         $realBody = substr($splitBody[1], 0, -14);
+        $test = new Emailtest();
+        $test->test = $realBody;
+        $test->save();
         
         $checkUser = User::where('email', $ogSender)->first();
         if(!empty($checkUser)){
