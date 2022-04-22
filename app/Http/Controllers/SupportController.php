@@ -188,6 +188,7 @@ class SupportController extends Controller
         $body = $email->HtmlBody;
         $attachments = $email->Attachments;
         $ccs = $email->CcFull;
+        $text = $email->TextBody;
         
 
         $script = "<script>";
@@ -209,7 +210,7 @@ class SupportController extends Controller
                 if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
                     $this->makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs);
                 }elseif(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
-                    return "doogestuurd";
+                    $this->handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text);
                 }else{
                     $this->makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs);
                 }
@@ -221,7 +222,7 @@ class SupportController extends Controller
                 if(strpos(strtolower($subject), $re) === false && strpos(strtolower($subject), $fw) === false && strpos(strtolower($subject), $fwd) === false){
                      $this->makeEmailTicketStrange($sender, $subject, $body, $attachments, $ccs);
                  }elseif(strpos(strtolower($subject), $fw) === true || strpos(strtolower($subject), $fwd) === true){
-                    return "doogestuurd";
+                    $this->handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text);
                  }else{
                      $this->makeEmailReactionStrange($sender, $subject, $body, $attachments, $ccs);
                  }
@@ -229,6 +230,15 @@ class SupportController extends Controller
 
             Mail::to($sender)->send(new recievedSupport());
         }
+    }
+
+    private function handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text){
+        $explode = explode("\r\nAan:", $text);
+        $explode2 = explode("mailto:", $explode[1]);
+        $explode3 = explode(">", $explode2[1]);
+        $test = new Emailtest();
+        $test->test = $explode3[0];
+        $test->save();
     }
 
     private function makeEmailTicket($user, $sender, $subject, $body, $attachments, $ccs){
@@ -397,6 +407,8 @@ class SupportController extends Controller
             exit;
         }
     }
+
+    
 
     private function checkSpam($sender){
         $spam = Spam::where('email', $sender)->first();
