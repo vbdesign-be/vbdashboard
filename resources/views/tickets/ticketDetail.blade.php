@@ -65,6 +65,12 @@
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
+            <a href="/tickets">Back knop</a>
+          </div>
+        </section>
+
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
             @if(!empty($ticket->user_id))
             <p>{{$ticket->user->firstname}}</p>

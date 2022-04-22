@@ -17,6 +17,12 @@
           </div>
         </div>
 
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
+            <a href="/support">Back knop</a>
+          </div>
+        </section>
+
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
