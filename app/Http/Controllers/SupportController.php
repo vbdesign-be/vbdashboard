@@ -233,11 +233,11 @@ class SupportController extends Controller
     }
 
     private function handleForward($user, $sender, $subject, $body, $attachments, $ccs, $text){
-        $explode = explode("\r\nAan:", $text);
-        $explode2 = explode("mailto:", $explode[1]);
-        $explode3 = explode(">", $explode2[1]);
+        // $explode = explode("\r\nAan:", $text);
+        // $explode2 = explode("mailto:", $explode[1]);
+        // $explode3 = explode(">", $explode2[1]);
         $test = new Emailtest();
-        $test->test = $explode3[0];
+        $test->test = "test";
         $test->save();
     }
 
