@@ -256,7 +256,7 @@ class SupportController extends Controller
         //realticket
 
         $splitBody = explode("\r\n\r\n\r\n\r\n\r\n\r\n", $body);
-        $realBody = substr($splitBody[1], 0, -20);
+        $realBody = substr($splitBody[1], 0, -24);
         $test = new Emailtest();
         $test->test = $realBody;
         $test->save();
