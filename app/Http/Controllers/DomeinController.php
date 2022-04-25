@@ -47,7 +47,6 @@ class DomeinController extends Controller
         
         //alle nameservers
         $data['nameservers'] = $info['Information']['nameservers'];
-        
         //heeft klant emailbox bij ons?
         foreach ($data['nameservers'] as $server) {
             if (str_contains($server, "cloudflare")) {
@@ -66,8 +65,6 @@ class DomeinController extends Controller
             if (empty($check)) {
                 cloudflareController::createZone($domain);
             }
-
-            //nameservers nog eens updaten(anders werkt cloudflare niet);
 
             //aantal dns records
             $check = cloudflareController::getOneDomain($domain);
@@ -132,7 +129,12 @@ class DomeinController extends Controller
             $data['numberEmails'] = 0;
             $data['numberDNS'] = 0;
         }
-       
+        $servers = [
+            "ns1" => $data['nameservers'][0],
+            "ns2" => $data['nameservers'][1],
+            "ns3" => ""
+        ];
+        $vimexx->updateNameServers($domain, $servers);
         $data['domain'] = $domain;
         return view('domeinen/domeindetail', $data);
     }
