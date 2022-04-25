@@ -103,6 +103,35 @@ class QboxController extends Controller
         return $data;
     }
 
+    
+
+    public static function getEmailsOfDomain($code){
+        $url = 'https://api.qboxmail.com/api/domains/'.$code.'/email_accounts';
+        $token = env('QBOX_TOKEN');
+        $res = Http::withHeaders([
+            'X-Api-Token' => $token,
+        ])->get($url);
+
+        $data = json_decode($res);
+        return $data;
+    }
+
+    public static function getDomainInfo($code){
+        $url = 'https://api.qboxmail.com/api/domains/'.$code;
+        $token = env('QBOX_TOKEN');
+        $res = Http::withHeaders([
+            'X-Api-Token' => $token,
+        ])->get($url);
+
+        $data = json_decode($res);
+        if(!empty($data->resources[0])){
+            return $data->resources[0];
+        }else{
+            return "";
+        }
+        
+    }
+
     public static function deleteDomain($code){
         $url = 'https://api.qboxmail.com/api/domains/'.$code;
         $token = env('QBOX_TOKEN');

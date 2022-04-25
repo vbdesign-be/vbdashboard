@@ -206,9 +206,7 @@ class ShopController extends Controller
         $front = strtok($email, '@');
         
         
-
         //checken of de emailbox al bestaat
-
         $emailOrder = EmailOrder::where('email', $front."@".$domain)->first();
 
         //checken of email nog beschikbaar is

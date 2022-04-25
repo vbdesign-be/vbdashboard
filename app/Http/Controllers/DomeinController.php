@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\cloudflareController;
 use App\Http\Controllers\QboxController;
-
+use App\Jobs\checkDnsINfo;
 
 class DomeinController extends Controller
 {
@@ -31,33 +31,110 @@ class DomeinController extends Controller
     public function detail($domain){
         //order ophalen met dat domein
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
-        if(empty($order)){
+        if (empty($order)) {
             abort(403);
         }
-
         //informatie over een bepaald domein vimexx
         $vimexx = new Vimexx();
         $info = $vimexx->getDomainInformation($domain);
         //dd($info);
-            //datum
-            $datum= $info['Information']['expiration_date'];
-            $jaar = substr($datum, 0,4);
-            $maand = substr($datum, 5,2);
-            $dag = substr($datum, 8,2);
-            $data['expiration_date'] = $dag . '-' . $maand . '-' . $jaar;
+        //datum
+        $datum= $info['Information']['expiration_date'];
+        $jaar = substr($datum, 0, 4);
+        $maand = substr($datum, 5, 2);
+        $dag = substr($datum, 8, 2);
+        $data['expiration_date'] = $dag . '-' . $maand . '-' . $jaar;
         
-            //alle nameservers
-            $data['nameservers'] = $info['Information']['nameservers'];
+        //alle nameservers
+        $data['nameservers'] = $info['Information']['nameservers'];
+            
+        //heeft klant emailbox bij ons?
+        foreach ($data['nameservers'] as $server) {
+            if (str_contains($server, "cloudflare")) {
+                $nameserverCheck[] = true;
+            } else {
+                $nameserverCheck[] = false;
+            }
+        }
+
+        if (in_array(true, $nameserverCheck)) {
+            $data['isCloudflare'] = true;
+            //indien cloudflare niet bestaat, cloudflare maken
+            $check = cloudflareController::getOneDomain($domain);
+            if (empty($check)) {
+                cloudflareController::createZone($domain);
+            }
+            //nameservers nog eens updaten(anders werkt cloudflare niet);
+            $servers = [
+                    "ns1" => $data['nameservers'][0],
+                    "ns2" => $data['nameservers'][1],
+                    "ns3" => ""
+                ];
+            $vimexx->updateNameServers($domain, $servers);
 
             //aantal dns records
-            
             $check = cloudflareController::getOneDomain($domain);
             $dns = cloudflareController::getDNSRecords($check[0]->id);
+            
+            if (!empty($dns)) {
+                foreach ($dns as $d) {
+                    if($d->type === "MX") {
+                        if (str_contains($d->content, "qbox")) {
+                            $data['checkDns'] = true;
+                        }
+                    }else{
+                        $data['checkDns'] = true;
+                    }
+                }
+            }else{
+                $data['checkDns'] = true;
+            }
             $data['numberDNS'] = count($dns);
-
             //aantal emails
-            $emails = EmailOrder::where('order_id', $order->id)->get();
-            $data['numberEmails'] = count($emails);
+            $emails = QboxController::getEmailsOfDomain($order->resource_code);
+            if (!empty($emails->resources)) {
+                //van de emailboxen een order maken;
+                foreach ($emails->resources as $email) {
+                    //checken of emailbox al bestaat
+                    if (empty(EmailOrder::where('email', $email->email_address)->first())) {
+                        $newEmailOrder = new EmailOrder();
+                        $newEmailOrder->order_id =  $order->id;
+                        $newEmailOrder->email = $email->email_address;
+                        $newEmailOrder->resource_code = $email->domain_code;
+                        $newEmailOrder->status = "active";
+                        $newEmailOrder->payed = 1;
+                        $newEmailOrder->save();
+                    }
+                }
+                $data['numberEmails'] = count($emails->resources);
+            } else {
+                $data['numberEmails'] = 0;
+            }
+        } else {
+            $data['isCloudflare'] = false;
+            $order = Order::where('domain', $domain)->first();
+            //cloudflare verwijderen
+            $check = cloudflareController::getOneDomain($domain);
+            if (!empty($check)) {
+                cloudflareController::deleteZone(($check[0]->id));
+
+            }
+
+            //delete qboxmail
+            $checkQbox = QboxController::getDomainInfo($order->resource_code);
+            if (!empty($checkQbox)) {
+                QboxController::deleteDomain($order->resource_code);
+            }
+            //delete emailorders
+            $emailOrders = EmailOrder::where('order_id', $order->id)->get();
+            if(!empty($emailOrders)){
+                foreach ($emailOrders as $email) {
+                    $email->delete();
+                }
+            }
+            $data['numberEmails'] = 0;
+            $data['numberDNS'] = 0;
+        }
         $data['domain'] = $domain;
         return view('domeinen/domeindetail', $data);
     }
@@ -129,7 +206,7 @@ class DomeinController extends Controller
         
         $vimexx = new Vimexx();
         $resp = $vimexx->updateNameServers($domain, $servers);
-
+        sleep(2);
         if($resp){
             $request->session()->flash('message', 'De nameservers voor '.$domain.' zijn gewijzigd.');
         }else{
@@ -168,10 +245,7 @@ class DomeinController extends Controller
             abort(403);
         }
         
-        
         $res = cloudflareController::createNewDNSRecord($zone, $type, $name, $content);
-        
-
         if($res->success){
             $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is toegevoegd.');
         }else{
@@ -183,6 +257,7 @@ class DomeinController extends Controller
     }
 
     public function dnsEdit(Request $request){
+        
         $credentials = $request->validate([
             'name' => 'required',
             'content' => 'required'
@@ -194,14 +269,14 @@ class DomeinController extends Controller
         $type = $request->input('type');
         $name = $request->input('name');
         $content = $request->input('content');
-
+        
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
+        
         if(empty($order)){
             abort(403);
         }
 
         $res = cloudflareController::editDNS($zone, $dns_id, $type, $name, $content);
-        
         if($res->success){
             $request->session()->flash('message', 'De dnsrecord voor '.$domain.' is gewijzigd.');
         }else{

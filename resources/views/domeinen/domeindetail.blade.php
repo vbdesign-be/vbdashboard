@@ -93,6 +93,8 @@
               <a href="/domein/{{$domain}}/nameservers">Beheer nameservers</a>
             </div>
           </div>
+          @if($isCloudflare === true)
+          @if(isset($checkDns))
           <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
             <div class="col-span-4">
               <p class="text-lg mb-2">Emailboxen</p>
@@ -102,6 +104,7 @@
               <a href="/domein/{{$domain}}/email">Beheer emailboxen</a>
             </div>
           </div>
+          @endif
           <div class="px-6 py-4 overflow-x-auto grid grid-cols-12 items-center">
             <div class="col-span-4">
               <p class="text-lg mb-2">DNS records</p>
@@ -111,6 +114,7 @@
               <a href="/domein/{{$domain}}/dns">Beheer DNS records</a>
             </div>
           </div>
+          @endif
         </div>
       </div>
       </section>

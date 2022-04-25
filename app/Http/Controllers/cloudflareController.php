@@ -183,6 +183,7 @@ class cloudflareController extends Controller
             'name' => $name,
             'content' => $content,
             'ttl' => 900,
+            'priority' => 1
         ]));
         
         $data = json_decode($res->body());
