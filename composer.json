@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "arcanedev/laravel-notes": "^8.1",
         "beyondcode/laravel-mailbox": "^2.2",
         "coconutcraig/laravel-postmark": "^2.11",
         "fruitcake/laravel-cors": "^3.0",
