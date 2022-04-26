@@ -2229,7 +2229,7 @@ if (editDNSBtns !== null) {
   editDNSBtns.forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
-      console.log("weg");
+      document.querySelector('.dnsAdd').classList.add('hidden');
       var number = btn.dataset.number;
       var edit = document.querySelector(".editDns--".concat(number));
       editForms.forEach(function (forms) {
