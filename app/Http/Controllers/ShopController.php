@@ -77,6 +77,7 @@ class ShopController extends Controller
     public function buyDomain(Request $request){
         
         $domain = $request->input("domain");
+        $price = env('PRICE___DOMAIN');
         if(!empty($domain)){
 
             $order = new Order();
@@ -86,7 +87,7 @@ class ShopController extends Controller
             $order->save();
 
             //molliepayment starten
-            MollieController::createPayment('4.99', $domain);
+            MollieController::createPayment($price, $domain);
         }
         
     }
@@ -204,6 +205,7 @@ class ShopController extends Controller
         $password = $request->input('password');
         $domain = $request->input('domain');
         $front = strtok($email, '@');
+        $price = env('PRICE__EMAIL');
         
         
         //checken of de emailbox al bestaat
@@ -225,12 +227,13 @@ class ShopController extends Controller
         $order->save();
         
         //payment creeren
-        MollieController::createPaymentEmail('4.99', $front."@".$domain, $front, $password);
+        MollieController::createPaymentEmail($price, $front."@".$domain, $front, $password);
     }
 
     public function transferDomain(Request $request){
         $domain = $request->input("domain");
         $code = $request->input('code');
+        $price = env('PRICE__TRANFSER');
         
         if(!empty($domain) && !empty($code)){
 
@@ -241,7 +244,7 @@ class ShopController extends Controller
             $order->save();
 
             //molliepayment starten
-            MollieController::createPaymentTransfer('4.99', $domain, $code);
+            MollieController::createPaymentTransfer($price, $domain, $code);
         }
     }
 
