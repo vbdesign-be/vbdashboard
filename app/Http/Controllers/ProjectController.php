@@ -176,7 +176,7 @@ class ProjectController extends Controller
 
     public function addPhoto(Request $request){
         $credentials = $request->validate([
-            'fotos' => 'required',
+            'bestanden' => 'required',
             
         ]);
 
@@ -202,16 +202,16 @@ class ProjectController extends Controller
         $dirAssets = $contentsAssets->where('type', '=', 'dir')->where('filename', '=', $folderAssets)->first();
 
         // fotos opslagen in google
-        foreach($request->file('fotos') as $foto){
+        foreach($request->file('bestanden') as $bestand){
             // dd($foto->getClientOriginalName());
-            Storage::disk("google")->putFileAs($dirAssets['path'], $foto, $foto->getClientOriginalName());
+            Storage::disk("google")->putFileAs($dirAssets['path'], $bestand, $bestand->getClientOriginalName());
         }
 
         //user laten weten dat het gelukt is
         $request->session()->flash('message', 'De bestanden zijn geüpload');
-
         return redirect('project/'.$project->id);
 
+        //bron van de drive code
         //https://www.youtube.com/watch?v=ygtawz36Lq0&t=17s
         //https://www.youtube.com/watch?v=dVUGVmJdJ1A&list=PLC-R40l2hJfevz23n59ZGjAXT01OSRa6y
     }
