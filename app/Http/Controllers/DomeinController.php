@@ -68,7 +68,6 @@ class DomeinController extends Controller
 
             //aantal dns records
             $check = cloudflareController::getOneDomain($domain);
-            dd($check);
             $dns = cloudflareController::getDNSRecords($check[0]->id);
             
             if (!empty($dns)) {
