@@ -229,6 +229,7 @@ class DomeinController extends Controller
             'type' => 'required',
             'content' => 'required'
         ]);
+        
         $domain = $request->input('domain');
         $zone = $request->input('zone');
         $type = $request->input('type');

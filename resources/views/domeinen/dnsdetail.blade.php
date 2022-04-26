@@ -79,6 +79,15 @@
             </div>
             <div class="p-4 overflow-x-auto">
 
+            <div class="w-full mb-6 grid grid-cols-12 ">
+              <form class="col-span-8 flex flex-wrap gap-4" action="">
+              @csrf
+                  <input type="text" name="search" class="border w-10/12 ">
+                  <input type="submit" value="Zoek">
+              </form>
+              <a class="dnsAddBtn col-span-3" href="">DNS record toevoegen</a>
+            </div>
+
 
             <section class="">
               <div class="container px-4 mx-auto">
