@@ -176,7 +176,7 @@ class DomeinController extends Controller
         $emailOrder = EmailOrder::where('email', $email)->first();
         
         //delete functie aanspreken
-        $emailOrder->delete();
+        EmailOrder::where('email', $email)->first()->delete();
         QboxController::deleteEmail($order->resource_code, $emailOrder->resource_code);
         
         //succes message en redirect
