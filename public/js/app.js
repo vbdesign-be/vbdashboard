@@ -2220,7 +2220,6 @@ if (editForms !== null) {
       var number = deleteBtn.dataset.number;
       var modalDns = document.querySelector('.modal--deleteDns--' + number);
       modalDns.classList.remove('hidden');
-      document.querySelector('.dnsAdd').classList.add('hidden');
     });
     edit.classList.add('hidden');
   });

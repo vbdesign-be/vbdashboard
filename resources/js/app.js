@@ -209,7 +209,6 @@ if(editForms !== null){
             let number = deleteBtn.dataset.number;
             let modalDns = document.querySelector('.modal--deleteDns--'+number);
             modalDns.classList.remove('hidden');
-            document.querySelector('.dnsAdd').classList.add('hidden');
         });
         
     
