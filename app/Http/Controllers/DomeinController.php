@@ -129,7 +129,7 @@ class DomeinController extends Controller
             $data['numberEmails'] = 0;
             $data['numberDNS'] = 0;
         }
-        
+
         $data['domain'] = $domain;
         return view('domeinen/domeindetail', $data);
     }
@@ -161,8 +161,13 @@ class DomeinController extends Controller
     }
 
     public function deleteEmail(Request $request){
+        
+        $credentials = $request->validate([
+            'domein' => 'required',
+        ]);
+        
         //domeincode ophalen
-        $domain = $request->input('domain');
+        $domain = $request->input('domein');
         $order = Order::where('domain', $domain)->first();
         
         //emailcode ophalen
@@ -190,7 +195,11 @@ class DomeinController extends Controller
     }
 
     public function updateNameservers(Request $request){
-        $domain = $request->input('domain');
+        $credentials = $request->validate([
+            'domein' => 'required',
+        ]);
+
+        $domain = $request->input('domein');
         $nameserver1 = $request->input('nameserver1');
         $nameserver2 = $request->input('nameserver2');
         $nameserver3 = $request->input('nameserver3');
@@ -227,13 +236,16 @@ class DomeinController extends Controller
     public function dnsAdd(Request $request){
         $credentials = $request->validate([
             'type' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'zone' => 'required',
+            'naam' => "required",
+            'domein' => 'required'
         ]);
         
-        $domain = $request->input('domain');
+        $domain = $request->input('domein');
         $zone = $request->input('zone');
         $type = $request->input('type');
-        $name = $request->input('name');
+        $name = $request->input('naam');
         $content = $request->input('content');
 
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
@@ -255,15 +267,19 @@ class DomeinController extends Controller
     public function dnsEdit(Request $request){
         
         $credentials = $request->validate([
-            'name' => 'required',
-            'content' => 'required'
+            'type' => 'required',
+            'content' => 'required',
+            'zone' => 'required',
+            'naam' => "required",
+            'domein' => 'required',
+            'dns_id' => 'required'
         ]);
 
         $zone = $request->input('zone');
-        $domain = $request->input('domain');
+        $domain = $request->input('domein');
         $dns_id = $request->input('dns_id');
         $type = $request->input('type');
-        $name = $request->input('name');
+        $name = $request->input('naam');
         $content = $request->input('content');
         
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
@@ -284,9 +300,15 @@ class DomeinController extends Controller
     }
 
     public function dnsDelete(Request $request){
+        $credentials = $request->validate([
+            'zone' => 'required',
+            'id' => 'required',
+            'domein' => 'required'
+        ]);
+        
         $zone = $request->input('zone');
         $id = $request->input('id');
-        $domain = $request->input('domain');
+        $domain = $request->input('domein');
 
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
         if(empty($order)){
@@ -306,7 +328,10 @@ class DomeinController extends Controller
     }
 
     public function domaindelete(Request $request){
-        $domain = $request->input('domain');
+        $credentials = $request->validate([
+            'domein' => 'required',
+        ]);
+        $domain = $request->input('domein');
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
         if(empty($order)){
             abort(403);

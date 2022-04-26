@@ -144,16 +144,16 @@
             <div class="container px-4 mx-auto w-6/12">
             <div class="">
               <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="emailbox">Emailbox</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="emailbox" placeholder="{{$placeholder}}"></div>
+                <label class="block text-sm font-medium mb-2" for="emailadres">Emailadres</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="emailadres" placeholder="{{$placeholder}}"></div>
             
                 <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" for="password">Wachtwoord emailbox</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="password" name="password" placeholder=""></div>
+                <label class="block text-sm font-medium mb-2" for="wachtwoord">Wachtwoord emailbox</label>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="password" name="wachtwoord" placeholder=""></div>
               
                 <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" for="password_confirmation">Bevestig wachtwoord emailbox</label>
-                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="password" name="password_confirmation" placeholder=""></div>
+                <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="password" name="wachtwoord_confirmation" placeholder=""></div>
                 
                 <input type="hidden" name="domain" value="{{$domain}}">
               </div>

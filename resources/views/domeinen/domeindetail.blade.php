@@ -137,7 +137,7 @@
                 <h1>Delete {{$domain}}</h1>
             <div class="clearfix">
                 <button type="button"  class="cancelbtn cancelDomainbtn">Cancel</button>
-                <input type="hidden" value="{{$domain}}" name="domain">
+                <input type="hidden" value="{{$domain}}" name="domein">
                 <button type="submit"  class="deletebtn" >Delete</button>
             </div>
             </div>

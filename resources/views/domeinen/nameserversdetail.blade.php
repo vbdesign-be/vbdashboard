@@ -85,21 +85,21 @@
             <div class="">
                 
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2" for="emailbox">Nameserver 1</label>
+                    <label class="block text-sm font-medium mb-2" for="nameserver1">Nameserver 1</label>
                     <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="nameserver1" @if(!empty($nameservers[0]))value="{{$nameservers[0]}}" @endif>
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2" for="emailbox">Nameserver 2</label>
+                    <label class="block text-sm font-medium mb-2" for="nameserver2">Nameserver 2</label>
                     <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="nameserver2" @if(!empty($nameservers[1]))value="{{$nameservers[1]}}" @endif>
                 </div>
 
                 <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2" for="emailbox">Nameserver 3</label>
+                    <label class="block text-sm font-medium mb-2" for="nameserver3">Nameserver 3</label>
                     <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="nameserver3" @if(!empty($nameservers[2]))value="{{$nameservers[2]}}" @endif>
                 </div>
                 
-                <input type="hidden" name="domain" value="{{$domain}}">
+                <input type="hidden" name="domein" value="{{$domain}}">
               </div>
             <div class="form__btn">
             <button class=" inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update</button>

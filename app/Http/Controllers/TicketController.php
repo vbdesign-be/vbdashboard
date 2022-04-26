@@ -100,6 +100,12 @@ class TicketController extends Controller
         if (Auth::user()->isAgent !== 1) {
             abort(403);
         }
+
+        $credentials = $request->validate([
+            'status' => 'required',
+            'ticket_id' => 'required',
+        ]);
+
         $status = $request->input('status');
         $ticket_id = $request->input('ticket_id');
          //security
@@ -122,6 +128,12 @@ class TicketController extends Controller
         if (Auth::user()->isAgent !== 1) {
             abort(403);
         }
+
+        $credentials = $request->validate([
+            'priority' => 'required',
+            'ticket_id' => 'required',
+        ]);
+
         $priority = $request->input('priority');
         $ticket_id = $request->input('ticket_id');
          //security
@@ -144,6 +156,12 @@ class TicketController extends Controller
         if (Auth::user()->isAgent !== 1) {
             abort(403);
         }
+
+        $credentials = $request->validate([
+            'type' => 'required',
+            'ticket_id' => 'required',
+        ]);
+
         $type = $request->input('type');
         $ticket_id = $request->input('ticket_id');
          //security
@@ -229,6 +247,12 @@ class TicketController extends Controller
         if(Auth::user()->isAgent !== 1){
             abort(403);
         }
+
+        $credentials = $request->validate([
+            'email' => 'required',
+            'ticket_id' => 'required',
+        ]);
+
         $email = $request->input('email');
         $ticket_id = $request->input('ticket_id');
         $spam = new Spam();
@@ -262,6 +286,11 @@ class TicketController extends Controller
         if(Auth::user()->isAgent !== 1){
             abort(403);
         }
+
+        $credentials = $request->validate([
+            'ticket1' => 'required',
+            'ticket2' => 'required',
+        ]);
 
         if(empty($request->input('ticket2'))){
             $request->session()->flash('error', 'Kies hieronder een ticket om samen te voegen');
@@ -367,6 +396,11 @@ class TicketController extends Controller
         if(Auth::user()->isAgent !== 1){
             abort(403);
         }
+
+        $credentials = $request->validate([
+            'ticket_id' => 'required',
+        ]);
+
         $ticket = Ticket::find($request->input('ticket_id'));
         $ticket->delete();
 
@@ -381,6 +415,7 @@ class TicketController extends Controller
 
         $credentials = $request->validate([
             'email' => 'required|email',
+            'ticket_id' => 'required'
         ]);
 
         $email = $request->input('email');
@@ -423,7 +458,8 @@ class TicketController extends Controller
 
         //checking credentials
         $credentials = $request->validate([
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'ticket_id' => 'required'
         ]);
 
         $email = $request->input('email');

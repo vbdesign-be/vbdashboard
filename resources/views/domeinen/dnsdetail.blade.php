@@ -129,8 +129,8 @@
                     </div>
 
                     <div class="form-dnsAdd__name flex flex-col">
-                    <label for="name">Name</label>
-                    <input name="name" type="text" class="border">
+                    <label for="naam">Naam</label>
+                    <input name="naam" type="text" class="border">
                     </div>
 
                     <div class="form-dnsAdd__content flex flex-col">
@@ -139,7 +139,7 @@
                     </div>
 
                     <input name="zone" type="hidden" value="{{$zone}}">
-                    <input name="domain" type="hidden" value="{{$domain}}">
+                    <input name="domein" type="hidden" value="{{$domain}}">
 
                     <div class="form-dnsAdd__btn flex flex-col self-end">
                         <input type="submit" value="record toevoegen">
@@ -156,7 +156,7 @@
                 @csrf
                     <div class="form-editDns__type">
                         <p>type: {{$dns->type}}</p>
-                        <input class="border" name="name" type="text" value="{{$dns->name}}">
+                        <input class="border" name="naam" type="text" value="{{$dns->name}}">
                     </div>
 
                     <textarea class="form-editDns__text border" name="content" type="text">{{$dns->content}}</textarea>
@@ -165,7 +165,7 @@
                         <input type="submit" value="update DNS">
                         <a data-number="{{$key}}" class="dnsDelete" href="">Verwijder</a>
                     </div>
-                    <input name="domain" type="hidden" value={{$domain}}>
+                    <input name="domein" type="hidden" value={{$domain}}>
                     <input name="zone" type="hidden" value={{$zone}}>
                     <input name="dns_id" type="hidden" value={{$dns->id}}>
                     <input name="type" type="hidden" value={{$dns->type}}>
@@ -178,7 +178,7 @@
 
               <table class="table-auto w-full">
                 <thead>
-                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Type</th><th class="pb-3 font-medium">Name</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
+                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Type</th><th class="pb-3 font-medium">Naam</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
                 </thead>
                 <tbody>
                 @if(!empty($dnsList))
@@ -212,7 +212,7 @@
                 <button type="button" data-number={{$key}}  class="cancelbtn cancelDnsBtn">Cancel</button>
                 <input type="hidden" value="{{$dns->id}}" name="id">
                 <input type="hidden" value="{{$zone}}" name="zone">
-                <input type="hidden" value="{{$domain}}" name="domain">
+                <input type="hidden" value="{{$domain}}" name="domein">
                 <button type="submit"  class="deletebtn" >Delete</button>
             </div>
             </div>

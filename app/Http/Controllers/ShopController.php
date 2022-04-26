@@ -58,6 +58,10 @@ class ShopController extends Controller
     }
 
     public function cart(Request $request){
+        $credentials = $request->validate([
+            'domein' => 'required',
+        ]);
+
         $domain = $request->input('domain');
         $end = ".".explode('.', $domain,)[1];
         $data["domain"] = $domain;
@@ -73,6 +77,11 @@ class ShopController extends Controller
     }
 
     public function cartTransfer(Request $request){
+
+        $credentials = $request->validate([
+            'domein' => 'required'
+        ]);
+
         $domain = $request->input('domain');
         $data["domain"] = $domain;
         $data["mailbox"] = "info@".$domain;
@@ -83,7 +92,8 @@ class ShopController extends Controller
     public function buyDomain(Request $request){
         //checking
         $credentials = $request->validate([
-            'domain' => 'required|max:255'
+            'domein' => 'required|max:255',
+            'prijs' => 'required'
         ]);
         
         $domain = $request->input("domain");
@@ -103,6 +113,12 @@ class ShopController extends Controller
     }
 
     public function payed(Request $request){
+
+        $credentials = $request->validate([
+            'order_id' => 'required',
+            
+        ]);
+
         //order aanpassen
         $id = $request->input('order_id');
         $order = Order::where('id', $id)->first();
@@ -131,6 +147,12 @@ class ShopController extends Controller
     }
 
     public function payedEmail(Request $request){
+        $credentials = $request->validate([
+            'emailorder_id' => 'required',
+            'front' => 'required',
+            'password' => 'required'
+        ]);
+
         //emailOrder aanpassen
         $emailOrderId = $request->input('emailorder_id');
         $front = $request->input('front');
@@ -207,13 +229,13 @@ class ShopController extends Controller
 
     public function buyEmail(Request $request){
         $credentials = $request->validate([
-            'emailbox' => 'required|email|max:255',
-            'password' => 'required|confirmed|min:8',
-
+            'emailadres' => 'required|email|max:255',
+            'wachtwoord' => 'required|confirmed|min:8',
+            'domein' => 'required'
         ]);
-        $email = $request->input('emailbox');
-        $password = $request->input('password');
-        $domain = $request->input('domain');
+        $email = $request->input('emailadres');
+        $password = $request->input('wachtwoord');
+        $domain = $request->input('domein');
         $front = strtok($email, '@');
         $price = Product::where('name', 'mailbox')->first()->price;
         
@@ -242,13 +264,14 @@ class ShopController extends Controller
     public function transferDomain(Request $request){
         //checking
         $credentials = $request->validate([
-            'domain' => 'required|max:255',
-            'code' => 'required'
+            'domein' => 'required|max:255',
+            'code' => 'required',
+            'prijs' => 'required'
         ]);
 
         $domain = $request->input("domain");
         $code = $request->input('code');
-        $price = $request->input('price');
+        $price = $request->input('prijs');
         
         if(!empty($domain) && !empty($code)){
             $order = new Order();
