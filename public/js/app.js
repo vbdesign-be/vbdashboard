@@ -2444,6 +2444,43 @@ if (searchFieldFactuur !== null) {
     var value = inputFactuur.value;
     searchFactuur(value, facturen);
   });
+} //zoekfuncite offertes
+
+
+var searchFieldOfferte = document.querySelector('.search__form--offerte');
+
+if (searchFieldOfferte !== null) {
+  var searchOfferte = function searchOfferte(value, offertes) {
+    offertes.forEach(function (offerte) {
+      offerte.classList.add('hidden');
+      var title = offerte.querySelector('.offerte__title').innerHTML;
+      var reference = offerte.querySelector('.offerte__reference').innerHTML;
+      var amount = offerte.querySelector('.offerte__amount').innerHTML;
+      var status = offerte.querySelector('.offerte__status').innerHTML;
+      var filterTitle = title.toLowerCase().indexOf(value.toLowerCase());
+      var filterReference = reference.toLowerCase().indexOf(value.toLowerCase());
+      var filterAmount = amount.toLowerCase().indexOf(value.toLowerCase());
+      var filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+
+      if (filterTitle > -1 || filterReference > -1 || filterAmount > -1 || filterStatus > -1) {
+        offerte.classList.remove('hidden');
+      }
+    });
+  };
+
+  var inputOfferte = searchFieldOfferte.querySelector('.search__input');
+  var btnOfferte = searchFieldOfferte.querySelector('.search__btn');
+  var offertes = document.querySelectorAll('.offerte');
+  inputOfferte.addEventListener('keyup', function (e) {
+    e.preventDefault();
+    var value = inputOfferte.value;
+    searchOfferte(value, offertes);
+  });
+  btnOfferte.addEventListener('click', function (e) {
+    e.preventDefault();
+    var value = inputOfferte.value;
+    searchOfferte(value, offertes);
+  });
 }
 
 /***/ }),

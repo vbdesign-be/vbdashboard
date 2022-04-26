@@ -462,3 +462,49 @@ function searchFactuur(value, facturen){
 
 }
 
+//zoekfuncite offertes
+let searchFieldOfferte = document.querySelector('.search__form--offerte');
+
+if(searchFieldOfferte !== null){
+    let inputOfferte = searchFieldOfferte.querySelector('.search__input');
+    let btnOfferte = searchFieldOfferte.querySelector('.search__btn');
+    let offertes = document.querySelectorAll('.offerte');
+
+    inputOfferte.addEventListener('keyup', (e) => {
+        e.preventDefault();
+        let value = inputOfferte.value;
+        searchOfferte(value, offertes);
+        
+    });
+    
+    btnOfferte.addEventListener('click', (e) => {
+        e.preventDefault();
+        let value = inputOfferte.value;
+        searchOfferte(value, offertes);
+    })
+
+    function searchOfferte(value, offertes){
+        offertes.forEach((offerte) => {
+            offerte.classList.add('hidden');
+            
+            let title = offerte.querySelector('.offerte__title').innerHTML;
+            let reference = offerte.querySelector('.offerte__reference').innerHTML;
+            let amount = offerte.querySelector('.offerte__amount').innerHTML;
+            let status = offerte.querySelector('.offerte__status').innerHTML;
+            
+            
+    
+            let filterTitle = title.toLowerCase().indexOf(value.toLowerCase());
+            let filterReference = reference.toLowerCase().indexOf(value.toLowerCase());
+            let filterAmount = amount.toLowerCase().indexOf(value.toLowerCase());
+            let filterStatus = status.toLowerCase().indexOf(value.toLowerCase());
+            
+    
+            if(filterTitle > -1 || filterReference > -1 || filterAmount > -1 || filterStatus > -1){
+                offerte.classList.remove('hidden');
+            }
+    
+    
+        })
+    }
+}

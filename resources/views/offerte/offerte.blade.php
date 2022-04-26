@@ -31,6 +31,19 @@
             </ul>
         @endcomponent
         @endif
+
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
+            <div class="bg-white shadow rounded py-6 px-6">
+              <div class="search">
+                <form class="search__form search__form--offerte flex gap-4" action="">
+                  <input class="border search__input rounded" type="text" name="search">
+                  <button class="rounded search__btn bg-blue-500 text-white" type="submit">Zoek</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
         
         <section class="py-8">
         <div class="container px-4 mx-auto">
@@ -78,13 +91,13 @@
                 <tbody>
                 @for($x = 0; $x < count($offertes); $x++)
                 @foreach($offertes[$x] as $f)
-                    <tr class="table__item text-xs bg-gray-50">
-                      <td class="flex items-center py-4 px-6 font-medium">
-                        <p>{{ $f->title }}</p>
+                    <tr class="table__item offerte text-xs bg-gray-50">
+                      <td class="font-medium offerte__title">
+                        {{ $f->title }}
                       </td>
-                      <td class="font-medium">{{ $f->reference }}</td>
-                      <td class="font-medium">{{ '€'.$f->estimated_value->amount }}</td>
-                      <td>
+                      <td class="font-medium offerte__reference">{{ $f->reference }}</td>
+                      <td class="font-medium offerte__amount">{{ '€'.$f->estimated_value->amount }}</td>
+                      <td class="offerte__status">
                         @if($f->status === "lost")
                           @component('components/status')
                             @slot('color') red @endslot
