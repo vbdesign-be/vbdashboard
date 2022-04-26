@@ -86,8 +86,8 @@
                   <tr id="winkelmandje" class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium"><div>{{ $domain }}<input class="domein" name="domain" type="hidden" value="{{$domain}}"></div></td>
                     <td class="font-medium">1 jaar</td>
-                    <td class="font-medium">1 x €4.99</td>
-                    <td class="font-medium">€4,99</td>
+                    <td class="font-medium">1 x €{{$price}}</td>
+                    <td class="font-medium">€{{$price}}</td>
                     <td><a class="delete" href="">verwijder btn</a></td>
                   </tr>
                   <tr >
@@ -99,6 +99,7 @@
                   </tr>
                 </tbody>
               </table>
+              <input type="hidden" name="price" value="{{$price}}">
               <div class="form__btn">
                 <button class="inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Verhuis</button>
               </div>

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\cloudflareController;
 use App\Http\Controllers\QboxController;
-
+use App\Models\Product;
 
 class ShopController extends Controller
 {
@@ -41,29 +41,34 @@ class ShopController extends Controller
             return view('shop/shop', $data);
         }
 
-        if(str_ends_with($domain, ".be")){
-            $data["domain"] = $domain;
-            $vimexx = new Vimexx();
-            $check = $vimexx->checkDomain($domain);
-            $data["check"] = $check;
         
-            if($check === "Beschikbaar"){
-                $data['checkColor'] = "green";
-            }else{
-                $data['checkColor'] = "red";
-            }
+        $data["domain"] = $domain;
+        $vimexx = new Vimexx();
+        $check = $vimexx->checkDomain($domain);
+        $data["check"] = $check;
+        
+        if($check === "Beschikbaar"){
+            $data['checkColor'] = "green";
         }else{
-            $data["domain"] = "";
-            $request->session()->flash('error', $domain.' is geen domeinnaam');
+            $data['checkColor'] = "red";
         }
+        
         return view('shop/shop', $data);
 
     }
 
     public function cart(Request $request){
         $domain = $request->input('domain');
+        $end = ".".explode('.', $domain,)[1];
         $data["domain"] = $domain;
         $data["mailbox"] = "info@".$domain;
+        $product = Product::where('name', $end)->first();
+        if(empty($product)){
+            $request->session()->flash('notification', 'Momenteel kunt u "'.$domain.'" niet aankopen via het dashboard. Gelieve een supportticket te maken of ons een mailtje te sturen');
+            return redirect('/shop');
+        }else{
+            $data['price'] = $product->price;
+        }
         return view('shop/cart', $data);
     }
 
@@ -71,15 +76,20 @@ class ShopController extends Controller
         $domain = $request->input('domain');
         $data["domain"] = $domain;
         $data["mailbox"] = "info@".$domain;
+        $data['price'] = Product::where('name', 'transfer')->first()->price;
         return view('shop/cartTransfer', $data);
     }
 
     public function buyDomain(Request $request){
+        //checking
+        $credentials = $request->validate([
+            'domain' => 'required|max:255'
+        ]);
         
         $domain = $request->input("domain");
-        $price = env('PRICE___DOMAIN');
-        if(!empty($domain)){
+        $price = $request->input("price");
 
+        if(!empty($domain)){
             $order = new Order();
             $order->domain = $domain;
             $order->user_id = Auth::id();
@@ -205,8 +215,7 @@ class ShopController extends Controller
         $password = $request->input('password');
         $domain = $request->input('domain');
         $front = strtok($email, '@');
-        $price = env('PRICE__EMAILBOX');
-        
+        $price = Product::where('name', 'mailbox')->first()->price;
         
         //checken of de emailbox al bestaat
         $emailOrder = EmailOrder::where('email', $front."@".$domain)->first();
@@ -231,12 +240,17 @@ class ShopController extends Controller
     }
 
     public function transferDomain(Request $request){
+        //checking
+        $credentials = $request->validate([
+            'domain' => 'required|max:255',
+            'code' => 'required'
+        ]);
+
         $domain = $request->input("domain");
         $code = $request->input('code');
-        $price = env('PRICE__TRANFSER');
+        $price = $request->input('price');
         
         if(!empty($domain) && !empty($code)){
-
             $order = new Order();
             $order->domain = $domain;
             $order->user_id = Auth::id();

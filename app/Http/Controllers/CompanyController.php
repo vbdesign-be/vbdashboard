@@ -10,9 +10,9 @@ use Symfony\Component\Console\Input\Input;
 use Vbdesign\Teamleader\Facade\Teamleader;
 
 class CompanyController extends Controller
-{
+{   
+    //informatie van het bedrijf verkrijgen
     public function company($id){
-
         teamleaderController::reAuthTL();
         $data['user'] = Auth::user();
         $company = Teamleader::crm()->company()->info($id);
