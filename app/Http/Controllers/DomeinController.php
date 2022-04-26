@@ -37,7 +37,7 @@ class DomeinController extends Controller
         //informatie over een bepaald domein vimexx
         $vimexx = new Vimexx();
         $info = $vimexx->getDomainInformation($domain);
-        //dd($info);
+       
         //datum
         $datum= $info['Information']['expiration_date'];
         $jaar = substr($datum, 0, 4);
@@ -129,12 +129,7 @@ class DomeinController extends Controller
             $data['numberEmails'] = 0;
             $data['numberDNS'] = 0;
         }
-        $servers = [
-            "ns1" => $data['nameservers'][0],
-            "ns2" => $data['nameservers'][1],
-            "ns3" => ""
-        ];
-        $vimexx->updateNameServers($domain, $servers);
+        
         $data['domain'] = $domain;
         return view('domeinen/domeindetail', $data);
     }
