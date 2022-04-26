@@ -155,7 +155,7 @@
                 <label class="block text-sm font-medium mb-2" for="password_confirmation">Bevestig wachtwoord emailbox</label>
                 <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="password" name="wachtwoord_confirmation" placeholder=""></div>
                 
-                <input type="hidden" name="domain" value="{{$domain}}">
+                <input type="hidden" name="domein" value="{{$domain}}">
               </div>
             <div class="form__btn">
             <button class=" inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Toevoegen</button>
