@@ -220,6 +220,7 @@ if(editDNSBtns !== null){
     editDNSBtns.forEach((btn) => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            console.log("weg");
             let number = btn.dataset.number;
             let edit = document.querySelector(`.editDns--${number}`);
             editForms.forEach((forms) => {
