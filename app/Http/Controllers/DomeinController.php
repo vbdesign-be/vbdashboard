@@ -177,7 +177,7 @@ class DomeinController extends Controller
 
         //delete functie aanspreken
         QboxController::deleteEmail($order->resource_code, $emailOrder->resource_code);
-        $emailOrder->delete();
+        $emailOrder->destroy();
         //succes message en redirect
         $request->session()->flash('message', $email." is verwijderd.");
         return redirect('domein/'.$order->domain);
