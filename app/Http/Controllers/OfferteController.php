@@ -8,6 +8,7 @@ use App\Models\Offerte;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Vbdesign\Teamleader\Facade\Teamleader;
 
 
