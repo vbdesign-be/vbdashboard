@@ -186,7 +186,7 @@
                   <tr class="table__item dns  text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium dns__type">{{$dns->type}}</td>
                     <td class="font-medium dns__name">{{$dns->name}}</td>
-                    <td class="font-medium dns__content">{{substr($dns->content,0,25)}}...</td>
+                    <td class="font-medium dns__content">{{substr($dns->content,0,25)}} @if(strlen($dns->content) > 25) ... @endif</td>
                     <td class="font-medium dns__ttl">{{$dns->ttl}}</td>
                     <td><a class="editDNSBtn" data-number={{$key}} href="">bewerk knopje</a></td>
                   </tr>
