@@ -49,20 +49,19 @@ Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
 
+//madeItBelgium
+Route::get('/connect', [teamleaderController::class, "requestToken"]);
+Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
+Route::get('/register', [teamleaderController::class, "register"]);
 
+//clickup
+Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
+Route::get('/clickup', [ClickupController::class, "accessToken"]);
+Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
 
 Route::group(['middleware' => ['auth']], function() {
 
-    //madeItBelgium
-    Route::get('/connect', [teamleaderController::class, "requestToken"]);
-    Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
-    Route::get('/register', [teamleaderController::class, "register"]);
-
-    //clickup
-    Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
-    Route::get('/clickup', [ClickupController::class, "accessToken"]);
-    Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
     //user
     Route::get('/profiel', [UserController::class, "profile"]);
