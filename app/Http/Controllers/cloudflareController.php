@@ -7,18 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class cloudflareController extends Controller
 {
-    public function test(){
-        $url = "https://api.cloudflare.com/client/v4/";
-        
-        $res = Http::withHeaders([
-            'X-Auth-Key' => env('CLOUDFLARE_AUTH_KEY'),
-            'X-Auth-Email' => 'bert@vbdesign.be',
-            'X-Auth-User-Service-Key' => env('CLOUDFLARE_USER_KEY')
-        ])->get($url.'/accounts/46ec306d71921c8086e04f573412597f');
-        $data = json_decode($res->body());
-        dd($data->result);
-    }
-
+    //informatie van een domein op cloudflare verkrijgen
     public static function getOneDomain($domain){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -31,6 +20,7 @@ class cloudflareController extends Controller
         return $data->result;
     }
 
+    //cloudflare zone voor domeinnaam creeren
     public static function createZone($domain){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -50,6 +40,7 @@ class cloudflareController extends Controller
         
     }
 
+    //eerste a record creeeren om qbox met cloudflare te verbinden
     public static function createDnsRecord($zone, $name, $ip) {
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -68,6 +59,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //mx record creeeren om cloudflare met qbox mail te verbinden
     public static function createMXRecord($zone, $number ){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -87,6 +79,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //spf record creeeren om cloudflare met qbox mail te verbinden
     public static function createSPFRecord($zone ){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -105,6 +98,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //dkim record creeeren om cloudflare met qbox mail te verbinden
     public static function createDKIMRecord($zone, $record ){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -123,6 +117,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //dmarc record creeeren om cloudflare met qbox mail te verbinden
     public static function createDMARCRecord($zone ){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -141,6 +136,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //alle dns record van een domeinnaam zone verkrijgen
     public static function getDNSRecords($zone){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -153,6 +149,7 @@ class cloudflareController extends Controller
         return $data->result;
     }
 
+    //nieuwe dns record maken
     public static function createNewDNSRecord($zone, $type, $name, $content){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -171,6 +168,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //dns record updaten
     public static function editDNS($zone, $dns_id, $type, $name, $content){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -190,6 +188,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //dns record verwijderen
     public static function deleteDNS($zone, $dns_id){
         $url = "https://api.cloudflare.com/client/v4/";
         
@@ -203,6 +202,7 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //domein zone verwijderen
     public static function deleteZone($zone){
         $url = "https://api.cloudflare.com/client/v4/";
         $res = Http::withHeaders([

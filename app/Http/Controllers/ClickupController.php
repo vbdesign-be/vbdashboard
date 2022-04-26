@@ -15,11 +15,13 @@ class ClickupController extends Controller
         $redirectUri = env('CLICKUP_REDIRECT');
         
         $url = 'https://app.clickup.com/api?client_id='. $clientId .'&redirect_uri='.$redirectUri;
+        //redirecten naar de url om de connectie te laten starten
         header("Location: {$url}");
         exit;
     }
 
     public function accessToken(Request $request){
+        //verschillende parameters voor de post ophalen
         $code = $request->input('code');
         $clientId = env('CLICKUP_ID');
         $clientSecret = env('CLICKUP_SECRET');
@@ -31,31 +33,17 @@ class ClickupController extends Controller
         $data['client_secret'] = $clientSecret;
         $data["code"] = $code;
 
-        $test = ['body' => json_encode($data)];
-
+        //post doen naar de url om de accestoken te verkrijgen
         $resp = Http::post($url.'?client_id='.$clientId.'&client_secret='.$clientSecret.'&code='.$code);
-
         $data = json_decode($resp->body());
 
+        //acces token van clickup opslaan
         $clickup = new Clickup();
         $clickup->token = $data->access_token;
         $clickup->save();
         
+        //redirecten naar de loginpage
         return redirect('/login');
 
-    }
-
-    public function getTasks(){
-        $clickup = Clickup::find(1);
-        $token = $clickup->token;
-        
-        $url = 'https://app.clickup.com/api/v2/list/40397755/task';
-
-        $response = Http::withToken($token)->get($url);
-
-        $data = json_decode($response->body());
-
-        dd($data); 
-        
     }
 }
