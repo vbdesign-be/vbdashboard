@@ -168,6 +168,7 @@
              @foreach($reactions as $reaction)
               @if(!empty($reaction->user_id))
               @if($reaction->user->id === $ticket->agent_id)
+              <div><img class=" w-16 h-16 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="{{url('')}}/img/{{ $reaction->user->avatar }}" alt="avatar"></div>
               <div class="bg-blue-200 w-shadow rounded w-8/12 ml-auto mb-6 py-6 px-6">
                 <p class="mb-4">Jij schreef: </p>
                 <p>{!! $reaction->text !!}</p>
@@ -181,6 +182,9 @@
                 @endif
               </div>
               @else
+              @if(!empty($reaction->user_id))
+              <div><img class=" w-16 h-16 p-1 mb-4 mx-auto rounded-full border border-indigo-50" src="{{url('')}}/img/{{ $reaction->user->avatar }}" alt="avatar"></div>
+              @endif
               <div class="bg-gray-200 shadow rounded w-8/12 mr-auto mb-6 py-6 px-6">
                 @if(!empty($reaction->user_id))
                 <p class="mb-4">{{$reaction->user->firstname}} schreef: </p>
