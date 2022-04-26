@@ -2200,6 +2200,7 @@ if (addDNSBtn !== null) {
   addDNSBtn.addEventListener('click', function (e) {
     e.preventDefault();
     dnsAdd.classList.remove('hidden');
+    document.querySelectorAll('.editDns').classList.add('hidden');
   });
 } //dns edit 
 
@@ -2216,6 +2217,7 @@ if (editForms !== null) {
       var number = deleteBtn.dataset.number;
       var modalDns = document.querySelector('.modal--deleteDns--' + number);
       modalDns.classList.remove('hidden');
+      document.querySelector('.dnsAdd').classList.add('hidden');
     });
     edit.classList.add('hidden');
   });
