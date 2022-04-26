@@ -32,21 +32,6 @@ class OfferteController extends Controller
             $offertes[] = Teamleader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
         }
         $data['offertes'] = $offertes;
-    
-        // //de quotation deal id de deal gaan opvragen
-        // foreach($comps as $c){
-        // foreach($test as $t){
-        //     $deal = TeamLeader::deals()->info($t->deal->id)->data;
-        //     if($deal->lead->customer->id === $c->data->id){
-        //         $dealCompany[] = $t;
-        //     }
-        // }
-        // }
-
-        //als die deal bij het bedrijf hoort mag het in een array ofzo
-
-        
-
 
         return view('offerte/offerte', $data);
     }
