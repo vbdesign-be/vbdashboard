@@ -88,7 +88,7 @@ class DomeinController extends Controller
             $emails = QboxController::getEmailsOfDomain($order->resource_code);
             if (!empty($emails->resources)) {
                 //van de emailboxen een order maken;
-                foreach ($emails->resources as $email) {
+                foreach ($emails->resources as $email){
                     //checken of emailbox al bestaat
                     if (empty(EmailOrder::where('email', $email->email_address)->first())) {
                         $newEmailOrder = new EmailOrder();
@@ -178,7 +178,7 @@ class DomeinController extends Controller
         //delete functie aanspreken
         $emailOrder->delete();
         QboxController::deleteEmail($order->resource_code, $emailOrder->resource_code);
-        
+        sleep(10);
         //succes message en redirect
         $request->session()->flash('message', $email." is verwijderd.");
         return redirect('domein/'.$order->domain);
