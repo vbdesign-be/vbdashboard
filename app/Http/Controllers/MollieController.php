@@ -58,7 +58,6 @@ class MollieController extends Controller
         ];
 
         $res = Http::withToken("test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC")->post('https://api.mollie.com/v2/payments', $data);
-        dd($res);
         $ans = json_decode($res->body());
         header("Location: {$ans->_links->checkout->href}");
         exit;
