@@ -2200,7 +2200,10 @@ if (addDNSBtn !== null) {
   addDNSBtn.addEventListener('click', function (e) {
     e.preventDefault();
     dnsAdd.classList.remove('hidden');
-    document.querySelector('.editDns').style.display = 'none';
+    var editDNS = document.querySelectorAll('.editDns');
+    editDNS.forEach(function (d) {
+      d.classList.add('hidden');
+    });
   });
 } //dns edit 
 
@@ -2217,7 +2220,7 @@ if (editForms !== null) {
       var number = deleteBtn.dataset.number;
       var modalDns = document.querySelector('.modal--deleteDns--' + number);
       modalDns.classList.remove('hidden');
-      document.querySelector('.dnsAdd').style.display = 'none';
+      document.querySelector('.dnsAdd').classList.add('hidden');
     });
     edit.classList.add('hidden');
   });
