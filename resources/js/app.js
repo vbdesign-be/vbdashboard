@@ -186,7 +186,7 @@ if(addDNSBtn !== null){
     addDNSBtn.addEventListener('click', (e) => {
         e.preventDefault();
         dnsAdd.classList.remove('hidden');
-        document.querySelectorAll('.editDns').classList.add('hidden');
+        document.querySelectorAll('.editDns').style.display = 'none';
     });
     
 }
@@ -206,7 +206,7 @@ if(editForms !== null){
             let number = deleteBtn.dataset.number;
             let modalDns = document.querySelector('.modal--deleteDns--'+number);
             modalDns.classList.remove('hidden');
-            document.querySelector('.dnsAdd').classList.add('hidden');
+            document.querySelector('.dnsAdd').style.display = 'none';
         });
         
     
