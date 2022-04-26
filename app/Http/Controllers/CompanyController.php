@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
-use MadeITBelgium\TeamLeader\Facade\TeamLeader;
+use Vbdesign\Teamleader\Facade\Teamleader;
 
 class CompanyController extends Controller
 {
@@ -15,7 +15,7 @@ class CompanyController extends Controller
 
         teamleaderController::reAuthTL();
         $data['user'] = Auth::user();
-        $company = TeamLeader::crm()->company()->info($id);
+        $company = Teamleader::crm()->company()->info($id);
         $data["company"] = $company->data;
         
         $emails = $data['company']->emails;
@@ -49,15 +49,15 @@ class CompanyController extends Controller
             }
         }
      
-        $company_users = TeamLeader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id, 'tags' => [0 => "klant"] ]]);
+        $company_users = Teamleader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id, 'tags' => [0 => "klant"] ]]);
         foreach($company_users as $u){
             $data['company']->users = $u;
         }
 
-        $businessTypes = TeamLeader::crm()->company()->getBusinessTypes($data['company']->country);
+        $businessTypes = Teamleader::crm()->company()->getBusinessTypes($data['company']->country);
         $data["businessTypes"] = $businessTypes->data;
 
-        $provinces = TeamLeader::crm()->company()->getProvinces($data['company']->country);
+        $provinces = Teamleader::crm()->company()->getProvinces($data['company']->country);
         $data['provinces'] = $provinces->data;
 
         foreach($data["company"]->users as $u){
@@ -84,7 +84,7 @@ class CompanyController extends Controller
       
         
         if (!empty($request->input('telefoon'))) {
-            TeamLeader::crm()->company()->update($company_id, [
+            Teamleader::crm()->company()->update($company_id, [
             'name' => $request->input('bedrijfsnaam'),
             'business_type_id' => $request->input('bedrijfsvorm'),
             'vat_number' => $request->input('btw-nummer'),
@@ -100,7 +100,7 @@ class CompanyController extends Controller
                 ]]],
             ]);
         }else{
-            TeamLeader::crm()->company()->update($company_id, [
+            Teamleader::crm()->company()->update($company_id, [
                 'name' => $request->input('bedrijfsnaam'),
                 'business_type_id' => $request->input('bedrijfsvorm'),
                 'vat_number' => $request->input('btw-nummer'),
