@@ -164,6 +164,7 @@ class DomeinController extends Controller
         
         $credentials = $request->validate([
             'domein' => 'required',
+            'email' => 'required'
         ]);
         
         //domeincode ophalen
