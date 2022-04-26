@@ -2200,7 +2200,7 @@ if (addDNSBtn !== null) {
   addDNSBtn.addEventListener('click', function (e) {
     e.preventDefault();
     dnsAdd.classList.remove('hidden');
-    document.querySelectorAll('.editDns').style.display = 'none';
+    document.querySelector('.editDns').style.display = 'none';
   });
 } //dns edit 
 

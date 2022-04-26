@@ -186,7 +186,7 @@ if(addDNSBtn !== null){
     addDNSBtn.addEventListener('click', (e) => {
         e.preventDefault();
         dnsAdd.classList.remove('hidden');
-        document.querySelectorAll('.editDns').style.display = 'none';
+        document.querySelector('.editDns').style.display = 'none';
     });
     
 }
