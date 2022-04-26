@@ -146,7 +146,7 @@ class OfferteController extends Controller
         //gegevens van het bedrijf mee doorsturen
         $data['company'] = TeamLeader::crm()->company()->info($data['company_id'])->data;
         //mail versturen naar bert met nieuwe offerte
-        Mail::to('jonathan_verhaegen@hotmail.com')->send(new NewOfferteMail($data));
+        Mail::to('bert@vbdesign.be')->send(new NewOfferteMail($data));
         //redirecten
         return redirect('/offerte');
     }
