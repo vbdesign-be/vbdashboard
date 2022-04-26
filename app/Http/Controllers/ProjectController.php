@@ -175,8 +175,13 @@ class ProjectController extends Controller
     }
 
     public function addPhoto(Request $request){
-        $id = $request->input('project_id');
+        $credentials = $request->validate([
+            'fotos' => 'required',
+            
+        ]);
 
+        $id = $request->input('project_id');
+        
         teamleaderController::reAuthTL();
         //project ophalen
         $project = Teamleader::crm()->company()->getProjectDetail($id)->data;
