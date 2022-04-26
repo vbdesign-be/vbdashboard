@@ -174,7 +174,7 @@ class DomeinController extends Controller
         //emailcode ophalen
         $email = $request->input('email');
         $emailOrder = EmailOrder::where('email', $email)->first();
-        dd($emailOrder);
+        
 
         //delete functie aanspreken
         QboxController::deleteEmail($order->resource_code, $emailOrder->resource_code);
