@@ -205,7 +205,7 @@ class ShopController extends Controller
         $password = $request->input('password');
         $domain = $request->input('domain');
         $front = strtok($email, '@');
-        $price = env('PRICE__EMAIL');
+        $price = env('PRICE__EMAILBOX');
         
         
         //checken of de emailbox al bestaat
