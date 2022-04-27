@@ -125,8 +125,7 @@
                 </thead>
                 <tbody>
                 @if(!empty($facturen))
-                @for($x = 0; $x < count($facturen); $x++)
-                @foreach($facturen[$x] as $fac)
+                @foreach($facturen as $fac)
                   @if($fac->status !== "draft")
                     @if(date('d/m/y') > date('d/m/Y', strtotime($fac->due_on)) && $fac->status === "outstanding")
                     <tr class="table__item facturen text-xs bg-red-50">
@@ -157,7 +156,6 @@
                     </tr>
                   @endif
                 @endforeach
-                @endfor
                 @endif
                 </tbody>
               </table>

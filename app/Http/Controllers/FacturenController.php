@@ -25,8 +25,10 @@ class FacturenController extends Controller
             //kunnen maar dan 20 zijn dus enkele instantie in de array moet een offerte zijn
             $facturen[] = Teamleader::deals()->getInvoices(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
         }
-       $data['facturen'] = $facturen;
-       
+        
+        //facturen orderene op invoice_number-> laatste eerst
+        $data['facturen'] = collect($facturen[0])->sortByDesc('invoice_number')->all();
+        
         //facturen meesturen en redirecten
         return view('facturen/facturen', $data);
     }
@@ -60,11 +62,6 @@ class FacturenController extends Controller
         }else{
             abort(403);
         }
-
-        //op volgorde zetten
-
-        
-
     }
 
     public function betaalFactuur($factuur_id){
