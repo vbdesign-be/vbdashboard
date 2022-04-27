@@ -256,19 +256,14 @@ class SupportController extends Controller
         $split = explode(": ", strtolower($subject));
         $realSubject = $split[1];
 
-        
-
         //hier loopt het mis
         //realticket
         $splitBody = explode("&gt;<br><\/div><br><br>", $body);
-        $realBody = substr($splitBody[1], 0, -24);
-        
-        foreach($splitBody as $b){
-            $test = new Emailtest();
-            $test->test = $b;
-            $test->save();
-        }
-        
+        $realBody = substr($splitBody[1], 0, -23);
+
+        $test = new Emailtest();
+        $test->test = "body";
+        $test->save();
         
         $checkUser = User::where('email', $ogSender)->first();
         if(!empty($checkUser)){

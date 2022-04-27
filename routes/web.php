@@ -21,6 +21,7 @@ use App\Http\Controllers\FacturenController;
 use App\Http\Livewire\AddTag;
 use App\Mail\UserLoginMail;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\Vimexx;
 
 
@@ -42,7 +43,23 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
+Route::get('/test', function(){
+    $text = "bekijk deze test eens\r\n\r\n---------- Forwarded message ---------\r\nVan: Bert Vanhees <info@krits.be>\r\nDate: wo 27 apr. 2022 om 11:54\r\nSubject: nieuwe test\r\nTo: <jonathan@vbdesign.be>\r\n\r\n\r\nhallo\r\n\r\nnieuwe test\r\n";
+    $body = "<div dir=\"ltr\">bekijk dit eens of het werkt zonder attachment<br><div><br><div class=\"gmail_quote\"><div dir=\"ltr\" class=\"gmail_attr\">---------- Forwarded message ---------<br>Van: <b class=\"gmail_sendername\" dir=\"auto\">Bert Vanhees<\/b> <span dir=\"auto\">&lt;<a href=\"mailto:info@krits.be\">info@krits.be<\/a>&gt;<\/span><br>Date: wo 27 apr. 2022 om 11:09<br>Subject: test doorsturen zonder attachment<br>To:  &lt;<a href=\"mailto:jonathan@vbdesign.be\">jonathan@vbdesign.be<\/a>&gt;<br><\/div><br><br><div><div style=\"color:black;font-size:14px\">testje met het doorsturen van een mail<\/div><div style=\"color:black;font-size:14px\"><br><\/div><div style=\"color:black;font-size:14px\"><br><\/div><\/div><\/div><\/div><\/div>\r\n";
+    
+    $explode = explode("\r\nVan:", $text);
+        $explode2 = explode("<", $explode[1]);
+        $explode3 = explode(">", $explode2[1]);
+        $ogSender = $explode3[0];
 
+        //hier loopt het mis
+        //realticket
+        
+        $splitBody = explode("&gt;<br><\/div><br><br>", $body);
+        $realBody = substr($splitBody[1], 0, -23);
+
+       dd($realBody);
+});
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
