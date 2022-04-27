@@ -81,10 +81,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/project/bugfix/{id}', [ProjectController::class, 'bugfix']);
     Route::get('/project/{id}', [ProjectController::class, 'detail']);
     Route::post('/project/addPhoto', [ProjectController::class, 'addPhoto']);
-    
-
-    //statistieken
-    Route::get('/statistieken', [StatistiekController::class, "statistieken"]);
 
     //shop
     Route::get('/shop', [ShopController::class, "shop"]);
