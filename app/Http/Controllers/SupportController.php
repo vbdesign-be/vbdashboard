@@ -256,6 +256,10 @@ class SupportController extends Controller
         $split = explode(": ", strtolower($subject));
         $realSubject = $split[1];
 
+        $test = new Emailtest();
+        $test->test = "hier";
+        $test->save();
+
         //hier loopt het mis
         //realticket
         $splitBody = explode("&gt;<br><\/div><br><br>", $body);
