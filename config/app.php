@@ -169,7 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
-        Vbdesign\Calculator\CalculatorServiceProvider::class,
+        
         Vbdesign\Teamleader\ServiceProvider\Teamleader::class,
         
         
