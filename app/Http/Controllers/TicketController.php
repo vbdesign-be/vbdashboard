@@ -465,9 +465,10 @@ class TicketController extends Controller
         $email = $request->input('email');
         $ticket = Ticket::find($request->input('ticket_id'));
         $checkUser = User::where('email', $email)->first();
+        
 
         //checken of het ticket al reacties heeft => anders moet wijzigen onmogelijk zijn
-        if(!empty($ticket->reactions)){
+        if(!empty($ticket->reactions[0])){
             $request->session()->flash('error', 'Kan afzender niet wijzigen omdat ticket reacties heeft');
             return redirect('/ticket/'. $ticket->id);
         }
