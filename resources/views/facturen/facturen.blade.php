@@ -18,6 +18,52 @@
           </div>
         </div>
 
+        @if($errors->any())
+            @component('components/notification')
+            @slot('type') red @endslot
+            @slot('size') notification-profile   @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endcomponent
+        @endif
+
+        @if($flash = session('message'))
+        @component('components/notification')
+            @slot('type') green @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') green @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
+        @if($flash = session('notification'))
+        @component('components/notification')
+            @slot('type') indigo @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') indigo @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
+        @if($flash = session('error'))
+        @component('components/notification')
+            @slot('type') red @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') red @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
         
         
 
@@ -81,6 +127,7 @@
                 @if(!empty($facturen))
                 @for($x = 0; $x < count($facturen); $x++)
                 @foreach($facturen[$x] as $fac)
+                  @if($fac->status !== "draft")
                     @if(date('d/m/y') > date('d/m/Y', strtotime($fac->due_on)) && $fac->status === "outstanding")
                     <tr class="table__item facturen text-xs bg-red-50">
                     @else
@@ -106,7 +153,9 @@
                           @endswitch
                       </td>
                       <td><a class="btn--download" target="_blank" href="/factuur/download/{{$fac->id}}">download icon</a></td>
+                      <td>@if($fac->status === "outstanding")<a class="btn--download" target="_blank" href="/factuur/betaling/{{$fac->id}}">betaal icon</a>@endif</td>
                     </tr>
+                  @endif
                 @endforeach
                 @endfor
                 @endif

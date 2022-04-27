@@ -119,6 +119,8 @@ Route::group(['middleware' => ['auth']], function() {
     //facturen
     Route::get('/facturen', [FacturenController::class, "getFacturen"]);
     Route::get('/factuur/download/{id}', [FacturenController::class, "downloadFactuur"]);
+    Route::get('/factuur/betaling/{id}', [FacturenController::class, "betaalFactuur"]);
+    Route::get('/factuur/payedFactuur', [FacturenController::class, "payedFactuur"]);
 
     //afspraak
     Route::get('/afspraak', [AfspraakController::class, "afspraak"]);

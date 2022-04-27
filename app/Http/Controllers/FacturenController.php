@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Vbdesign\Teamleader\Facade\Teamleader;
@@ -60,5 +61,75 @@ class FacturenController extends Controller
             abort(403);
         }
 
+        //op volgorde zetten
+
+        
+
+    }
+
+    public function betaalFactuur($factuur_id){
+        teamleaderController::reAuthTL();
+        //factuur info
+        $factuur = Teamleader::deals()->getInvoice(['id' => $factuur_id]);
+
+        //security
+        $bedrijf = $factuur->invoicee->name;
+        $teamleader_id = Auth::user()->teamleader_id;
+        $user = Teamleader::crm()->contact()->info($teamleader_id)->data;
+        $companies = $user->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+            $comps[] = Teamleader::crm()->company()->info($company_id);
+        }
+        foreach($comps as $c){
+            if($c->data->name === $bedrijf){
+                $check = true;
+            }
+        }
+        if(!isset($check)){
+            abort(403);
+        }
+
+        //prijs uit de factuur halen
+        $price = strval($factuur->total->payable->amount);
+            // als er maar 1 cijfer achter punt->nul bijzetten(anders werkt mollie niet)
+            $priceExplode = explode(".", $price);
+            if(!isset($priceExplode[1])){
+                $price = $price.".00";
+            }elseif(strlen($priceExplode[1]) === 1){
+                $price = $price."0";
+            }
+        //invoice number uit de factuur halen
+        $number = $factuur->invoice_number;
+        $explodeNumber = explode(" ", $number);
+        $realNumber = $explodeNumber[0].$explodeNumber[1].$explodeNumber[2];
+        //mollie payment creeren met id en prijs
+        MollieController::createPaymentFactuur($factuur_id, $price, $realNumber);
+    }
+
+    public function payedFactuur(Request $request){
+        $credentials = $request->validate([
+            'factuur_id' => 'required',
+            'price' => 'required',
+            'number' => 'required'
+        ]);
+
+        $factuur_id = $request->input('factuur_id');
+        $price = floatval($request->input('price'));
+
+        $number = $request->input('number');
+        $explodeNumber = explode("/", $number);
+        $realNumber = $explodeNumber[0].' / '.$explodeNumber[1];
+
+        //datum weten van de payment;
+        $date = new DateTime();
+        $realDate = $date->format('Y-m-d\TH:i:sP');
+    
+        //teamleader laten weten dat de betaling gelukt is
+        teamleaderController::reAuthTL();
+        $res = Teamleader::deals()->invoicePayed(['id' => $factuur_id, 'payment' => ['amount' => $price, 'currency' => 'EUR'], 'paid_at' => $realDate]);
+
+        $request->session()->flash('message', 'Factuur: '.$realNumber.' is betaald.');
+        return redirect('facturen');
     }
 }

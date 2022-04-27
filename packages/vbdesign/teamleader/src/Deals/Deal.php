@@ -168,5 +168,15 @@ class Deal
             'body' => json_encode($data)
         ]);
     }
+
+    public function getInvoice($data = []){
+        return $this->teamleader->getCall('invoices.info?'.http_build_query($data))->data;
+    }
+
+    public function invoicePayed($data = []){
+        return $this->teamleader->postCall('invoices.registerPayment', [
+            'body' => json_encode($data)
+        ]);
+    }
     
 }

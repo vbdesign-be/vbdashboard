@@ -86,5 +86,27 @@ class MollieController extends Controller
         exit;
     }
 
+    public static function createPaymentFactuur($factuur_id, $price, $number){
+        $token = env('MOLLIE_TOKEN');
+        $url = env('MOLLIE_URL');
+        $data = [
+            'amount' => [
+                'currency' => 'EUR',
+                'value' => $price
+            ],
+            'description' => 'Betaling factuur: '.$number,
+            'redirectUrl' => $url.'/factuur/payedFactuur?factuur_id='.$factuur_id.'&price='.$price.'&number='.$number,
+            'metadata' => [
+                'type' => 'Factuur',
+                'factuur_id' => $factuur_id,
+                'factuur_nummer' => $number,
+          ]
+        ];
+        $res = Http::withToken("test_g6CCJx8E7JFpwCM2j77wNW8M8zQ8NC")->post('https://api.mollie.com/v2/payments', $data);
+        $ans = json_decode($res->body());
+        header("Location: {$ans->_links->checkout->href}");
+        exit;
+    }
+
     
 }
