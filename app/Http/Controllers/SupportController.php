@@ -244,34 +244,30 @@ class SupportController extends Controller
     }
 
     private function handleForward($user ,$sender, $subject, $body, $attachments, $ccs, $text){
-        $test = new Emailtest();
-        $test->test = "handle forward";
-        $test->save();
+        
         $explode = explode("\r\nVan:", $text);
         $explode2 = explode("<", $explode[1]);
         $explode3 = explode(">", $explode2[1]);
         $ogSender = $explode3[0];
 
-        $test1 = new Emailtest();
-        $test1->test = $ogSender;
-        $test1->save();
+        
 
         //realsubject
         $split = explode(": ", strtolower($subject));
         $realSubject = $split[1];
 
-        $test2 = new Emailtest();
-        $test2->test = $realSubject;
-        $test2->save();
+        
 
         //hier loopt het mis
         //realticket
         $splitBody = explode("&gt;<br><\/div><br><br>", $body);
         $realBody = substr($splitBody[1], 0, -24);
         
-        $test3 = new Emailtest();
-        $test3->test = $realBody;
-        $test3->save();
+        foreach($splitBody as $b){
+            $test = new Emailtest();
+            $test->test = $b;
+            $test->save();
+        }
         
         
         $checkUser = User::where('email', $ogSender)->first();
