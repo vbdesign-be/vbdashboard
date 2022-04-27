@@ -43,19 +43,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/test', function(){
-    $text = "bekijk deze test eens\r\n\r\n---------- Forwarded message ---------\r\nVan: Bert Vanhees <info@krits.be>\r\nDate: wo 27 apr. 2022 om 11:54\r\nSubject: nieuwe test\r\nTo: <jonathan@vbdesign.be>\r\n\r\n\r\nhallo\r\n\r\nnieuwe test\r\n";
-    $body = "<div dir=\"ltr\">test 4<br><div><br><div class=\"gmail_quote\"><div dir=\"ltr\" class=\"gmail_attr\">---------- Forwarded message ---------<br>Van: <b class=\"gmail_sendername\" dir=\"auto\">jonathan verhaegen<\/b> <span dir=\"auto\">&lt;<a href=\"mailto:jonathan_verhaegen@hotmail.com\">jonathan_verhaegen@hotmail.com<\/a>&gt;<\/span><br>Date: wo 27 apr. 2022 om 12:06<br>Subject: test 4<br>To: Jonathan Verhaegen &lt;<a href=\"mailto:jonathan@vbdesign.be\">jonathan@vbdesign.be<\/a>&gt;<br><\/div><br><br>\r\n\r\n\r\n\r\n\r\n\r\n<div link=\"blue\" vlink=\"#954F72\" style=\"word-wrap:break-word\" lang=\"NL-BE\">\r\n<div class=\"m_3798959708290935489WordSection1\">\r\n<p class=\"MsoNormal\">Test4<\/p>\r\n<p class=\"MsoNormal\"><u><\/u>\u00a0<u><\/u><\/p>\r\n<p class=\"MsoNormal\">Verzonden vanuit <a href=\"https:\/\/go.microsoft.com\/fwlink\/?LinkId=550986\" target=\"_blank\">\r\nMail<\/a> voor Windows<\/p>\r\n<p class=\"MsoNormal\"><u><\/u>\u00a0<u><\/u><\/p>\r\n<\/div>\r\n<\/div>\r\n\r\n<\/div><\/div><\/div>\r\n";
-    
 
-    //hier loopt het mis
-    //realticket
-        
-    $splitBody = explode("&gt;<br><\/div><br><br>", $body);
-    $realBody = substr($splitBody[1], 0, -23);
-
-    dd($realBody);
-});
 
 Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
