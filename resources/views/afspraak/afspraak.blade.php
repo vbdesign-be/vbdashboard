@@ -23,7 +23,7 @@
           <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
           <script>
             Calendly.initInlineWidget({
-              url: 'https://calendly.com/jonathan-764'
+              url: 'https://calendly.com/vbdesign/kennismaking'
             });
           </script>
           </div>

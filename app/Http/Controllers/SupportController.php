@@ -326,7 +326,7 @@ class SupportController extends Controller
     private function makeEmailReaction($user, $sender, $subject, $body, $attachments, $ccs){
         $user = User::where('email', $sender)->first();
         $realSub = substr($subject,  4);  
-        return "test";
+        
         
         if(!empty($user)){
             $ticket = Ticket::where('subject', $realSub)->first();
