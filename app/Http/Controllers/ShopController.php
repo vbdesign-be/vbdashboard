@@ -62,7 +62,7 @@ class ShopController extends Controller
             'domein' => 'required',
         ]);
 
-        $domain = $request->input('domain');
+        $domain = $request->input('domein');
         $end = ".".explode('.', $domain,)[1];
         $data["domain"] = $domain;
         $data["mailbox"] = "info@".$domain;
