@@ -118,7 +118,7 @@ class OfferteController extends Controller
         $offerte->estimated_closing_date = $data['estimated_closing_date'];
         $offerte->save();
         //24 uur duren ...
-        $request->session()->flash('message', 'Je offerte is goed ontvangen ');
+        $request->session()->flash('message', 'Je offerte is goed ontvangen, het kan 24u duren voor deze bevestigd is.');
         
         //gegevens van de persoon(naam voornaam)
         teamleaderController::reAuthTL();
