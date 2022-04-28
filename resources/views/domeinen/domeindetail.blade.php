@@ -146,6 +146,9 @@
 
     </div>
 
+    <div class="loader__container">
+    <span class="loader"><span class="loader-inner"></span></span>
+    </div>
 
       
 

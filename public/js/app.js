@@ -2063,7 +2063,24 @@ module.exports = {
 var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
     add = _require.add;
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //tickets samenvoegen
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // //loader
+// let loader_container = document.querySelector('.loader__container');
+// function fadeOutEffect(loader_container){
+//     var fadeEffect = setInterval(function () {
+//         if (!loader_container.style.opacity) {
+//             loader_container.style.opacity = 1;
+//         }
+//         if (loader_container.style.opacity > 0) {
+//             loader_container.style.opacity -= 0.1;
+//         } else {
+//             clearInterval(fadeEffect);
+//         }
+//     }, 50);
+// }
+// if(loader_container !== null){
+//     window.addEventListener('load', fadeOutEffect(loader_container));
+// }
+//tickets samenvoegen
 
 
 var ticketsMerge = document.querySelectorAll('.ticket--merge');

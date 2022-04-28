@@ -117,6 +117,25 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //dkim record creeeren om cloudflare met postmark te verbinden
+    public static function createDKIMRecordPostmark($zone, $host, $record ){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => env('CLOUDFLARE_AUTH_KEY'),
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => env('CLOUDFLARE_USER_KEY')
+        ])->post($url.'zones/'.$zone.'/dns_records', ([
+            'type' => 'TXT',
+            'name' => $host,
+            'content' => $record,
+            'ttl' => 900,
+        ]));
+        
+        $data = json_decode($res->body());
+        return $data;
+    }
+
     //dmarc record creeeren om cloudflare met qbox mail te verbinden
     public static function createDMARCRecord($zone ){
         $url = "https://api.cloudflare.com/client/v4/";
@@ -224,6 +243,24 @@ class cloudflareController extends Controller
             'X-Auth-User-Service-Key' => env('CLOUDFLARE_USER_KEY')
         ])->post($url.'zones/'.$zone.'/dns_records/scan');
     
+        $data = json_decode($res->body());
+        return $data;
+    }
+
+    public static function createCNAMERecordPostmark($zone, $record){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => env('CLOUDFLARE_AUTH_KEY'),
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => env('CLOUDFLARE_USER_KEY')
+        ])->post($url.'zones/'.$zone.'/dns_records', ([
+            'type' => 'CNAME',
+            'name' => 'pm-bounces',
+            'content' => $record,
+            'ttl' => 900,
+        ]));
+        
         $data = json_decode($res->body());
         return $data;
     }

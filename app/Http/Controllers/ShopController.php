@@ -96,8 +96,8 @@ class ShopController extends Controller
             'prijs' => 'required'
         ]);
         
-        $domain = $request->input("domain");
-        $price = $request->input("price");
+        $domain = $request->input("domein");
+        $price = $request->input("prijs");
 
         if(!empty($domain)){
             $order = new Order();
@@ -113,12 +113,10 @@ class ShopController extends Controller
     }
 
     public function payed(Request $request){
-
         $credentials = $request->validate([
-            'order_id' => 'required',
-            
+            'order_id' => 'required', 
         ]);
-
+        
         //order aanpassen
         $id = $request->input('order_id');
         $order = Order::where('id', $id)->first();
@@ -132,9 +130,24 @@ class ShopController extends Controller
         
 
         //domeinnaam reistreren via cloudflare
-        $cloudflare = CloudflareController::createZone($order->domain);
-        
+        $cloudflare = cloudflareController::createZone($order->domain);
 
+        //postmark maken en dkim return
+        $postmark = PostmarkController::createDomain($order->domain);
+        
+        //cloudflare dkim invullen en verifieren;
+        $checkCloud = cloudflareController::getOneDomain($order->domain);
+        $cloudDKIM = cloudflareController::createDKIMRecordPostmark($checkCloud[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
+        sleep(5);
+        $postmarkCheck = PostmarkController::checkDKIM($postmark->ID);
+        
+        //postmark return path invullen en verifieren
+        cloudflareController::createCNAMERecordPostmark($checkCloud[0]->id, $postmark->ReturnPathDomainCNAMEValue);
+        sleep(5);
+        $postmarkCheck2 = PostmarkController::checkCNAME($postmark->ID);
+
+        
+        //vimexx checken of domein actief is
         $check = $vimexx->checkDomain($order->domain);
         if($check === 'Niet beschikbaar'){
             $order->status = "active";
@@ -201,7 +214,7 @@ class ShopController extends Controller
             
              //toevoegen aan de cloudflare domein
                 //create a cloudflare domein als dat er nog niet is
-                $check = CloudflareController::getOneDomain($order->domain);
+                $check = cloudflareController::getOneDomain($order->domain);
                 
                 if(empty($check)){
                     //informatie tonen zodat mensne die kunnen invullen
@@ -215,7 +228,7 @@ class ShopController extends Controller
                     $ip = '185.97.217.16';
 
                     //invullen op cloudflare
-                    CloudflareController::createDnsRecord($check[0]->id, $name, $ip);
+                    cloudflareController::createDnsRecord($check[0]->id, $name, $ip);
                     //qboxmail check doen liefts async
                     $this->dispatch(new checkDnsINfo($resource_code, $check, $front, $password, $user, $emailOrder));
                 }
@@ -301,8 +314,16 @@ class ShopController extends Controller
         $zone = cloudflareController::createZone($order->domain);
         $check = cloudflareController::getOneDomain($order->domain);
         $scan = cloudflareController::dnsScan($check[0]->id);
+
+        $check = $vimexx->checkDomain($order->domain);
+        if($check === 'Niet beschikbaar'){
+            $order->status = "active";
+            $order->save();
+            $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinaam te verhuizen. Dit kan 24u duren.');
+        }else{
+            $request->session()->flash('error', 'Er is iets fout gegaan. Je kan ons bereiken via een support ticket');
+        }
         
-        $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinaam te verhuizen. Dit kan 24u duren.');
         return redirect('domein/'.$order->domain);
     }
 
