@@ -167,10 +167,23 @@ class FacturenController extends Controller
 
     public function downloadCreditnota($credit_id){
         teamleaderController::reAuthTL();
-       
-        $download = Teamleader::deals()->downloadCreditnota(['id' => $credit_id, 'format' => 'pdf']);
-           
-        if(!empty($download)){
+        $teamleader_id = Auth::user()->teamleader_id;
+        $user = Teamleader::crm()->contact()->info($teamleader_id)->data;
+        $companies = $user->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+            $comps[] = Teamleader::crm()->company()->info($company_id);
+        }
+
+        //security
+        $credit = Teamleader::deals()->getOneCreditnote(['id' => $credit_id]);
+        foreach($comps as $c){
+            if($c->data->name === $credit->invoicee->name){
+                $check = true;
+            }
+        }
+        if(isset($check)){
+            $download = Teamleader::deals()->downloadCreditnota(['id' => $credit_id, 'format' => 'pdf']);
             return redirect($download->data->location);
         }else{
             abort(403);

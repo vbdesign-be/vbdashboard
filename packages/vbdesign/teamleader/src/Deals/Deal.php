@@ -183,6 +183,10 @@ class Deal
         return $this->teamleader->getCall('creditNotes.list?'.http_build_query($data));
     }
 
+    public function getOneCreditnote($data = []){
+        return $this->teamleader->getCall('creditNotes.info?'.http_build_query($data))->data;
+    }
+
     public function downloadCreditnota($data = []){
         return $this->teamleader->postCall('creditNotes.download', [
             'body' => json_encode($data)
