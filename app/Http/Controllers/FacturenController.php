@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Vbdesign\Teamleader\Facade\Teamleader;
 
+
 class FacturenController extends Controller
 {
     public function getFacturen(){
@@ -28,7 +29,7 @@ class FacturenController extends Controller
         
         //facturen orderene op invoice_number-> laatste eerst
         $data['facturen'] = collect($facturen[0])->sortByDesc('invoice_number')->all();
-        
+
         //facturen meesturen en redirecten
         return view('facturen/facturen', $data);
     }
@@ -129,4 +130,51 @@ class FacturenController extends Controller
         $request->session()->flash('message', 'Factuur: '.$realNumber.' is betaald.');
         return redirect('facturen');
     }
+
+    public function getCreditnotas(){
+        teamleaderController::reAuthTL();
+        //wie ingelogd?
+        $teamleader_id = Auth::user()->teamleader_id;
+        $user = Teamleader::crm()->contact()->info($teamleader_id)->data;
+        $companies = $user->companies;
+        foreach($companies as $c){
+            $company_id = $c->company->id;
+            $comps[] = Teamleader::crm()->company()->info($company_id);
+        }
+        $data['comps'] = $comps;
+        
+        foreach ($comps as $c) {
+            //kunnen maar dan 20 zijn dus enkele instantie in de array moet een offerte zijn
+            $facturen[] = Teamleader::deals()->getInvoices(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
+        }
+
+    
+        //alle notas gaan halen die bij de facturen passen
+        // foreach($facturen[0] as $f){
+        //     $notes['notes'][] = Teamleader::deals()->getCreditnotes(['filter' => [ 'invoice_id' => $f->id]]);
+        //     $notes['notes']['title'][] = Teamleader::deals()->getInvoice(['id' => $f->id]);
+        // };
+        for($x = 0; $x < count($facturen[0]); $x++){
+            $notes[$x]['note'] = Teamleader::deals()->getCreditnotes(['filter' => [ 'invoice_id' => $facturen[0][$x]->id]]);
+            $notes[$x]['title'] = $facturen[0][$x]->invoicee->name;
+        }
+
+        //dd($notes[1]);
+        
+        $data['creditnotas'] = $notes;
+        return view('facturen/creditnotas', $data);
+    }
+
+    public function downloadCreditnota($credit_id){
+        teamleaderController::reAuthTL();
+       
+        $download = Teamleader::deals()->downloadCreditnota(['id' => $credit_id, 'format' => 'pdf']);
+           
+        if(!empty($download)){
+            return redirect($download->data->location);
+        }else{
+            abort(403);
+        }
+    }
+    
 }

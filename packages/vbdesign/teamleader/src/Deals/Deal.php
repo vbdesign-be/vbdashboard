@@ -178,5 +178,16 @@ class Deal
             'body' => json_encode($data)
         ]);
     }
+
+    public function getCreditnotes($data = []){
+        return $this->teamleader->getCall('creditNotes.list?'.http_build_query($data));
+    }
+
+    public function downloadCreditnota($data = []){
+        return $this->teamleader->postCall('creditNotes.download', [
+            'body' => json_encode($data)
+        ]);
+    }
+    
     
 }

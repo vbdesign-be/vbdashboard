@@ -1,6 +1,6 @@
 @extends('layouts/app')
 
-@section('title', 'Facturen')
+@section('title', 'Creditnotas')
 
 @section('content')
 
@@ -14,9 +14,15 @@
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">
           <div class="container px-4 mx-auto">
-            <h2 class="text-2xl font-bold">Facturen</h2>
+            <h2 class="text-2xl font-bold">Creditnotas</h2>
           </div>
         </div>
+
+        <section class="py-8">
+          <div class="container px-4 mx-auto">
+            <a href="/facturen">Back knop</a>
+          </div>
+        </section>
 
         @if($errors->any())
             @component('components/notification')
@@ -84,9 +90,8 @@
         <div class="container px-4 mx-auto">
           <div class="pt-6 bg-white shadow rounded">
             <div class="px-6 border-b">
-              <div class="grid grid-cols-2 items-center mb-6">
-                <h3 class="text-xl font-bold">Overzicht Facturen</h3>
-                <a class="justify-self-end" href="/creditnotas">Bekijk creditnotas</a>
+              <div class="flex flex-wrap items-center mb-6">
+                <h3 class="text-xl font-bold">Overzicht Creditnotas</h3>
               </div>
             </div>
             <div class="p-4 overflow-x-auto">
@@ -125,35 +130,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                @if(!empty($facturen))
-                @foreach($facturen as $fac)
-                  @if($fac->status !== "draft")
-                    @if(date('d/m/y') > date('d/m/Y', strtotime($fac->due_on)) && $fac->status === "outstanding")
-                    <tr class="table__item facturen text-xs bg-red-50">
-                    @else
+                @if(!empty($creditnotas))
+                @foreach($creditnotas as $credit)
+                  @if(!empty($credit['note']->data))
                     <tr class="table__item facturen text-xs bg-gray-50">
-                    @endif
                       <td class="flex items-center factuur__number py-4 px-6 font-medium">
-                        <p>{{$fac->invoice_number}}</p>
+                        <p>{{$credit['note']->data[0]->credit_note_number}}</p>
                       </td>
-                      <td class="font-medium factuur__name">{{$fac->invoicee->name}}</td>
-                      <td class="font-medium factuur__amount">€{{$fac->total->tax_inclusive->amount}}</td>
-                      <td class="font-medium factuur__date">{{ date('d/m/Y', strtotime($fac->due_on))}}</td>
+                      <td class="font-medium factuur__name">{{$credit['title']}}</td>
+                      <td class="font-medium factuur__amount">€{{$credit['note']->data[0]->total->payable->amount}}</td>
+                      <td class="font-medium factuur__date">{{ date('d/m/Y', strtotime($credit['note']->data[0]->credit_note_date))}}</td>
                       <td class="font-medium factuur__status">
-                          @switch($fac->status)
-                            @case("matched")
-                                Betaald
-                                @break
-                            @case("draft")
-                                Nog niet ingebracht
-                                @break
-                            @case("outstanding")
-                                Nog te betalen
-                                @break
-                          @endswitch
+                         {{$credit['note']->data[0]->status}}
                       </td>
-                      <td><a class="btn--download" target="_blank" href="/factuur/download/{{$fac->id}}">download icon</a></td>
-                      <td>@if($fac->status === "outstanding")<a class="btn--download" target="_blank" href="/factuur/betaling/{{$fac->id}}">betaal icon</a>@endif</td>
+                      <td><a class="btn--download" target="_blank" href="/creditnota/download/{{$credit['note']->data[0]->id}}">download icon</a></td>
                     </tr>
                   @endif
                 @endforeach
