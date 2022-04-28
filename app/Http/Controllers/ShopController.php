@@ -298,7 +298,9 @@ class ShopController extends Controller
         //$vimexx->transferDomain($order->domain,'', '', $code);
 
         //toevoegen aan cloudflare
-        CloudflareController::createZone($order->domain);
+        $zone = cloudflareController::createZone($order->domain);
+        $check = cloudflareController::getOneDomain($order->domain);
+        $scan = cloudflareController::dnsScan($check[0]->id);
         
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je domeinaam te verhuizen. Dit kan 24u duren.');
         return redirect('domein/'.$order->domain);

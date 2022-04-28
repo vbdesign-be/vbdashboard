@@ -215,4 +215,18 @@ class cloudflareController extends Controller
         return $data;
     }
 
+    //dns scan
+    public static function dnsScan($zone){
+        $url = "https://api.cloudflare.com/client/v4/";
+        $res = Http::withHeaders([
+            'X-Auth-Key' => env('CLOUDFLARE_AUTH_KEY'),
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => env('CLOUDFLARE_USER_KEY')
+        ])->post($url.'zones/'.$zone.'/dns_records/scan');
+    
+        $data = json_decode($res->body());
+        return $data;
+    }
+    
+
 }
