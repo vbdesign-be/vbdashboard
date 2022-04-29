@@ -72,12 +72,13 @@
               <h3 class="text-xl font-bold">Mijn domeinnamen</h3>
             </div>
             <div class="p-4 overflow-x-auto">
+            @if(!empty($orders[0]))
               <table class="table-auto w-full">
                 <thead>
                   <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">E-mailbox</th><th class="pb-3 font-medium">Status</th><th style="visibility:hidden">bewerk knopjes </th></tr>
                 </thead>
                 <tbody>
-                  @if(!empty($orders))
+                  
                   @foreach($orders as $order)
                   <tr class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium">{{ $order->domain }}</td>
@@ -111,14 +112,16 @@
                           @endcomponent
                         @endif
                     </td>
-                    <td>@if($order->status === "active")<a href="domein/{{$order->domain}}">bewerk knopje</a>@else<div></div>@endif</td>
+                    <td>@if($order->status !== "ordered")<a href="domein/{{$order->domain}}">bewerk knopje</a>@else<div></div>@endif</td>
                   </tr>
                   @endforeach
-                  @endif
+                  
                 </tbody>
               </table>
-              
-            </div>
+              </div>
+              @else
+                <p>Momenteel geen domeinnamen</p>
+              @endif
           </div>
         </div>
       </section>

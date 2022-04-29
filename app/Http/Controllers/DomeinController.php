@@ -10,21 +10,19 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\cloudflareController;
 use App\Http\Controllers\QboxController;
 use App\Jobs\checkDnsINfo;
+use Illuminate\Support\Facades\Session;
 
 class DomeinController extends Controller
 {
     public function domeinen(){
         $orders = Order::where('user_id', Auth::id())->get();
-        foreach($orders as $order){
-            if($order->payed){
-                $data['orders'][] = $order;
-            }
-        }
-        if(!empty($data['orders'])){
-            return view('domeinen/domeinen', $data);
-        }else{
-            return view('domeinen/domeinen');
-        }
+        // foreach($orders as $order){
+        //     if($order->payed){
+        //         $data['orders'][] = $order;
+        //     }
+        // }
+        $data['orders'] = $orders;
+        return view('domeinen/domeinen', $data);
         
     }
 
@@ -69,8 +67,10 @@ class DomeinController extends Controller
                 $check = cloudflareController::getOneDomain($domain);
                 $scan = cloudflareController::dnsScan($check[0]->id);
 
-                //postmark maken en dkim return
+                //postmark maken en id opslaan in database
                 $postmark = PostmarkController::createDomain($domain);
+                $order->postmark = strval($postmark->ID);
+                $order->save();
         
                 //cloudflare dkim invullen en verifieren;
                 $checkCloud = cloudflareController::getOneDomain($domain);
@@ -84,6 +84,28 @@ class DomeinController extends Controller
                 PostmarkController::checkCNAME($postmark->ID);
             }
 
+            //checken of postmark en cloudflare werken
+            $check = cloudflareController::getOneDomain($domain)[0];
+            $checkPost = PostmarkController::getOneDomain($order->postmark);
+            
+            if($check->status !== "active" && $checkPost->DKIMVerified !== true && $checkPost->DKIMVerified !== true){
+                $order->status = "pending";
+                $order->save();
+                $data['numberEmails'] = 0;
+                $data['checkDns'] = true;
+                $data['isCloudflare'] = false;
+                $data['domain'] = $domain;
+                $data['numberDNS'] = 0;
+
+                Session::flash('error', 'De nameservers zijn momenteel nog aan het updaten. Dit kan 24u duren');
+                return view('domeinen/domeindetail', $data);
+
+            }
+
+            //status op active
+            $order->status = "active";
+            $order->save();
+            
             //aantal dns records
             $check = cloudflareController::getOneDomain($domain);
             //dd($check);
@@ -125,6 +147,7 @@ class DomeinController extends Controller
                 $data['numberEmails'] = 0;
             }
         } else {
+            //nameservers zijn niet van cloudflare
 
             $data['isCloudflare'] = false;
             $order = Order::where('domain', $domain)->first();
@@ -156,6 +179,7 @@ class DomeinController extends Controller
         }
 
         $data['domain'] = $domain;
+        $data['order'] = $order;
         return view('domeinen/domeindetail', $data);
     }
 

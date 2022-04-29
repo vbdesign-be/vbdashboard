@@ -76,8 +76,28 @@
     <section class="py-8">
       <div class="container px-4 mx-auto">
         <div class="pt-4 bg-white shadow rounded">
-          <div class="flex px-6 pb-4 border-b">
+          <div class="flex gap-20 px-6 pb-4 border-b">
             <h3 class="text-xl font-bold">Informatie {{$domain}}</h3>
+            <div>
+            @if($order->status === "failed")
+                          @component('components/domainstatus')
+                            @slot('color') red @endslot
+                              {{$order->status}}
+                          @endcomponent
+                        @endif
+                        @if($order->status === "active")
+                          @component('components/domainstatus')
+                            @slot('color') green @endslot
+                              {{$order->status}}
+                          @endcomponent
+                        @endif
+                        @if($order->status === "pending")
+                          @component('components/domainstatus')
+                            @slot('color') orange @endslot
+                              {{$order->status}}
+                          @endcomponent
+                        @endif
+            </div>
           </div>
           <div class="px-6 py-4 overflow-x-auto">
             <p>Eindigd op: {{ $expiration_date }}</p>

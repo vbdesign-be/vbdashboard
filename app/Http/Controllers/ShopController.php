@@ -103,6 +103,7 @@ class ShopController extends Controller
             $order = new Order();
             $order->domain = $domain;
             $order->user_id = Auth::id();
+            $order->status = "ordered";
             $order->payed = false;
             $order->save();
 
