@@ -2073,6 +2073,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // //load
 //         if (loader_container.style.opacity > 0) {
 //             loader_container.style.opacity -= 0.1;
 //         } else {
+//             loader_container.style.display = "none";
 //             clearInterval(fadeEffect);
 //         }
 //     }, 50);

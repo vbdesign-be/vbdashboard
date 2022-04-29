@@ -19,9 +19,9 @@
     
 
     @yield('content')
-    <!-- <div class="loader__container">
+    <div class="loader__container">
         <span class="loader"><span class="loader-inner"></span></span>
-    </div> -->
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/charts-demo.js"></script>
     <script src="{{ URL::asset('js/app.js') }}"></script>

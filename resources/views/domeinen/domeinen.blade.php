@@ -112,7 +112,7 @@
                           @endcomponent
                         @endif
                     </td>
-                    <td>@if($order->status !== "ordered")<a href="domein/{{$order->domain}}">bewerk knopje</a>@else<div></div>@endif</td>
+                    <td>@if($order->status !== "ordered" && !empty($order->status) )<a class="editDomain" href="domein/{{$order->domain}}">bewerk knopje</a>@else<div></div>@endif</td>
                   </tr>
                   @endforeach
                   

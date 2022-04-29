@@ -5,6 +5,7 @@ require('./bootstrap');
 // //loader
 // let loader_container = document.querySelector('.loader__container');
 
+
 // function fadeOutEffect(loader_container){
 //     var fadeEffect = setInterval(function () {
 //         if (!loader_container.style.opacity) {
@@ -13,7 +14,7 @@ require('./bootstrap');
 //         if (loader_container.style.opacity > 0) {
 //             loader_container.style.opacity -= 0.1;
 //         } else {
-            
+//             loader_container.style.display = "none";
 //             clearInterval(fadeEffect);
 //         }
 //     }, 50);
@@ -22,6 +23,8 @@ require('./bootstrap');
 // if(loader_container !== null){
 //     window.addEventListener('load', fadeOutEffect(loader_container));
 // }
+
+
 
 //tickets samenvoegen
 let ticketsMerge = document.querySelectorAll('.ticket--merge');
