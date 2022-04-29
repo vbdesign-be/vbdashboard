@@ -34,7 +34,7 @@ class ShopController extends Controller
         }
         
         $checkDomain = explode(".", $domain);
-        if(!isset($checkDomain[1]) || !isset($checkDomain[2])){
+        if(!isset($checkDomain[1]) && !isset($checkDomain[2])){
             $request->session()->flash('error', $input.' is geen domeinnaam');
             return view('shop/shop');
         }
