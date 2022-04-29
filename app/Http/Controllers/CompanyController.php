@@ -18,13 +18,17 @@ class CompanyController extends Controller
         $company = Teamleader::crm()->company()->info($id);
         $data["company"] = $company->data;
         
+        //bedrijf kan meerdere emails hebben.
+        //Lus alle emails voor een bedrijf uit
         $emails = $data['company']->emails;
         foreach($emails as $e){
             if ($e->type === "primary") {
                 $data['company']->email = $e->email;
             }
         }
-        
+
+        //bedrijf kan meerdere telefoons hebben.
+        //Lus alle telefoons voor een bedrijf uit
         $telephones = $data['company']->telephones;
         for($x = 0; $x < count($telephones); $x++){
             if($telephones[$x]->type === "mobile"){
@@ -35,6 +39,8 @@ class CompanyController extends Controller
             }
         }
 
+        //Bedrijf kan meerdere adressen hebben
+        //lus alle adresses en kijk welken de primary adres is.
         $addresses = $data['company']->addresses;
         foreach($addresses as $address){
             if($address->type === "primary"){
@@ -48,18 +54,24 @@ class CompanyController extends Controller
                 
             }
         }
-     
+        
+        //welke users zitten bij het bedrijf
         $company_users = Teamleader::crm()->contact()->list(['filter' => ['company_id' => $data["company"]->id, 'tags' => [0 => "klant"] ]]);
         foreach($company_users as $u){
             $data['company']->users = $u;
         }
 
+        //welke businesstypes zijn er allemaal
         $businessTypes = Teamleader::crm()->company()->getBusinessTypes($data['company']->country);
         $data["businessTypes"] = $businessTypes->data;
 
+        //welke provincies zijn er allemaal
         $provinces = Teamleader::crm()->company()->getProvinces($data['company']->country);
         $data['provinces'] = $provinces->data;
 
+        //kijken of de ingelogde gebruiker een werknemer is van het bedrijf
+            //ja? dan mag die de blade bekijken
+            //nee?abort403
         foreach($data["company"]->users as $u){
             $user_ids[] = $u->id;
         }
@@ -74,6 +86,7 @@ class CompanyController extends Controller
     public function updateCompany(Request $request){
         teamleaderController::reAuthTL();
 
+        //checken of alles meegestuurd word
         $credentials = $request->validate([
             'bedrijfsnaam' => 'required|max:255',
             'bedrijfsemail' => 'required|email',     
@@ -81,8 +94,7 @@ class CompanyController extends Controller
 
         $company_id = $request->input('company_id');
 
-      
-        
+        //als de input telefoon niet leeg is-> update doen met telefoon
         if (!empty($request->input('telefoon'))) {
             Teamleader::crm()->company()->update($company_id, [
             'name' => $request->input('bedrijfsnaam'),
@@ -100,6 +112,7 @@ class CompanyController extends Controller
                 ]]],
             ]);
         }else{
+            //als de input telefoon leeg is-> update doen zonder
             Teamleader::crm()->company()->update($company_id, [
                 'name' => $request->input('bedrijfsnaam'),
                 'business_type_id' => $request->input('bedrijfsvorm'),
@@ -117,12 +130,8 @@ class CompanyController extends Controller
                 ]);
         }
 
+        //gebruikers een update geven en redirecten
         $request->session()->flash('message', 'De gegevens van '. $request->input('bedrijfsnaam'). ' zijn geüpdate');
-        
-
-
         return redirect('/company/'.$company_id.'');
-
-
     }
 }

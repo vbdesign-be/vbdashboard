@@ -15,17 +15,22 @@ use Illuminate\Support\Facades\Session;
 class DomeinController extends Controller
 {
     public function domeinen(){
+        //allee domeinen voor de ingelogde gebruiker ophalen en meegeven naar de blade
         $orders = Order::where('user_id', Auth::id())->get();
-        // foreach($orders as $order){
-        //     if($order->payed){
-        //         $data['orders'][] = $order;
-        //     }
-        // }
-        $data['orders'] = $orders;
+
+        //enkel de betaalde orders mogen getoond worden
+        if(!empty($orders)){
+            foreach($orders as $order){
+                if($order->payed){
+                    $data['orders'][] = $order;
+                }
+            }
+        }
+
         return view('domeinen/domeinen', $data);
-        
     }
 
+    //detailpagina van een domein
     public function detail($domain){
         //order ophalen met dat domein
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
@@ -36,7 +41,7 @@ class DomeinController extends Controller
         $vimexx = new Vimexx();
         $info = $vimexx->getDomainInformation($domain);
        
-        //datum
+        //datum format aanpassen
         $datum= $info['Information']['expiration_date'];
         $jaar = substr($datum, 0, 4);
         $maand = substr($datum, 5, 2);
@@ -45,7 +50,8 @@ class DomeinController extends Controller
         
         //alle nameservers
         $data['nameservers'] = $info['Information']['nameservers'];
-        //heeft klant emailbox bij ons?
+
+        //heeft de klant cloudflare in zijn nameservers staan?
         foreach ($data['nameservers'] as $server) {
             if (str_contains($server, "cloudflare")) {
                 $nameserverCheck[] = true;
@@ -54,11 +60,13 @@ class DomeinController extends Controller
             }
         }
 
-        
-
         if (in_array(true, $nameserverCheck)) {
+            //cloudflare zit in de nameservers
+            //klant moet cloudflare en postmark hebben
+
             $data['isCloudflare'] = true;
-            //indien cloudflare niet bestaat, cloudflare maken
+
+            //indien cloudflare niet bestaat, cloudflare en postmark maken
             $check = cloudflareController::getOneDomain($domain);
             if (empty($check)) {
                 cloudflareController::createZone($domain);
@@ -89,6 +97,7 @@ class DomeinController extends Controller
             $checkPost = PostmarkController::getOneDomain($order->postmark);
             
             if($check->status !== "active" && $checkPost->DKIMVerified !== true && $checkPost->DKIMVerified !== true){
+                //postmark en cloudlfare zijn nog aan het wachten op een nameserver update
                 $order->status = "pending";
                 $order->save();
                 $data['numberEmails'] = 0;
@@ -97,9 +106,10 @@ class DomeinController extends Controller
                 $data['domain'] = $domain;
                 $data['numberDNS'] = 0;
 
+                //gebruiker laten weten dat de update nog bezig is
+                //code stopt hier->redirecten
                 Session::flash('error', 'De nameservers zijn momenteel nog aan het updaten. Dit kan 24u duren');
                 return view('domeinen/domeindetail', $data);
-
             }
 
             //status op active
@@ -108,10 +118,10 @@ class DomeinController extends Controller
             
             //aantal dns records
             $check = cloudflareController::getOneDomain($domain);
-            //dd($check);
-            //$status = cloudflareController::getStatus($check[0]->id);
             $dns = cloudflareController::getDNSRecords($check[0]->id);
             
+            //checken of de mx record qbox bevatten
+            //zo weten we of de emailboxen bij ons zijn of niet
             if (!empty($dns)) {
                 foreach ($dns as $d) {
                     if($d->type === "MX") {
@@ -125,11 +135,15 @@ class DomeinController extends Controller
             }else{
                 $data['checkDns'] = true;
             }
+
             $data['numberDNS'] = count($dns);
-            //aantal emails
+
+            //aantal emails van een domeon
             $emails = QboxController::getEmailsOfDomain($order->resource_code);
+
+            //kijken of er emailboxen zijn
             if (!empty($emails->resources)) {
-                //van de emailboxen een order maken;
+                //als er emails zijn, van deze emails een EmailOrder maken in de database
                 foreach ($emails->resources as $email){
                     //checken of emailbox al bestaat
                     if (empty(EmailOrder::where('email', $email->email_address)->first())) {
@@ -142,13 +156,16 @@ class DomeinController extends Controller
                         $newEmailOrder->save();
                     }
                 }
+                //counten hoeveel emails er zijn op qboxmail
                 $data['numberEmails'] = count($emails->resources);
             } else {
                 $data['numberEmails'] = 0;
             }
-        } else {
-            //nameservers zijn niet van cloudflare
 
+        //hier stop de if
+        } else {
+
+            //nameservers zijn niet van cloudflare
             $data['isCloudflare'] = false;
             $order = Order::where('domain', $domain)->first();
 
@@ -176,15 +193,20 @@ class DomeinController extends Controller
             }
             $data['numberEmails'] = 0;
             $data['numberDNS'] = 0;
+
+            //einde van de if else loop
         }
 
+        //domain en order meegeven naar de blade. Deze zijn nodig
         $data['domain'] = $domain;
         $data['order'] = $order;
         return view('domeinen/domeindetail', $data);
     }
 
+    //detailpagina van de emails van een domein
     public function emailDetail($domain){
-        //order ophalen met dat domein
+
+        //order ophalen met dat domein voor de gebruiker
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
         if(empty($order)){
             abort(403);
@@ -192,23 +214,28 @@ class DomeinController extends Controller
 
         //order ophalen van de emailboxen met dat domein
         $emails = EmailOrder::where('order_id', $order->id)->get();
+
         //enkel de betaalde emailboxen
-        
         foreach($emails as $email){
             if($email->payed === 1){
                 $emailsPayed [] = $email;
             }
         }
+
+        //checken of er betaalde emails zijn
+        //anders een lege string meegeven zodat code werkt
         if(!empty($emailsPayed)){
             $data['emails'] = $emailsPayed;
         }else{
             $data['emails'] = "";
         }
+
         $data['domain'] = $order->domain;
         $data['placeholder'] = "info@".$domain;
         return view('domeinen/emaildetail', $data);
     }
 
+    //het deleten van een email
     public function deleteEmail(Request $request){
         
         $credentials = $request->validate([
@@ -227,25 +254,36 @@ class DomeinController extends Controller
         //delete functie aanspreken
         $emailOrder->delete();
         QboxController::deleteEmail($order->resource_code, $emailOrder->resource_code);
+
+        //even wachten zodat de email echt weg is van qboxmail(duurt een paar seconden)
         sleep(10);
+
         //succes message en redirect
         $request->session()->flash('message', $email." is verwijderd.");
         return redirect('domein/'.$order->domain);
     }
 
+    //detailpagina van de nameservers
     public function nameserversDetail($domain){
+        //order ophalen met dat domein voor de gebruiker
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();
         if(empty($order)){
             abort(403);
         }
+
+        //nieuwe instantie van de classe Vimexx
+        //met functie die de informatie van een domeinnaam geeft
         $vimexx = new Vimexx();
         $info = $vimexx->getDomainInformation($domain);
+
         $data['nameservers'] = $info['Information']['nameservers'];
         $data['domain'] = $domain;
         return view('domeinen/nameserversdetail', $data);
     }
 
+    //nameservers updaten voor een domein
     public function updateNameservers(Request $request){
+
         $credentials = $request->validate([
             'domein' => 'required',
         ]);
@@ -255,13 +293,21 @@ class DomeinController extends Controller
         $nameserver2 = $request->input('nameserver2');
         $nameserver3 = $request->input('nameserver3');
 
-        $servers['ns1'] = $nameserver1;
-        $servers['ns2'] = $nameserver2;
-        $servers['ns3'] = $nameserver3;
+        //array maken van de nameservers voor de functie van vimexx
+        $servers = [
+            'ns1' => $nameserver1,
+            'ns2' => $nameserver2,
+            'ns3' => $nameserver3
+        ];
         
+        //nieuwe instantie van de classe Vimexx met functie die de nameservers update
         $vimexx = new Vimexx();
         $resp = $vimexx->updateNameServers($domain, $servers);
+
+        //even wachten zodat de nameservers daadwerkelijk zijn geupdate
         sleep(2);
+
+        //kijken of $resp true is of niet
         if($resp){
             $request->session()->flash('message', 'De nameservers voor '.$domain.' zijn gewijzigd.');
         }else{
@@ -270,6 +316,7 @@ class DomeinController extends Controller
         return redirect('/domein/'.$domain);
     }
 
+    //detailpagina van de dns
     public function dnsDetail($domain){
         $data['domain'] = $domain;
         $order = Order::where('domain', $domain)->where('user_id', Auth::id())->first();

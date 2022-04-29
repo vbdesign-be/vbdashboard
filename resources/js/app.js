@@ -2,27 +2,25 @@ const { add } = require('lodash');
 
 require('./bootstrap');
 
-// //loader
-// let loader_container = document.querySelector('.loader__container');
 
+//loading poging 2
 
-// function fadeOutEffect(loader_container){
-//     var fadeEffect = setInterval(function () {
-//         if (!loader_container.style.opacity) {
-//             loader_container.style.opacity = 1;
-//         }
-//         if (loader_container.style.opacity > 0) {
-//             loader_container.style.opacity -= 0.1;
-//         } else {
-//             loader_container.style.display = "none";
-//             clearInterval(fadeEffect);
-//         }
-//     }, 50);
-// }
+let domainDetailBtns = document.querySelectorAll('.domainDetailBtn');
 
-// if(loader_container !== null){
-//     window.addEventListener('load', fadeOutEffect(loader_container));
-// }
+if(domainDetailBtns !== null){
+    let loader__container = document.querySelector('.loader__container');
+    domainDetailBtns.forEach((btn) => {
+        
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let domain = btn.dataset.domain;
+            console.log(domain);
+            loader__container.style.display = "flex";
+            window.location.href = "/domein/" + domain;
+        })
+
+    })
+}
 
 
 
