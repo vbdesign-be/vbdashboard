@@ -32,6 +32,13 @@ class ShopController extends Controller
         }else{
             $domain = $input;
         }
+        
+        $checkDomain = explode(".", $domain);
+        if(!isset($checkDomain[1]) || !isset($checkDomain[2])){
+            $request->session()->flash('error', $input.' is geen domeinnaam');
+            return view('shop/shop');
+        }
+        
 
         $order = Order::where('domain', $domain)->first();
 

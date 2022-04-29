@@ -65,7 +65,7 @@
 
 
         <div class="container px-4 mx-auto">
-          <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/shop/search" method="post">
+          <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/zoek" method="post">
           @csrf
             <h1 class="mb-2 text-4xl font-bold font-heading">Start met een gloednieuwe website</h1>
       
@@ -89,8 +89,8 @@
             <h3 class="font-medium">{{$domain}}</h3>
             <span class="inline-block py-1 px-2 bg-{{ $checkColor }}-50 text-xs text-{{ $checkColor }}-500 rounded-full">{{ $check }}</span>
             <div>
-            @if($check === "Beschikbaar")<form method="post" action="/shop/winkelmandje">@csrf <input type="hidden" name="domein" value="{{ $domain }}"> <button type="submit" >Koop btn</button>  </form>@endif
-            @if($check === "Niet beschikbaar")<form method="post" action="/shop/transfer">@csrf <input type="hidden" name="domein" value="{{ $domain }}"> <button type="submit" >verhuis btn</button>  </form>@endif
+            @if($check === "Beschikbaar")<form method="post" action="/domein/winkelmandje">@csrf <input type="hidden" name="domein" value="{{ $domain }}"> <button type="submit" >Koop btn</button>  </form>@endif
+            @if($check === "Niet beschikbaar")<form method="post" action="/domein/transfer">@csrf <input type="hidden" name="domein" value="{{ $domain }}"> <button type="submit" >verhuis btn</button>  </form>@endif
             
             </div>
             

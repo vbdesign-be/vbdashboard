@@ -19,7 +19,7 @@
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
-            <a href="/shop">Back knop</a>
+            <a href="/domein/toevoegen">Back knop</a>
           </div>
         </section>
 
@@ -81,7 +81,7 @@
                   <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium px-6">Product</th><th class="pb-3 font-medium">Looptijd</th><th class="pb-3 font-medium">prijs</th><th class="pb-3 font-medium">Totaal</th></tr>
                 </thead>
                 <tbody>
-                <form class="domainForm" method="post" action="/shop/buy/domain">
+                <form class="domainForm" method="post" action="/domein/koop/domein">
                 @csrf
                   <tr id="winkelmandje" class="table__item text-xs bg-gray-50">
                     <td class="py-5 px-6 font-medium"><div>{{ $domain }}<input class="domein" name="domein" type="hidden" value="{{$domain}}"></div></td>

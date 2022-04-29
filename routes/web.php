@@ -83,13 +83,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/project/addPhoto', [ProjectController::class, 'addPhoto']);
 
     //shop
-    Route::get('/shop', [ShopController::class, "shop"]);
-    Route::post('/shop/search', [ShopController::class, "searchDomain"]);
-    Route::post('/shop/winkelmandje', [ShopController::class, "cart"]);
-    Route::post('/shop/transfer', [ShopController::class, "cartTransfer"]);
-    Route::post('/shop/buy/domain', [ShopController::class, "buyDomain"]);
-    Route::post('/shop/transfer/domain', [ShopController::class, "transferDomain"]);
-    Route::post('/shop/buy/email', [ShopController::class, "buyEmail"]);
+    Route::get('/domein/toevoegen', [ShopController::class, "shop"]);
+    Route::post('/domein/zoek', [ShopController::class, "searchDomain"]);
+    Route::post('/domein/winkelmandje', [ShopController::class, "cart"]);
+    Route::post('/domein/transfer', [ShopController::class, "cartTransfer"]);
+    Route::post('/domein/koop/domein', [ShopController::class, "buyDomain"]);
+    Route::post('/domein/transfer/domein', [ShopController::class, "transferDomain"]);
+    Route::post('/domein/buy/email', [ShopController::class, "buyEmail"]);
     Route::get('/payed', [ShopController::class, "payed"]);
     Route::get('/payedEmail', [ShopController::class, "payedEmail"]);
     Route::get('/payedTransfer', [ShopController::class, "payedTransfer"]);
