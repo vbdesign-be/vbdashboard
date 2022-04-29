@@ -88,8 +88,8 @@ class ShopController extends Controller
         $credentials = $request->validate([
             'domein' => 'required'
         ]);
-
-        $domain = $request->input('domain');
+        
+        $domain = $request->input('domein');
         $data["domain"] = $domain;
         $data["mailbox"] = "info@".$domain;
         $data['price'] = Product::where('name', 'transfer')->first()->price;
@@ -289,11 +289,11 @@ class ShopController extends Controller
             'code' => 'required',
             'prijs' => 'required'
         ]);
-
-        $domain = $request->input("domain");
+        
+        
+        $domain = $request->input("domein");
         $code = $request->input('code');
         $price = $request->input('prijs');
-        
         if(!empty($domain) && !empty($code)){
             $order = new Order();
             $order->domain = $domain;

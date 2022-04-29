@@ -135,7 +135,7 @@
 
       <section id="emailAdd" class="py-8 hidden">
           <div class="container px-4 mx-auto">
-          <form class="mt-6 px-6 pb-6 pt-4 bg-white shadow rounded" action="/shop/buy/email" method="post">
+          <form class="mt-6 px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/koop/email" method="post">
           @csrf
             
       
