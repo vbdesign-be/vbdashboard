@@ -1,6 +1,22 @@
-const { add } = require('lodash');
+const { add, findLastIndex } = require('lodash');
 
 require('./bootstrap');
+
+// //loader
+// let loader_container = document.querySelector('.loader__container');
+
+
+function fadeInEffect(loader__container){
+    var fadeEffect = setInterval(function () {
+        
+        if (loader__container.style.opacity < 1) {
+            loader__container.style.opacity += 0.1;
+            console.log(loader__container);
+        } else {
+            clearInterval(fadeEffect);
+        }
+    }, 50);
+}
 
 
 //loading poging 2
@@ -14,9 +30,10 @@ if(domainDetailBtns !== null){
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             let domain = btn.dataset.domain;
-            console.log(domain);
             loader__container.style.display = "flex";
-            window.location.href = "/domein/" + domain;
+            loader__container.style.opacity = 1;
+            //fadeInEffect(loader__container);
+            window.location.href = "/domein/"+domain;
         })
 
     })

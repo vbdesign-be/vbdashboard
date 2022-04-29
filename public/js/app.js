@@ -2061,9 +2061,23 @@ module.exports = {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-    add = _require.add;
+    add = _require.add,
+    findLastIndex = _require.findLastIndex;
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //loading poging 2
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // //loader
+// let loader_container = document.querySelector('.loader__container');
+
+
+function fadeInEffect(loader__container) {
+  var fadeEffect = setInterval(function () {
+    if (loader__container.style.opacity < 1) {
+      loader__container.style.opacity += 0.1;
+      console.log(loader__container);
+    } else {
+      clearInterval(fadeEffect);
+    }
+  }, 50);
+} //loading poging 2
 
 
 var domainDetailBtns = document.querySelectorAll('.domainDetailBtn');
@@ -2074,8 +2088,9 @@ if (domainDetailBtns !== null) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       var domain = btn.dataset.domain;
-      console.log(domain);
       loader__container.style.display = "flex";
+      loader__container.style.opacity = 1; //fadeInEffect(loader__container);
+
       window.location.href = "/domein/" + domain;
     });
   });
