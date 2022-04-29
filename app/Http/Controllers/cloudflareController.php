@@ -264,6 +264,19 @@ class cloudflareController extends Controller
         $data = json_decode($res->body());
         return $data;
     }
+
+    public static function getStatus($zone){
+        $url = "https://api.cloudflare.com/client/v4/";
+        
+        $res = Http::withHeaders([
+            'X-Auth-Key' => env('CLOUDFLARE_AUTH_KEY'),
+            'X-Auth-Email' => 'bert@vbdesign.be',
+            'X-Auth-User-Service-Key' => env('CLOUDFLARE_USER_KEY')
+        ])->get($url.'zones/'.$zone);
+        
+        $data = json_decode($res->body());
+        return $data;
+    }
     
 
 }

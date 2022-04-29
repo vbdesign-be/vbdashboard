@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id');
             $table->string('domain');
             $table->string('resource_code')->nullable();
+            $table->string('postmark')->nullable();
             $table->boolean('payed')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();

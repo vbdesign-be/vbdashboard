@@ -139,12 +139,12 @@ class ShopController extends Controller
         $checkCloud = cloudflareController::getOneDomain($order->domain);
         $cloudDKIM = cloudflareController::createDKIMRecordPostmark($checkCloud[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
         sleep(5);
-        $postmarkCheck = PostmarkController::checkDKIM($postmark->ID);
+        PostmarkController::checkDKIM($postmark->ID);
         
         //postmark return path invullen en verifieren
         cloudflareController::createCNAMERecordPostmark($checkCloud[0]->id, $postmark->ReturnPathDomainCNAMEValue);
         sleep(5);
-        $postmarkCheck2 = PostmarkController::checkCNAME($postmark->ID);
+        PostmarkController::checkCNAME($postmark->ID);
 
         
         //vimexx checken of domein actief is
@@ -314,6 +314,20 @@ class ShopController extends Controller
         $zone = cloudflareController::createZone($order->domain);
         $check = cloudflareController::getOneDomain($order->domain);
         $scan = cloudflareController::dnsScan($check[0]->id);
+
+        //postmark maken en dkim return
+        $postmark = PostmarkController::createDomain($order->domain);
+        
+        //cloudflare dkim invullen en verifieren;
+        $checkCloud = cloudflareController::getOneDomain($order->domain);
+        $cloudDKIM = cloudflareController::createDKIMRecordPostmark($checkCloud[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
+        sleep(5);
+        PostmarkController::checkDKIM($postmark->ID);
+        
+        //postmark return path invullen en verifieren
+        cloudflareController::createCNAMERecordPostmark($checkCloud[0]->id, $postmark->ReturnPathDomainCNAMEValue);
+        sleep(5);
+        PostmarkController::checkCNAME($postmark->ID);
 
         $check = $vimexx->checkDomain($order->domain);
         if($check === 'Niet beschikbaar'){

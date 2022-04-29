@@ -54,4 +54,17 @@ class PostmarkController extends Controller
         $data = json_decode($res->body());
         return $data;
     }
+
+    public static function deleteDomain($id){
+        $url = "https://api.postmarkapp.com";
+        $res = Http::withHeaders([
+            'X-Postmark-Account-Token' => env('POSTMARK_ACOUNT_CODE'),
+            'Accept' => 'application/json'
+        ])->delete($url.'/domains/'.$id);
+    
+        $data = json_decode($res->body());
+        return $data;
+    }
+
+    
 }

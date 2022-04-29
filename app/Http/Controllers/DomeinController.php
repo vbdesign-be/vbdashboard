@@ -64,11 +64,30 @@ class DomeinController extends Controller
             $check = cloudflareController::getOneDomain($domain);
             if (empty($check)) {
                 cloudflareController::createZone($domain);
+                
+                //scannen naar dnsrecords
+                $check = cloudflareController::getOneDomain($domain);
+                $scan = cloudflareController::dnsScan($check[0]->id);
+
+                //postmark maken en dkim return
+                $postmark = PostmarkController::createDomain($domain);
+        
+                //cloudflare dkim invullen en verifieren;
+                $checkCloud = cloudflareController::getOneDomain($domain);
+                $cloudDKIM = cloudflareController::createDKIMRecordPostmark($check[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
+                sleep(5);
+                PostmarkController::checkDKIM($postmark->ID);
+        
+                //postmark return path invullen en verifieren
+                cloudflareController::createCNAMERecordPostmark($check[0]->id, $postmark->ReturnPathDomainCNAMEValue);
+                sleep(5);
+                PostmarkController::checkCNAME($postmark->ID);
             }
 
             //aantal dns records
             $check = cloudflareController::getOneDomain($domain);
-            $scan = cloudflareController::dnsScan($check[0]->id);
+            //dd($check);
+            //$status = cloudflareController::getStatus($check[0]->id);
             $dns = cloudflareController::getDNSRecords($check[0]->id);
             
             if (!empty($dns)) {
@@ -106,14 +125,19 @@ class DomeinController extends Controller
                 $data['numberEmails'] = 0;
             }
         } else {
+
             $data['isCloudflare'] = false;
             $order = Order::where('domain', $domain)->first();
+
             //cloudflare verwijderen
             $check = cloudflareController::getOneDomain($domain);
             if (!empty($check)) {
                 cloudflareController::deleteZone(($check[0]->id));
 
             }
+
+            //delete postmark
+            PostmarkController::deleteDomain($order->postmark);
 
             //delete qboxmail
             $checkQbox = QboxController::getDomainInfo($order->resource_code);
