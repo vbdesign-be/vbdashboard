@@ -13,7 +13,8 @@ use Vbdesign\Teamleader\Facade\Teamleader;
 
 
 class OfferteController extends Controller
-{
+{   
+    //pagina met lijst met alle offertes
     public function offerte(){
         teamleaderController::reAuthTL();
 
@@ -27,6 +28,7 @@ class OfferteController extends Controller
 
         $data['comps'] = $comps;
        
+        //voor elk bedrijf van de gebruiker de offertes halen.
         foreach ($comps as $c) {
             //kunnen maar dan 20 zijn dus enkele instantie in de array moet een offerte zijn
             $offertes[] = Teamleader::deals()->list(['filter'=> ['customer' => ['type' => 'company', 'id' => $c->data->id] ], 'page' => ['number' => 1, 'size' => 100]])->data;
@@ -36,10 +38,11 @@ class OfferteController extends Controller
         return view('offerte/offerte', $data);
     }
 
+    //offerte bekijken
     public function getDeal($deal_id){
         teamleaderController::reAuthTL();
         
-        //security bij
+        //security zodat enkel de gebruiker zijn offerte kan bekijken.
         $userId = Auth::user()->teamleader_id;
         $user = Teamleader::crm()->contact()->info($userId)->data;
         $companies = $user->companies;
@@ -47,7 +50,6 @@ class OfferteController extends Controller
             $company_id = $c->company->id;
             $comps[] = Teamleader::crm()->company()->info($company_id)->data;
         }
-        
         
         foreach($comps as $c){
             $deal = Teamleader::deals()->list(['filter'=> ['ids' => [$deal_id]]])->data[0];
@@ -64,30 +66,32 @@ class OfferteController extends Controller
         for($x = 1; $x <= 10; $x++){
             $quotations [] = Teamleader::deals()->getQuotations(['page' => ['number' => $x, 'size' => 50]])->data;
         }
-
+        
+        //1 array met alle quotations in
         foreach($quotations as $q){
             foreach($q as $t){
-                $offertes [] = $t;
+                $offertes[] = $t;
             }
         }
 
+        //checken werlke quotation bij de offerte hoort en deze dan downloaden.
         foreach($offertes as $f){
             $test = Teamleader::deals()->getInfoQuotation($f->id);
             if($test->data->deal->id === $deal_id){
                 $offerte = $test;
             }
         }
-
         $download = Teamleader::deals()->downloadQuotation(['id' => $offerte->data->id, 'format' => 'pdf']);
 
+        //redirecten naar de download pagina van de quotation
         $redirect = $download->data->location;
-
         return redirect($redirect);
 
     }
 
+    //wanneer een gebruiker een nieuwe offerte aanvraagd
     public function post(Request $request){
-
+        //checken of de input velden zijn ingevuld
         $credentials = $request->validate([
             'titel' => 'required|max:255',
             'bedrijf' => 'required',
@@ -108,7 +112,7 @@ class OfferteController extends Controller
         $data['estimated_closing_date'] = $dag . '-' . $maand . '-' . $jaar;
 
         
-        //offerte in database
+        //offerte in database opslaan 
         $offerte = new Offerte();
         $offerte->title = $data['title'];
         $offerte->summary = $data['summary'];
@@ -117,7 +121,7 @@ class OfferteController extends Controller
         $offerte->estimated_value = $data['estimated_value'];
         $offerte->estimated_closing_date = $data['estimated_closing_date'];
         $offerte->save();
-        //24 uur duren ...
+        //gebruiker laten weten dat het 24uur kan duren voor de offerte erdoor komt
         $request->session()->flash('message', 'Je offerte is goed ontvangen, het kan 24u duren voor deze bevestigd is.');
         
         //gegevens van de persoon(naam voornaam)
@@ -131,8 +135,10 @@ class OfferteController extends Controller
         }
         //gegevens van het bedrijf mee doorsturen
         $data['company'] = TeamLeader::crm()->company()->info($data['company_id'])->data;
+        
         //mail versturen naar bert met nieuwe offerte
         Mail::to('bert@vbdesign.be')->send(new NewOfferteMail($data));
+
         //redirecten
         return redirect('/offerte');
     }
