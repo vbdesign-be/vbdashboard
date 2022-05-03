@@ -7,18 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class PostmarkController extends Controller
 {
-    public static function createServer($domain){
-        $url = "https://api.postmarkapp.com";
-        $res = Http::withHeaders([
-            'X-Postmark-Account-Token' => env('POSTMARK_ACOUNT_CODE'),
-        ])->post($url.'/servers', ([
-            'name' => $domain
-        ]));
-    
-        $data = json_decode($res->body());
-        return $data;
-    }
-
+    //domein creeren op postmark
     public static function createDomain($domain){
         $url = "https://api.postmarkapp.com";
         $res = Http::withHeaders([
@@ -33,6 +22,7 @@ class PostmarkController extends Controller
         return $data;
     }
 
+    //dkim check doen op postmark
     public static function checkDKIM($id){
         $url = "https://api.postmarkapp.com";
         $res = Http::withHeaders([
@@ -44,6 +34,7 @@ class PostmarkController extends Controller
         return $data;
     }
 
+    //cname check doen op postmark
     public static function checkCNAME($id){
         $url = "https://api.postmarkapp.com";
         $res = Http::withHeaders([
@@ -55,6 +46,7 @@ class PostmarkController extends Controller
         return $data;
     }
 
+    //domein deleten
     public static function deleteDomain($id){
         $url = "https://api.postmarkapp.com";
         $res = Http::withHeaders([
@@ -66,6 +58,7 @@ class PostmarkController extends Controller
         return $data;
     }
 
+    //info over 1 domein verkrijgen
     public static function getOneDomain($id){
         $url = "https://api.postmarkapp.com";
         $res = Http::withHeaders([
@@ -76,6 +69,5 @@ class PostmarkController extends Controller
         $data = json_decode($res->body());
         return $data;
     }
-
     
 }
