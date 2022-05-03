@@ -18,11 +18,7 @@
           </div>
         </div>
 
-        <section class="py-8">
-          <div class="container px-4 mx-auto">
-            <a href="/facturen">Back knop</a>
-          </div>
-        </section>
+        
 
         @if($errors->any())
             @component('components/notification')
@@ -90,8 +86,9 @@
         <div class="container px-4 mx-auto">
           <div class="pt-6 bg-white shadow rounded">
             <div class="px-6 border-b">
-              <div class="flex flex-wrap items-center mb-6">
+              <div class="grid grid-cols-2 items-center mb-6">
                 <h3 class="text-xl font-bold">Overzicht Creditnotas</h3>
+                <a class="justify-self-end" href="/facturen">Bekijk facturen</a>
               </div>
             </div>
             <div class="p-4 overflow-x-auto">
