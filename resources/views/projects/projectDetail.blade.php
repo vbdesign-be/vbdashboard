@@ -110,7 +110,7 @@
         <div class="container px-4 mx-auto">
           <div class="px-6 pb-6 pt-4 bg-white shadow rounded">
             <div class="flex flex-wrap items-center mb-3">
-              <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/project/addPhoto" method="post" enctype="multipart/form-data">
+              <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/project/addAsset" method="post" enctype="multipart/form-data">
               @csrf
 
                 <label class="btn--mini  custom-file-upload"><input name="bestanden[]" type="file" multiple/>Bestanden kiezen</label>

@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/project/addBugfix', [ProjectController::class, 'addBugfix']);
     Route::get('/project/bugfix/{id}', [ProjectController::class, 'bugfix']);
     Route::get('/project/{id}', [ProjectController::class, 'detail']);
-    Route::post('/project/addPhoto', [ProjectController::class, 'addPhoto']);
+    Route::post('/project/addAsset', [ProjectController::class, 'addAsset']);
 
     //shop
     Route::get('/domein/toevoegen', [ShopController::class, "shop"]);

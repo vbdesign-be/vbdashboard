@@ -17,6 +17,17 @@
           </div>
         </div>
 
+        @if($flash = session('notification'))
+        @component('components/notification')
+            @slot('type') indigo @endslot
+            @slot('size')  notification-profile  @endslot
+            @slot('textcolor') indigo @endslot
+            <ul>
+                <li>{{ $flash }}</li>
+            </ul>
+        @endcomponent
+        @endif
+
         <!-- projecten -->
 
         <section class="py-8">

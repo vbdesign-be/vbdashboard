@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
+    //pagina met lijst met alle projecten 
     public function projects(Request $request)
     {
         $user = Auth::user();
+
+        //als het de eerste keer is dat de gebruiker inlogd, naar het profielpagina sturen
         if (!$user->didLogin) {
             $request->session()->flash('notification', 'Welkom op je dashboard, hieronder kan je je gegevens controleren en veranderen.');
             return redirect('/profiel');
@@ -23,9 +26,7 @@ class ProjectController extends Controller
 
         //projecten uit teamleader halen voor een bepaald bedrijf
         teamleaderController::reAuthTL();
-
         $resp = Teamleader::crm()->contact()->info($user->teamleader_id);
-
         $companies = $resp->data->companies;
         
         foreach($companies as $c){
@@ -37,11 +38,12 @@ class ProjectController extends Controller
         foreach($comps as $c){
             $data['projects'] = Teamleader::crm()->company()->getProjects($c->data->id)->data;
         }
-        
+
+        //gebruiker redirecten naar de pagina
         return view('projects/projects', $data);
     }
 
-
+    //detail pagina van een project
     public function detail($id){
 
         teamleaderController::reAuthTL();
@@ -50,10 +52,33 @@ class ProjectController extends Controller
 
         //security
         $company_id = $data['project']->customer->id;
-        
         $company = Teamleader::crm()->company()->info($company_id)->data;
+        $company_users = Teamleader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
+        foreach($company_users as $u){
+            $cUsers = $u;
+        }
+        foreach($cUsers as $u){
+            $user_ids[] = $u->id;
+        }
         
-        
+        //$check is true als het project bij een bedrijf van de gebruiker hoort
+        $check = in_array(Auth::user()->teamleader_id, $user_ids, TRUE);
+        if($check){
+            return view('projects/projectDetail', $data);
+        }else{
+            abort(403);
+        }
+    }
+
+    //pagina met alle bugfixes voor een bepaald project
+    public function bugfix($id){
+        teamleaderController::reAuthTL();
+        //project ophalen
+        $data['project'] = Teamleader::crm()->company()->getProjectDetail($id)->data;
+
+        //security
+        $company_id = $data['project']->customer->id;
+        $company = Teamleader::crm()->company()->info($company_id)->data;
         $company_users = Teamleader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
         foreach($company_users as $u){
             $users = $u;
@@ -64,45 +89,30 @@ class ProjectController extends Controller
         }
         
         $check = in_array(Auth::user()->teamleader_id, $user_ids, TRUE);
-        if($check){
-            return view('projects/projectDetail', $data);
-        }else{
+        //als check false is is het project niet van de gebruiker dus abort
+        if(!$check){
             abort(403);
         }
-        
 
-              
-        
-    }
-
-    public function bugfix($id){
-
-
-        teamleaderController::reAuthTL();
-        //project ophalen
-        $data['project'] = Teamleader::crm()->company()->getProjectDetail($id)->data;
-
-        //allee projecten ophalen
-
+        //alle projecten ophalen
         $clickup = Clickup::find(1);
         $token = $clickup->token;
-
         $url = 'https://app.clickup.com/api/v2/space/6748104/folder';
-
         $response = Http::withToken($token)->get($url);
         $folders = json_decode($response->body())->folders;
-        
-        
+
+        //de juiste porjectfolder in clickup gaan halen
         foreach($folders as $folder){
             if($folder->name === $data['project']->title){
                 $projectFolder = $folder;
             }
         }
-
+        //als er geen projectfolder is gevonden abort
         if(empty($projectFolder)){
             abort(404);
         }
 
+        //bugfixes uit de clickupfolder halen en toonen
         $url2 = 'https://app.clickup.com/api/v2/list/'.$projectFolder->lists[1]->id.'/task';
         $response2 = Http::withToken($token)->get($url2);
         $bugfixes = json_decode($response2->body())->tasks;
@@ -113,47 +123,23 @@ class ProjectController extends Controller
             $data['bugfixes'] = "";
         }
 
-        //security
-        $company_id = $data['project']->customer->id;
-        
-        $company = Teamleader::crm()->company()->info($company_id)->data;
-        
-        
-        $company_users = Teamleader::crm()->contact()->list(['filter' => ['company_id' => $company_id, 'tags' => [0 => "klant"] ]]);
-        foreach($company_users as $u){
-            $users = $u;
-        }
-
-        foreach($users as $u){
-            $user_ids[] = $u->id;
-        }
-        
-        $check = in_array(Auth::user()->teamleader_id, $user_ids, TRUE);
-        if($check){
-            return view('projects/bugfix', $data); 
-        }else{
-            abort(403);
-        }
-
-        
+        return view('projects/bugfix', $data); 
     }
 
+    //gebruiker kan bugfix toevoegen
     public function addBugfix(Request $request){
-        
+        //checken of alle velden zijn ingevuld
         $credentials = $request->validate([
             'titel' => 'required|max:255',
             'beschrijving' => 'required',
         ]);
 
-        //juiste map zoeken
+        //juiste map zoeken om de bugfix in toe te voegen
         $clickup = Clickup::find(1);
         $token = $clickup->token;
-
         $url = 'https://app.clickup.com/api/v2/space/6748104/folder';
-
         $response = Http::withToken($token)->get($url);
         $folders = json_decode($response->body())->folders;
-        
         
         foreach($folders as $folder){
             if($folder->name === $request->input('projectName')){
@@ -161,31 +147,30 @@ class ProjectController extends Controller
             }
         }
 
-        //create task
-    
+        //taak creeren van de bugfix in clickup
         $url2 = 'https://app.clickup.com/api/v2/list/'.$projectFolder->lists[1]->id.'/task';
         $body = [
             "name" => $request->input('titel'),
             "description" => $request->input('beschrijving'),
             ];
-
+        
+        //clickup toevoegen
         Http::withBody(json_encode($body), 'application/json')->withToken($token)->post($url2);
         return redirect('/project/bugfix/'.$request->input('id'));
-
     }
 
-    public function addPhoto(Request $request){
+    //assets in de drive zetten van een project
+    public function addAsset(Request $request){
+        //checken of de bestanden wel zijn ingeveuld
         $credentials = $request->validate([
             'bestanden' => 'required',
             
         ]);
 
         $id = $request->input('project_id');
-        
         teamleaderController::reAuthTL();
         //project ophalen
         $project = Teamleader::crm()->company()->getProjectDetail($id)->data;
-
         $company = Teamleader::crm()->company()->info($project->customer->id)->data;
 
         // juiste map van de drive halen
@@ -203,7 +188,6 @@ class ProjectController extends Controller
 
         // fotos opslagen in google
         foreach($request->file('bestanden') as $bestand){
-            // dd($foto->getClientOriginalName());
             Storage::disk("google")->putFileAs($dirAssets['path'], $bestand, $bestand->getClientOriginalName());
         }
 
