@@ -45,23 +45,27 @@ class checkDnsINfo implements ShouldQueue
      */
     public function handle()
     {
-       
         sleep(20);
         QboxController::checkDns(strtolower($this->resource_code));
         sleep(40);
+
+        //records op cloudflare invullen
         $record = QboxController::getDKIM(strtolower($this->resource_code));
         cloudflareController::createMXRecord($this->check[0]->id, 1);
         cloudflareController::createMXRecord($this->check[0]->id, 2);
         cloudflareController::createSPFRecord($this->check[0]->id);
         cloudflareController::createDKIMRecord($this->check[0]->id, $record);
         cloudflareController::createDMARCRecord($this->check[0]->id);
+
+        //email maken
         $newEmail = QboxController::makeEmail($this->front, $this->resource_code, $this->password, $this->user->data->first_name);
+        
+        //mx record verifieren
         QboxController::verifyMX(strtolower($this->resource_code));
+        
+        //emailorder opslaan
         $this->emailOrder->status = "active";
         $this->emailOrder->resource_code = $newEmail->resource_code;
-        $this->emailOrder->save();          
-                    
+        $this->emailOrder->save();               
     }
-
-    
 }
