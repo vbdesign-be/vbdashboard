@@ -53,43 +53,46 @@ class checkUserCommand extends Command
                 $users [] = $t;
             }
         }
-            foreach ($users as $u) {
-                $emails = $u->emails;
-                foreach ($emails as $e) {
-                    $email = $e->email;
-                }
+        
+        foreach ($users as $u) {
+            $emails = $u->emails;
+            foreach ($emails as $e) {
+                $email = $e->email;
+            }
                 
-                $checkUser = User::where('teamleader_id', $u->id)->first();
+            $checkUser = User::where('teamleader_id', $u->id)->first();
 
-                if (!empty($u->tags[0])) {
-                    if ($u->tags[0] === 'klant') {
-                        if (empty($checkUser)) {
-                            $newUser = new User();
-                            $newUser->email = $email;
-                            $newUser->firstname = $u->first_name;
-                            $newUser->lastname = $u->last_name;
-                            $newUser->teamleader_id = $u->id;
-                            $newUser->tag = $u->tags[0];
-                            $newUser->save();
-                        } else {
-                            $user = User::where('teamleader_id', $u->id)->first();
-                            $user->email = $email;
-                            $user->firstname = $u->first_name;
-                            $user->lastname = $u->last_name;
-                            $user->teamleader_id = $u->id;
-                            $user->tag = $u->tags[0];
-                            $user->save();
-                        }
+            if (!empty($u->tags[0])) {
+                if ($u->tags[0] === 'klant') {
+                    if (empty($checkUser)) {
+                        $newUser = new User();
+                        $newUser->email = $email;
+                        $newUser->firstname = $u->first_name;
+                        $newUser->lastname = $u->last_name;
+                        $newUser->teamleader_id = $u->id;
+                        $newUser->tag = $u->tags[0];
+                        $newUser->save();
                     } else {
-                        if (!empty($checkUser)) {
-                            $checkUser->delete();
-                        }
+                        $user = User::where('teamleader_id', $u->id)->first();
+                        $user->email = $email;
+                        $user->firstname = $u->first_name;
+                        $user->lastname = $u->last_name;
+                        $user->teamleader_id = $u->id;
+                        $user->tag = $u->tags[0];
+                        $user->save();
                     }
-                } elseif (empty($u->tags[0])) {
+                } else {
                     if (!empty($checkUser)) {
                         $checkUser->delete();
                     }
                 }
+
+            } elseif (empty($u->tags[0])) {
+                if (!empty($checkUser)) {
+                    $checkUser->delete();
+                }
             }
+
+        }
     }
 }
