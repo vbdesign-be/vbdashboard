@@ -49,8 +49,7 @@ Route::get('/login', [LoginController::class, "login"])->name('login');
 Route::post('/user/login', [LoginController::class, "canLogin"]);
 Route::get('/logout', [Logincontroller::class, "logout"]);
 
-
-//madeItBelgium
+//teamleader
 Route::get('/connect', [teamleaderController::class, "requestToken"]);
 Route::get('/teamleader', [teamleaderController::class, "teamleader"]);
 Route::get('/register', [teamleaderController::class, "register"]);
@@ -60,15 +59,13 @@ Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
 
-
+//deze routes enkel de bereiken als de gebruiker is ingelogd
 Route::group(['middleware' => ['auth']], function() {
-
 
     //user
     Route::get('/profiel', [UserController::class, "profile"]);
     Route::post('/user/update', [UserController::class, "updateUser"]);
     Route::post('/user/updateAvatar', [UserController::class, "updateAvatar"]);
-    
     
     //company
     Route::get('/company/{id}', [CompanyController::class, "company"]);
@@ -82,18 +79,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/project/{id}', [ProjectController::class, 'detail']);
     Route::post('/project/addAsset', [ProjectController::class, 'addAsset']);
 
-    //shop
-    Route::get('/domein/toevoegen', [ShopController::class, "shop"]);
-    Route::post('/domein/zoek', [ShopController::class, "searchDomain"]);
-    Route::post('/domein/winkelmandje', [ShopController::class, "cart"]);
-    Route::post('/domein/transfer', [ShopController::class, "cartTransfer"]);
-    Route::post('/domein/koop/domein', [ShopController::class, "buyDomain"]);
-    Route::post('/domein/transfer/domein', [ShopController::class, "transferDomain"]);
-    Route::post('/domein/koop/email', [ShopController::class, "buyEmail"]);
-    Route::get('/payed', [ShopController::class, "payed"]);
-    Route::get('/payedEmail', [ShopController::class, "payedEmail"]);
-    Route::get('/payedTransfer', [ShopController::class, "payedTransfer"]);
-
     //domeinen
     Route::get('/domein', [DomeinController::class, "domeinen"]);
     Route::get('/domein/{domain}', [DomeinController::class, "detail"]);
@@ -106,12 +91,27 @@ Route::group(['middleware' => ['auth']], function() {
     Route::Post('/domein/dns/edit', [DomeinController::class, 'dnsEdit']);
     Route::Post('/domein/dns/delete', [DomeinController::class, 'dnsDelete']);
     Route::Post('/domein/delete', [DomeinController::class, 'domainDelete']);
-    
+
+    //domein toevoegen
+    Route::get('/domein/toevoegen', [ShopController::class, "shop"]);
+    Route::post('/domein/zoek', [ShopController::class, "searchDomain"]);
+    Route::post('/domein/winkelmandje', [ShopController::class, "cart"]);
+    Route::post('/domein/koop/domein', [ShopController::class, "buyDomain"]);
+
+    //domein transfer
+    Route::post('/domein/transfer', [ShopController::class, "cartTransfer"]);
+    Route::post('/domein/transfer/domein', [ShopController::class, "transferDomain"]);
+    Route::get('/payedTransfer', [ShopController::class, "payedTransfer"]);
+
+    //email toevoegen
+    Route::post('/domein/koop/email', [ShopController::class, "buyEmail"]);
+    Route::get('/payedEmail', [ShopController::class, "payedEmail"]);
 
     //offerte
     Route::get('/offerte', [OfferteController::class, "offerte"]);
     Route::post('/offerte/post', [OfferteController::class, "post"]);
     Route::get('getDeal/{id}', [OfferteController::class, "getDeal"]);
+    Route::get('/payed', [ShopController::class, "payed"]);
 
     //facturen
     Route::get('/facturen', [FacturenController::class, "getFacturen"]);
@@ -147,14 +147,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ticket/delete', [TicketController::class, "deleteTicket"]);
     Route::post('/ticket/send', [TicketController::class, "ticketSend"]);
     Route::post('/ticket/changeuser', [TicketController::class, "changeUser"]);
-
-
-    Route::get('/ask', [SupportController::class, "askQuestion"]);
-    Route::post('/support/addQuestion', [SupportController::class, "store"]);
-    Route::get('/status', [SupportController::class, "status"]);
-
-    
-
-    
     
 });
