@@ -11,7 +11,7 @@
                 <img class="h-8 logo" src="{{asset('img/vblogo.svg')}}" alt="" width="auto"></a>
             </div>
             <div class="px-4 pb-6">
-              <h3 class="mb-2 text-xs uppercase text-gray-200 font-medium">Main</h3>
+              <h3 class="mb-2 text-xs uppercase text-gray-200 font-medium">Dashboard</h3>
               <ul class="mb-8 text-sm font-medium"><li>
                   <a class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded menu__item" href="/">
                     <span class="inline-block mr-3">
@@ -79,7 +79,9 @@
                 <li>
                   
                 </li>
-              </ul><div class="pt-8">
+              </ul>
+              <div class="pt-8">
+              <h3 class="mb-2 text-xs uppercase text-gray-200 font-medium">Other</h3>
               @if(Auth::user()->isAgent === 1)
               <a class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-indigo-50 rounded" href="/tickets">
                   <span class="inline-block mr-4">
