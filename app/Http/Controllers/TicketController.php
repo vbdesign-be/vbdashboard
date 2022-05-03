@@ -518,6 +518,5 @@ class TicketController extends Controller
 
         $request->session()->flash('message', 'Afzender is succesvol gewijzigd');
         return redirect('/ticket/'. $ticket->id);
-
     }
 }
