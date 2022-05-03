@@ -79,6 +79,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/project/{id}', [ProjectController::class, 'detail']);
     Route::post('/project/addAsset', [ProjectController::class, 'addAsset']);
 
+    //domein toevoegen
+    Route::get('/domein/toevoegen', [ShopController::class, "shop"]);
+    Route::post('/domein/zoek', [ShopController::class, "searchDomain"]);
+    Route::post('/domein/winkelmandje', [ShopController::class, "cart"]);
+    Route::post('/domein/koop/domein', [ShopController::class, "buyDomain"]);
+
     //domeinen
     Route::get('/domein', [DomeinController::class, "domeinen"]);
     Route::get('/domein/{domain}', [DomeinController::class, "detail"]);
@@ -91,12 +97,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::Post('/domein/dns/edit', [DomeinController::class, 'dnsEdit']);
     Route::Post('/domein/dns/delete', [DomeinController::class, 'dnsDelete']);
     Route::Post('/domein/delete', [DomeinController::class, 'domainDelete']);
-
-    //domein toevoegen
-    Route::get('/domein/toevoegen', [ShopController::class, "shop"]);
-    Route::post('/domein/zoek', [ShopController::class, "searchDomain"]);
-    Route::post('/domein/winkelmandje', [ShopController::class, "cart"]);
-    Route::post('/domein/koop/domein', [ShopController::class, "buyDomain"]);
 
     //domein transfer
     Route::post('/domein/transfer', [ShopController::class, "cartTransfer"]);

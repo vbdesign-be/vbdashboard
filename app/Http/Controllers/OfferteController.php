@@ -111,7 +111,6 @@ class OfferteController extends Controller
         $dag = substr($datum, 8,2);
         $data['estimated_closing_date'] = $dag . '-' . $maand . '-' . $jaar;
 
-        
         //offerte in database opslaan 
         $offerte = new Offerte();
         $offerte->title = $data['title'];
@@ -121,6 +120,7 @@ class OfferteController extends Controller
         $offerte->estimated_value = $data['estimated_value'];
         $offerte->estimated_closing_date = $data['estimated_closing_date'];
         $offerte->save();
+
         //gebruiker laten weten dat het 24uur kan duren voor de offerte erdoor komt
         $request->session()->flash('message', 'Je offerte is goed ontvangen, het kan 24u duren voor deze bevestigd is.');
         
@@ -133,6 +133,7 @@ class OfferteController extends Controller
                 $data['position'] = $c->position;
             }
         }
+        
         //gegevens van het bedrijf mee doorsturen
         $data['company'] = TeamLeader::crm()->company()->info($data['company_id'])->data;
         

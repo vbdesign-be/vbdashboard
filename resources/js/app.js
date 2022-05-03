@@ -26,8 +26,7 @@ function fadeIn(el, time) {
  
 
 
-//loading poging 2
-
+//loading domeindetail
 let domainDetailBtns = document.querySelectorAll('.domainDetailBtn');
 if(domainDetailBtns !== null){
     let loader__container = document.querySelector('.loader__container');
@@ -44,6 +43,18 @@ if(domainDetailBtns !== null){
     })
 }
 
+//loading search domein
+let domainSearchBtn = document.querySelector('.domainSearchBtn');
+
+if(domainSearchBtn !== null){
+    let loader__container = document.querySelector('.loader__container');
+    domainSearchBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        loader__container.style.display = "flex";
+        fadeIn(loader__container, 200);
+        document.querySelector(".searchDomain").submit(); 
+    });
+}
 
 
 //tickets samenvoegen
@@ -61,7 +72,6 @@ if(ticketsMerge != null){
         })
     })
 }
-
 
 //tickets/timeline
 let agentTickets = document.querySelector('.agentTickets');
@@ -92,10 +102,6 @@ if(ticketsBtn !== null){
     })
 }
 
-
-
-
-
 //faq opnenen
 
 let faqs = document.querySelectorAll('#faq-item');
@@ -122,9 +128,6 @@ faqs.forEach((faq) => {
     
 })
 
-
-
-
 let items = document.querySelectorAll('#winkelmandje');
 
 items.forEach((item) => {
@@ -138,7 +141,6 @@ items.forEach((item) => {
 
 });
 
-
 //emailadd
 
 let emailAddBtn = document.querySelector('.emailAddBtn');
@@ -151,26 +153,6 @@ if(emailAddBtn !== null){
         window.location.href = '#emailAdd';
     });
 }
-
-
-
-//emaildelete
-
-// let emails = document.querySelectorAll('#emailBoxes');
-
-// emails.forEach((email) => {
-
-//     let deleteBtn = email.querySelector('.emailDeleteBtn');
-//     deleteBtn.addEventListener('click', (e) => {
-//         e.preventDefault();
-        
-//         //formdata verzenden;
-        
-
-//             //email.classList.add('hidden');
-
-//     });
-// })
 
 //zoekfunctie dns
 let searchFieldDns = document.querySelector('.search__form--dns');
@@ -218,7 +200,6 @@ function searchDns(value, dnss){
     })
 }
 }
-
 
 //dns ass input field
 

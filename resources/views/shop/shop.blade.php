@@ -65,7 +65,7 @@
 
 
         <div class="container px-4 mx-auto">
-          <form class="px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/zoek" method="post">
+          <form class="searchDomain px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/zoek" method="post">
           @csrf
             <h1 class="mb-2 text-4xl font-bold font-heading">Start met een gloednieuwe website</h1>
       
@@ -75,7 +75,7 @@
             <div class="">
               <input class="block w-full px-4 py-3  text-sm placeholder-gray-500 bg-white border rounded" type="text" name="domeinnaam" @if(!empty($domain)) value="{{$domain}}" @endif placeholder="voorbeeld.be">
             </div>
-            <button class="inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Submit</button>
+            <button class="domainSearchBtn inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Submit</button>
           </div>
           </form>
         </div>

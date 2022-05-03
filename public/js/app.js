@@ -2085,7 +2085,7 @@ function fadeIn(el, time) {
   };
 
   tick();
-} //loading poging 2
+} //loading domeindetail
 
 
 var domainDetailBtns = document.querySelectorAll('.domainDetailBtn');
@@ -2100,6 +2100,20 @@ if (domainDetailBtns !== null) {
       fadeIn(loader__container, 200);
       window.location.href = "/domein/" + domain;
     });
+  });
+} //loading search domein
+
+
+var domainSearchBtn = document.querySelector('.domainSearchBtn');
+
+if (domainSearchBtn !== null) {
+  var _loader__container = document.querySelector('.loader__container');
+
+  domainSearchBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    _loader__container.style.display = "flex";
+    fadeIn(_loader__container, 200);
+    document.querySelector(".searchDomain").submit();
   });
 } //tickets samenvoegen
 
@@ -2181,17 +2195,7 @@ if (emailAddBtn !== null) {
     emailAdd.classList.remove('hidden');
     window.location.href = '#emailAdd';
   });
-} //emaildelete
-// let emails = document.querySelectorAll('#emailBoxes');
-// emails.forEach((email) => {
-//     let deleteBtn = email.querySelector('.emailDeleteBtn');
-//     deleteBtn.addEventListener('click', (e) => {
-//         e.preventDefault();
-//         //formdata verzenden;
-//             //email.classList.add('hidden');
-//     });
-// })
-//zoekfunctie dns
+} //zoekfunctie dns
 
 
 var searchFieldDns = document.querySelector('.search__form--dns');
