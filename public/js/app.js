@@ -2062,21 +2062,29 @@ module.exports = {
 
 var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
     add = _require.add,
-    findLastIndex = _require.findLastIndex;
+    findLastIndex = _require.findLastIndex,
+    isSet = _require.isSet;
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // //loader
 // let loader_container = document.querySelector('.loader__container');
+//fadein funtie
+//bron: http://jsfiddle.net/TH2dn/606/
 
 
-function fadeInEffect(loader__container) {
-  var fadeEffect = setInterval(function () {
-    if (loader__container.style.opacity < 1) {
-      loader__container.style.opacity += 0.1;
-      console.log(loader__container);
-    } else {
-      clearInterval(fadeEffect);
+function fadeIn(el, time) {
+  el.style.opacity = 0;
+  var last = +new Date();
+
+  var tick = function tick() {
+    el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+    last = +new Date();
+
+    if (+el.style.opacity < 1) {
+      window.requestAnimationFrame && requestAnimationFrame(tick) || setTimeout(tick, 16);
     }
-  }, 50);
+  };
+
+  tick();
 } //loading poging 2
 
 
@@ -2089,8 +2097,7 @@ if (domainDetailBtns !== null) {
       e.preventDefault();
       var domain = btn.dataset.domain;
       loader__container.style.display = "flex";
-      loader__container.style.opacity = 1; //fadeInEffect(loader__container);
-
+      fadeIn(loader__container, 200);
       window.location.href = "/domein/" + domain;
     });
   });

@@ -9,7 +9,6 @@
         <div>
           
         <x-menu/>
-        <div wire:loading>Loading...</div>
         
           <div class="mx-auto lg:ml-80">
         <div class="py-8 px-6">

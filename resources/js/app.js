@@ -1,28 +1,34 @@
-const { add, findLastIndex } = require('lodash');
+const { add, findLastIndex, isSet } = require('lodash');
 
 require('./bootstrap');
 
 // //loader
 // let loader_container = document.querySelector('.loader__container');
 
-
-function fadeInEffect(loader__container){
-    var fadeEffect = setInterval(function () {
-        
-        if (loader__container.style.opacity < 1) {
-            loader__container.style.opacity += 0.1;
-            console.log(loader__container);
-        } else {
-            clearInterval(fadeEffect);
-        }
-    }, 50);
-}
+//fadein funtie
+//bron: http://jsfiddle.net/TH2dn/606/
+function fadeIn(el, time) {
+    el.style.opacity = 0;
+  
+    var last = +new Date();
+    var tick = function() {
+      el.style.opacity = +el.style.opacity + (new Date() - last) / time;
+      last = +new Date();
+  
+      if (+el.style.opacity < 1) {
+        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+      }
+    };
+  
+    tick();
+  }
+  
+ 
 
 
 //loading poging 2
 
 let domainDetailBtns = document.querySelectorAll('.domainDetailBtn');
-
 if(domainDetailBtns !== null){
     let loader__container = document.querySelector('.loader__container');
     domainDetailBtns.forEach((btn) => {
@@ -31,8 +37,7 @@ if(domainDetailBtns !== null){
             e.preventDefault();
             let domain = btn.dataset.domain;
             loader__container.style.display = "flex";
-            loader__container.style.opacity = 1;
-            //fadeInEffect(loader__container);
+            fadeIn(loader__container, 200);
             window.location.href = "/domein/"+domain;
         })
 
