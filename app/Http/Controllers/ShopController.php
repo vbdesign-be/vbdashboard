@@ -15,17 +15,19 @@ use App\Models\Product;
 
 class ShopController extends Controller
 {
+    //view van de domeinnaam shop inladen
     public function shop(){
         return view('shop/shop');
     }
 
+    //gebruiker kan een domein ingeven en kijken of deze nog beschikbaar is
     public function searchDomain(Request $request){
-
+        //checken of het inputveld wel is ingevuld
         $credentials = $request->validate([
             'domeinnaam' => 'required|max:255',
         ]);
 
-    
+        //als een gebruiker www.domeinaam.be ingeeft, de ww van de domeinnaam strippen
         $input = $request->input('domeinnaam');
         if(strtok($input, '.') === "www"){
             $domain = substr($input, strpos($input, ".") + 1); 
@@ -33,23 +35,24 @@ class ShopController extends Controller
             $domain = $input;
         }
         
+        //checken of het ingevulde domeinnaam wel eindigd op een .domein
         $checkDomain = explode(".", $domain);
         if(!isset($checkDomain[1]) && !isset($checkDomain[2])){
             $request->session()->flash('error', $input.' is geen domeinnaam');
             return view('shop/shop');
         }
-        
 
+        //kijken of er al een order bestaat met dit domeinnaam
         $order = Order::where('domain', $domain)->first();
-
         if(!empty($order)){
             $data["domain"] = "";
             $request->session()->flash('error', $domain.' is al in benadeling');
             return view('shop/shop', $data);
         }
 
-        
         $data["domain"] = $domain;
+
+        //checken met de vimexx api of de domeinnaam nog beschikbaar is
         $vimexx = new Vimexx();
         $check = $vimexx->checkDomain($domain);
         $data["check"] = $check;
@@ -59,12 +62,14 @@ class ShopController extends Controller
         }else{
             $data['checkColor'] = "red";
         }
-        
-        return view('shop/shop', $data);
 
+        //view inladen
+        return view('shop/shop', $data);
     }
 
+    //winkelmandje 
     public function cart(Request $request){
+        //checken of domeinnaam meegegeven is
         $credentials = $request->validate([
             'domein' => 'required',
         ]);
@@ -72,7 +77,8 @@ class ShopController extends Controller
         $domain = $request->input('domein');
         $end = ".".explode('.', $domain,)[1];
         $data["domain"] = $domain;
-        $data["mailbox"] = "info@".$domain;
+
+        //wat is de prijs van de domeinaam
         $product = Product::where('name', $end)->first();
         if(empty($product)){
             $request->session()->flash('notification', 'Momenteel kunt u "'.$domain.'" niet aankopen via het dashboard. Gelieve een supportticket te maken of ons een mailtje te sturen');
@@ -80,24 +86,28 @@ class ShopController extends Controller
         }else{
             $data['price'] = $product->price;
         }
+        //view inladen
         return view('shop/cart', $data);
     }
 
+    //winkelmandje trasfer domeinnaam
     public function cartTransfer(Request $request){
-
+        //checken of domeinnaam is meegeven
         $credentials = $request->validate([
             'domein' => 'required'
         ]);
         
         $domain = $request->input('domein');
         $data["domain"] = $domain;
-        $data["mailbox"] = "info@".$domain;
+
+        //checken wat de prijs is voor een transfer
         $data['price'] = Product::where('name', 'transfer')->first()->price;
         return view('shop/cartTransfer', $data);
     }
 
+    //domein kopen
     public function buyDomain(Request $request){
-        //checking
+        //kijken of domeinnaam en prijs is meegegeven
         $credentials = $request->validate([
             'domein' => 'required|max:255',
             'prijs' => 'required'
@@ -106,6 +116,7 @@ class ShopController extends Controller
         $domain = $request->input("domein");
         $price = $request->input("prijs");
 
+        //als domein niet leeg is(ingevuld)->order maken en mollie payment maken
         if(!empty($domain)){
             $order = new Order();
             $order->domain = $domain;
@@ -120,6 +131,7 @@ class ShopController extends Controller
         
     }
 
+    //domeinnaam is betaald
     public function payed(Request $request){
         $credentials = $request->validate([
             'order_id' => 'required', 
@@ -136,7 +148,6 @@ class ShopController extends Controller
         $vimexx = new Vimexx();
         //$res = $vimexx->registerDomain($order->domain);
         
-
         //domeinnaam reistreren via cloudflare
         $cloudflare = cloudflareController::createZone($order->domain);
 
@@ -154,8 +165,7 @@ class ShopController extends Controller
         sleep(5);
         PostmarkController::checkCNAME($postmark->ID);
 
-        
-        //vimexx checken of domein actief is
+        //vimexx checken of domein actief is->niet beschikbaar is de aankoop gelukt
         $check = $vimexx->checkDomain($order->domain);
         if($check === 'Niet beschikbaar'){
             $order->status = "active";
@@ -167,6 +177,47 @@ class ShopController extends Controller
         return redirect('/domein');
     }
 
+    //gebruiker wil emailbox aankopen
+    public function buyEmail(Request $request){
+        //checken of alle velden zijn ingevuld
+        $credentials = $request->validate([
+            'emailadres' => 'required|email|max:255',
+            'wachtwoord' => 'required|confirmed|min:8',
+            'domein' => 'required'
+        ]);
+        $email = $request->input('emailadres');
+        $password = $request->input('wachtwoord');
+        $domain = $request->input('domein');
+
+        //zorgen dat de domeinnaam juist geschreven is.
+        $front = strtok($email, '@');
+
+        //kijken wat de prijs is in de database voor een emailbox
+        $price = Product::where('name', 'mailbox')->first()->price;
+        
+        //checken of de emailbox al bestaat
+        $emailOrder = EmailOrder::where('email', $front."@".$domain)->first();
+
+        //checken of email nog beschikbaar is
+        if(!empty($emailOrder)){
+            $request->session()->flash('error', $emailOrder->email.' is al in benadeling');
+            return redirect('domein/'.$domain);
+        }
+        
+        //order maken in de emailorders
+            //order id van domein weten
+            $res = Order::where('domain', $domain)->first();
+        $order = new EmailOrder();
+        $order->order_id = $res->id;
+        $order->email = $front."@".$domain;
+        $order->status = "pending";
+        $order->save();
+        
+        //payment creeren
+        MollieController::createPaymentEmail($price, $front."@".$domain, $front, $password);
+    }
+
+    //emailbox is  betaald
     public function payedEmail(Request $request){
         $credentials = $request->validate([
             'emailorder_id' => 'required',
@@ -183,15 +234,14 @@ class ShopController extends Controller
         $emailOrder->status = "pending";
         $emailOrder->save();
 
+        //user ophalen
         $user = UserController::getUser();
 
+        //order ophalen
         $order = Order::find($emailOrder->order_id);
-        //pas hier de logica toepassen van na de aankoop
 
         //checken of email nog beschikbaar is in qbox
-        //api call
         $emailDomains = QboxController::getAllDomains();
-        
         foreach($emailDomains as $edomain){
             if($edomain->name === $order->domain){
                 $check [] = "bestaat al";
@@ -210,91 +260,47 @@ class ShopController extends Controller
             $emailOrder->save();
             $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. '.$emailOrder->email.' is geregistreerd.');
             return redirect('domein/'.$order->domain);
+
         }else{
-            
             //domain toevoegen aan qboxmail
             $resource_code = QboxController::makeDomain($order->domain);
 
             //emailorder opslaan
             $order->resource_code = $resource_code; 
             $order->save();
+
             //emailbox toevoegen
-            
-             //toevoegen aan de cloudflare domein
-                //create a cloudflare domein als dat er nog niet is
-                $check = cloudflareController::getOneDomain($order->domain);
-                
-                if(empty($check)){
-                    //informatie tonen zodat mensne die kunnen invullen
-                    $dns = "type: A   name: ".$resource_code.".".$order->domain."   content: 185.97.217.16   TTL: auto/1";
+            //toevoegen aan de cloudflare domein
+            $check = cloudflareController::getOneDomain($order->domain);    
+            $name = strtolower($resource_code).'.'.$order->domain;
+            $ip = '185.97.217.16';
 
-                    //de juiste informatie weergeven
-                    $request->session()->flash('notification', "We hebben je aankoop goed ontvangen. Vul deze gegevens in bij je domeinaamhost:\n".$dns."\nStuur ons een support ticket wanneer je deze info hebt ingevuld.");
-                    return redirect('domein/'.$order->domain);
-                }else{
-                    $name = strtolower($resource_code).'.'.$order->domain;
-                    $ip = '185.97.217.16';
+            //invullen op cloudflare
+            cloudflareController::createDnsRecord($check[0]->id, $name, $ip);
 
-                    //invullen op cloudflare
-                    cloudflareController::createDnsRecord($check[0]->id, $name, $ip);
-                    //qboxmail check doen liefts async
-                    $this->dispatch(new checkDnsINfo($resource_code, $check, $front, $password, $user, $emailOrder));
-                }
+            //qboxmail checks doen in een async functie
+            $this->dispatch(new checkDnsINfo($resource_code, $check, $front, $password, $user, $emailOrder));
         }
 
+        //gebruiker laten weten dat de betaling gebeurd is
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met je emailbox te registeren. Dit kan 24u duren.');
         return redirect('domein/'.$order->domain);
     }
 
-
-
-    public function buyEmail(Request $request){
-        $credentials = $request->validate([
-            'emailadres' => 'required|email|max:255',
-            'wachtwoord' => 'required|confirmed|min:8',
-            'domein' => 'required'
-        ]);
-        $email = $request->input('emailadres');
-        $password = $request->input('wachtwoord');
-        $domain = $request->input('domein');
-        $front = strtok($email, '@');
-        $price = Product::where('name', 'mailbox')->first()->price;
-        
-        //checken of de emailbox al bestaat
-        $emailOrder = EmailOrder::where('email', $front."@".$domain)->first();
-
-        //checken of email nog beschikbaar is
-        if(!empty($emailOrder)){
-            $request->session()->flash('error', $emailOrder->email.' is al in benadeling');
-            return redirect('domein/'.$domain);
-        }
-        
-        //order maken in de emailorders
-            //order id van domein weten
-        $res = Order::where('domain', $domain)->first();
-        $order = new EmailOrder();
-        $order->order_id = $res->id;
-        $order->email = $front."@".$domain;
-        $order->status = "pending";
-        $order->save();
-        
-        //payment creeren
-        MollieController::createPaymentEmail($price, $front."@".$domain, $front, $password);
-    }
-
+    //een gebruiker wilt een transfer doen van een domeinnaam
     public function transferDomain(Request $request){
-        //checking
+        //checking of alle velden zijn ingevuld
         $credentials = $request->validate([
             'domein' => 'required|max:255',
             'code' => 'required',
             'prijs' => 'required'
         ]);
         
-        
         $domain = $request->input("domein");
         $code = $request->input('code');
         $price = $request->input('prijs');
         if(!empty($domain) && !empty($code)){
+            //nieuw order opslaan
             $order = new Order();
             $order->domain = $domain;
             $order->user_id = Auth::id();
@@ -306,6 +312,7 @@ class ShopController extends Controller
         }
     }
 
+    //transfer van een domein is betaald
     public function payedTransfer(Request $request){
         $id = $request->input('order_id');
         $code = $request->input('code');
@@ -321,6 +328,8 @@ class ShopController extends Controller
         //toevoegen aan cloudflare
         $zone = cloudflareController::createZone($order->domain);
         $check = cloudflareController::getOneDomain($order->domain);
+
+        //scannen op al bestaande dns records
         $scan = cloudflareController::dnsScan($check[0]->id);
 
         //postmark maken en dkim return
@@ -336,7 +345,8 @@ class ShopController extends Controller
         cloudflareController::createCNAMERecordPostmark($checkCloud[0]->id, $postmark->ReturnPathDomainCNAMEValue);
         sleep(5);
         PostmarkController::checkCNAME($postmark->ID);
-
+        
+        //checken of de transfer gelukt is
         $check = $vimexx->checkDomain($order->domain);
         if($check === 'Niet beschikbaar'){
             $order->status = "active";
@@ -349,9 +359,4 @@ class ShopController extends Controller
         return redirect('domein/'.$order->domain);
     }
 
-   
-
-    
-
-    
 }
