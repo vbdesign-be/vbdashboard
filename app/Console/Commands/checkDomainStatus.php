@@ -20,7 +20,7 @@ class checkDomainStatus extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Checken of de domeinnaam online is of niet';
 
     /**
      * Create a new command instance.

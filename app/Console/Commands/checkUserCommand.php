@@ -21,7 +21,9 @@ class checkUserCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'functie die alle contactpersonen checkt in teamleader of ze de tag klant hebben
+                                zijn ze klant->opslaan in database
+                                waren ze klant en nu niet meer->verwijderen uit database';
 
     /**
      * Create a new command instance.
