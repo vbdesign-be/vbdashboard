@@ -17,12 +17,6 @@
           </div>
         </div>
 
-        <section class="py-8">
-          <div class="container px-4 mx-auto">
-            <a href="/shop">Back knop</a>
-          </div>
-        </section>
-
         @if($errors->any())
             @component('components/notification')
             @slot('type') red @endslot
