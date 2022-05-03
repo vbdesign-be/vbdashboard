@@ -6,6 +6,8 @@
     left: 0;
     background-color: #242f3f;
     display:flex;
+    flex-direction: column;
+    gap:5px;
     justify-content: center;
     align-items: center;
     z-index:100000;
@@ -27,6 +29,10 @@
     width: 100%;
     background-color: #fff;
     animation: loader-inner 2s infinite ease-in;
+  }
+
+  .loader__text{
+    color:white;
   }
   
   @keyframes loader {

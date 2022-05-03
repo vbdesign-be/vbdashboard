@@ -20,6 +20,7 @@
 
     @yield('content')
     <div class="loader__container">
+        <p class="loader__text">Aan het laden...</p>
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

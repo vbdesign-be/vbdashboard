@@ -411,6 +411,8 @@ hr {
   left: 0;
   background-color: #242f3f;
   display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   z-index: 100000;
@@ -434,6 +436,10 @@ hr {
   background-color: #fff;
   -webkit-animation: loader-inner 2s infinite ease-in;
           animation: loader-inner 2s infinite ease-in;
+}
+
+.loader__text {
+  color: white;
 }
 
 @-webkit-keyframes loader {
