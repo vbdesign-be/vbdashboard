@@ -56,6 +56,18 @@ if(domainSearchBtn !== null){
     });
 }
 
+//loading nameserver update
+let nameserverUpdateBtn = document.querySelector('.nameserverUpdateBtn');
+if(nameserverUpdateBtn !== null){
+    let loader__container = document.querySelector('.loader__container');
+    nameserverUpdateBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        loader__container.style.display = "flex";
+        fadeIn(loader__container, 200);
+        document.querySelector(".nameserverUpdate").submit(); 
+    });
+}
+
 
 //tickets samenvoegen
 let ticketsMerge = document.querySelectorAll('.ticket--merge');

@@ -2115,6 +2115,20 @@ if (domainSearchBtn !== null) {
     fadeIn(_loader__container, 200);
     document.querySelector(".searchDomain").submit();
   });
+} //loading nameserver update
+
+
+var nameserverUpdateBtn = document.querySelector('.nameserverUpdateBtn');
+
+if (nameserverUpdateBtn !== null) {
+  var _loader__container2 = document.querySelector('.loader__container');
+
+  nameserverUpdateBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    _loader__container2.style.display = "flex";
+    fadeIn(_loader__container2, 200);
+    document.querySelector(".nameserverUpdate").submit();
+  });
 } //tickets samenvoegen
 
 

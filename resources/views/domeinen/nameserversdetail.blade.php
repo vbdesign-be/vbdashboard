@@ -75,7 +75,7 @@
 
       <section class="py-8">
           <div class="container px-4 mx-auto">
-          <form class="mt-6 px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/nameservers/update" method="post">
+          <form class="nameserverUpdate mt-6 px-6 pb-6 pt-4 bg-white shadow rounded" action="/domein/nameservers/update" method="post">
           @csrf
             
       
@@ -102,7 +102,7 @@
                 <input type="hidden" name="domein" value="{{$domain}}">
               </div>
             <div class="form__btn">
-            <button class=" inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update</button>
+            <button class="nameserverUpdateBtn inline-block w-full md:w-auto px-4 py-3 font-medium text-sm text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Update</button>
             </div>
           </div>
           </form>
