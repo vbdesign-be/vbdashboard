@@ -10,6 +10,7 @@ class Ticket extends Model
     use HasFactory;
     
     protected $with = ["attachmentsTicket", "reactions", "user", "cc", "notitie", "status", "type", "priority", "tickets_tags"];
+    
     public function attachmentsTicket(){
         return $this->hasMany(\App\Models\AttachmentTicket::class);
     }

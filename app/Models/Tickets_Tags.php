@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tickets_Tags extends Model
 {
     use HasFactory;
+    
     protected $with = ["tag"];
     
     public function tag(){
