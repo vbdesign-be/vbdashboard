@@ -18,6 +18,7 @@ use App\Models\Ticket;
 use App\Models\Tickets_Tags;
 use App\Models\Type;
 use App\Models\User;
+use Google\Service\DeploymentManager\Resource\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -54,6 +55,8 @@ class TicketController extends Controller
 
         $data['tickets'] = Ticket::where('agent_id', Auth::id())->orderBy($filter, $direction)->get();
         $data['filter'] = $filterInput;
+        $data['types'] = Type::get();
+        $data['priorities'] = Priority::get();
         return view('tickets/tickets', $data);
     }
 
@@ -518,5 +521,102 @@ class TicketController extends Controller
 
         $request->session()->flash('message', 'Afzender is succesvol gewijzigd');
         return redirect('/ticket/'. $ticket->id);
+    }
+
+    //agent die een ticket toevoegt voor een klant
+    public function ticketAdd(Request $request){
+        //checken of de ingelogde gebruiker wel een agent is
+        if(Auth::user()->isAgent !== 1){
+            abort(403);
+        }
+
+        //checking credentials
+        $credentials = $request->validate([
+            'klant' => 'required|email',
+            'type' => 'required',
+            'onderwerp' => 'required|max:255',
+            'prioriteit' => 'required',
+            'beschrijving' => 'required'
+        ]);
+
+        $client = $request->input('klant');
+        $type = $request->input('type');
+        $subject = $request->input('onderwerp');
+        $priority = $request->input('prioriteit');
+        $tags = $request->input('tags');
+        $summary = $request->input('beschrijving');
+
+        //de juiste klant ophalen
+
+        $customers = User::get();
+        foreach($customers as $c){
+            if($c->email === $client){
+                $client = $c;
+            }
+        }
+
+        //ticket maken en info invullen(infortie + request)
+        $ticket = new Ticket();
+        if(!empty($client->email)){
+            $ticket->user_id = $client->id;
+        }else{
+            $ticket->email = $client;
+        }
+        $ticket->subject = $subject;
+        $ticket->body = $summary;
+        $ticket->status_id = 2;
+        $ticket->priority_id = $priority;
+        $ticket->type_id = $type;
+        $ticket->agent_id = Auth::id();
+        $ticket->isOpen = 0;
+        $ticket->save();
+
+        //tags opslaan
+        $tags = explode(', ', $tags);
+        foreach ($tags as $tag) {
+            $oldTag = Tag::where('name', $tag)->first();
+            if (empty($oldTag)) {
+                $newTag = new Tag();
+                $newTag->name = $tag;
+                $newTag->save();
+                $ticketsTags = new Tickets_Tags();
+                $ticketsTags->ticket_id = $ticket->id;
+                $ticketsTags->tag_id = $newTag->id;
+                $ticketsTags->save();
+            } else {
+                $checkTags = Tickets_Tags::where('tag_id', $oldTag->id)->where('ticket_id', $ticket->id)->first();
+                if (empty($checkTags)) {
+                    $ticketsTags = new Tickets_Tags();
+                    $ticketsTags->ticket_id = $ticket->id;
+                    $ticketsTags->tag_id = $oldTag->id;
+                    $ticketsTags->save();
+                }
+            }
+        }
+
+        //attachments opslaan
+        if (!empty($request->file('attachments'))) {
+            foreach ($request->file('attachments') as $attachment) {
+                //attachment in de public folder plaatsen
+                $imageSrc = time().'.'.$attachment->extension();
+                $attachment->move(public_path('attachments'), $imageSrc);
+
+                //attachment opslaan
+                $newAttach = new AttachmentTicket();
+                $newAttach->name = $attachment->getClientOriginalName();
+                $newAttach->src = $imageSrc;
+                $newAttach->ticket_id = $ticket->id;
+                $newAttach->save();
+                sleep(1);
+            }
+        }
+
+        //mail sturen naar de klant in kwestie
+        
+        //status message naar de gebruiker
+        $request->session()->flash('message', 'Het ticket is opgeslagen');
+
+        //redirecten
+        return redirect('/ticket/'.$ticket->id);
     }
 }

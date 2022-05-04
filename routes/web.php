@@ -147,5 +147,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ticket/delete', [TicketController::class, "deleteTicket"]);
     Route::post('/ticket/send', [TicketController::class, "ticketSend"]);
     Route::post('/ticket/changeuser', [TicketController::class, "changeUser"]);
+    Route::post('/tickets/ticketAdd', [TicketController::class, "ticketAdd"]);
     
 });

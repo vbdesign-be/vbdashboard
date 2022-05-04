@@ -7,7 +7,7 @@
 <div class="">
         
         <div>
-          
+        <x-head.tinymce-config/>
         <x-menu/>
 
 
@@ -64,9 +64,67 @@
                   <input class="border search__input rounded" type="text" name="search">
                   <button class="rounded search__btn bg-blue-500 text-white" type="submit">Zoek</button>
                 </form>
+                <a class="addTicketAgentBtn search__addBtn" href="">Ticket toevoegen</a>
               </div>
             </div>
           </div>
+        </section>
+
+        <section class="py-8  form--addTicketAgent">
+          <div class="container px-4 mx-auto">
+            <form enctype="multipart/form-data"  class="bg-white shadow rounded py-6 px-6" action="/tickets/ticketAdd" method="post" >
+            @csrf
+            <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+              <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+                <div class="mb-6">
+                  <label class="block text-sm font-medium mb-2" for="klant">Klant</label>
+                  <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="klant" value="{{ old('klant') }}">
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium mb-2" for="onderwerp">Onderwerp</label>
+                  <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="onderwerp" value="{{ old('onderwerp') }}">
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium mb-2" for="tags">Tags</label>
+                  <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="tags" value="{{ old('tags') }}">
+                </div>
+              </div>
+            <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
+              <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="type">Type</label>
+                <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="type" value="{{ old('type') }}">
+                  @foreach($types as $type)
+                  <option value="{{$type->id}}">{{$type->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="prioriteit">Prioriteit</label>
+                <select class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="number" name="prioriteit" value="{{ old('type') }}">
+                  @foreach($priorities as $p)
+                  <option value="{{$p->id}}">{{$p->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            </div>
+      
+            <div class="mb-6">
+            <label class="block text-sm font-medium mb-2" for="beschrijving">Beschrijving</label>
+              <textarea id="myeditorinstance" class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" name="beschrijving" rows="5" value="{{ old('beschrijving') }}"></textarea>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2" for="attachments">Attachment</label>
+                <input name="attachments[]" type="file" accept=".png, .jpg, .jpeg, .pdf" multiple>
+            </div>
+      
+            <div class="form__btn">
+              <button class="inline-block w-full md:w-auto px-6 py-3 font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded transition duration-200" type="submit">Plaats ticket</button>
+            </div>
+
+          </form>
+          </div>
+
         </section>
         
         <section class="py-8">
