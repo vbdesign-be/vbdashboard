@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\madeTicket;
 use App\Mail\sendTicket;
 use App\Mail\TicketReactionMail;
 use App\Models\AttachmentReaction;
@@ -554,7 +555,7 @@ class TicketController extends Controller
                 $client = $c;
             }
         }
-
+        
         //ticket maken en info invullen(infortie + request)
         $ticket = new Ticket();
         if(!empty($client->email)){
@@ -569,7 +570,7 @@ class TicketController extends Controller
         $ticket->type_id = $type;
         $ticket->agent_id = Auth::id();
         $ticket->isOpen = 0;
-        $ticket->save();
+        // $ticket->save();
 
         //tags opslaan
         $tags = explode(', ', $tags);
@@ -578,18 +579,18 @@ class TicketController extends Controller
             if (empty($oldTag)) {
                 $newTag = new Tag();
                 $newTag->name = $tag;
-                $newTag->save();
+                // $newTag->save();
                 $ticketsTags = new Tickets_Tags();
                 $ticketsTags->ticket_id = $ticket->id;
                 $ticketsTags->tag_id = $newTag->id;
-                $ticketsTags->save();
+                // $ticketsTags->save();
             } else {
                 $checkTags = Tickets_Tags::where('tag_id', $oldTag->id)->where('ticket_id', $ticket->id)->first();
                 if (empty($checkTags)) {
                     $ticketsTags = new Tickets_Tags();
                     $ticketsTags->ticket_id = $ticket->id;
                     $ticketsTags->tag_id = $oldTag->id;
-                    $ticketsTags->save();
+                    // $ticketsTags->save();
                 }
             }
         }
@@ -606,13 +607,19 @@ class TicketController extends Controller
                 $newAttach->name = $attachment->getClientOriginalName();
                 $newAttach->src = $imageSrc;
                 $newAttach->ticket_id = $ticket->id;
-                $newAttach->save();
+                // $newAttach->save();
                 sleep(1);
             }
         }
-
-        //mail sturen naar de klant in kwestie
         
+        //mail sturen naar de klant in kwestie
+        $data['firstname'] = Auth::user()->firstname;
+        if(!empty($client->email)){
+            Mail::to($client->email)->send(new madeTicket($data));
+        }else{
+            Mail::to($client)->send(new madeTicket($data));
+        }
+       
         //status message naar de gebruiker
         $request->session()->flash('message', 'Het ticket is opgeslagen');
 
