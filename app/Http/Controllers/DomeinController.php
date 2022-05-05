@@ -96,7 +96,7 @@ class DomeinController extends Controller
             $check = cloudflareController::getOneDomain($domain)[0];
             $checkPost = PostmarkController::getOneDomain($order->postmark);
             
-            if($check->status !== "active" && $checkPost->DKIMVerified !== true && $checkPost->DKIMVerified !== true){
+            if($check->status !== "active" && $checkPost->DKIMVerified !== true && $checkPost->ReturnPathDomainVerified !== true){
                 //postmark en cloudlfare zijn nog aan het wachten op een nameserver update
                 $order->status = "pending";
                 $order->save();
@@ -105,9 +105,10 @@ class DomeinController extends Controller
                 $data['isCloudflare'] = false;
                 $data['domain'] = $domain;
                 $data['numberDNS'] = 0;
-
+                $data['order'] = $order;
                 //gebruiker laten weten dat de update nog bezig is
                 //code stopt hier->redirecten
+                Session::forget('message');
                 Session::flash('error', 'De nameservers zijn momenteel nog aan het updaten. Dit kan 24u duren');
                 return view('domeinen/domeindetail', $data);
             }
@@ -283,7 +284,6 @@ class DomeinController extends Controller
 
     //nameservers updaten voor een domein
     public function updateNameservers(Request $request){
-
         $credentials = $request->validate([
             'domein' => 'required',
         ]);
@@ -331,6 +331,7 @@ class DomeinController extends Controller
         return view('domeinen/dnsdetail', $data);
     }
 
+    //dns toevoegen aan een domeinnaam
     public function dnsAdd(Request $request){
         $credentials = $request->validate([
             'type' => 'required',
@@ -362,6 +363,7 @@ class DomeinController extends Controller
         return redirect('domein/'.$domain.'/dns');
     }
 
+    //updaten van een specifiek dns record
     public function dnsEdit(Request $request){
         
         $credentials = $request->validate([
@@ -397,6 +399,7 @@ class DomeinController extends Controller
 
     }
 
+    //deleten van een specifiek dsn record
     public function dnsDelete(Request $request){
         $credentials = $request->validate([
             'zone' => 'required',
@@ -425,6 +428,7 @@ class DomeinController extends Controller
        
     }
 
+    //deleten van een domein
     public function domaindelete(Request $request){
         $credentials = $request->validate([
             'domein' => 'required',

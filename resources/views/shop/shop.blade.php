@@ -88,6 +88,7 @@
             <div class="flex justify-between items-center">
             <h3 class="font-medium">{{$domain}}</h3>
             <span class="inline-block py-1 px-2 bg-{{ $checkColor }}-50 text-xs text-{{ $checkColor }}-500 rounded-full">{{ $check }}</span>
+            <span>€ {{$price}}</span>
             <div>
             @if($check === "Beschikbaar")<form method="post" action="/domein/winkelmandje">@csrf <input type="hidden" name="domein" value="{{ $domain }}"> <button type="submit" >Koop btn</button>  </form>@endif
             @if($check === "Niet beschikbaar")<form method="post" action="/domein/transfer">@csrf <input type="hidden" name="domein" value="{{ $domain }}"> <button type="submit" >verhuis btn</button>  </form>@endif

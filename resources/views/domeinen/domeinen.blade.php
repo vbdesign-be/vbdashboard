@@ -74,7 +74,7 @@
             <div class="p-4 overflow-x-auto">
               <table class="table-auto w-full">
                 <thead>
-                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">E-mailbox</th><th class="pb-3 font-medium">Status</th><th style="visibility:hidden">bewerk knopjes </th></tr>
+                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Domeinnaam</th><th class="pb-3 font-medium">E-mailboxen</th><th style="visibility:hidden">bewerk knopjes </th></tr>
                 </thead>
                 <tbody>
                   @if(!empty($orders))
@@ -89,27 +89,6 @@
                       @endforeach
                       </ul>
                       
-                    </td>
-                    
-                    <td>
-                    @if($order->status === "failed")
-                          @component('components/domainstatus')
-                            @slot('color') red @endslot
-                              {{$order->status}}
-                          @endcomponent
-                        @endif
-                        @if($order->status === "active")
-                          @component('components/domainstatus')
-                            @slot('color') green @endslot
-                              {{$order->status}}
-                          @endcomponent
-                        @endif
-                        @if($order->status === "pending")
-                          @component('components/domainstatus')
-                            @slot('color') orange @endslot
-                              {{$order->status}}
-                          @endcomponent
-                        @endif
                     </td>
                     <td>@if($order->status !== "ordered")<a data-domain="{{$order->domain}}" class="domainDetailBtn" href="domein/{{$order->domain}}">bewerk knopje</a>@else<div></div>@endif</td>
                   </tr>

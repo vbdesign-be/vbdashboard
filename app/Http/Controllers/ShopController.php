@@ -63,6 +63,9 @@ class ShopController extends Controller
             $data['checkColor'] = "red";
         }
 
+        //prijs opvragen van een domeinnaam
+        $data['price'] = Product::where('name', '.'.$checkDomain[1])->first()->price;
+        
         //view inladen
         return view('shop/shop', $data);
     }

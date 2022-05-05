@@ -548,7 +548,6 @@ class TicketController extends Controller
         $summary = $request->input('beschrijving');
 
         //de juiste klant ophalen
-
         $customers = User::get();
         foreach($customers as $c){
             if($c->email === $client){

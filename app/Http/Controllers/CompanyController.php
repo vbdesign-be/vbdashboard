@@ -83,6 +83,7 @@ class CompanyController extends Controller
         }
     }
 
+    //informatie van een bedrijf updaten in teamleader
     public function updateCompany(Request $request){
         teamleaderController::reAuthTL();
 
