@@ -63,7 +63,7 @@
             <div class="bg-white shadow rounded py-6 px-6">
               
               <div class="grid grid-cols-2">
-                <p class="">{{$ticket->subject}}</p>
+                <p class="text-xl font-bold mb-4">{{$ticket->subject}}</p>
                 <div class="justify-self-end"><form method="post" action="/support/ticket/statusUpdate">
                 @csrf
                   <select name="status" id="">

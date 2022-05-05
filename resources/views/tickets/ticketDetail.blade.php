@@ -72,13 +72,17 @@
         <section class="py-8">
           <div class="container px-4 mx-auto">
             <div class="bg-white shadow rounded py-6 px-6">
-            @if(!empty($ticket->user_id))
-            <p>{{$ticket->user->firstname}}</p>
-            @else
-            <p>{{$ticket->email}}</p>
-            @endif
               <div class="grid grid-cols-2">
-                <p class="">{{$ticket->subject}}</p>
+                <div>
+                @if(!empty($ticket->user_id))
+                  <p class="text-xl font-bold mb-4">{{$ticket->user->firstname}}:</p>
+                @else
+                  <p class="text-xl font-bold mb-4">{{$ticket->email}}:</p>
+                @endif
+                  <p class="text-lg font-bold">{{$ticket->subject}}</p>
+                  <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
+                </div>
+                
                 <div class="justify-self-end">
                   <!-- Status wijzigen -->
                   <form method="post" action="/ticket/statusUpdate">
@@ -132,7 +136,6 @@
                 <livewire:show-tag :ticket_id="$ticket->id">
                   
               </div>
-                <p class="italic">{{ date('d/m/Y H:i:s', strtotime($ticket->created_at))}}</p>
               </div>
               @if(!empty($ticket->cc[0]))
                 <div class="flex">
