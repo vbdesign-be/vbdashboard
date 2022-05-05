@@ -2,6 +2,8 @@ const { add, findLastIndex, isSet } = require('lodash');
 
 require('./bootstrap');
 
+
+
 // //loader
 // let loader_container = document.querySelector('.loader__container');
 
@@ -327,7 +329,6 @@ if(cancelEmailBtns !== null){
 
 
 //addTicket
-
 let addTicketBtn = document.querySelector('.addTicketBtn');
 
 if(addTicketBtn !== null){
@@ -338,6 +339,14 @@ if(addTicketBtn !== null){
     })
 }
 
+//addTicket agent
+let addTicketAgentBtn = document.querySelector('.addTicketAgentBtn');
+if(addTicketAgentBtn !== null){
+    addTicketAgentBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('.form--addTicketAgent').classList.remove('hidden');
+    })
+}
 
 
 //zoekfunctie tickets

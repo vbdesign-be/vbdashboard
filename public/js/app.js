@@ -2362,6 +2362,16 @@ if (addTicketBtn !== null) {
     var addTicket = document.querySelector('.form--addTicket');
     addTicket.classList.remove('hidden');
   });
+} //addTicket agent
+
+
+var addTicketAgentBtn = document.querySelector('.addTicketAgentBtn');
+
+if (addTicketAgentBtn !== null) {
+  addTicketAgentBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector('.form--addTicketAgent').classList.remove('hidden');
+  });
 } //zoekfunctie tickets
 
 

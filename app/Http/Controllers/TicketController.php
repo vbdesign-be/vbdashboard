@@ -570,7 +570,7 @@ class TicketController extends Controller
         $ticket->type_id = $type;
         $ticket->agent_id = Auth::id();
         $ticket->isOpen = 0;
-        // $ticket->save();
+        $ticket->save();
 
         //tags opslaan
         $tags = explode(', ', $tags);
@@ -579,18 +579,18 @@ class TicketController extends Controller
             if (empty($oldTag)) {
                 $newTag = new Tag();
                 $newTag->name = $tag;
-                // $newTag->save();
+                $newTag->save();
                 $ticketsTags = new Tickets_Tags();
                 $ticketsTags->ticket_id = $ticket->id;
                 $ticketsTags->tag_id = $newTag->id;
-                // $ticketsTags->save();
+                $ticketsTags->save();
             } else {
                 $checkTags = Tickets_Tags::where('tag_id', $oldTag->id)->where('ticket_id', $ticket->id)->first();
                 if (empty($checkTags)) {
                     $ticketsTags = new Tickets_Tags();
                     $ticketsTags->ticket_id = $ticket->id;
                     $ticketsTags->tag_id = $oldTag->id;
-                    // $ticketsTags->save();
+                    $ticketsTags->save();
                 }
             }
         }
@@ -607,7 +607,7 @@ class TicketController extends Controller
                 $newAttach->name = $attachment->getClientOriginalName();
                 $newAttach->src = $imageSrc;
                 $newAttach->ticket_id = $ticket->id;
-                // $newAttach->save();
+                $newAttach->save();
                 sleep(1);
             }
         }

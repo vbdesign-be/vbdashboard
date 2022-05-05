@@ -18,6 +18,7 @@ use App\Http\Controllers\FreshdeskController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\DomeinController;
 use App\Http\Controllers\FacturenController;
+use App\Http\Controllers\TypeaheadController;
 use App\Http\Livewire\AddTag;
 use App\Mail\UserLoginMail;
 use App\Models\Order;
@@ -58,6 +59,9 @@ Route::get('/register', [teamleaderController::class, "register"]);
 Route::get('/connectClickup', [ClickupController::class, "requestToken"]);
 Route::get('/clickup', [ClickupController::class, "accessToken"]);
 Route::get('/getTasks', [ClickupController::class, "getTasks"]);
+
+//autocomplete
+Route::get('/autocomplete-search', [TypeaheadController::class, 'autocompleteSearch']);
 
 //deze routes enkel de bereiken als de gebruiker is ingelogd
 Route::group(['middleware' => ['auth']], function() {
@@ -148,5 +152,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ticket/send', [TicketController::class, "ticketSend"]);
     Route::post('/ticket/changeuser', [TicketController::class, "changeUser"]);
     Route::post('/tickets/ticketAdd', [TicketController::class, "ticketAdd"]);
+
+    
     
 });

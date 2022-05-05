@@ -70,7 +70,7 @@
           </div>
         </section>
 
-        <section class="py-8  form--addTicketAgent">
+        <section class="py-8 hidden form--addTicketAgent">
           <div class="container px-4 mx-auto">
             <form enctype="multipart/form-data"  class="bg-white shadow rounded py-6 px-6" action="/tickets/ticketAdd" method="post" >
             @csrf
@@ -78,7 +78,7 @@
               <div class="w-full md:w-1/2 px-4 mb-4 md:mb-0">
                 <div class="mb-6">
                   <label class="block text-sm font-medium mb-2" for="klant">Klant</label>
-                  <input class="block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" name="klant" value="{{ old('klant') }}">
+                  <input class="inputKlant block w-full px-4 py-3 mb-2 text-sm placeholder-gray-500 bg-white border rounded" type="text" autocomplete="off"  name="klant" value="{{ old('klant') }}">
                 </div>
                 <div class="mb-6">
                   <label class="block text-sm font-medium mb-2" for="onderwerp">Onderwerp</label>
@@ -180,6 +180,25 @@
           </div>
         </div>
     </section>
+
+    <script type="text/javascript">
+        var route = "{{ url('autocomplete-search') }}";
+        
+        $(document).ready(function () { 
+        $('.inputKlant').typeahead({
+      source:  function (query, process) {
+        
+      return $.get(route, { term: query }, function (data) {
+              return process(data);
+          });
+      }
+  });
+        
+        });
+          
+      
+        
+    </script>
         
 
 @endsection
