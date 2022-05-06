@@ -335,11 +335,11 @@ class ShopController extends Controller
         $order->payed = 1;
         $order->status = "pending";
         $order->save();
-
+        
         //domeinnaam verhuizen
         $vimexx = new Vimexx();
         $vimexx->transferDomain($order->domain,'', '', $code);
-
+        
         //toevoegen aan cloudflare
         $zone = cloudflareController::createZone($order->domain);
         $check = cloudflareController::getOneDomain($order->domain);
@@ -348,7 +348,7 @@ class ShopController extends Controller
         $scan = cloudflareController::dnsScan($check[0]->id);
 
         //als de cloudflare nog pending is kunnen we niet verder
-        if($check->status === "pending"){
+        if($check[0]->status === "pending"){
             $order->status = "pending";
             $order->save();
 
