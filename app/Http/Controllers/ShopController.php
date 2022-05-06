@@ -214,7 +214,7 @@ class ShopController extends Controller
 
         //checken of email nog beschikbaar is
         if(!empty($emailOrder)){
-            $request->session()->flash('error', $emailOrder->email.' is al in benadeling');
+            $request->session()->flash('error', $emailOrder->email.' is al in benadeling. Je kan ons bereiken door een support ticket te maken.');
             return redirect('domein/'.$domain);
         }
         
