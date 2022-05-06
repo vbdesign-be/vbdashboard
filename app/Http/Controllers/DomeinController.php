@@ -64,6 +64,7 @@ class DomeinController extends Controller
                 
                 //scannen naar dnsrecords
                 $check = cloudflareController::getOneDomain($domain);
+                dd($check);
                 $scan = cloudflareController::dnsScan($check[0]->id);
 
                 //postmark maken en id opslaan in database
