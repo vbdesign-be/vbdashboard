@@ -347,6 +347,16 @@ class ShopController extends Controller
         //scannen op al bestaande dns records
         $scan = cloudflareController::dnsScan($check[0]->id);
 
+        //als de cloudflare nog pending is kunnen we niet verder
+        if($check->status === "pending"){
+            $order->status = "pending";
+            $order->save();
+
+            //message en redirect
+            $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
+            return redirect('/domein/'.$order->domain);
+        }
+
         //postmark maken en dkim return
         $postmark = PostmarkController::createDomain($order->domain);
         
