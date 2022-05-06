@@ -86,7 +86,7 @@
 
             
               <div class="container px-4 mx-auto">
-                <div class="bg-white shadow rounded py-6 px-6">
+                <div class="bg-white py-8 px-6">
                   <div class="search">
                     <form class="search__form search__form--dns flex gap-4" action="">
                       <input class="border search__input rounded" type="text" name="search">
