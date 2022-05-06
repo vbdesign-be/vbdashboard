@@ -265,7 +265,7 @@ class ShopController extends Controller
             }
         };
 
-        if(in_array('bestaat al' , $check) && !empty($order->postmark)){
+        if(in_array('bestaat al' , $check) && !empty($order->resource_code)){
             //email gewoon toevoegen via qboxmail
             $order = Order::where('domain', $order->domain)->first();
             $resource_code = $order->resource_code;
