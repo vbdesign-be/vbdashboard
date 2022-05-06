@@ -131,7 +131,7 @@
               <p>actieve DNS records: {{ $numberDNS }}</p>
             </div>
             <div class="col-span-2">
-              <a href="/domein/{{$domain}}/dns">Beheer DNS records</a>
+              <a class="editDnsBtn" data-domain="{{$domain}}" href="/domein/{{$domain}}/dns">Beheer DNS records</a>
             </div>
           </div>
           @endif

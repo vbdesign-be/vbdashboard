@@ -19,7 +19,7 @@
 
         <section class="py-8">
           <div class="container px-4 mx-auto">
-            <a href="/domein/{{$domain}}">Back knop</a>
+            <a class="dnsBackBtn" data-domain="{{$domain}}" href="/domein/{{$domain}}">Back knop</a>
           </div>
         </section>
 

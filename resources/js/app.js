@@ -26,7 +26,47 @@ function fadeIn(el, time) {
   }
   
  
+//loading dnsdeatil
+let dnsDetailBtn = document.querySelector('.editDnsBtn');
+if(dnsDetailBtn !== null){
+    let loader__container = document.querySelector('.loader__container');
+    dnsDetailBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("test");
+            let domain = dnsDetailBtn.dataset.domain;
+            loader__container.style.display = "flex";
+            fadeIn(loader__container, 200);
+            window.location.href = "/domein/"+ domain +"/dns";
+        })
+}
 
+//loading dnsback
+let dnsBackBtn = document.querySelector('.dnsBackBtn');
+if(dnsBackBtn !== null){
+    let loader__container = document.querySelector('.loader__container');
+    dnsBackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("test");
+            let domain = dnsBackBtn.dataset.domain;
+            loader__container.style.display = "flex";
+            fadeIn(loader__container, 200);
+            window.location.href = "/domein/"+ domain;
+        })
+}
+
+//loading nameserversback
+let nameBackBtn = document.querySelector('.nameBackBtn');
+if(nameBackBtn !== null){
+    let loader__container = document.querySelector('.loader__container');
+    nameBackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("test");
+            let domain = nameBackBtn.dataset.domain;
+            loader__container.style.display = "flex";
+            fadeIn(loader__container, 200);
+            window.location.href = "/domein/"+ domain;
+        })
+}
 
 //loading domeindetail
 let domainDetailBtns = document.querySelectorAll('.domainDetailBtn');

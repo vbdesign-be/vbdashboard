@@ -2085,19 +2085,67 @@ function fadeIn(el, time) {
   };
 
   tick();
+} //loading dnsdeatil
+
+
+var dnsDetailBtn = document.querySelector('.editDnsBtn');
+
+if (dnsDetailBtn !== null) {
+  var loader__container = document.querySelector('.loader__container');
+  dnsDetailBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log("test");
+    var domain = dnsDetailBtn.dataset.domain;
+    loader__container.style.display = "flex";
+    fadeIn(loader__container, 200);
+    window.location.href = "/domein/" + domain + "/dns";
+  });
+} //loading dnsback
+
+
+var dnsBackBtn = document.querySelector('.dnsBackBtn');
+
+if (dnsBackBtn !== null) {
+  var _loader__container = document.querySelector('.loader__container');
+
+  dnsBackBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log("test");
+    var domain = dnsBackBtn.dataset.domain;
+    _loader__container.style.display = "flex";
+    fadeIn(_loader__container, 200);
+    window.location.href = "/domein/" + domain;
+  });
+} //loading nameserversback
+
+
+var nameBackBtn = document.querySelector('.nameBackBtn');
+
+if (nameBackBtn !== null) {
+  var _loader__container2 = document.querySelector('.loader__container');
+
+  nameBackBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log("test");
+    var domain = nameBackBtn.dataset.domain;
+    _loader__container2.style.display = "flex";
+    fadeIn(_loader__container2, 200);
+    window.location.href = "/domein/" + domain;
+  });
 } //loading domeindetail
 
 
 var domainDetailBtns = document.querySelectorAll('.domainDetailBtn');
 
 if (domainDetailBtns !== null) {
-  var loader__container = document.querySelector('.loader__container');
+  var _loader__container3 = document.querySelector('.loader__container');
+
   domainDetailBtns.forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       var domain = btn.dataset.domain;
-      loader__container.style.display = "flex";
-      fadeIn(loader__container, 200);
+      _loader__container3.style.display = "flex";
+      fadeIn(_loader__container3, 200);
       window.location.href = "/domein/" + domain;
     });
   });
@@ -2107,12 +2155,12 @@ if (domainDetailBtns !== null) {
 var domainSearchBtn = document.querySelector('.domainSearchBtn');
 
 if (domainSearchBtn !== null) {
-  var _loader__container = document.querySelector('.loader__container');
+  var _loader__container4 = document.querySelector('.loader__container');
 
   domainSearchBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    _loader__container.style.display = "flex";
-    fadeIn(_loader__container, 200);
+    _loader__container4.style.display = "flex";
+    fadeIn(_loader__container4, 200);
     document.querySelector(".searchDomain").submit();
   });
 } //loading nameserver update
@@ -2121,12 +2169,12 @@ if (domainSearchBtn !== null) {
 var nameserverUpdateBtn = document.querySelector('.nameserverUpdateBtn');
 
 if (nameserverUpdateBtn !== null) {
-  var _loader__container2 = document.querySelector('.loader__container');
+  var _loader__container5 = document.querySelector('.loader__container');
 
   nameserverUpdateBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    _loader__container2.style.display = "flex";
-    fadeIn(_loader__container2, 200);
+    _loader__container5.style.display = "flex";
+    fadeIn(_loader__container5, 200);
     document.querySelector(".nameserverUpdate").submit();
   });
 } //tickets samenvoegen
