@@ -167,7 +167,7 @@ class ShopController extends Controller
 
             //message en redirect
             $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
-            return redirect('/domein');
+            return redirect('/domein/'.$order->domain);
         }
         
         $cloudDKIM = cloudflareController::createDKIMRecordPostmark($checkCloud[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
@@ -188,7 +188,7 @@ class ShopController extends Controller
 
         //message en redirect
         $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
-        return redirect('/domein');
+        return redirect('/domein'.$order->domain);
     }
 
     //gebruiker wil emailbox aankopen
