@@ -255,6 +255,7 @@ class ShopController extends Controller
         $order = Order::find($emailOrder->order_id);
 
         //checken of email nog beschikbaar is in qbox
+        //als postmark column ook leeg is in database(dubbelcheck)
         $emailDomains = QboxController::getAllDomains();
         foreach($emailDomains as $edomain){
             if($edomain->name === $order->domain){
@@ -264,7 +265,7 @@ class ShopController extends Controller
             }
         };
 
-        if(in_array('bestaat al' , $check)){
+        if(in_array('bestaat al' , $check) && !empty($order->postmark)){
             //email gewoon toevoegen via qboxmail
             $order = Order::where('domain', $order->domain)->first();
             $resource_code = $order->resource_code;
