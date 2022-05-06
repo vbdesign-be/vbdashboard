@@ -91,7 +91,6 @@ class DomeinController extends Controller
             if($check->status === "active"){
                 //postmark maken en id opslaan in database
                 $postmark = PostmarkController::createDomain($domain);
-                dd($postmark);
                 $order->postmark = strval($postmark->ID);
                 $order->save();
 
