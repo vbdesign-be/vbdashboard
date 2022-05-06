@@ -16,17 +16,8 @@ class DomeinController extends Controller
 {
     public function domeinen(){
         //allee domeinen voor de ingelogde gebruiker ophalen en meegeven naar de blade
-        $orders = Order::where('user_id', Auth::id())->get();
-
         //enkel de betaalde orders mogen getoond worden
-        if(!empty($orders)){
-            foreach($orders as $order){
-                if($order->payed){
-                    $data['orders'][] = $order;
-                }
-            }
-        }
-
+        $data['orders'] = Order::where('user_id', Auth::id())->where('payed', 1)->get();
         return view('domeinen/domeinen', $data);
     }
 
