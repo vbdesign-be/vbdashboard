@@ -84,7 +84,7 @@ class SupportController extends Controller
         $ticket->status_id = 1;
         $ticket->priority_id = 1;
         $ticket->type_id = $type;
-        $ticket->agent_id = 1;
+        $ticket->agent_id = env('AGENT_ID');
         $ticket->isOpen = 0;
         $ticket->save();
 
@@ -292,7 +292,7 @@ class SupportController extends Controller
         $ticket->status_id = 1;
         $ticket->priority_id = 1;
         $ticket->type_id = 1;
-        $ticket->agent_id = 1;
+        $ticket->agent_id = env('AGENT_ID');
         $ticket->isOpen = 0;
         $ticket->save();
 
