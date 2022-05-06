@@ -149,7 +149,7 @@ class ShopController extends Controller
 
         //domeinnaam registeren via vimexx
         $vimexx = new Vimexx();
-        //$res = $vimexx->registerDomain($order->domain);
+        $res = $vimexx->registerDomain($order->domain);
         
         //domeinnaam reistreren via cloudflare
         $cloudflare = cloudflareController::createZone($order->domain);
@@ -326,7 +326,7 @@ class ShopController extends Controller
 
         //domeinnaam verhuizen
         $vimexx = new Vimexx();
-        //$vimexx->transferDomain($order->domain,'', '', $code);
+        $vimexx->transferDomain($order->domain,'', '', $code);
 
         //toevoegen aan cloudflare
         $zone = cloudflareController::createZone($order->domain);
