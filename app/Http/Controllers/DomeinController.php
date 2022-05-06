@@ -54,7 +54,6 @@ class DomeinController extends Controller
         if (in_array(true, $nameserverCheck)) {
             //cloudflare zit in de nameservers
             //klant moet cloudflare en postmark hebben
-
             $data['isCloudflare'] = true;
 
             //indien cloudflare niet bestaat, cloudflare en postmark maken
