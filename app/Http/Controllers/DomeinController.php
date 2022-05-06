@@ -87,6 +87,22 @@ class DomeinController extends Controller
             $check = cloudflareController::getOneDomain($domain)[0];
             $checkPost = PostmarkController::getOneDomain($order->postmark);
             
+            //als cloudflare niet op active staat->code stoppen en gebruiker laten weten dat het nog pending is
+            if($check->statux !== "active"){
+                $order->status = "pending";
+                $order->save();
+                $data['numberEmails'] = 0;
+                $data['checkDns'] = true;
+                $data['isCloudflare'] = false;
+                $data['domain'] = $domain;
+                $data['numberDNS'] = 0;
+                $data['order'] = $order;
+                //gebruiker laten weten dat de update nog bezig is
+                //code stopt hier->redirecten
+                Session::forget('message');
+                Session::flash('error', 'De nameservers zijn momenteel nog aan het updaten. Dit kan 24u duren');
+                return view('domeinen/domeindetail', $data);
+            }
 
             //als cloudflare op active staat->postmark aanmaken
             if($check->status === "active" && empty($order->postmark)){
@@ -104,24 +120,8 @@ class DomeinController extends Controller
                 cloudflareController::createCNAMERecordPostmark($check->id, $postmark->ReturnPathDomainCNAMEValue);
                 sleep(5);
                 PostmarkController::checkCNAME($postmark->ID);
-            }else{
-                $order->status = "pending";
-                $order->save();
-                $data['numberEmails'] = 0;
-                $data['checkDns'] = true;
-                $data['isCloudflare'] = false;
-                $data['domain'] = $domain;
-                $data['numberDNS'] = 0;
-                $data['order'] = $order;
-                //gebruiker laten weten dat de update nog bezig is
-                //code stopt hier->redirecten
-                Session::forget('message');
-                Session::flash('error', 'De nameservers zijn momenteel nog aan het updaten. Dit kan 24u duren');
-                return view('domeinen/domeindetail', $data);
             }
 
-
-            
             if($check->status !== "active" && $checkPost->DKIMVerified !== true && $checkPost->ReturnPathDomainVerified !== true){
                 //postmark en cloudlfare zijn nog aan het wachten op een nameserver update
                 $order->status = "pending";
