@@ -264,7 +264,7 @@ class ShopController extends Controller
                 $check [] = "bestaat niet"; 
             }
         };
-
+        dd($check);
         if(in_array('bestaat al' , $check) && !empty($order->resource_code)){
             //email gewoon toevoegen via qboxmail
             $order = Order::where('domain', $order->domain)->first();
