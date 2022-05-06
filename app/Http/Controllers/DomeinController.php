@@ -59,7 +59,7 @@ class DomeinController extends Controller
             //indien cloudflare niet bestaat, cloudflare en postmark maken
             $check = cloudflareController::getOneDomain($domain);
             
-            if (empty($check)) {
+            if(empty($check)) {
                 cloudflareController::createZone($domain);
                 
                 //scannen naar dnsrecords
@@ -86,10 +86,10 @@ class DomeinController extends Controller
             //checken of postmark en cloudflare werken
             $check = cloudflareController::getOneDomain($domain)[0];
             $checkPost = PostmarkController::getOneDomain($order->postmark);
-            dd($checkPost);
+            
 
             //als cloudflare op active staat->postmark aanmaken
-            if($check->status === "active"){
+            if($check->status === "active" && empty($order->postmark)){
                 //postmark maken en id opslaan in database
                 $postmark = PostmarkController::createDomain($domain);
                 
@@ -104,6 +104,20 @@ class DomeinController extends Controller
                 cloudflareController::createCNAMERecordPostmark($check->id, $postmark->ReturnPathDomainCNAMEValue);
                 sleep(5);
                 PostmarkController::checkCNAME($postmark->ID);
+            }else{
+                $order->status = "pending";
+                $order->save();
+                $data['numberEmails'] = 0;
+                $data['checkDns'] = true;
+                $data['isCloudflare'] = false;
+                $data['domain'] = $domain;
+                $data['numberDNS'] = 0;
+                $data['order'] = $order;
+                //gebruiker laten weten dat de update nog bezig is
+                //code stopt hier->redirecten
+                Session::forget('message');
+                Session::flash('error', 'De nameservers zijn momenteel nog aan het updaten. Dit kan 24u duren');
+                return view('domeinen/domeindetail', $data);
             }
 
 
