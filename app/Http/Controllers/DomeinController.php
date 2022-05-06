@@ -86,12 +86,13 @@ class DomeinController extends Controller
             //checken of postmark en cloudflare werken
             $check = cloudflareController::getOneDomain($domain)[0];
             $checkPost = PostmarkController::getOneDomain($order->postmark);
+            dd($checkPost);
 
             //als cloudflare op active staat->postmark aanmaken
             if($check->status === "active"){
                 //postmark maken en id opslaan in database
                 $postmark = PostmarkController::createDomain($domain);
-                dd($postmark);
+                
                 $order->postmark = strval($postmark->ID);
                 $order->save();
 
