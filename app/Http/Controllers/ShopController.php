@@ -149,7 +149,7 @@ class ShopController extends Controller
 
         //domeinnaam registeren via vimexx
         $vimexx = new Vimexx();
-        $res = $vimexx->registerDomain($order->domain);
+        //$res = $vimexx->registerDomain($order->domain);
         
         //domeinnaam reistreren via cloudflare
         $cloudflare = cloudflareController::createZone($order->domain);
@@ -159,6 +159,7 @@ class ShopController extends Controller
         
         //cloudflare dkim invullen en verifieren;
         $checkCloud = cloudflareController::getOneDomain($order->domain);
+        dd($checkCloud);
         $cloudDKIM = cloudflareController::createDKIMRecordPostmark($checkCloud[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
         sleep(5);
         PostmarkController::checkDKIM($postmark->ID);
