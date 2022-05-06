@@ -85,7 +85,9 @@
                     <td class="font-medium">
                       <ul class="mt-2 ">
                       @foreach($order->emailorder as $email)
+                        @if($email->payed === 1)
                       <li class="mb-2">{{$email->email}}</li>
+                        @endif
                       @endforeach
                       </ul>
                       
