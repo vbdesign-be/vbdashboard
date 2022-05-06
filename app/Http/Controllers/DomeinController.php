@@ -88,7 +88,7 @@ class DomeinController extends Controller
             $checkPost = PostmarkController::getOneDomain($order->postmark);
             
             //als cloudflare niet op active staat->code stoppen en gebruiker laten weten dat het nog pending is
-            if($check->statux !== "active"){
+            if($check->status !== "active"){
                 $order->status = "pending";
                 $order->save();
                 $data['numberEmails'] = 0;
