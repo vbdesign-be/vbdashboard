@@ -159,7 +159,17 @@ class ShopController extends Controller
         
         //cloudflare dkim invullen en verifieren;
         $checkCloud = cloudflareController::getOneDomain($order->domain);
-        dd($checkCloud);
+
+        //als de cloudflare nog pending is kunnen we niet verder
+        if($checkCloud[0]->status === "pending"){
+            $order->status = "pending";
+            $order->save();
+
+            //message en redirect
+            $request->session()->flash('message', 'We hebben je aankoop goed ontvangen. We zijn nu bezig met '.$order->domain.' te registeren. Dit kan 24u duren.');
+            return redirect('/domein');
+        }
+        
         $cloudDKIM = cloudflareController::createDKIMRecordPostmark($checkCloud[0]->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
         sleep(5);
         PostmarkController::checkDKIM($postmark->ID);
