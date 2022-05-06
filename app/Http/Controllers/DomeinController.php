@@ -87,6 +87,25 @@ class DomeinController extends Controller
             //checken of postmark en cloudflare werken
             $check = cloudflareController::getOneDomain($domain)[0];
             $checkPost = PostmarkController::getOneDomain($order->postmark);
+
+            //als cloudflare op active staat->postmark aanmaken
+            if($check->status === "active"){
+                //postmark maken en id opslaan in database
+                $postmark = PostmarkController::createDomain($domain);
+                $order->postmark = strval($postmark->ID);
+                $order->save();
+
+                cloudflareController::createDKIMRecordPostmark($check->id, $postmark->DKIMPendingHost, $postmark->DKIMPendingTextValue);
+                sleep(5);
+                PostmarkController::checkDKIM($postmark->ID);
+        
+                //postmark return path invullen en verifieren
+                cloudflareController::createCNAMERecordPostmark($check->id, $postmark->ReturnPathDomainCNAMEValue);
+                sleep(5);
+                PostmarkController::checkCNAME($postmark->ID);
+            }
+
+
             
             if($check->status !== "active" && $checkPost->DKIMVerified !== true && $checkPost->ReturnPathDomainVerified !== true){
                 //postmark en cloudlfare zijn nog aan het wachten op een nameserver update
