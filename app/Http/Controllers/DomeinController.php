@@ -59,6 +59,7 @@ class DomeinController extends Controller
 
             //indien cloudflare niet bestaat, cloudflare en postmark maken
             $check = cloudflareController::getOneDomain($domain);
+            dd($check);
             if (empty($check)) {
                 cloudflareController::createZone($domain);
                 
