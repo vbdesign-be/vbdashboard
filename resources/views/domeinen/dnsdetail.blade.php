@@ -178,7 +178,7 @@
 
               <table class="table-auto w-full">
                 <thead>
-                  <tr class="text-xs text-gray-500"><th class="pb-3 font-medium">Type</th><th class="pb-3 font-medium">Naam</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
+                  <tr class="text-xs text-gray-500 text-left"><th class="pb-3 font-medium">Type</th><th class="pb-3 font-medium">Naam</th><th class="pb-3 font-medium">Content</th><th class="pb-3 font-medium">TTL</th></tr>
                 </thead>
                 <tbody>
                 @if(!empty($dnsList))
