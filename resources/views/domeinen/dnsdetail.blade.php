@@ -84,7 +84,7 @@
             </div>
 
 
-            <section class="">
+            
               <div class="container px-4 mx-auto">
                 <div class="bg-white shadow rounded py-6 px-6">
                   <div class="search">
@@ -95,7 +95,7 @@
                   </div>
                 </div>
               </div>
-            </section>
+            
 
                 <div class="dnsAdd hidden w-full mb-6">
                     <form class="form-dnsAdd" method="POST" action="/domein/dns/add">
