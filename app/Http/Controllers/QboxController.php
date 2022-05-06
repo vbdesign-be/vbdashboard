@@ -15,7 +15,7 @@ class QboxController extends Controller
         
         $res = Http::withHeaders([
             'X-Api-Token' => $token,
-        ])->get($url);
+        ])->get($url.'?per=200');
 
         $data = json_decode($res);
         return $data->resources;
