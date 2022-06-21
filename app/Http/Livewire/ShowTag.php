@@ -16,7 +16,6 @@ class ShowTag extends Component
 
     public function deleteTag($tickets_tags_id){
         Tickets_Tags::destroy($tickets_tags_id);
-        
     }
 
     public function addTag(){
